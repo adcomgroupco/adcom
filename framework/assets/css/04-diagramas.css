@@ -1,0 +1,36 @@
+/* ============================================================
+   Framework Digital · 04-diagramas.css
+   Diagramas de flujo en SVG
+   ============================================================ */
+
+/* ---------- diagramas de flujo ---------- */
+.flow{margin:0;padding:clamp(16px,2vw,26px);border-radius:var(--radius);border:1px solid var(--line);background:var(--surface);overflow-x:auto}
+.flow+.flow{margin-top:14px}
+.flow svg{display:block;width:100%;min-width:820px;height:auto;color:var(--fg)}
+.flow figcaption{margin:14px 0 0;padding-top:13px;border-top:1px solid var(--line);color:var(--fg-muted);font-size:.82rem;max-width:96ch}
+.flow figcaption b{color:var(--fg)}
+.fl-band{fill:none;stroke:currentColor;stroke-opacity:.13;stroke-width:1;stroke-dasharray:5 6}
+.fl-box{fill:var(--surface-2);stroke:currentColor;stroke-opacity:.3;stroke-width:1.4}
+.fl-box-key{fill:rgba(255,212,0,.13);stroke:var(--accent-ink);stroke-opacity:.9;stroke-width:1.6}
+.fl-box-out{fill:none;stroke:currentColor;stroke-opacity:.22;stroke-width:1.4;stroke-dasharray:6 5}
+.fl-dec{fill:var(--surface-2);stroke:var(--accent-ink);stroke-opacity:.9;stroke-width:1.6}
+.fl-t{fill:currentColor;font-size:12.5px;font-weight:600}
+.fl-t-b{fill:currentColor;font-size:12.5px;font-weight:800}
+.fl-t-sm{fill:currentColor;fill-opacity:.6;font-size:10.5px;font-weight:600}
+.fl-t-key{fill:var(--accent-ink);font-size:10px;font-weight:900;letter-spacing:.1em}
+.fl-t-code{fill:var(--accent-ink);font-size:11.5px;font-weight:800}
+.fl-line{fill:none;stroke:currentColor;stroke-opacity:.4;stroke-width:1.5}
+.fl-line-yes{fill:none;stroke:#3aa76d;stroke-width:1.6}
+.fl-line-no{fill:none;stroke:#e04343;stroke-width:1.6}
+.fl-line-loop{fill:none;stroke:var(--accent-ink);stroke-width:1.6;stroke-dasharray:7 5}
+.fl-edge{fill:currentColor;fill-opacity:.62;font-size:10px;font-weight:700;letter-spacing:.04em}
+.fl-edge-yes{fill:#3aa76d;font-size:11px;font-weight:900}
+.fl-edge-no{fill:#e04343;font-size:11px;font-weight:900}
+.mk-a{fill:currentColor;fill-opacity:.5}
+.mk-y{fill:#3aa76d}
+.mk-n{fill:#e04343}
+.mk-l{fill:var(--accent-ink)}
+.section-dark .fl-line-yes{stroke:#55c98a}
+.section-dark .fl-edge-yes,.section-dark .mk-y{fill:#55c98a}
+.section-dark .fl-line-no{stroke:#ff6b6b}
+.section-dark .fl-edge-no,.section-dark .mk-n{fill:#ff6b6b}

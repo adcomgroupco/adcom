@@ -1,0 +1,85 @@
+/* ============================================================
+   Framework Digital · 02-layout.css
+   Header, navegación y hero
+   ============================================================ */
+
+/* ---------- header ---------- */
+.progress{position:fixed;top:0;left:0;z-index:60;height:3px;width:0;background:var(--yellow);transition:width .12s linear}
+.site-header{position:fixed;inset:3px 0 auto;z-index:50;height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 clamp(18px,4vw,64px);background:rgba(5,5,5,.82);border-bottom:1px solid var(--line-dark);backdrop-filter:blur(18px)}
+.brand{display:inline-flex;align-items:center;gap:11px;font-weight:900;letter-spacing:.05em;font-size:.86rem;flex:0 0 auto}
+.brand-mark{width:34px;height:34px;display:grid;place-items:center;border:2px solid var(--yellow);color:var(--yellow);border-radius:50%;font-size:.78rem}
+.brand small{display:block;color:var(--muted-dark);font-size:.62rem;font-weight:600;letter-spacing:.12em}
+.site-header nav{display:flex;gap:clamp(14px,2.2vw,30px);color:#cfcfcf;font-size:.8rem;font-weight:600;overflow:auto;scrollbar-width:none;padding:6px 2px}
+.site-header nav::-webkit-scrollbar{display:none}
+.site-header nav a{position:relative;white-space:nowrap;transition:color .2s ease}
+.site-header nav a::after{content:"";position:absolute;left:0;bottom:-6px;width:100%;height:2px;background:var(--yellow);transform:scaleX(0);transform-origin:left;transition:transform .24s ease}
+.site-header nav a:hover,.site-header nav a.is-current{color:var(--yellow)}
+.site-header nav a:hover::after,.site-header nav a:focus-visible::after,.site-header nav a.is-current::after{transform:scaleX(1)}
+.header-context{flex:0 0 auto;color:var(--yellow);border:1px solid var(--yellow);border-radius:999px;padding:7px 12px;font-size:.7rem;font-weight:800;letter-spacing:.1em}
+
+/* ---------- menú compacto ----------
+   Debajo de 1080px los quince enlaces no caben en una línea. En vez de
+   esconder la navegación (que dejaba el documento sin índice en móvil),
+   el nav se convierte en un panel desplegable. */
+.nav-toggle{display:none;flex:0 0 auto;width:44px;height:44px;padding:0;border:1px solid var(--line-dark);border-radius:13px;background:transparent;cursor:pointer;place-items:center}
+.nav-toggle:hover{border-color:var(--yellow)}
+.nav-toggle>span{position:relative;display:block;width:18px;height:2px;background:var(--yellow);transition:background .2s ease}
+.nav-toggle>span::before,.nav-toggle>span::after{content:"";position:absolute;left:0;width:18px;height:2px;background:var(--yellow);transition:transform .22s ease}
+.nav-toggle>span::before{top:-6px}
+.nav-toggle>span::after{top:6px}
+.site-header.nav-abierto .nav-toggle>span{background:transparent}
+.site-header.nav-abierto .nav-toggle>span::before{transform:translateY(6px) rotate(45deg)}
+.site-header.nav-abierto .nav-toggle>span::after{transform:translateY(-6px) rotate(-45deg)}
+
+@media(max-width:1080px){
+  .nav-toggle{display:grid}
+  .site-header nav{
+    display:none;position:fixed;left:0;right:0;top:75px;
+    max-height:calc(100svh - 88px);overflow-y:auto;
+    grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(14px,4vw,40px);
+    padding:8px clamp(18px,4vw,64px) 20px;
+    background:rgba(5,5,5,.97);border-bottom:1px solid var(--line-dark);
+    backdrop-filter:blur(18px);font-size:.94rem
+  }
+  .site-header.nav-abierto nav{display:grid}
+  .site-header nav a{padding:14px 2px;border-bottom:1px solid var(--line-dark)}
+  .site-header nav a::after{display:none}
+}
+@media(max-width:420px){
+  .site-header nav{grid-template-columns:1fr}
+}
+@media(max-width:520px){.header-context{display:none}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100svh;padding-top:132px;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(300px,.62fr);align-items:center;gap:clamp(36px,6vw,90px);overflow:hidden}
+.hero-copy{position:relative;z-index:2;max-width:900px}
+.hero h1{margin:0;font-size:clamp(3.1rem,8.4vw,8.4rem);line-height:.86;letter-spacing:-.062em;font-weight:800}
+.hero-lead{max-width:640px;margin:32px 0 0;color:#c3c3c3;font-size:clamp(1rem,1.5vw,1.28rem)}
+.hero-quote{margin:34px 0 0;max-width:660px;padding:20px 24px;border-left:3px solid var(--yellow);background:linear-gradient(90deg,rgba(255,212,0,.09),transparent);border-radius:0 16px 16px 0;font-size:1.02rem;font-weight:600}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.button{display:inline-flex;align-items:center;justify-content:center;gap:14px;min-height:52px;padding:0 24px;border-radius:999px;border:1px solid var(--yellow);font-weight:800;font-size:.92rem;cursor:pointer;transition:transform .2s ease,background .2s ease,color .2s ease}
+.button:hover{transform:translateY(-2px)}
+.button-primary{background:var(--yellow);color:var(--ink)}
+.button-ghost{color:var(--yellow);background:transparent}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin:46px 0 0;background:var(--line-dark);border:1px solid var(--line-dark);border-radius:20px;overflow:hidden}
+.hero-stats div{padding:18px 16px;background:var(--ink-soft)}
+.hero-stats dt{color:var(--muted-dark);font-size:.68rem;text-transform:uppercase;letter-spacing:.1em}
+.hero-stats dd{margin:6px 0 0;color:var(--yellow);font-size:clamp(1.4rem,2.3vw,2.1rem);font-weight:900;letter-spacing:-.04em;line-height:1}
+.hero-visual{position:relative;min-height:540px;display:grid;place-items:center}
+.orbit{position:absolute;border:1px solid rgba(255,212,0,.34);border-radius:50%}
+.orbit-1{width:min(78vw,440px);aspect-ratio:1}
+.orbit-2{width:min(96vw,580px);aspect-ratio:1;border-style:dashed;animation:spin 34s linear infinite}
+.orbit-3{width:min(112vw,700px);aspect-ratio:1;border-color:rgba(255,212,0,.14);animation:spin 52s linear infinite reverse}
+.hero-core{position:relative;z-index:2;width:min(72vw,320px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;text-align:center;padding:34px;background:radial-gradient(circle at 30% 25%,#1d1d1d,#0a0a0a);border:1px solid var(--line-dark);box-shadow:var(--shadow);animation:float 7s ease-in-out infinite}
+.hero-core strong{display:block;font-size:clamp(1.5rem,3vw,2.3rem);line-height:.95;letter-spacing:-.05em}
+.hero-core span{display:block;margin-top:10px;color:var(--muted-dark);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
+.orbit-chip{position:absolute;z-index:3;padding:9px 14px;border-radius:999px;background:var(--ink-card);border:1px solid var(--yellow);color:var(--yellow);font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.scroll-cue{position:absolute;left:clamp(20px,5vw,72px);bottom:26px;display:flex;align-items:center;gap:12px;color:var(--muted-dark);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase}
+.scroll-cue i{width:8px;height:8px;border-radius:50%;background:var(--yellow);animation:pulse 2.4s ease-in-out infinite}
+@media(max-width:960px){.hero{grid-template-columns:1fr;padding-top:110px;padding-bottom:70px}.hero-visual{min-height:340px;order:-1}.hero-stats{grid-template-columns:repeat(2,1fr)}.scroll-cue{display:none}}
+
+/* volver al índice */
+.al-indice{position:fixed;right:clamp(16px,3vw,32px);bottom:clamp(16px,3vw,32px);z-index:55;display:inline-flex;align-items:center;gap:9px;height:46px;padding:0 18px;border-radius:999px;border:1px solid var(--yellow);background:rgba(5,5,5,.86);color:var(--yellow);font-size:.78rem;font-weight:800;letter-spacing:.06em;backdrop-filter:blur(14px);opacity:0;transform:translateY(14px);pointer-events:none;transition:opacity .28s ease,transform .28s ease,background .2s ease,color .2s ease}
+.al-indice.is-on{opacity:1;transform:none;pointer-events:auto}
+.al-indice:hover{background:var(--yellow);color:var(--ink)}
+@media print{.al-indice{display:none}}

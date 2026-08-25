@@ -1,0 +1,10 @@
+# Dumps de datos y exports de plataformas: al repo solo entra el informe construido.
+*.json
+*.csv
+*.xlsx
+*.zip
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+.vscode/

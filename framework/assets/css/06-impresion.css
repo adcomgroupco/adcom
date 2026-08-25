@@ -1,0 +1,111 @@
+/* ============================================================
+   Framework Digital · 06-impresion.css
+   Cómo sale el documento en papel o en PDF
+   ------------------------------------------------------------
+   Se carga con media="print", así que no afecta la pantalla.
+   Tres decisiones: todo va sobre blanco (una sección oscura gasta
+   una página entera de tinta), todo lo plegado se abre, y nada de
+   lo que solo sirve en pantalla se imprime.
+   ============================================================ */
+
+@page{margin:16mm 14mm}
+
+html{scroll-behavior:auto}
+
+body{
+  background:#fff;color:#000;font-size:10.5pt;line-height:1.4;
+}
+
+/* ---------- fuera del papel ---------- */
+.site-header,
+.nav-toggle,
+.progress,
+.skip-link,
+.al-indice,
+.scroll-cue,
+.hero-visual,
+.toc-search,
+.toc-filtros,
+.toc-vacio,
+.copy-ok,
+.button,
+.link-reset,
+.cycle-nav{display:none !important}
+
+/* ---------- todo visible: en papel no hay scroll que dispare la animación ---------- */
+[data-reveal]{opacity:1 !important;transform:none !important}
+
+/* ---------- todo sobre blanco ---------- */
+.section-dark,
+.section-light,
+.iface,
+.avoid,
+.split>div:nth-child(2),
+.card,
+.card-light,
+.panel,
+.panel-light,
+.roadmap-card,
+.alert-card,
+.table-wrap,
+.flow,
+.quote{
+  background:#fff !important;
+  color:#000 !important;
+  box-shadow:none !important;
+  backdrop-filter:none !important;
+}
+.section-dark,.section-light{padding:0 0 14pt}
+.section-dark,
+.iface,
+.avoid,
+.split>div:nth-child(2){
+  --fg:#000;--fg-muted:#333;--line:#bbb;--surface:#fff;--surface-2:#fff;
+  --accent-ink:#000;--chip-bg:#fff;--chip-bd:#bbb;--chip-fg:#333;
+  --quote-bg:#fff;--quote-bd:#bbb;
+}
+
+/* el amarillo no existe en papel: se convierte en negro o en un borde */
+.eyebrow,.eyebrow span:first-child,em,.tag-accent,.card-index,.panel-label{
+  color:#000 !important;background:none !important;border-color:#666 !important;
+}
+em{font-weight:800}
+
+.card,.roadmap-card,.alert-card,.panel,.quote,.table-wrap,.flow{
+  border:1px solid #bbb !important;
+}
+
+/* ---------- lo plegado se abre ---------- */
+details.mas>summary{display:none}
+details.mas>.mas-body{display:block !important}
+
+/* ---------- cortes de página ---------- */
+h2,h3,h4{break-after:avoid;page-break-after:avoid}
+.section-heading,.card,.roadmap-card,.alert-card,.gate,.flow,.quote,tr{
+  break-inside:avoid;page-break-inside:avoid;
+}
+section[id]{break-before:page;page-break-before:always}
+
+/* ---------- diagramas y tablas completos, sin scroll ---------- */
+.flow{overflow:visible !important}
+.flow svg{min-width:0 !important;width:100% !important}
+.table-wrap{overflow:visible !important}
+table{font-size:8.5pt}
+
+/* ---------- el hero, en una sola columna ---------- */
+.hero{min-height:0;padding-top:0;display:block}
+.hero h1{font-size:30pt;line-height:1}
+.hero-stats{margin-top:14pt}
+
+/* ---------- las herramientas interactivas no se imprimen: en papel
+   muestran un estado vacío que confunde más de lo que aporta ---------- */
+.calc,.tree,.board,.builder{display:none !important}
+
+/* ---------- rejillas: dos columnas máximo en papel ---------- */
+.grid-3,.pillars,.roadmap,.toc-grid{
+  display:grid !important;grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:8pt !important;
+}
+.grid-2{gap:8pt !important}
+
+/* ---------- la URL de un enlace externo, junto al texto ---------- */
+a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;color:#555}
