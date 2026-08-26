@@ -38,6 +38,11 @@ body{
 /* ---------- todo sobre blanco ---------- */
 .section-dark,
 .section-light,
+.section-plain,
+.stat,
+.num,
+.recurso,
+.showcase,
 .iface,
 .avoid,
 .split>div:nth-child(2),
@@ -55,7 +60,7 @@ body{
   box-shadow:none !important;
   backdrop-filter:none !important;
 }
-.section-dark,.section-light{padding:0 0 14pt}
+.section-dark,.section-light,.section-plain{padding:0 0 14pt}
 .section-dark,
 .iface,
 .avoid,
@@ -109,3 +114,12 @@ table{font-size:8.5pt}
 
 /* ---------- la URL de un enlace externo, junto al texto ---------- */
 a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;color:#555}
+
+/* ---------- los visuales abstractos no se imprimen ----------
+   Son gradientes: en papel salen como manchas grises que no dicen nada.
+   Las capturas reales (.showcase) sí se imprimen. */
+.visual{display:none !important}
+.pin{position:static !important;display:inline-flex;margin:4pt 4pt 0;box-shadow:none !important;border:1px solid #000 !important}
+.recurso-go{display:none !important}
+/* un recurso en papel es una referencia, no un boton: se muestra a donde apunta */
+.recurso[href]::after{content:" (" attr(href) ")";font-size:7pt;color:#555;word-break:break-all}

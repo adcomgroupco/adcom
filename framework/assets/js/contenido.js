@@ -398,3 +398,82 @@ FD.LOCALIZAR = [
   {n:"6", t:"Contexto",   q:"¿Cambió algo fuera de la campaña?",           m:"Demanda · competencia · calendario · oferta",
    falla:"No hay nada que optimizar en plataforma. Hay que ajustar expectativa, estrategia u oferta y comunicarlo."}
 ];
+
+/* ============================================================
+   RECURSOS · el puente entre el framework y lo que ya existe
+   ------------------------------------------------------------
+   Cada punto del documento que tiene un archivo real detrás se enlaza
+   desde aquí. Es lo que evita que el framework se lea como teoría.
+
+   Cómo se usa: en el HTML basta con dejar el contenedor vacío
+
+       <div class="recursos" data-recursos="sistema"></div>
+
+   y esta lista lo llena. Agregar un recurso NO requiere tocar el HTML.
+
+   Campos de cada recurso:
+     k     etiqueta de tipo, en mayúsculas (REPOSITORIO, PLANTILLA, TABLERO…)
+     t     nombre del archivo o del destino
+     d     una línea: qué encuentra quien haga clic
+     href  el enlace. Vacío = todavía no existe o no está enlazado, y se
+           pinta como pendiente en vez de desaparecer. Esa es la gracia:
+           el hueco se ve.
+     i     id del ícono del sprite del <head> (i-file, i-list, i-code…)
+     img   ruta a una captura, opcional. Si está, reemplaza al ícono.
+           Las capturas van en assets/img/.
+   ============================================================ */
+
+FD.RECURSOS = {
+
+  /* 12—19 · Procesos y materiales */
+  procesos: [
+    {k:"Plantilla", t:"Especificaciones de materiales", d:"Formatos, pesos y medidas por plataforma", href:"", i:"i-list"},
+    {k:"Checklist", t:"QA previo a lanzamiento", d:"Lo que se revisa antes de que una campaña salga", href:"", i:"i-check-circle"},
+    {k:"Plantilla", t:"Brief de solicitud de piezas", d:"Lo mínimo que debe traer una solicitud de material", href:"", i:"i-file"}
+  ],
+
+  /* 20—35 · Control presupuestal */
+  control: [
+    {k:"Plantilla", t:"Control presupuestal por cuenta", d:"Ritmo de gasto, proyección y desviación", href:"", i:"i-shield"},
+    {k:"Tablero", t:"Hub de informes de clientes", d:"Accesos a Looker y Zoho de cada cuenta", href:"../clientes.html", i:"i-eye"},
+    {k:"Fuente de datos", t:"Origen del gasto diario", d:"De dónde sale la cifra que se compara contra lo planeado", href:"", i:"i-code"}
+  ],
+
+  /* 36—50 · Reacción y anomalías */
+  reaccion: [
+    {k:"Plantilla", t:"Registro de anomalías", d:"Qué se detectó, qué se hizo y qué resultó", href:"", i:"i-bell"},
+    {k:"Protocolo", t:"Escalamiento por severidad", d:"A quién se avisa y en cuánto tiempo", href:"", i:"i-bolt"}
+  ],
+
+  /* 86—92 · Solicitudes */
+  solicitudes: [
+    {k:"Formulario", t:"Entrada de solicitudes", d:"La puerta única del área: sin esto no entra trabajo", href:"", i:"i-list"},
+    {k:"Plantilla", t:"Brief por tipo de solicitud", d:"Los mínimos de cada tipo, listos para copiar", href:"", i:"i-file"}
+  ],
+
+  /* 51—57 · Optimización de pauta */
+  optimizacion: [
+    {k:"Tablero", t:"Rendimiento por campaña", d:"La vista que se revisa antes de tocar una puja", href:"", i:"i-radar"},
+    {k:"Bitácora", t:"Registro de optimizaciones", d:"Qué se cambió, cuándo y con qué hipótesis", href:"", i:"i-loop"},
+    {k:"Diagnóstico", t:"Educación superior y leads de valor", d:"Ejemplo de análisis de sector aplicado a pauta", href:"../diagnostico-educacion.html", i:"i-search"}
+  ],
+
+  /* 58—81 · Sistema documental */
+  sistema: [
+    {k:"Repositorio", t:"Estructura maestra de cuenta", d:"Las once carpetas, listas para duplicar por cliente", href:"", i:"i-file"},
+    {k:"Convención", t:"Nomenclatura de campañas", d:"La tabla de códigos que usa el constructor de nombres", href:"", i:"i-code"},
+    {k:"Plantilla", t:"Informe mensual", d:"El formato de salida con acciones derivadas", href:"", i:"i-list"},
+    {k:"Bitácora", t:"Decisiones, riesgos y pendientes", d:"Carpeta 07: la memoria de por qué se hizo lo que se hizo", href:"", i:"i-badge"}
+  ],
+
+  /* 82—85 · Playbooks */
+  playbooks: [
+    {k:"Playbook", t:"Guías por vertical", d:"Lo que ya sabemos que funciona en cada categoría", href:"", i:"i-bulb"}
+  ],
+
+  /* 93 · Equipo y cuentas */
+  equipo: [
+    {k:"Tablero", t:"Distribución de cuentas", d:"Quién lleva qué y con cuánta carga", href:"", i:"i-badge"}
+  ]
+
+};

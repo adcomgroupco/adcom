@@ -17,6 +17,23 @@
 .site-header nav a:hover::after,.site-header nav a:focus-visible::after,.site-header nav a.is-current::after{transform:scaleX(1)}
 .header-context{flex:0 0 auto;color:var(--yellow);border:1px solid var(--yellow);border-radius:999px;padding:7px 12px;font-size:.7rem;font-weight:800;letter-spacing:.1em}
 
+/* ---------- header claro ----------
+   Al pasar el hero el header se vuelve papel. Los tokens de color del nav
+   se resuelven contra el fondo nuevo, asi que basta con redeclararlos. */
+.site-header.is-claro{background:rgba(255,255,255,.82);border-bottom-color:var(--line-light)}
+.site-header.is-claro .brand{color:var(--ink)}
+.site-header.is-claro .brand small{color:var(--muted-light)}
+.site-header.is-claro nav{color:var(--muted-light)}
+.site-header.is-claro nav a:hover,.site-header.is-claro nav a.is-current{color:var(--ink)}
+.site-header.is-claro .header-context{color:#7a6800;border-color:rgba(160,140,0,.5)}
+.site-header.is-claro .nav-toggle{border-color:var(--line-light)}
+.site-header.is-claro .nav-toggle>span,.site-header.is-claro .nav-toggle>span::before,.site-header.is-claro .nav-toggle>span::after{background:var(--ink)}
+.site-header.is-claro.nav-abierto .nav-toggle>span{background:transparent}
+@media(max-width:1080px){
+  .site-header.is-claro nav{background:rgba(255,255,255,.97);border-bottom-color:var(--line-light)}
+  .site-header.is-claro nav a{border-bottom-color:var(--line-light)}
+}
+
 /* ---------- menú compacto ----------
    Debajo de 1080px los quince enlaces no caben en una línea. En vez de
    esconder la navegación (que dejaba el documento sin índice en móvil),

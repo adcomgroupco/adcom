@@ -8,12 +8,16 @@
   var FD = window.FD, $ = FD.$, $$ = FD.$$;
   var fillChips = FD.chips, fillList = FD.lista;
 
-  /* ---------- scroll progress ---------- */
+  /* ---------- scroll progress y color del header ----------
+     El header nace oscuro sobre el hero y se aclara al entrar al documento:
+     una barra negra fija sobre un documento claro pesa de mas. */
   var progress = $("#progress");
+  var headerEl = $(".site-header");
   function onScroll(){
     var h = document.documentElement;
     var max = h.scrollHeight - h.clientHeight;
     progress.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + "%";
+    if (headerEl) headerEl.classList.toggle("is-claro", h.scrollTop > window.innerHeight - 90);
   }
   window.addEventListener("scroll", onScroll, {passive:true});
   onScroll();
@@ -363,6 +367,54 @@
     campo.addEventListener("search", filtrar);
     filtrar();
   }
+
+
+  /* ---------- recursos: enlaces a lo que ya existe ----------
+     Llena cualquier <div class="recursos" data-recursos="clave"></div> con la
+     lista que le corresponda de FD.RECURSOS. Un recurso sin href se pinta como
+     pendiente y no es enlace: se ve el hueco, que es justo lo que queremos. */
+  FD.$$("[data-recursos]").forEach(function(cont){
+    var lista = (FD.RECURSOS || {})[cont.getAttribute("data-recursos")];
+    if (!lista || !lista.length) return;
+    cont.innerHTML = "";
+    lista.forEach(function(r){
+      var enlazado = !!r.href;
+      var el = document.createElement(enlazado ? "a" : "div");
+      el.className = "recurso" + (enlazado ? "" : " is-pendiente");
+      if (enlazado){
+        el.href = r.href;
+        /* solo los externos abren pestaña: dentro del repo la navegación es directa */
+        if (/^https?:/i.test(r.href)){ el.target = "_blank"; el.rel = "noopener"; }
+      }
+
+      var thumb = document.createElement("span");
+      thumb.className = "recurso-thumb";
+      if (r.img){
+        var img = document.createElement("img");
+        img.src = r.img; img.alt = ""; img.loading = "lazy";
+        thumb.appendChild(img);
+      } else {
+        thumb.innerHTML = '<svg aria-hidden="true"><use href="#' + (r.i || "i-file") + '"></use></svg>';
+      }
+
+      var body = document.createElement("span");
+      body.className = "recurso-body";
+      var kind = document.createElement("span");
+      kind.className = "recurso-kind";
+      kind.textContent = enlazado ? r.k : r.k + " · por enlazar";
+      var t = document.createElement("b"); t.textContent = r.t;
+      var d = document.createElement("small"); d.textContent = r.d;
+      body.appendChild(kind); body.appendChild(t); body.appendChild(d);
+
+      var go = document.createElement("span");
+      go.className = "recurso-go";
+      go.setAttribute("aria-hidden", "true");
+      go.textContent = enlazado ? "↗" : "···";
+
+      el.appendChild(thumb); el.appendChild(body); el.appendChild(go);
+      cont.appendChild(el);
+    });
+  });
 
   /* ---------- botón de vuelta al índice ---------- */
   var alIndice = $("#al-indice");

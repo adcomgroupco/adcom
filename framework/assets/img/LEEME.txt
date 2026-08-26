@@ -1,0 +1,13 @@
+Capturas del framework.
+
+Cada archivo de esta carpeta se referencia desde assets/js/contenido.js:
+  - en FD.RECURSOS, campo `img` (miniatura de 56x56, se recorta centrada)
+  - o directo en index.html dentro de un <figure class="showcase">
+
+Convencion de nombres: kebab-case y que diga que es.
+  repositorio-carpetas.png
+  nomenclatura-tabla.png
+  control-presupuestal.png
+  tablero-looker.png
+
+Formato: PNG o JPG, ancho maximo 1600px. Sin datos de cliente visibles.

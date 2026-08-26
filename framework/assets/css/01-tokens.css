@@ -7,30 +7,38 @@
   --ink:#050505;
   --ink-soft:#111111;
   --ink-card:#151515;
-  --paper:#f4f4f1;
-  --paper-soft:#eceae4;
+  --paper:#f2f2ef;
+  --paper-soft:#e9e9e4;
   --white:#ffffff;
   --yellow:#ffd400;
   --yellow-soft:#ffe86a;
+  --yellow-wash:#fff8d6;
   --green:#55c98a;
   --orange:#ff8a3d;
   --red:#ff4d4d;
   --blue:#315cff;
-  --line-dark:rgba(255,255,255,.16);
-  --line-light:rgba(5,5,5,.14);
+  --line-dark:rgba(255,255,255,.14);
+  --line-light:rgba(5,5,5,.10);
   --muted-dark:#a8a8a8;
   --muted-light:#5d5d5d;
   --radius:28px;
+  --radius-sm:14px;
+  --radius-md:20px;
   --max:1360px;
   --shadow:0 28px 80px rgba(0,0,0,.16);
+  /* elevación de tarjeta clara: casi imperceptible, solo despega del canvas */
+  --shadow-card:0 1px 2px rgba(5,5,5,.04),0 12px 32px rgba(5,5,5,.05);
+  /* escala de espacio: cinco pasos, los mismos que usan las utilidades .sep-* */
+  --sp-1:8px; --sp-2:12px; --sp-3:16px; --sp-4:24px; --sp-5:40px;
   /* color de acento por defecto: las secciones lo redeclaran según su fondo */
   --accent-ink:var(--yellow);
   font-family:"Poppins",ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  color-scheme:dark;
+  color-scheme:light;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--ink);color:var(--white);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+/* El documento es claro por defecto. El negro es puntuación, no fondo. */
+body{margin:0;background:var(--paper);color:var(--ink);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
 button,input,select{font:inherit}
 a{color:inherit;text-decoration:none}
 h1,h2,h3,h4,p{text-wrap:pretty}
@@ -49,43 +57,61 @@ h1,h2,h3,h4,p{text-wrap:pretty}
 .wrap{max-width:var(--max);margin:0 auto}
 /* que las anclas no queden debajo del header fijo */
 section[id],[id].divider,h3[id],h2[id]{scroll-margin-top:96px}
-.section-dark,.section-light{padding:clamp(72px,9vw,140px) clamp(20px,5vw,72px)}
-/* tokens de superficie: cualquier isla oscura dentro de una sección clara los redeclara */
+.section-dark,.section-light,.section-plain{padding:clamp(88px,10vw,168px) clamp(20px,5vw,72px)}
+
+/* ---------- los tres niveles de superficie ----------
+   El ritmo del documento se arma alternando papel y blanco; la tinta se
+   reserva para el hero, los momentos de énfasis y el cierre. Cada nivel
+   redeclara los mismos tokens, así que voltear una sección es cambiarle
+   la clase: ningún componente de adentro necesita saber dónde está. */
 .section-dark,.iface,.avoid,.split>div:nth-child(2){
   --fg:var(--white);--fg-muted:var(--muted-dark);
   --chip-bg:#222;--chip-bd:transparent;--chip-fg:#dcdcdc;
   --line:var(--line-dark);--surface:var(--ink-card);--surface-2:#1c1c1c;
-  --accent-ink:var(--yellow);
+  --accent-ink:var(--yellow);--eyebrow-fg:var(--yellow);
+  --elev:none;
   --quote-bg:linear-gradient(120deg,rgba(255,212,0,.1),transparent);--quote-bd:rgba(255,212,0,.42);
 }
-.section-light{
+.section-light,.section-plain{
   --fg:var(--ink);--fg-muted:var(--muted-light);
-  --chip-bg:var(--white);--chip-bd:var(--line-light);--chip-fg:var(--muted-light);
-  --line:var(--line-light);--surface:var(--white);--surface-2:var(--paper);
-  --accent-ink:#8a7500;
-  --quote-bg:var(--white);--quote-bd:rgba(5,5,5,.16);
+  --chip-bd:var(--line-light);--chip-fg:var(--muted-light);
+  --line:var(--line-light);
+  --accent-ink:#8a7500;--eyebrow-fg:var(--ink);
+  --elev:var(--shadow-card);
+  --quote-bd:rgba(5,5,5,.14);
 }
+/* papel de fondo, tarjetas blancas */
+.section-light{--surface:var(--white);--surface-2:var(--paper);--chip-bg:var(--white);--quote-bg:var(--white)}
+/* blanco de fondo, tarjetas de papel: el mismo aire, sin repetir el mismo tono */
+.section-plain{--surface:var(--paper);--surface-2:var(--paper-soft);--chip-bg:var(--paper);--quote-bg:var(--paper)}
 .section-dark{background:var(--ink);color:var(--white)}
 .section-light{background:var(--paper);color:var(--ink)}
+.section-plain{background:var(--white);color:var(--ink)}
 .iface,.avoid,.split>div:nth-child(2){color:var(--white)}
-.eyebrow{margin:0 0 22px;display:flex;flex-wrap:wrap;align-items:center;gap:14px;color:var(--yellow);font-size:.74rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase}
-.eyebrow span:first-child{border:1px solid var(--yellow);border-radius:999px;padding:8px 15px}
-.eyebrow-dark{color:var(--ink)}
-.eyebrow-dark span:first-child{border-color:var(--ink)}
+
+.eyebrow{margin:0 0 22px;display:flex;flex-wrap:wrap;align-items:center;gap:14px;color:var(--eyebrow-fg,var(--yellow));font-size:.74rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase}
+.eyebrow span:first-child{border:1px solid currentColor;border-radius:999px;padding:8px 15px}
+/* .eyebrow-dark queda como alias: el color ya lo resuelve el token de la sección */
+.eyebrow-dark{color:var(--eyebrow-fg,var(--ink))}
+
 em{font-style:normal;color:var(--yellow)}
-.section-light em{color:var(--ink);background:linear-gradient(transparent 62%,var(--yellow) 62%)}
+.section-light em,.section-plain em{color:var(--ink);background:linear-gradient(transparent 62%,var(--yellow) 62%)}
 .iface em,.avoid em{background:none;color:var(--yellow)}
-.section-heading{display:grid;grid-template-columns:minmax(320px,1fr) minmax(300px,.72fr);gap:clamp(28px,5vw,80px);align-items:end;margin:0 auto 54px}
-.section-heading h2{margin:0;font-size:clamp(1.75rem,3vw,2.7rem);line-height:1.02;letter-spacing:-.04em;font-weight:800}
+
+/* ---------- jerarquía de encabezado ----------
+   Una sección tiene un título grande y una sola frase que lo sostiene.
+   Todo lo demás es detalle y va dentro de un componente, no suelto. */
+.section-heading{display:grid;grid-template-columns:minmax(320px,1fr) minmax(300px,.72fr);gap:clamp(28px,5vw,80px);align-items:end;margin:0 auto clamp(48px,6vw,76px)}
+.section-heading h2{margin:0;font-size:clamp(2rem,3.6vw,3.4rem);line-height:1;letter-spacing:-.045em;font-weight:800}
 .section-heading>p{margin:0;max-width:560px;color:var(--fg-muted);font-size:1.02rem}
 /* la frase de cada sección: acompaña al título, no lo reemplaza */
 .claim{margin:14px 0 0;max-width:34ch;font-size:clamp(1.05rem,1.6vw,1.4rem);line-height:1.18;letter-spacing:-.02em;font-weight:800}
-.sub-heading{margin:0 0 24px;font-size:clamp(1.3rem,2vw,1.75rem);line-height:1.06;letter-spacing:-.03em;font-weight:800}
+.sub-heading{margin:0 0 24px;font-size:clamp(1.4rem,2.2vw,2rem);line-height:1.04;letter-spacing:-.035em;font-weight:800}
 .lead{max-width:720px;color:var(--fg-muted);font-size:1.05rem}
-.divider{max-width:var(--max);margin:clamp(60px,7vw,104px) auto 0;padding-top:clamp(52px,6vw,88px);border-top:1px solid var(--line)}
+.divider{max-width:var(--max);margin:clamp(72px,8vw,120px) auto 0;padding-top:clamp(60px,7vw,100px);border-top:1px solid var(--line)}
 .tag{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:999px;border:1px solid var(--line);color:var(--fg-muted);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
 .tag-accent{border-color:var(--yellow);color:var(--yellow);background:transparent}
-.section-light .tag-accent{background:var(--yellow);color:var(--ink)}
+.section-light .tag-accent,.section-plain .tag-accent{background:var(--yellow);color:var(--ink);border-color:var(--yellow)}
 .iface .tag-accent,.avoid .tag-accent{background:transparent;color:var(--yellow)}
 
 /* ---------- animaciones ---------- */
