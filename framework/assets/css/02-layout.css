@@ -68,11 +68,11 @@
 @media(max-width:520px){.header-context{display:none}}
 
 /* ---------- hero ---------- */
-.hero{position:relative;min-height:100svh;padding-top:132px;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(300px,.62fr);align-items:center;gap:clamp(36px,6vw,90px);overflow:hidden}
+.hero{position:relative;min-height:min(84svh,760px);padding-top:126px;padding-bottom:clamp(48px,6vw,88px);display:grid;grid-template-columns:minmax(0,1.08fr) minmax(300px,.62fr);align-items:center;gap:clamp(36px,6vw,90px);overflow:hidden}
 .hero-copy{position:relative;z-index:2;max-width:900px}
-.hero h1{margin:0;font-size:clamp(3.1rem,8.4vw,8.4rem);line-height:.86;letter-spacing:-.062em;font-weight:800}
-.hero-lead{max-width:640px;margin:32px 0 0;color:#c3c3c3;font-size:clamp(1rem,1.5vw,1.28rem)}
-.hero-quote{margin:34px 0 0;max-width:660px;padding:20px 24px;border-left:3px solid var(--yellow);background:linear-gradient(90deg,rgba(255,212,0,.09),transparent);border-radius:0 16px 16px 0;font-size:1.02rem;font-weight:600}
+.hero h1{margin:0;font-size:clamp(2.3rem,4.9vw,4.4rem);line-height:.94;letter-spacing:-.045em;font-weight:800}
+.hero-lead{max-width:600px;margin:26px 0 0;color:#c3c3c3;font-size:clamp(1rem,1.5vw,1.28rem)}
+.hero-quote{margin:26px 0 0;max-width:660px;padding:20px 24px;border-left:3px solid var(--yellow);background:linear-gradient(90deg,rgba(255,212,0,.09),transparent);border-radius:0 16px 16px 0;font-size:1.02rem;font-weight:600}
 .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
 .button{display:inline-flex;align-items:center;justify-content:center;gap:14px;min-height:52px;padding:0 24px;border-radius:999px;border:1px solid var(--yellow);font-weight:800;font-size:.92rem;cursor:pointer;transition:transform .2s ease,background .2s ease,color .2s ease}
 .button:hover{transform:translateY(-2px)}
@@ -82,12 +82,12 @@
 .hero-stats div{padding:18px 16px;background:var(--ink-soft)}
 .hero-stats dt{color:var(--muted-dark);font-size:.68rem;text-transform:uppercase;letter-spacing:.1em}
 .hero-stats dd{margin:6px 0 0;color:var(--yellow);font-size:clamp(1.4rem,2.3vw,2.1rem);font-weight:900;letter-spacing:-.04em;line-height:1}
-.hero-visual{position:relative;min-height:540px;display:grid;place-items:center}
+.hero-visual{position:relative;min-height:440px;display:grid;place-items:center}
 .orbit{position:absolute;border:1px solid rgba(255,212,0,.34);border-radius:50%}
-.orbit-1{width:min(78vw,440px);aspect-ratio:1}
-.orbit-2{width:min(96vw,580px);aspect-ratio:1;border-style:dashed;animation:spin 34s linear infinite}
-.orbit-3{width:min(112vw,700px);aspect-ratio:1;border-color:rgba(255,212,0,.14);animation:spin 52s linear infinite reverse}
-.hero-core{position:relative;z-index:2;width:min(72vw,320px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;text-align:center;padding:34px;background:radial-gradient(circle at 30% 25%,#1d1d1d,#0a0a0a);border:1px solid var(--line-dark);box-shadow:var(--shadow);animation:float 7s ease-in-out infinite}
+.orbit-1{width:min(70vw,360px);aspect-ratio:1}
+.orbit-2{width:min(84vw,472px);aspect-ratio:1;border-style:dashed;animation:spin 34s linear infinite}
+.orbit-3{width:min(98vw,570px);aspect-ratio:1;border-color:rgba(255,212,0,.14);animation:spin 52s linear infinite reverse}
+.hero-core{position:relative;z-index:2;width:min(64vw,262px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;text-align:center;padding:34px;background:radial-gradient(circle at 30% 25%,#1d1d1d,#0a0a0a);border:1px solid var(--line-dark);box-shadow:var(--shadow);animation:float 7s ease-in-out infinite}
 .hero-core strong{display:block;font-size:clamp(1.5rem,3vw,2.3rem);line-height:.95;letter-spacing:-.05em}
 .hero-core span{display:block;margin-top:10px;color:var(--muted-dark);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
 .orbit-chip{position:absolute;z-index:3;padding:9px 14px;border-radius:999px;background:var(--ink-card);border:1px solid var(--yellow);color:var(--yellow);font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;box-shadow:0 10px 30px rgba(0,0,0,.4)}

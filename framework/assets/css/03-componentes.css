@@ -570,14 +570,6 @@ a.recurso:hover .recurso-go{transform:translate(3px,-3px)}
   .steps-h .paso-n{margin:0}
 }
 
-/* ---------- bloque tipografico ----------
-   La celda del bento que no lleva texto: un signo grande que ancla la
-   rejilla. Es el recurso del ampersand de la ref1. */
-.marca{display:grid;place-items:center;padding:26px;border-radius:var(--radius);background:var(--ink);color:var(--yellow);min-height:180px;overflow:hidden}
-.marca span{font-size:clamp(4rem,11vw,8.5rem);line-height:.8;font-weight:800;letter-spacing:-.06em}
-.marca-accent{background:var(--yellow);color:var(--ink)}
-.marca .ico{width:clamp(56px,9vw,92px);height:clamp(56px,9vw,92px);stroke-width:1.1}
-
 /* ---------- utilidades de separación ----------
    Reemplazan los margin-top que antes se repetían inline en index.html.
    El selector va duplicado (.sep.sep) a propósito: así gana sobre reglas de

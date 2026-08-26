@@ -115,7 +115,6 @@ Si una sección pasa de ~450 palabras, probablemente son dos capítulos.
 | `.iconrow` + `.iconcell` | cuatro o cinco conceptos que se enumeran | si cada uno necesita un párrafo, va un bento |
 | `.steps-h` | secuencia conectada por una línea | el diagrama más barato que existe; `.es-clave` marca el paso que pesa |
 | `.display` | una frase a tamaño de portada | nunca dos seguidas, nunca más de doce palabras |
-| `.marca` | celda del bento sin texto: un signo o un icono grande | ancla la rejilla cuando todo lo demás es texto |
 | `.stat-badge` | distintivo en la esquina de una cifra | marca cuál de las cifras es la que importa |
 
 ## Que no todas las secciones abran igual
