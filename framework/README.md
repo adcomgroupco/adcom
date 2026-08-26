@@ -28,6 +28,7 @@ framework/
 │       │                         de cuentas y los requisitos de solicitud
 │       ├── interacciones.js      navegación, animaciones y bloques que se pintan solos
 │       └── herramientas.js       calculadora, árbol, constructor, combinador y tablero
+├── assets/img/                    capturas (ver assets/img/LEEME.txt)
 ├── _archivo/                     versiones sustituidas y fuente histórica (regla 10)
 │   ├── framework-area-digital-v03.html           versión anterior de la página
 │   └── framework-area-digital-v03-detallado.md   texto original, puntos 1—85
@@ -50,6 +51,112 @@ resuelve la cascada. Si agregas uno, ponlo en la posición que le corresponda y 
 
 ---
 
+---
+
+## Las tres superficies
+
+El documento es claro. El negro es puntuación, no fondo: se reserva para el hero, tres
+momentos de énfasis (`control`, `ia`, `futuro`) y el cierre. Todo lo demás alterna papel y
+blanco, que es lo que da ritmo sin cambiar el peso de la página.
+
+| Clase | Fondo | Tarjetas | Cuándo |
+|---|---|---|---|
+| `section-light` | papel | blancas | el paso por defecto |
+| `section-plain` | blanco | papel | el paso alterno, para que dos secciones seguidas no se fundan |
+| `section-dark` | tinta | tinta | solo énfasis: úsalo y ya llevas cinco en todo el documento |
+
+**Voltear una sección es cambiarle la clase, nada más.** Cada superficie redeclara los mismos
+tokens (`--surface`, `--fg`, `--line`, `--chip-bg`, `--eyebrow-fg`…), así que ningún componente
+de adentro necesita saber dónde está. Si un componente nuevo se ve mal al voltear la sección,
+el error es que tiene un color fijo: cámbialo por el token y se arregla en las tres.
+
+Las clases `card-light` y `panel-light` solo hacen algo dentro de una sección oscura, donde
+significan «isla clara». En una sección clara son un no-op.
+
+## Una sección, un capítulo
+
+**La regla que mantiene el documento legible.** Antes había hasta seis capítulos metidos en un
+solo bloque de scroll y por eso se sentía denso: no sobraba información, sobraba jerarquía
+plana. Hoy cada capítulo con su propio `<h2>` es un `<section>`.
+
+Al agregar un capítulo, agrégalo como sección, no como `<div class="divider">` dentro de otra:
+
+```html
+<section class="section-plain" id="mi-capitulo" aria-labelledby="mi-capitulo-title">
+  <div class="wrap">
+    <div class="section-heading" data-reveal>
+      <div>
+        <p class="eyebrow"><span>NN</span></p>
+        <h2 id="mi-capitulo-title">Título del capítulo</h2>
+        <p class="claim">La frase que lo resume <em>en una línea.</em></p>
+      </div>
+      <p>El párrafo que acompaña al título.</p>
+    </div>
+    …
+  </div>
+</section>
+```
+
+Alterna `section-light` / `section-plain` respecto a la vecina. `divider` se sigue usando, pero
+solo para separar bloques *dentro* de un capítulo.
+
+Si una sección pasa de ~450 palabras, probablemente son dos capítulos.
+
+## Los componentes de composición
+
+| Componente | Para qué | Regla |
+|---|---|---|
+| `.bento` | rejilla de seis columnas con celdas de peso distinto | combina `b-2` (tercio), `b-3` (mitad), `b-4` (dos tercios), `b-6` (ancho completo); `b-tall` ocupa dos filas |
+| `.stats` + `.stat` | cifras que se leen de lejos | el número manda, la etiqueta explica; `stat-accent` para una sola |
+| `.numbers` + `.num` | secuencias de 3 a 5 pasos | el número es lo que comunica que hay un orden |
+| `.card-accent` / `.card-ink` | destacar una celda | **una por rejilla**: si hay dos, ya no destaca ninguna |
+| `.visual` | respiro visual donde no hay nada que capturar | variantes `visual-b` y `visual-c` para que no se repita la misma mancha |
+| `.showcase` + `.pin` | captura real con etiquetas encima | sin la etiqueta, la captura es decoración |
+
+## Recursos: el puente con lo que ya existe
+
+Cada punto que tiene un archivo real detrás (un repo, una plantilla, un presupuesto, un
+tablero) se enlaza desde `FD.RECURSOS`, en `contenido.js`. Es lo que evita que el framework se
+lea como teoría.
+
+En el HTML basta con dejar el contenedor vacío; la lista lo llena sola:
+
+```html
+<div class="recursos" data-recursos="sistema"></div>
+```
+
+```js
+{k:"Repositorio", t:"Estructura maestra de cuenta",
+ d:"Las once carpetas, listas para duplicar por cliente",
+ href:"", i:"i-file", img:""}
+```
+
+- **`href` vacío significa pendiente**, y se pinta como tal: marco punteado y la etiqueta
+  «por enlazar». Esa es la gracia. Un recurso que no existe todavía tiene que verse, no
+  desaparecer: si desaparece, nadie se acuerda de conectarlo.
+- **Llenar un pendiente es pegar el enlace en `href`.** Nada más: ni HTML ni CSS.
+- `i` es un ícono del sprite del `<head>` (`i-file`, `i-list`, `i-code`, `i-shield`…).
+- `img` es opcional y reemplaza al ícono por una miniatura.
+
+## Imágenes
+
+Van en `assets/img/`, en `kebab-case` y con nombre que diga qué son. Máximo 1600px de ancho y
+sin datos de cliente visibles.
+
+Los huecos de captura (`.showcase.is-pendiente`) siguen el mismo criterio que los recursos
+pendientes: declaran qué imagen falta en vez de dejar la sección sin apoyo visual. Cuando
+llegue la captura, se le mete el `<img>` y se le quita la clase `is-pendiente`:
+
+```html
+<figure class="showcase sep-lg" data-reveal>
+  <img src="assets/img/nomenclatura-tabla.png" alt="Describe qué muestra la captura.">
+  <span class="pin pin-accent pin-tl">Lo que hay que mirar</span>
+  <figcaption>Qué es y de dónde salió.</figcaption>
+</figure>
+```
+
+---
+
 ## Dónde cambiar qué
 
 | Quiero cambiar… | Voy a… |
@@ -60,6 +167,9 @@ resuelve la cascada. Si agregas uno, ponlo en la posición que le corresponda y 
 | Las personas o las cuentas del tablero | `assets/js/contenido.js`, bloque `FD.CUENTAS` |
 | Lo que se pide para aceptar una solicitud | `assets/js/contenido.js`, bloque `FD.SOLICITUDES` |
 | Cualquier otro texto de la página | `index.html`, en la sección correspondiente |
+| Un enlace a un archivo real (repo, plantilla, presupuesto) | `assets/js/contenido.js`, bloque `FD.RECURSOS` |
+| El fondo de una sección | la clase del `<section>`: `section-light`, `section-plain` o `section-dark` |
+| Una captura | `assets/img/`, y la ruta en el `<img>` o en el campo `img` del recurso |
 | Un diagrama de flujo | `index.html`, dentro del `<figure class="flow">` |
 | El aspecto de los diagramas | `assets/css/04-diagramas.css` |
 | Cómo se comporta la calculadora o el constructor | `assets/js/herramientas.js` |
@@ -106,8 +216,9 @@ y ajustes de un diagrama.
 ## Cómo agregar una sección
 
 1. Copia el bloque de una sección existente en `index.html` (desde `<section` hasta `</section>`).
-2. Cámbiale el `id`, el `aria-labelledby` y alterna la clase `section-dark` / `section-light`
-   respecto a la sección vecina.
+2. Cámbiale el `id`, el `aria-labelledby` y alterna `section-light` / `section-plain`
+   respecto a la sección vecina. `section-dark` solo si de verdad es un momento de énfasis:
+   ver <b>Las tres superficies</b>.
 3. Agrega el enlace en `<nav id="mainnav">`. El resaltado activo del menú es automático: el JS
    observa cualquier sección que esté enlazada desde ahí.
 4. Marca con `data-reveal` los bloques que deban aparecer al hacer scroll.

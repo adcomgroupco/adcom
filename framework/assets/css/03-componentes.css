@@ -471,6 +471,16 @@ a.recurso:hover .recurso-go{transform:translate(3px,-3px)}
 .pin-br{bottom:14px;right:14px}
 @media (max-width:640px){.pin{position:static;max-width:none;margin:8px 8px 0;box-shadow:none}}
 
+/* ---------- hueco de captura ----------
+   Mismo criterio que .recurso.is-pendiente: el hueco se declara en vez de
+   desaparecer. El marco lleva el visual abstracto de fondo, asi que la
+   pagina no se ve rota mientras llega la imagen real; el pie dice que
+   captura va ahi. Cuando llegue, se le mete un <img> y se quita la clase. */
+.showcase.is-pendiente{border-style:dashed;min-height:260px;display:grid;grid-template-rows:1fr auto}
+.showcase.is-pendiente .showcase-hueco{position:relative;overflow:hidden}
+.showcase.is-pendiente figcaption{display:flex;align-items:center;gap:10px;font-style:italic}
+.showcase.is-pendiente figcaption::before{content:"";flex:0 0 8px;height:8px;border-radius:2px;background:var(--accent-ink)}
+
 /* ---------- utilidades de separación ----------
    Reemplazan los margin-top que antes se repetían inline en index.html.
    El selector va duplicado (.sep.sep) a propósito: así gana sobre reglas de
