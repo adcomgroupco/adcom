@@ -102,6 +102,22 @@ solo para separar bloques *dentro* de un capítulo.
 
 Si una sección pasa de ~450 palabras, probablemente son dos capítulos.
 
+### El `<em>` es un bloque, no un subrayado
+
+Sobre fondo claro, `<em>` pinta un **rectángulo amarillo lleno** detrás de las palabras: es la
+marca de la casa y se usa una vez por encabezado, en el `claim` o en el `h1`. Sobre fondo oscuro
+el mismo `<em>` se resuelve como texto amarillo, porque un bloque relleno sobre tinta pesa
+demasiado. No hace falta hacer nada: es el mismo marcado en las tres superficies.
+
+Dos cosas que lo arruinan: meter `<em>` en un párrafo de cuerpo (el bloque grita y el párrafo no
+tiene por qué gritar) y marcar más de una frase por encabezado.
+
+### El encabezado apilado arranca a la izquierda
+
+`es-apilado` limita el ancho a 880px y **se alinea con la rejilla que viene abajo**, no con el
+centro del `wrap`. Si lo centras, el título deja de coincidir con la primera columna del
+contenido y la sección se lee torcida aunque todo lo demás esté bien.
+
 ## Los componentes de composición
 
 | Componente | Para qué | Regla |
@@ -116,6 +132,56 @@ Si una sección pasa de ~450 palabras, probablemente son dos capítulos.
 | `.steps-h` | secuencia conectada por una línea | el diagrama más barato que existe; `.es-clave` marca el paso que pesa |
 | `.display` | una frase a tamaño de portada | nunca dos seguidas, nunca más de doce palabras |
 | `.stat-badge` | distintivo en la esquina de una cifra | marca cuál de las cifras es la que importa |
+
+## La celda que pesa
+
+**Cada rejilla necesita una celda que mande.** Sin eso, seis tarjetas blancas en fila se leen
+como un parrafo largo cortado en cajas: la vista no sabe por donde entrar. La regla es una sola
+marca por rejilla y hay dos:
+
+| Marca | Que significa | Ejemplo |
+|---|---|---|
+| `card-accent` | **la regla** — lo que hay que hacer | «El KPI se elige antes de lanzar» |
+| `card-ink` | **el limite** — lo que no | «Cinco cosas que no se firman sin leerlas» |
+
+Tres cosas que hay que respetar:
+
+- **Una por rejilla.** Si marcas dos, no destaca ninguna y ademas la rejilla queda con dos
+  manchas de color peleandose.
+- **Si las celdas son pares de verdad, no marques ninguna.** Las tres severidades (S1/S2/S3) ya
+  tienen su propio semaforo en el borde y las tres familias de procesos son A, B y C: meterles
+  una celda amarilla encima seria decoracion, no jerarquia. Cuando una fila de pares se ve
+  monotona, lo que hay que cambiar es la forma de la rejilla, no el color de una celda.
+- **Una celda marcada no puede quedar con mas de ~20% de alto vacio.** El vacio que en una
+  tarjeta blanca no se nota, en un bloque amarillo o negro es un agujero. Si la celda marcada es
+  la corta del par, no la despintes: pasala a `bento` y dale un tercio (`b-2` contra `b-4`). Al
+  angostarse crece de alto y el hueco se cierra solo, y de paso la rejilla gana la jerarquia de
+  anchos que no tenia. El 20% es medible: compara el alto del contenido contra el alto de la
+  celda mas alta de esa fila.
+- **Sobre tinta, `card-ink` no marca nada** y degrada a tarjeta normal a proposito: no hay nada
+  mas oscuro que el fondo. En una seccion oscura el limite lo marca lo que ya tiene color propio
+  —la viñeta roja de `list-cross`, la cita amarilla—, no un bloque negro sobre negro.
+
+`card-light` significa «isla clara» y solo hace algo dentro de una seccion oscura, asi que esta
+escrito para perder contra `card-accent` y `card-ink`: una celda marcada se queda marcada en
+cualquier superficie.
+
+**Una celda marcada es una superficie, no una tarjeta pintada.** Igual que `section-dark`,
+`card-accent` y `card-ink` redeclaran los mismos tokens que consultan sus hijos, asi que la
+viñeta, la pastilla, la cita y la etiqueta se resuelven solas al caer dentro. Si te ves
+escribiendo `.card-accent .loquesea{color:…}`, para: lo que falta es un token, no una regla.
+
+## Las listas largas se densifican solas
+
+De ocho items en adelante una nube de pastillas deja de leerse y pasa a lista en columnas. El
+umbral vive en `FD.DENSA` (`base.js`) y se aplica por dos caminos que dan el mismo resultado:
+`FD.chips` lo mide cuando pinta una lista desde `contenido.js`, y `FD.densificar()` recorre al
+arrancar las que estan escritas a mano en `index.html`.
+
+Las listas del marcado llevan `chips-densa` escrito **como respaldo para cuando no hay
+JavaScript**; con JS, `FD.densificar()` lo recalcula y manda el umbral. Por eso no hace falta
+acordarse de ponerlo ni de quitarlo: si le agregas o le quitas items a una lista, la clase se
+corrige sola al cargar. Lo unico que no hay que hacer es cambiar el umbral en un solo lado.
 
 ## Que no todas las secciones abran igual
 
@@ -285,6 +351,12 @@ punteada), `fl-dec` (rombo de decisión), `fl-band` (contenedor), `fl-line` / `f
 `fl-line-no` / `fl-line-loop` (conexiones), `fl-t` / `fl-t-b` / `fl-t-sm` / `fl-t-key` / `fl-t-code`
 (textos), `fl-edge` / `fl-edge-yes` / `fl-edge-no` (etiquetas de flecha).
 
+**El diagrama usa el mismo lenguaje que las tarjetas.** El marco (`.flow`) es el lienzo de papel y
+las cajas son blancas encima, no al revés: por eso un nodo se lee como una tarjeta chica y no como
+un wireframe. `fl-box` y `fl-box-key` fijan su propio `rx` desde el CSS, así que el `rx="10"` del
+marcado es indiferente — está en la plantilla solo para que el SVG se vea bien sin hoja de estilo.
+`fl-box-key` es amarillo lleno y **va una vez por diagrama**: es el nodo que cierra el flujo.
+
 Tres cosas que hay que respetar:
 
 - **El `id` del marcador debe ser único en toda la página.** Por eso llevan sufijo (`fa-87a`, `fa-89`).
@@ -398,6 +470,24 @@ funciona igual, con la tipografía de respaldo del sistema.
 
 **Los acentos de los diagramas usan `var(--accent-ink)`**, no el amarillo fijo: así el mismo diagrama
 se lee tanto en una sección oscura como en una clara.
+
+## Cuándo va el color de marca y cuándo va el token
+
+Esta es la regla que más veces se rompió sola, y siempre por el mismo motivo: el amarillo, el
+verde, el naranja y el rojo de la paleta están calibrados **para leerse sobre tinta**. Puestos
+como texto sobre papel se lavan. El amarillo sobre blanco da 1.4 de contraste; el verde, 1.9.
+
+| Si el color es… | Usa | Por qué |
+|---|---|---|
+| **texto** o una marca chica (viñeta, etiqueta, numerito) | `--accent-ink`, `--ok`, `--warn`, `--bad` | cada superficie los resuelve: sobre tinta son el color de marca, sobre papel bajan a una versión legible |
+| **relleno** (una pastilla, una insignia, una celda destacada) | `--yellow`, `--green`, `--orange`, `--red` | el color es el fondo y el texto encima ya se resuelve aparte |
+| **borde grueso** (el semáforo de severidad, la barra de un aviso) | `--green`, `--orange`, `--red` | 3–5px de color puro se leen bien sobre cualquier fondo |
+
+Y hay una consecuencia que es fácil de pasar por alto: **un componente que fija un color literal
+—`#e4e4e1`, `var(--ink)`, `#fff9d6`— se rompe en cuanto alguien lo mete en una superficie
+distinta.** La tabla llevaba `color:var(--ink)` en el `td` y vivió meses ilegible dentro de la
+única sección oscura que tiene una, además escondida en un `details` cerrado. Si escribes un
+color fijo en un componente, estás decidiendo por él en qué superficie puede vivir.
 
 ---
 

@@ -16,18 +16,26 @@
   --green:#55c98a;
   --orange:#ff8a3d;
   --red:#ff4d4d;
+  /* Los tres de arriba estan calibrados para leerse sobre tinta. Puestos como
+     texto sobre papel se lavan (el verde daba 1.9 de contraste, el naranja 2.4),
+     asi que la version legible sobre claro es otra y cada superficie elige.
+     Usa --ok / --warn / --bad siempre que el color sea texto o una marca chica;
+     --green / --orange / --red quedan para rellenos y bordes gruesos. */
+  --ok:#1f7a4a;
+  --warn:#a85400;
+  --bad:#c62f2f;
   --blue:#315cff;
   --line-dark:rgba(255,255,255,.14);
   --line-light:rgba(5,5,5,.10);
   --muted-dark:#a8a8a8;
   --muted-light:#5d5d5d;
-  --radius:28px;
-  --radius-sm:14px;
-  --radius-md:20px;
+  --radius:24px;
+  --radius-sm:12px;
+  --radius-md:18px;
   --max:1360px;
   --shadow:0 28px 80px rgba(0,0,0,.16);
   /* elevación de tarjeta clara: casi imperceptible, solo despega del canvas */
-  --shadow-card:0 1px 2px rgba(5,5,5,.04),0 12px 32px rgba(5,5,5,.05);
+  --shadow-card:0 1px 2px rgba(5,5,5,.03);
   /* escala de espacio: cinco pasos, los mismos que usan las utilidades .sep-* */
   --sp-1:8px; --sp-2:12px; --sp-3:16px; --sp-4:24px; --sp-5:40px;
   /* color de acento por defecto: las secciones lo redeclaran según su fondo */
@@ -57,26 +65,29 @@ h1,h2,h3,h4,p{text-wrap:pretty}
 .wrap{max-width:var(--max);margin:0 auto}
 /* que las anclas no queden debajo del header fijo */
 section[id],[id].divider,h3[id],h2[id]{scroll-margin-top:96px}
-.section-dark,.section-light,.section-plain{padding:clamp(88px,10vw,168px) clamp(20px,5vw,72px)}
+.section-dark,.section-light,.section-plain{padding:clamp(76px,8vw,136px) clamp(20px,5vw,72px)}
 
 /* ---------- los tres niveles de superficie ----------
    El ritmo del documento se arma alternando papel y blanco; la tinta se
    reserva para el hero, los momentos de énfasis y el cierre. Cada nivel
    redeclara los mismos tokens, así que voltear una sección es cambiarle
    la clase: ningún componente de adentro necesita saber dónde está. */
-.section-dark,.iface,.avoid,.split>div:nth-child(2){
+.section-dark,.iface,.avoid,.tree,.split>div:nth-child(2){
   --fg:var(--white);--fg-muted:var(--muted-dark);
   --chip-bg:#222;--chip-bd:transparent;--chip-fg:#dcdcdc;
   --line:var(--line-dark);--surface:var(--ink-card);--surface-2:#1c1c1c;
   --accent-ink:var(--yellow);--eyebrow-fg:var(--yellow);
+  --ok:var(--green);--warn:var(--orange);--bad:var(--red);
+  --row-hover:rgba(255,212,0,.1);
   --elev:none;
   --quote-bg:linear-gradient(120deg,rgba(255,212,0,.1),transparent);--quote-bd:rgba(255,212,0,.42);
 }
 .section-light,.section-plain{
   --fg:var(--ink);--fg-muted:var(--muted-light);
   --chip-bd:var(--line-light);--chip-fg:var(--muted-light);
-  --line:var(--line-light);
+  --line:rgba(5,5,5,.075);
   --accent-ink:#8a7500;--eyebrow-fg:var(--ink);
+  --row-hover:var(--yellow-wash);
   --elev:var(--shadow-card);
   --quote-bd:rgba(5,5,5,.14);
 }
@@ -87,7 +98,7 @@ section[id],[id].divider,h3[id],h2[id]{scroll-margin-top:96px}
 .section-dark{background:var(--ink);color:var(--white)}
 .section-light{background:var(--paper);color:var(--ink)}
 .section-plain{background:var(--white);color:var(--ink)}
-.iface,.avoid,.split>div:nth-child(2){color:var(--white)}
+.iface,.avoid,.tree,.split>div:nth-child(2){color:var(--white)}
 
 .eyebrow{margin:0 0 22px;display:flex;flex-wrap:wrap;align-items:center;gap:14px;color:var(--eyebrow-fg,var(--yellow));font-size:.74rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase}
 .eyebrow span:first-child{border:1px solid currentColor;border-radius:999px;padding:8px 15px}
@@ -97,18 +108,20 @@ section[id],[id].divider,h3[id],h2[id]{scroll-margin-top:96px}
 .eyebrow .ico{margin-right:-5px}
 
 em{font-style:normal;color:var(--yellow)}
-.section-light em,.section-plain em{color:var(--ink);background:linear-gradient(transparent 62%,var(--yellow) 62%)}
+.section-light em,.section-plain em{color:var(--ink);background:var(--yellow);
+  padding:.04em .26em;margin:0 -.04em;border-radius:.22em;
+  -webkit-box-decoration-break:clone;box-decoration-break:clone}
 .iface em,.avoid em{background:none;color:var(--yellow)}
 
 /* ---------- jerarquía de encabezado ----------
    Una sección tiene un título grande y una sola frase que lo sostiene.
    Todo lo demás es detalle y va dentro de un componente, no suelto. */
-.section-heading{display:grid;grid-template-columns:minmax(320px,1fr) minmax(300px,.72fr);gap:clamp(28px,5vw,80px);align-items:end;margin:0 auto clamp(48px,6vw,76px)}
-.section-heading h2{margin:0;font-size:clamp(2rem,3.6vw,3.4rem);line-height:1;letter-spacing:-.045em;font-weight:800}
+.section-heading{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.6fr);gap:clamp(28px,5vw,72px);align-items:end;margin:0 auto clamp(40px,4.6vw,66px)}
+.section-heading h2{margin:0;font-size:clamp(2.4rem,5.2vw,4.7rem);line-height:.9;letter-spacing:-.055em;font-weight:800;text-wrap:balance}
 .section-heading>p{margin:0;max-width:560px;color:var(--fg-muted);font-size:1.02rem}
 /* la frase de cada sección: acompaña al título, no lo reemplaza */
-.claim{margin:14px 0 0;max-width:34ch;font-size:clamp(1.05rem,1.6vw,1.4rem);line-height:1.18;letter-spacing:-.02em;font-weight:800}
-.sub-heading{margin:0 0 24px;font-size:clamp(1.4rem,2.2vw,2rem);line-height:1.04;letter-spacing:-.035em;font-weight:800}
+.claim{margin:20px 0 0;max-width:32ch;font-size:clamp(1.12rem,1.85vw,1.6rem);line-height:1.32;letter-spacing:-.025em;font-weight:800;text-wrap:balance}
+.sub-heading{margin:0 0 24px;font-size:clamp(1.6rem,2.8vw,2.5rem);line-height:1;letter-spacing:-.045em;font-weight:800}
 .lead{max-width:720px;color:var(--fg-muted);font-size:1.05rem}
 .divider{max-width:var(--max);margin:clamp(72px,8vw,120px) auto 0;padding-top:clamp(60px,7vw,100px);border-top:1px solid var(--line)}
 .tag{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:999px;border:1px solid var(--line);color:var(--fg-muted);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}

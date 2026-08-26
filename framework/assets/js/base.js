@@ -12,10 +12,23 @@ window.FD = window.FD || {};
   FD.$  = function(s,c){return (c||document).querySelector(s)};
   FD.$$ = function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
 
+  /* El umbral de densidad vive en un solo lugar: de 8 items en adelante una nube
+     de pastillas deja de leerse y funciona mejor como lista en columnas. */
+  FD.DENSA = 7;
+
+  /* Las listas escritas a mano en el HTML tienen que seguir el mismo criterio que
+     las que arma el JS; si no, media pagina densifica y la otra media no. */
+  FD.densificar = function(raiz){
+    /* Las que llena el JS estan vacias en este momento y quedan en no-densa;
+       FD.chips las vuelve a medir cuando las pinta, asi que no hay conflicto. */
+    FD.$$("ul.chips", raiz || document).forEach(function(ul){
+      ul.classList.toggle("chips-densa", ul.children.length > FD.DENSA);
+    });
+  };
+
   /* pinta una lista de textos como chips, con entrada escalonada */
   FD.chips = function(ul, arr){
-    /* de 8 items en adelante se lee mejor como lista en columnas que como nube */
-    ul.classList.toggle("chips-densa", arr.length > 7);
+    ul.classList.toggle("chips-densa", arr.length > FD.DENSA);
     ul.innerHTML = "";
     arr.forEach(function(t,i){
       var li = document.createElement("li");

@@ -8,6 +8,11 @@
   var FD = window.FD, $ = FD.$, $$ = FD.$$;
   var fillChips = FD.chips, fillList = FD.lista;
 
+  /* ---------- densidad de las listas escritas a mano ----------
+     Se corre una vez al arrancar: las nubes de mas de siete pastillas pasan a
+     lista en columnas, igual que las que pinta FD.chips. */
+  FD.densificar();
+
   /* ---------- scroll progress y color del header ----------
      El header nace oscuro sobre el hero y se aclara al entrar al documento:
      una barra negra fija sobre un documento claro pesa de mas. */

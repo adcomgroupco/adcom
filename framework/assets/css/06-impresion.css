@@ -75,6 +75,8 @@ body{
   color:#000 !important;background:none !important;border-color:#666 !important;
 }
 em{font-weight:800}
+/* el nodo clave del diagrama es amarillo lleno en pantalla; en papel, marco grueso */
+.fl-box-key{fill:#fff !important;stroke:#000 !important;stroke-width:2 !important}
 
 .card,.roadmap-card,.alert-card,.panel,.quote,.table-wrap,.flow{
   border:1px solid #bbb !important;
