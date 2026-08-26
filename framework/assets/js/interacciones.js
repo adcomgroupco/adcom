@@ -394,7 +394,7 @@
         img.src = r.img; img.alt = ""; img.loading = "lazy";
         thumb.appendChild(img);
       } else {
-        thumb.innerHTML = '<svg aria-hidden="true"><use href="#' + (r.i || "i-file") + '"></use></svg>';
+        thumb.innerHTML = '<svg class="ico" aria-hidden="true"><use href="#' + (r.i || "i-file") + '"></use></svg>';
       }
 
       var body = document.createElement("span");

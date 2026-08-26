@@ -47,7 +47,10 @@ ul.chips.chips-densa li::before{content:"";position:absolute;left:0;top:.5em;wid
 .pillar{position:relative;min-height:210px;display:flex;flex-direction:column;justify-content:space-between;gap:18px;padding:22px;text-align:left;border-radius:24px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;appearance:none;transition:transform .22s ease,background .22s ease,border-color .22s ease,color .22s ease;box-shadow:var(--elev,none)}
 .pillar:hover{transform:translateY(-5px);border-color:var(--yellow)}
 .pillar.is-active{background:var(--yellow);border-color:var(--yellow);color:var(--ink)}
-.pillar span{font-size:.7rem;font-weight:900;letter-spacing:.14em;color:var(--yellow)}
+.pillar span{font-size:.7rem;font-weight:900;letter-spacing:.14em;color:var(--accent-ink)}
+/* el icono va a la esquina, como distintivo: no compite con el numero */
+.pillar .ico{position:absolute;top:20px;right:20px;color:var(--accent-ink);opacity:.9}
+.pillar.is-active .ico{color:var(--ink);opacity:.6}
 .pillar.is-active span{color:rgba(5,5,5,.55)}
 .pillar-txt{display:block}
 .pillar strong{display:block;min-height:2.2em;font-size:1.22rem;line-height:1.1;letter-spacing:-.03em}
@@ -89,7 +92,15 @@ ul.chips.chips-densa li::before{content:"";position:absolute;left:0;top:.5em;wid
 .rail i{display:block;height:100%;width:10%;background:var(--yellow);transition:width .35s cubic-bezier(.22,1,.36,1)}
 
 /* ---------- iconografía ---------- */
-.ico{width:24px;height:24px;stroke:currentColor;stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round;display:block}
+/* ---------- iconos ----------
+   Un solo trazo para todo el documento: reticula de 24, grosor 1.5, puntas
+   redondas y color heredado. Si un icono necesita su propio grosor o su
+   propio color, esta mal dibujado, no mal configurado.
+   La escala son cuatro pasos; no inventes tamanos intermedios con style=. */
+.ico{width:24px;height:24px;stroke:currentColor;stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round;display:block;flex:0 0 auto}
+.ico-sm{width:18px;height:18px}
+.ico-lg{width:32px;height:32px;stroke-width:1.4}
+.ico-xl{width:44px;height:44px;stroke-width:1.25}
 
 /* ---------- fases ilustradas (procesos explicados) ---------- */
 .phases{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.6vw,20px)}
@@ -428,7 +439,7 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;paddin
 a.recurso:hover{transform:translateY(-3px);border-color:rgba(255,212,0,.6)}
 .recurso-thumb{flex:0 0 56px;height:56px;border-radius:14px;background:var(--surface-2);display:grid;place-items:center;overflow:hidden;position:relative}
 .recurso-thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.recurso-thumb svg{width:24px;height:24px;stroke:var(--accent-ink);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.recurso-thumb .ico{color:var(--accent-ink)}
 .recurso-body{min-width:0;flex:1}
 .recurso-body b{display:block;font-size:.94rem;letter-spacing:-.01em;line-height:1.25}
 .recurso-body small{display:block;margin-top:3px;color:var(--fg-muted);font-size:.78rem;line-height:1.35}
@@ -480,6 +491,92 @@ a.recurso:hover .recurso-go{transform:translate(3px,-3px)}
 .showcase.is-pendiente .showcase-hueco{position:relative;overflow:hidden}
 .showcase.is-pendiente figcaption{display:flex;align-items:center;gap:10px;font-style:italic}
 .showcase.is-pendiente figcaption::before{content:"";flex:0 0 8px;height:8px;border-radius:2px;background:var(--accent-ink)}
+
+
+/* ============================================================
+   COMPOSICION
+   Cuarenta secciones que abren todas igual se leen como una sola.
+   Estas variantes existen para romper eso. Se aplican al <section>
+   o al encabezado, no cambian el contenido.
+   ============================================================ */
+
+/* ---------- variantes de encabezado ----------
+   Por defecto el encabezado es una rejilla de dos: titulo a la izquierda,
+   parrafo a la derecha. Estas tres son las alternativas. Usa una cada
+   tres o cuatro secciones; si las usas todo el tiempo, vuelves a tener
+   una sola forma, solo que otra. */
+.section-heading.es-centro{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center;max-width:860px;margin-inline:auto}
+.section-heading.es-centro>p{max-width:62ch;text-align:center}
+.section-heading.es-centro .claim{max-width:26ch;margin-inline:auto}
+.section-heading.es-centro .eyebrow{justify-content:center}
+
+/* titulo y parrafo apilados a la izquierda: deja el ancho completo libre
+   para lo que venga abajo, que es lo que necesita una tabla o un bento */
+.section-heading.es-apilado{grid-template-columns:minmax(0,1fr);gap:18px;align-items:start;max-width:760px}
+
+/* el titulo al final, como en la ref2: primero se ve, despues se nombra.
+   Solo para secciones donde lo de arriba se entiende sin titulo. */
+.wrap-titulo-abajo{display:flex;flex-direction:column}
+.wrap-titulo-abajo>.section-heading{order:9;margin:clamp(40px,5vw,72px) 0 0;padding-top:clamp(36px,4vw,56px);border-top:1px solid var(--line);align-items:start}
+
+/* ---------- declaracion ----------
+   El recurso de la ref2: una frase a tamano de portada, sola, ocupando
+   la pantalla. Sirve para cerrar un bloque o para abrir uno nuevo.
+   Nunca dos seguidas y nunca mas de doce palabras. */
+.display{margin:0;font-size:clamp(2.2rem,6.4vw,5rem);line-height:.94;letter-spacing:-.05em;font-weight:800;max-width:18ch}
+.display-centro{margin-inline:auto;text-align:center;max-width:22ch}
+.display small{display:block;margin-top:clamp(20px,2.4vw,30px);max-width:52ch;font-size:clamp(.94rem,1.2vw,1.06rem);font-weight:500;line-height:1.5;letter-spacing:0;color:var(--fg-muted)}
+.display-centro small{margin-inline:auto}
+
+/* ---------- cifra con distintivo ----------
+   La cifra de la ref1 lleva un distintivo en la esquina. No es adorno:
+   marca cual de las cifras es la que importa. */
+.stat{position:relative}
+.stat-badge{position:absolute;top:16px;right:16px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--yellow);font-size:.72rem;font-weight:900}
+.stat-accent .stat-badge{background:var(--ink);color:var(--yellow)}
+.stat-ink .stat-badge{background:var(--yellow);color:var(--ink)}
+.stat .ico{margin-bottom:16px;color:var(--accent-ink)}
+
+/* ---------- fila de iconos ----------
+   Cuatro o cinco conceptos que se enumeran, no se explican. Si cada uno
+   necesita un parrafo, esto no es lo que va: es un bento. */
+.iconrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.iconcell{display:flex;flex-direction:column;gap:12px;padding:22px;border-radius:var(--radius-md);border:1px solid var(--line);background:var(--surface);box-shadow:var(--elev,none)}
+.iconcell .ico{color:var(--accent-ink)}
+.iconcell b{font-size:.92rem;letter-spacing:-.01em;line-height:1.25}
+.iconcell span{color:var(--fg-muted);font-size:.8rem;line-height:1.35}
+.iconcell-accent{background:var(--yellow);border-color:var(--yellow);color:var(--ink)}
+.iconcell-accent .ico{color:var(--ink)}
+.iconcell-accent span{color:rgba(5,5,5,.7)}
+.iconcell-ink{background:var(--ink);border-color:var(--ink);color:var(--white)}
+.iconcell-ink .ico{color:var(--yellow)}
+.iconcell-ink span{color:var(--muted-dark)}
+
+/* ---------- secuencia horizontal ----------
+   Pasos conectados por una linea. Es el diagrama mas barato que existe y
+   dice mas que tres tarjetas sueltas. */
+.steps-h{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:0;align-items:start}
+.steps-h>li{position:relative;list-style:none;padding:0 16px;text-align:center}
+.steps-h>li::before{content:"";position:absolute;top:21px;left:-50%;width:100%;height:2px;background:var(--line)}
+.steps-h>li:first-child::before{display:none}
+.steps-h .paso-n{position:relative;z-index:1;width:44px;height:44px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:2px solid var(--line);font-weight:900;font-size:.86rem}
+.steps-h li.es-clave .paso-n{background:var(--yellow);border-color:var(--yellow);color:var(--ink)}
+.steps-h b{display:block;font-size:.9rem;letter-spacing:-.01em}
+.steps-h span{display:block;margin-top:5px;color:var(--fg-muted);font-size:.78rem;line-height:1.35}
+@media (max-width:760px){
+  .steps-h{grid-auto-flow:row;gap:16px}
+  .steps-h>li{text-align:left;display:grid;grid-template-columns:44px 1fr;gap:14px;padding:0}
+  .steps-h>li::before{top:44px;left:21px;width:2px;height:100%}
+  .steps-h .paso-n{margin:0}
+}
+
+/* ---------- bloque tipografico ----------
+   La celda del bento que no lleva texto: un signo grande que ancla la
+   rejilla. Es el recurso del ampersand de la ref1. */
+.marca{display:grid;place-items:center;padding:26px;border-radius:var(--radius);background:var(--ink);color:var(--yellow);min-height:180px;overflow:hidden}
+.marca span{font-size:clamp(4rem,11vw,8.5rem);line-height:.8;font-weight:800;letter-spacing:-.06em}
+.marca-accent{background:var(--yellow);color:var(--ink)}
+.marca .ico{width:clamp(56px,9vw,92px);height:clamp(56px,9vw,92px);stroke-width:1.1}
 
 /* ---------- utilidades de separación ----------
    Reemplazan los margin-top que antes se repetían inline en index.html.

@@ -112,6 +112,44 @@ Si una sección pasa de ~450 palabras, probablemente son dos capítulos.
 | `.card-accent` / `.card-ink` | destacar una celda | **una por rejilla**: si hay dos, ya no destaca ninguna |
 | `.visual` | respiro visual donde no hay nada que capturar | variantes `visual-b` y `visual-c` para que no se repita la misma mancha |
 | `.showcase` + `.pin` | captura real con etiquetas encima | sin la etiqueta, la captura es decoración |
+| `.iconrow` + `.iconcell` | cuatro o cinco conceptos que se enumeran | si cada uno necesita un párrafo, va un bento |
+| `.steps-h` | secuencia conectada por una línea | el diagrama más barato que existe; `.es-clave` marca el paso que pesa |
+| `.display` | una frase a tamaño de portada | nunca dos seguidas, nunca más de doce palabras |
+| `.marca` | celda del bento sin texto: un signo o un icono grande | ancla la rejilla cuando todo lo demás es texto |
+| `.stat-badge` | distintivo en la esquina de una cifra | marca cuál de las cifras es la que importa |
+
+## Que no todas las secciones abran igual
+
+Cuarenta secciones con la misma apertura se leen como una sola. Por eso el encabezado tiene
+tres variantes además de la normal, y **dos secciones seguidas nunca comparten forma**:
+
+| Clase | Dónde va | Cuándo |
+|---|---|---|
+| *(ninguna)* | en el `<div class="section-heading">` | título a la izquierda, párrafo a la derecha |
+| `es-apilado` | en el `section-heading` | la sección trae algo ancho (tabla, diagrama, bento) y el encabezado se aparta |
+| `es-centro` | en el `section-heading` | sección corta que funciona como bisagra entre dos bloques densos |
+| `wrap-titulo-abajo` | en el `<div class="wrap">` | el contenido se entiende sin que se lo anuncien: el título cierra en vez de abrir |
+
+Si vas a agregar una sección, mira qué forma tienen la anterior y la siguiente y usa otra.
+
+## Iconos
+
+Treinta y cinco iconos en el sprite del `<head>`, todos sobre la misma retícula de 24 y con el
+mismo trazo. **Cada sección lleva el suyo en el eyebrow**, que es lo que los hace leerse como
+sistema y no como decoración suelta.
+
+```html
+<svg class="ico ico-sm" aria-hidden="true"><use href="#i-shield"/></svg>
+```
+
+- El color y el grosor **se heredan**: nunca le pongas `fill`, `stroke` ni `stroke-width` a un
+  `<symbol>`. Si un icono necesita su propio grosor, está mal dibujado, no mal configurado.
+- La escala son cuatro pasos: `ico-sm` (18), base (24), `ico-lg` (32), `ico-xl` (44). No
+  inventes tamaños intermedios con `style=`.
+- Al dibujar uno nuevo: `viewBox="0 0 24 24"`, solo trazo, sin relleno, y que el peso visual se
+  parezca al de los que ya están. Ponlo en el sprite del `<head>`, junto a los demás.
+- Que un icono se repita entre secciones está bien si los temas están emparentados
+  (`i-route` en flujo, ruta y árbol). Que se repita por descuido, no.
 
 ## Recursos: el puente con lo que ya existe
 
