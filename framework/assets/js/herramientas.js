@@ -10,16 +10,43 @@
   /* ---------- calculadora de pacing ---------- */
   var fmt = new Intl.NumberFormat("es-CO",{maximumFractionDigits:0});
   function money(v){ return "$" + fmt.format(Math.round(v||0)); }
-  function num(id){ var v = parseFloat($(id).value); return isNaN(v) ? 0 : v; }
+  /* Acepta 20.000.000 / 20,000,000 / 20000000. Antes era parseFloat directo
+     sobre un type="number": el navegador devolvía "" con separadores de miles
+     y el panel entero se iba a $0 sin decir una palabra. */
+  function num(id){
+    var t = String($(id).value || "").trim().replace(/\s/g, "");
+    if (!t) return NaN;
+    /* la coma solo es decimal si cierra el número con 1-2 dígitos (20,5);
+       en cualquier otro caso es separador de miles (20,000,000) */
+    var comaDecimal = /,\d{1,2}$/.test(t) && (t.match(/,/g) || []).length === 1;
+    if (comaDecimal) t = t.replace(/\./g, "").replace(",", ".");
+    else t = t.replace(/,/g, "");
+    /* puntos de millar: 20.000.000, o un solo grupo de tres (1.234) */
+    if (t.split(".").length > 2 || /\.\d{3}(\D|$)/.test(t)) t = t.replace(/\./g, "");
+    if (!/^\d+(\.\d+)?$/.test(t)) return NaN;
+    var v = parseFloat(t);
+    return isNaN(v) ? NaN : v;
+  }
+
+  function num0(id){ var v = num(id); return isNaN(v) ? 0 : v; }
   var modelSel = $("#c-model"), curveField = $("#c-curve-field");
   function calc(){
-    var budget = num("#c-budget"), spent = num("#c-spent");
-    var totalDays = Math.max(num("#c-total-days"),1);
-    var days = Math.min(Math.max(num("#c-days"),0), totalDays);
+    var budget = num0("#c-budget"), spent = num0("#c-spent");
+    var totalDays = Math.max(num0("#c-total-days"),1);
+    var diasEscritos = Math.max(num0("#c-days"),0);
+    var days = Math.min(diasEscritos, totalDays);
+    /* el recorte era invisible: el campo mostraba 45 y el cálculo usaba 30 */
+    var notaDias = $("#c-days-nota");
+    if (notaDias){
+      var recortado = diasEscritos > totalDays;
+      notaDias.hidden = !recortado;
+      if (recortado) notaDias.textContent = "El periodo dura " + totalDays +
+        " días, así que el cálculo usa " + totalDays + " y no " + diasEscritos + ".";
+    }
     var planned = modelSel.value === "plan";
     curveField.hidden = !planned;
 
-    var pct = planned ? Math.min(Math.max(num("#c-curve"),0),100)/100 : (days/totalDays);
+    var pct = planned ? Math.min(Math.max(num0("#c-curve"),0),100)/100 : (days/totalDays);
     var expected = budget * pct;
     var pacing = expected > 0 ? (spent/expected)*100 : 0;
     var varAbs = spent - expected;
@@ -35,18 +62,18 @@
 
     $("#c-pacing").textContent = expected > 0 ? pacing.toFixed(1) + "%" : "—";
     $("#c-expected").textContent = money(expected);
-    $("#c-var-abs").textContent = (varAbs>=0?"+":"−") + money(Math.abs(varAbs)).replace("$","$");
+    $("#c-var-abs").textContent = (varAbs>=0?"+":"−") + money(Math.abs(varAbs));
     $("#c-var-pct").textContent = (varPct>=0?"+":"−") + Math.abs(varPct).toFixed(1) + "%";
     $("#c-left").textContent = money(left);
     $("#c-days-left").textContent = daysLeft + (daysLeft===1?" día":" días");
     $("#c-daily").textContent = money(daily);
     $("#c-required").textContent = daysLeft > 0 ? money(required) : "Periodo cerrado";
     $("#c-forecast").textContent = money(forecast);
-    $("#c-forecast-var").textContent = (forecastVar>=0?"+":"−") + money(Math.abs(forecastVar)).replace("$","$");
+    $("#c-forecast-var").textContent = (forecastVar>=0?"+":"−") + money(Math.abs(forecastVar));
 
     var state, color;
     var dev = Math.abs(pacing - 100);
-    if (expected <= 0){ state = "Sin datos"; color = "#666"; }
+    if (expected <= 0){ state = "Escribe presupuesto y días"; color = "var(--muted-dark)"; }
     else if (dev <= 5){ state = "Normal"; color = "var(--green)"; }
     else if (dev <= 15){ state = "Observación"; color = "var(--yellow)"; }
     else if (dev <= 30){ state = "Acción"; color = "var(--orange)"; }
@@ -55,10 +82,10 @@
     var label = $("#c-status-label");
     label.textContent = state + (pacing > 100 ? " · sobreconsumo" : (pacing < 100 && expected > 0 ? " · subconsumo" : ""));
     label.style.background = color;
-    label.style.color = (state === "Observación") ? "#050505" : "#050505";
+    label.style.color = "var(--ink)";
     $("#c-status").style.borderLeftColor = color;
     var meter = $("#c-meter");
-    meter.style.width = Math.min(pacing/2, 100) + "%";
+    meter.style.transform = "scaleX(" + (Math.min(pacing/2, 100)/100) + ")";
     meter.style.background = color;
   }
   $$("#calc input, #calc select").forEach(function(el){
@@ -128,16 +155,7 @@
                 "Anuncio: "+$("#out-anuncio").textContent,
                 "Documento: "+$("#out-doc").textContent,
                 "Correo: "+$("#out-mail").textContent].join("\n");
-    var ok = $("#copy-ok");
-    function flash(){ ok.classList.add("show"); setTimeout(function(){ ok.classList.remove("show"); }, 2200); }
-    if (navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(text).then(flash).catch(flash);
-    } else {
-      var ta = document.createElement("textarea");
-      ta.value = text; document.body.appendChild(ta); ta.select();
-      try { document.execCommand("copy"); } catch(e){}
-      document.body.removeChild(ta); flash();
-    }
+    FD.copiar(text, $("#copy-ok"));
   });
 
   /* ---------- combinador de variables (90) ---------- */
@@ -178,18 +196,38 @@
         return o;
       } catch(e){ return base(); }
     }
+    /* devuelve si de verdad guardó: en modo privado o sin cuota falla, y
+       antes ese fallo se tragaba en silencio dejando creer que quedó guardado */
     function guardar(){
-      try { window.localStorage.setItem(LLAVE, JSON.stringify(reparto)); } catch(e){}
+      try { window.localStorage.setItem(LLAVE, JSON.stringify(reparto)); return true; }
+      catch(e){ return false; }
+    }
+    function avisar(t){ var a = $("#board-aviso"); if (a) a.textContent = t; }
+    function nombreDe(id){
+      var p = DATA.equipo.filter(function(x){ return x.id === id; })[0];
+      return p ? p.nombre : id;
     }
     var reparto = cargar();
 
     function mover(cuenta, persona){
+      var hecho = false, ok = true;
       if (cuenta && persona && reparto[cuenta] !== persona){
         reparto[cuenta] = persona;
-        guardar();
+        ok = guardar();
+        hecho = true;
       }
       elegida = null;
-      pintar();
+      /* el foco se devuelve a la ficha movida: pintar() reconstruye el tablero
+         entero y sin esto el teclado quedaba en <body> tras cada movimiento */
+      pintar(hecho ? cuenta : null);
+      if (hecho){
+        var carga = DATA.cuentas.reduce(function(a,c){
+          return a + (reparto[c.n] === persona ? (c.c || 0) : 0); }, 0);
+        var cuantas = DATA.cuentas.filter(function(c){ return reparto[c.n] === persona; }).length;
+        avisar(cuenta + " asignada a " + nombreDe(persona) + ". " + nombreDe(persona) + ": " +
+               cuantas + (cuantas === 1 ? " cuenta, " : " cuentas, ") + carga + " campañas." +
+               (ok ? "" : " No se pudo guardar en este navegador: al recargar volverá el reparto anterior."));
+      }
     }
     function ficha(c){
       var b = document.createElement("button");
@@ -214,7 +252,7 @@
       });
       return b;
     }
-    function pintar(){
+    function pintar(focoEn){
       var cargas = DATA.equipo.map(function(p){
         return DATA.cuentas.reduce(function(a,c){ return a + (reparto[c.n]===p.id ? (c.c||0) : 0); }, 0);
       });
@@ -235,7 +273,7 @@
         var load = document.createElement("div");
         load.className = "board-load";
         var barra = document.createElement("i");
-        barra.style.width = Math.round(cargas[idx] / tope * 100) + "%";
+        barra.style.transform = "scaleX(" + (cargas[idx] / tope) + ")";
         load.appendChild(barra);
         col.appendChild(load);
 
@@ -262,6 +300,10 @@
         col.addEventListener("click", function(){ if (elegida) mover(elegida, p.id); });
         board.appendChild(col);
       });
+      if (focoEn){
+        var f = board.querySelector('[data-cuenta="' + focoEn.replace(/"/g,'\\"') + '"]');
+        if (f) f.focus();
+      }
       resumen();
     }
     function resumen(){
@@ -281,4 +323,8 @@
     });
     pintar();
   }
+
+  /* Se arranca aquí, el último script, porque para este punto todas las
+     pestañas (índice, etapas, solicitudes, repositorio) ya están pintadas. */
+  if (window.FD && FD.tabs) FD.tabs();
 })();

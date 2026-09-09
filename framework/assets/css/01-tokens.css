@@ -7,46 +7,79 @@
   --ink:#050505;
   --ink-soft:#111111;
   --ink-card:#151515;
-  --paper:#f2f2ef;
-  --paper-soft:#e9e9e4;
+  --paper:#f4f4f1;
+  --paper-soft:#eceae4;
   --white:#ffffff;
   --yellow:#ffd400;
   --yellow-soft:#ffe86a;
-  --yellow-wash:#fff8d6;
   --green:#55c98a;
   --orange:#ff8a3d;
   --red:#ff4d4d;
-  /* Los tres de arriba estan calibrados para leerse sobre tinta. Puestos como
-     texto sobre papel se lavan (el verde daba 1.9 de contraste, el naranja 2.4),
-     asi que la version legible sobre claro es otra y cada superficie elige.
-     Usa --ok / --warn / --bad siempre que el color sea texto o una marca chica;
-     --green / --orange / --red quedan para rellenos y bordes gruesos. */
-  --ok:#1f7a4a;
-  --warn:#a85400;
-  --bad:#c62f2f;
   --blue:#315cff;
-  --line-dark:rgba(255,255,255,.14);
-  --line-light:rgba(5,5,5,.10);
+  /* variantes para superficie clara: mismo tono, luminosidad bajada
+     hasta el mínimo que pasa WCAG AA 4.5:1 sobre #eceae4, la superficie
+     clara más oscura del sistema. Derivadas, no elegidas a ojo. */
+  --yellow-ink:#7d6800;
+  --green-ink:#26784c;
+  --red-ink:#d60000;
+  --orange-ink:#b44700;
+  --blue-ink:#2a56ff;
+  --red-soft:#ff6b6b;
+  --line-dark:rgba(255,255,255,.16);
+  --line-light:rgba(5,5,5,.14);
   --muted-dark:#a8a8a8;
   --muted-light:#5d5d5d;
-  --radius:24px;
+  /* Sistema de forma: superficies 20px, controles compactos 12px,
+     acciones primarias en píldora. */
+  --radius:20px;
   --radius-sm:12px;
-  --radius-md:18px;
   --max:1360px;
   --shadow:0 28px 80px rgba(0,0,0,.16);
-  /* elevación de tarjeta clara: casi imperceptible, solo despega del canvas */
-  --shadow-card:0 1px 2px rgba(5,5,5,.03);
-  /* escala de espacio: cinco pasos, los mismos que usan las utilidades .sep-* */
-  --sp-1:8px; --sp-2:12px; --sp-3:16px; --sp-4:24px; --sp-5:40px;
+  /* ---------- escala tipográfica ----------
+     Nueve roles de tamaño, cuatro de tracking, cinco de interlineado.
+     Antes había 51 tamaños y 22 valores de tracking sin sistema: pares como
+     .66/.68/.70/.72rem cumplían el mismo papel con diferencias de 0.3px,
+     invisibles para el lector y caras de mantener.
+
+     Cada rol declara tamaño + tracking + interlineado JUNTOS. Es deliberado:
+     un `letter-spacing` en `em` declarado arriba se hereda hacia hijos con
+     `font-size` menor y se deforma (el render llegaba a 0.61em efectivos).
+     Declarar los tres en el mismo sitio corta esa herencia. */
+  --fs-label:.75rem;                    /* microetiqueta en mayúsculas · 12px */
+  --fs-ui:.875rem;                      /* controles, nav, tablas, dato denso · 14px */
+  --fs-body:1rem;                       /* prosa · 16px */
+  --fs-lead:1.125rem;                   /* entradilla y cita · 18px */
+  --fs-h4:1.25rem;                      /* título de tarjeta o panel · 20px */
+  --fs-h3:clamp(1.5rem,2.4vw,2rem);     /* subtítulo · 24—32px */
+  --fs-h2:clamp(1.75rem,3vw,2.7rem);    /* título de sección · 28—43px */
+  --fs-h1:clamp(2.1rem,4.6vw,4rem);     /* cierre · 34—64px */
+  --fs-display:clamp(2.8rem,7vw,6.5rem);/* solo el h1 del hero · 45—104px */
+  --fs-data:clamp(1.6rem,2.6vw,2.4rem); /* cifras y marcadores */
+
+  --tk-label:.12em;                     /* único tracking para mayúsculas */
+  --tk-body:0;
+  --tk-h:-.03em;
+  --tk-display:-.04em;                  /* piso: nada baja de aquí */
+
+  --lh-display:.94;
+  --lh-h:1.1;                           /* h2 y h3: titulares grandes, 1-2 líneas */
+  --lh-h4:1.25;                         /* h4 a 20px: en español envuelve a 2-3 líneas */
+  --lh-body:1.6;                        /* prosa suelta */
+  --lh-dense:1.45;                      /* prosa dentro de tarjeta */
+  --lh-ui:1.35;                         /* listas y controles */
+  --lh-flat:1;                          /* cifras de una línea */
+
+  --measure:68ch;                       /* medida de lectura cómoda */
+  --lh-base:1.55;
+
   /* color de acento por defecto: las secciones lo redeclaran según su fondo */
   --accent-ink:var(--yellow);
   font-family:"Poppins",ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  color-scheme:light;
+  color-scheme:dark;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-/* El documento es claro por defecto. El negro es puntuación, no fondo. */
-body{margin:0;background:var(--paper);color:var(--ink);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--ink);color:var(--white);font-size:16px;line-height:var(--lh-base);-webkit-font-smoothing:antialiased}
 button,input,select{font:inherit}
 a{color:inherit;text-decoration:none}
 h1,h2,h3,h4,p{text-wrap:pretty}
@@ -63,81 +96,83 @@ h1,h2,h3,h4,p{text-wrap:pretty}
 .skip-link{position:fixed;top:8px;left:8px;z-index:100;transform:translateY(-160%);background:var(--yellow);color:var(--ink);padding:10px 16px;border-radius:999px;font-weight:800}
 .skip-link:focus{transform:translateY(0)}
 .wrap{max-width:var(--max);margin:0 auto}
+/* visible solo para lectores de pantalla */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 /* que las anclas no queden debajo del header fijo */
-section[id],[id].divider,h3[id],h2[id]{scroll-margin-top:96px}
-.section-dark,.section-light,.section-plain{padding:clamp(76px,8vw,136px) clamp(20px,5vw,72px)}
-
-/* ---------- los tres niveles de superficie ----------
-   El ritmo del documento se arma alternando papel y blanco; la tinta se
-   reserva para el hero, los momentos de énfasis y el cierre. Cada nivel
-   redeclara los mismos tokens, así que voltear una sección es cambiarle
-   la clase: ningún componente de adentro necesita saber dónde está. */
-.section-dark,.iface,.avoid,.tree,.split>div:nth-child(2){
+section[id],[id].divider,h3[id],h2[id]{scroll-margin-top:104px}
+.section-dark,.section-light{padding:clamp(68px,8vw,112px) clamp(20px,5vw,72px)}
+/* tokens de superficie: cualquier isla oscura dentro de una sección clara los redeclara */
+.section-dark,.iface,.avoid,.split>div:nth-child(2){
   --fg:var(--white);--fg-muted:var(--muted-dark);
   --chip-bg:#222;--chip-bd:transparent;--chip-fg:#dcdcdc;
   --line:var(--line-dark);--surface:var(--ink-card);--surface-2:#1c1c1c;
-  --accent-ink:var(--yellow);--eyebrow-fg:var(--yellow);
-  --ok:var(--green);--warn:var(--orange);--bad:var(--red);
-  --row-hover:rgba(255,212,0,.1);
-  --elev:none;
+  --accent-ink:var(--yellow);
   --quote-bg:linear-gradient(120deg,rgba(255,212,0,.1),transparent);--quote-bd:rgba(255,212,0,.42);
 }
-.section-light,.section-plain{
+.section-light,.card-light{
   --fg:var(--ink);--fg-muted:var(--muted-light);
-  --chip-bd:var(--line-light);--chip-fg:var(--muted-light);
-  --line:rgba(5,5,5,.075);
-  --accent-ink:#8a7500;--eyebrow-fg:var(--ink);
-  --row-hover:var(--yellow-wash);
-  --elev:var(--shadow-card);
-  --quote-bd:rgba(5,5,5,.14);
+  --chip-bg:var(--white);--chip-bd:var(--line-light);--chip-fg:var(--muted-light);
+  --line:var(--line-light);--surface:var(--white);--surface-2:var(--paper);
+  --accent-ink:var(--yellow-ink);
+  --quote-bg:var(--white);--quote-bd:rgba(5,5,5,.16);
 }
-/* papel de fondo, tarjetas blancas */
-.section-light{--surface:var(--white);--surface-2:var(--paper);--chip-bg:var(--white);--quote-bg:var(--white)}
-/* blanco de fondo, tarjetas de papel: el mismo aire, sin repetir el mismo tono */
-.section-plain{--surface:var(--paper);--surface-2:var(--paper-soft);--chip-bg:var(--paper);--quote-bg:var(--paper)}
+/* Islas con fondo oscuro propio que viven dentro de secciones claras.
+   Solo necesitan el acento correcto: redeclarar todo el juego de tokens de
+   superficie aquí rompía las tarjetas claras (.card-light comparte .card). */
+.card,.pillar,.panel,.step,.roadmap-card,.hero-stats div,.hero-core,.orbit-chip,
+.calc-inputs,.calc-out,.builder-form,.builder-out,.tree,.tree-path span,
+.status,.kpis div,.meter,.output-line output,.field input,.field select,
+th,.tab.is-active,.repo-item.is-active,footer{--accent-ink:var(--yellow)}
+/* la tarjeta clara recupera el acento de superficie clara */
+.card-light{--accent-ink:var(--yellow-ink)}
 .section-dark{background:var(--ink);color:var(--white)}
 .section-light{background:var(--paper);color:var(--ink)}
-.section-plain{background:var(--white);color:var(--ink)}
-.iface,.avoid,.tree,.split>div:nth-child(2){color:var(--white)}
-
-.eyebrow{margin:0 0 22px;display:flex;flex-wrap:wrap;align-items:center;gap:14px;color:var(--eyebrow-fg,var(--yellow));font-size:.74rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase}
-.eyebrow span:first-child{border:1px solid currentColor;border-radius:999px;padding:8px 15px}
-/* .eyebrow-dark queda como alias: el color ya lo resuelve el token de la sección */
-.eyebrow-dark{color:var(--eyebrow-fg,var(--ink))}
-/* el icono de seccion vive dentro del eyebrow: mismo color, menos aire */
-.eyebrow .ico{margin-right:-5px}
-
-em{font-style:normal;color:var(--yellow)}
-.section-light em,.section-plain em{color:var(--ink);background:var(--yellow);
-  padding:.04em .26em;margin:0 -.04em;border-radius:.22em;
-  -webkit-box-decoration-break:clone;box-decoration-break:clone}
-.iface em,.avoid em{background:none;color:var(--yellow)}
-
-/* ---------- jerarquía de encabezado ----------
-   Una sección tiene un título grande y una sola frase que lo sostiene.
-   Todo lo demás es detalle y va dentro de un componente, no suelto. */
-.section-heading{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.6fr);gap:clamp(28px,5vw,72px);align-items:end;margin:0 auto clamp(40px,4.6vw,66px)}
-.section-heading h2{margin:0;font-size:clamp(2.4rem,5.2vw,4.7rem);line-height:.9;letter-spacing:-.055em;font-weight:800;text-wrap:balance}
-.section-heading>p{margin:0;max-width:560px;color:var(--fg-muted);font-size:1.02rem}
+.iface,.avoid,.split>div:nth-child(2){color:var(--white)}
+/* Mismo principio para el resto de islas oscuras: sin esto heredan la tinta
+   de la sección clara y quedan en negro sobre su propio fondo negro.
+   .card-light lo revierte desde 03-componentes.css, que carga después. */
+.card,.panel,.calc-inputs,.calc-out,.builder-form,.builder-out,
+.tree,.status,.meter,.kpis div,.roadmap-card{color:var(--white)}
+.eyebrow{margin:0 0 18px;display:flex;flex-wrap:wrap;align-items:center;gap:9px;color:var(--accent-ink);font-size:var(--fs-label);font-weight:900;letter-spacing:var(--tk-label);text-transform:uppercase}
+.eyebrow span{display:inline-flex;align-items:center}
+.eyebrow span+span::before{content:"/";margin-right:9px;color:var(--fg-muted)}
+.eyebrow-dark{color:var(--ink)}
+em{font-style:normal;color:var(--accent-ink)}
+.section-light em{color:var(--ink);background:linear-gradient(transparent 62%,var(--yellow) 62%)}
+.iface em,.avoid em{background:none;color:var(--accent-ink)}
+.section-heading{display:block;margin:0 auto clamp(38px,5vw,60px)}
+.section-heading>div{max-width:920px}
+.section-heading h2{margin:0;font-size:clamp(2rem,3.8vw,3.5rem);line-height:1.04;letter-spacing:var(--tk-h);font-weight:800}
+.section-heading>p{margin:20px 0 0;max-width:var(--measure);color:var(--fg-muted);font-size:var(--fs-lead);letter-spacing:var(--tk-body);line-height:var(--lh-body)}
 /* la frase de cada sección: acompaña al título, no lo reemplaza */
-.claim{margin:20px 0 0;max-width:32ch;font-size:clamp(1.12rem,1.85vw,1.6rem);line-height:1.32;letter-spacing:-.025em;font-weight:800;text-wrap:balance}
-.sub-heading{margin:0 0 24px;font-size:clamp(1.6rem,2.8vw,2.5rem);line-height:1;letter-spacing:-.045em;font-weight:800}
-.lead{max-width:720px;color:var(--fg-muted);font-size:1.05rem}
-.divider{max-width:var(--max);margin:clamp(72px,8vw,120px) auto 0;padding-top:clamp(60px,7vw,100px);border-top:1px solid var(--line)}
-.tag{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:999px;border:1px solid var(--line);color:var(--fg-muted);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
-.tag-accent{border-color:var(--yellow);color:var(--yellow);background:transparent}
-.section-light .tag-accent,.section-plain .tag-accent{background:var(--yellow);color:var(--ink);border-color:var(--yellow)}
-.iface .tag-accent,.avoid .tag-accent{background:transparent;color:var(--yellow)}
+.claim{margin:14px 0 0;max-width:34ch;font-size:var(--fs-h4);line-height:var(--lh-h);letter-spacing:var(--tk-h);font-weight:800}
+.sub-heading{margin:0 0 24px;font-size:var(--fs-h3);line-height:var(--lh-h);letter-spacing:var(--tk-h);font-weight:800}
+.lead{max-width:var(--measure);color:var(--fg-muted);font-size:var(--fs-lead);letter-spacing:var(--tk-body);line-height:var(--lh-body)}
+.divider{max-width:var(--max);margin:clamp(60px,7vw,104px) auto 0;padding-top:clamp(52px,6vw,88px);border-top:1px solid var(--line)}
+.tag{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:999px;border:1px solid var(--line);color:var(--fg-muted);font-size:var(--fs-label);font-weight:800;letter-spacing:var(--tk-label);text-transform:uppercase}
+.tag-accent{border-color:var(--yellow);color:var(--accent-ink);background:transparent}
+.section-light .tag-accent{background:var(--yellow);color:var(--ink)}
+.iface .tag-accent,.avoid .tag-accent{background:transparent;color:var(--accent-ink)}
 
 /* ---------- animaciones ---------- */
-[data-reveal]{opacity:0;transform:translateY(26px);transition:opacity .75s cubic-bezier(.22,1,.36,1),transform .75s cubic-bezier(.22,1,.36,1);transition-delay:var(--d,0ms)}
+[data-reveal]{opacity:0;transform:translateY(18px);transition:opacity .62s cubic-bezier(.22,1,.36,1),transform .62s cubic-bezier(.22,1,.36,1);transition-delay:var(--d,0ms)}
 [data-reveal].is-visible{opacity:1;transform:none}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(1.9)}}
 @keyframes dash{to{stroke-dashoffset:0}}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  /* Reducir el movimiento no es eliminar la respuesta.
+     Antes esto apagaba TODA transición (.001ms), y con ella el hover, el foco
+     y el cambio de estado: la interfaz dejaba de confirmar que la acción tuvo
+     efecto, que es justo lo que un usuario sensible al movimiento sí necesita.
+
+     Ahora: los bucles se detienen y nada se desplaza, gira ni escala —al
+     limitar transition-property, transform pasa a aplicarse de golpe—, pero
+     el color y la opacidad siguen respondiendo en 120ms. */
+  *,*::before,*::after{
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:120ms!important;
+    transition-property:color,background-color,border-color,outline-color,opacity,box-shadow,fill,stroke!important;
+  }
   [data-reveal]{opacity:1;transform:none}
 }

@@ -3,8 +3,8 @@
 Landing interna del framework de trabajo del área digital de Adcom.
 Es un sitio estático: **se abre haciendo doble clic en `index.html`**, sin servidor, sin build, sin dependencias.
 
-Vive dentro del repo [`adcomgroupco/adcom`](https://github.com/adcomgroupco/adcom) y se llega a él
-desde el portal de la raíz (`../index.html`).
+Vive dentro del repositorio [`adcomgroupco/adcom`](https://github.com/adcomgroupco/adcom) y se
+abre también desde el portal de la raíz (`../index.html`).
 
 ---
 
@@ -22,17 +22,19 @@ framework/
 │   │   ├── 04-diagramas.css      diagramas de flujo en SVG
 │   │   ├── 05-responsive.css     breakpoints globales
 │   │   └── 06-impresion.css      cómo sale en papel o PDF (media="print")
-│   └── js/
-│       ├── base.js               utilidades compartidas ($, $$, chips, lista)
-│       ├── contenido.js          TEXTOS de las partes interactivas, el índice, el tablero
-│       │                         de cuentas y los requisitos de solicitud
-│       ├── interacciones.js      navegación, animaciones y bloques que se pintan solos
-│       └── herramientas.js       calculadora, árbol, constructor, combinador y tablero
-├── assets/img/                    capturas (ver assets/img/LEEME.txt)
-├── _archivo/                     versiones sustituidas y fuente histórica (regla 10)
-│   ├── framework-area-digital-v03.html           versión anterior de la página
-│   └── framework-area-digital-v03-detallado.md   texto original, puntos 1—85
-└── README.md                     este archivo
+│   ├── js/
+│   │   ├── base.js               utilidades compartidas ($, $$, chips, lista)
+│   │   ├── contenido.js          TEXTOS de las partes interactivas, el índice, el tablero
+│   │   │                         de cuentas y los requisitos de solicitud
+│   │   ├── interacciones.js      navegación, animaciones y bloques que se pintan solos
+│   │   └── herramientas.js       calculadora, árbol, constructor, combinador y tablero
+│   ├── plantillas/                archivos de nomenclaturas y UTM descargables
+│   └── img/                       capturas y recursos visuales
+├── _archivo/                      versiones sustituidas y fuente histórica (regla 10)
+│   ├── framework-area-digital-v03.html
+│   └── framework-area-digital-v03-detallado.md
+├── PRODUCT.md                     propósito, usuarios y restricciones del producto
+└── README.md                      documentación de mantenimiento
 ```
 
 > **Ojo con el `.md` de `_archivo/`.** Era el documento fuente, pero `index.html` ya lo superó: la página
@@ -51,215 +53,6 @@ resuelve la cascada. Si agregas uno, ponlo en la posición que le corresponda y 
 
 ---
 
----
-
-## Las tres superficies
-
-El documento es claro. El negro es puntuación, no fondo: se reserva para el hero, tres
-momentos de énfasis (`control`, `ia`, `futuro`) y el cierre. Todo lo demás alterna papel y
-blanco, que es lo que da ritmo sin cambiar el peso de la página.
-
-| Clase | Fondo | Tarjetas | Cuándo |
-|---|---|---|---|
-| `section-light` | papel | blancas | el paso por defecto |
-| `section-plain` | blanco | papel | el paso alterno, para que dos secciones seguidas no se fundan |
-| `section-dark` | tinta | tinta | solo énfasis: úsalo y ya llevas cinco en todo el documento |
-
-**Voltear una sección es cambiarle la clase, nada más.** Cada superficie redeclara los mismos
-tokens (`--surface`, `--fg`, `--line`, `--chip-bg`, `--eyebrow-fg`…), así que ningún componente
-de adentro necesita saber dónde está. Si un componente nuevo se ve mal al voltear la sección,
-el error es que tiene un color fijo: cámbialo por el token y se arregla en las tres.
-
-Las clases `card-light` y `panel-light` solo hacen algo dentro de una sección oscura, donde
-significan «isla clara». En una sección clara son un no-op.
-
-## Una sección, un capítulo
-
-**La regla que mantiene el documento legible.** Antes había hasta seis capítulos metidos en un
-solo bloque de scroll y por eso se sentía denso: no sobraba información, sobraba jerarquía
-plana. Hoy cada capítulo con su propio `<h2>` es un `<section>`.
-
-Al agregar un capítulo, agrégalo como sección, no como `<div class="divider">` dentro de otra:
-
-```html
-<section class="section-plain" id="mi-capitulo" aria-labelledby="mi-capitulo-title">
-  <div class="wrap">
-    <div class="section-heading" data-reveal>
-      <div>
-        <p class="eyebrow"><span>NN</span></p>
-        <h2 id="mi-capitulo-title">Título del capítulo</h2>
-        <p class="claim">La frase que lo resume <em>en una línea.</em></p>
-      </div>
-      <p>El párrafo que acompaña al título.</p>
-    </div>
-    …
-  </div>
-</section>
-```
-
-Alterna `section-light` / `section-plain` respecto a la vecina. `divider` se sigue usando, pero
-solo para separar bloques *dentro* de un capítulo.
-
-Si una sección pasa de ~450 palabras, probablemente son dos capítulos.
-
-### El `<em>` es un bloque, no un subrayado
-
-Sobre fondo claro, `<em>` pinta un **rectángulo amarillo lleno** detrás de las palabras: es la
-marca de la casa y se usa una vez por encabezado, en el `claim` o en el `h1`. Sobre fondo oscuro
-el mismo `<em>` se resuelve como texto amarillo, porque un bloque relleno sobre tinta pesa
-demasiado. No hace falta hacer nada: es el mismo marcado en las tres superficies.
-
-Dos cosas que lo arruinan: meter `<em>` en un párrafo de cuerpo (el bloque grita y el párrafo no
-tiene por qué gritar) y marcar más de una frase por encabezado.
-
-### El encabezado apilado arranca a la izquierda
-
-`es-apilado` limita el ancho a 880px y **se alinea con la rejilla que viene abajo**, no con el
-centro del `wrap`. Si lo centras, el título deja de coincidir con la primera columna del
-contenido y la sección se lee torcida aunque todo lo demás esté bien.
-
-## Los componentes de composición
-
-| Componente | Para qué | Regla |
-|---|---|---|
-| `.bento` | rejilla de seis columnas con celdas de peso distinto | combina `b-2` (tercio), `b-3` (mitad), `b-4` (dos tercios), `b-6` (ancho completo); `b-tall` ocupa dos filas |
-| `.stats` + `.stat` | cifras que se leen de lejos | el número manda, la etiqueta explica; `stat-accent` para una sola |
-| `.numbers` + `.num` | secuencias de 3 a 5 pasos | el número es lo que comunica que hay un orden |
-| `.card-accent` / `.card-ink` | destacar una celda | **una por rejilla**: si hay dos, ya no destaca ninguna |
-| `.visual` | respiro visual donde no hay nada que capturar | variantes `visual-b` y `visual-c` para que no se repita la misma mancha |
-| `.showcase` + `.pin` | captura real con etiquetas encima | sin la etiqueta, la captura es decoración |
-| `.iconrow` + `.iconcell` | cuatro o cinco conceptos que se enumeran | si cada uno necesita un párrafo, va un bento |
-| `.steps-h` | secuencia conectada por una línea | el diagrama más barato que existe; `.es-clave` marca el paso que pesa |
-| `.display` | una frase a tamaño de portada | nunca dos seguidas, nunca más de doce palabras |
-| `.stat-badge` | distintivo en la esquina de una cifra | marca cuál de las cifras es la que importa |
-
-## La celda que pesa
-
-**Cada rejilla necesita una celda que mande.** Sin eso, seis tarjetas blancas en fila se leen
-como un parrafo largo cortado en cajas: la vista no sabe por donde entrar. La regla es una sola
-marca por rejilla y hay dos:
-
-| Marca | Que significa | Ejemplo |
-|---|---|---|
-| `card-accent` | **la regla** — lo que hay que hacer | «El KPI se elige antes de lanzar» |
-| `card-ink` | **el limite** — lo que no | «Cinco cosas que no se firman sin leerlas» |
-
-Tres cosas que hay que respetar:
-
-- **Una por rejilla.** Si marcas dos, no destaca ninguna y ademas la rejilla queda con dos
-  manchas de color peleandose.
-- **Si las celdas son pares de verdad, no marques ninguna.** Las tres severidades (S1/S2/S3) ya
-  tienen su propio semaforo en el borde y las tres familias de procesos son A, B y C: meterles
-  una celda amarilla encima seria decoracion, no jerarquia. Cuando una fila de pares se ve
-  monotona, lo que hay que cambiar es la forma de la rejilla, no el color de una celda.
-- **Una celda marcada no puede quedar con mas de ~20% de alto vacio.** El vacio que en una
-  tarjeta blanca no se nota, en un bloque amarillo o negro es un agujero. Si la celda marcada es
-  la corta del par, no la despintes: pasala a `bento` y dale un tercio (`b-2` contra `b-4`). Al
-  angostarse crece de alto y el hueco se cierra solo, y de paso la rejilla gana la jerarquia de
-  anchos que no tenia. El 20% es medible: compara el alto del contenido contra el alto de la
-  celda mas alta de esa fila.
-- **Sobre tinta, `card-ink` no marca nada** y degrada a tarjeta normal a proposito: no hay nada
-  mas oscuro que el fondo. En una seccion oscura el limite lo marca lo que ya tiene color propio
-  —la viñeta roja de `list-cross`, la cita amarilla—, no un bloque negro sobre negro.
-
-`card-light` significa «isla clara» y solo hace algo dentro de una seccion oscura, asi que esta
-escrito para perder contra `card-accent` y `card-ink`: una celda marcada se queda marcada en
-cualquier superficie.
-
-**Una celda marcada es una superficie, no una tarjeta pintada.** Igual que `section-dark`,
-`card-accent` y `card-ink` redeclaran los mismos tokens que consultan sus hijos, asi que la
-viñeta, la pastilla, la cita y la etiqueta se resuelven solas al caer dentro. Si te ves
-escribiendo `.card-accent .loquesea{color:…}`, para: lo que falta es un token, no una regla.
-
-## Las listas largas se densifican solas
-
-De ocho items en adelante una nube de pastillas deja de leerse y pasa a lista en columnas. El
-umbral vive en `FD.DENSA` (`base.js`) y se aplica por dos caminos que dan el mismo resultado:
-`FD.chips` lo mide cuando pinta una lista desde `contenido.js`, y `FD.densificar()` recorre al
-arrancar las que estan escritas a mano en `index.html`.
-
-Las listas del marcado llevan `chips-densa` escrito **como respaldo para cuando no hay
-JavaScript**; con JS, `FD.densificar()` lo recalcula y manda el umbral. Por eso no hace falta
-acordarse de ponerlo ni de quitarlo: si le agregas o le quitas items a una lista, la clase se
-corrige sola al cargar. Lo unico que no hay que hacer es cambiar el umbral en un solo lado.
-
-## Que no todas las secciones abran igual
-
-Cuarenta secciones con la misma apertura se leen como una sola. Por eso el encabezado tiene
-tres variantes además de la normal, y **dos secciones seguidas nunca comparten forma**:
-
-| Clase | Dónde va | Cuándo |
-|---|---|---|
-| *(ninguna)* | en el `<div class="section-heading">` | título a la izquierda, párrafo a la derecha |
-| `es-apilado` | en el `section-heading` | la sección trae algo ancho (tabla, diagrama, bento) y el encabezado se aparta |
-| `es-centro` | en el `section-heading` | sección corta que funciona como bisagra entre dos bloques densos |
-| `wrap-titulo-abajo` | en el `<div class="wrap">` | el contenido se entiende sin que se lo anuncien: el título cierra en vez de abrir |
-
-Si vas a agregar una sección, mira qué forma tienen la anterior y la siguiente y usa otra.
-
-## Iconos
-
-Treinta y cinco iconos en el sprite del `<head>`, todos sobre la misma retícula de 24 y con el
-mismo trazo. **Cada sección lleva el suyo en el eyebrow**, que es lo que los hace leerse como
-sistema y no como decoración suelta.
-
-```html
-<svg class="ico ico-sm" aria-hidden="true"><use href="#i-shield"/></svg>
-```
-
-- El color y el grosor **se heredan**: nunca le pongas `fill`, `stroke` ni `stroke-width` a un
-  `<symbol>`. Si un icono necesita su propio grosor, está mal dibujado, no mal configurado.
-- La escala son cuatro pasos: `ico-sm` (18), base (24), `ico-lg` (32), `ico-xl` (44). No
-  inventes tamaños intermedios con `style=`.
-- Al dibujar uno nuevo: `viewBox="0 0 24 24"`, solo trazo, sin relleno, y que el peso visual se
-  parezca al de los que ya están. Ponlo en el sprite del `<head>`, junto a los demás.
-- Que un icono se repita entre secciones está bien si los temas están emparentados
-  (`i-route` en flujo, ruta y árbol). Que se repita por descuido, no.
-
-## Recursos: el puente con lo que ya existe
-
-Cada punto que tiene un archivo real detrás (un repo, una plantilla, un presupuesto, un
-tablero) se enlaza desde `FD.RECURSOS`, en `contenido.js`. Es lo que evita que el framework se
-lea como teoría.
-
-En el HTML basta con dejar el contenedor vacío; la lista lo llena sola:
-
-```html
-<div class="recursos" data-recursos="sistema"></div>
-```
-
-```js
-{k:"Repositorio", t:"Estructura maestra de cuenta",
- d:"Las once carpetas, listas para duplicar por cliente",
- href:"", i:"i-file", img:""}
-```
-
-- **`href` vacío significa pendiente**, y se pinta como tal: marco punteado y la etiqueta
-  «por enlazar». Esa es la gracia. Un recurso que no existe todavía tiene que verse, no
-  desaparecer: si desaparece, nadie se acuerda de conectarlo.
-- **Llenar un pendiente es pegar el enlace en `href`.** Nada más: ni HTML ni CSS.
-- `i` es un ícono del sprite del `<head>` (`i-file`, `i-list`, `i-code`, `i-shield`…).
-- `img` es opcional y reemplaza al ícono por una miniatura.
-
-## Imágenes
-
-Van en `assets/img/`, en `kebab-case` y con nombre que diga qué son. Máximo 1600px de ancho y
-sin datos de cliente visibles.
-
-Los huecos de captura (`.showcase.is-pendiente`) siguen el mismo criterio que los recursos
-pendientes: declaran qué imagen falta en vez de dejar la sección sin apoyo visual. Cuando
-llegue la captura, se le mete el `<img>` y se le quita la clase `is-pendiente`:
-
-```html
-<figure class="showcase sep-lg" data-reveal>
-  <img src="assets/img/nomenclatura-tabla.png" alt="Describe qué muestra la captura.">
-  <span class="pin pin-accent pin-tl">Lo que hay que mirar</span>
-  <figcaption>Qué es y de dónde salió.</figcaption>
-</figure>
-```
-
----
-
 ## Dónde cambiar qué
 
 | Quiero cambiar… | Voy a… |
@@ -270,9 +63,6 @@ llegue la captura, se le mete el `<img>` y se le quita la clase `is-pendiente`:
 | Las personas o las cuentas del tablero | `assets/js/contenido.js`, bloque `FD.CUENTAS` |
 | Lo que se pide para aceptar una solicitud | `assets/js/contenido.js`, bloque `FD.SOLICITUDES` |
 | Cualquier otro texto de la página | `index.html`, en la sección correspondiente |
-| Un enlace a un archivo real (repo, plantilla, presupuesto) | `assets/js/contenido.js`, bloque `FD.RECURSOS` |
-| El fondo de una sección | la clase del `<section>`: `section-light`, `section-plain` o `section-dark` |
-| Una captura | `assets/img/`, y la ruta en el `<img>` o en el campo `img` del recurso |
 | Un diagrama de flujo | `index.html`, dentro del `<figure class="flow">` |
 | El aspecto de los diagramas | `assets/css/04-diagramas.css` |
 | Cómo se comporta la calculadora o el constructor | `assets/js/herramientas.js` |
@@ -319,9 +109,8 @@ y ajustes de un diagrama.
 ## Cómo agregar una sección
 
 1. Copia el bloque de una sección existente en `index.html` (desde `<section` hasta `</section>`).
-2. Cámbiale el `id`, el `aria-labelledby` y alterna `section-light` / `section-plain`
-   respecto a la sección vecina. `section-dark` solo si de verdad es un momento de énfasis:
-   ver <b>Las tres superficies</b>.
+2. Cámbiale el `id`, el `aria-labelledby` y alterna la clase `section-dark` / `section-light`
+   respecto a la sección vecina.
 3. Agrega el enlace en `<nav id="mainnav">`. El resaltado activo del menú es automático: el JS
    observa cualquier sección que esté enlazada desde ahí.
 4. Marca con `data-reveal` los bloques que deban aparecer al hacer scroll.
@@ -351,12 +140,6 @@ punteada), `fl-dec` (rombo de decisión), `fl-band` (contenedor), `fl-line` / `f
 `fl-line-no` / `fl-line-loop` (conexiones), `fl-t` / `fl-t-b` / `fl-t-sm` / `fl-t-key` / `fl-t-code`
 (textos), `fl-edge` / `fl-edge-yes` / `fl-edge-no` (etiquetas de flecha).
 
-**El diagrama usa el mismo lenguaje que las tarjetas.** El marco (`.flow`) es el lienzo de papel y
-las cajas son blancas encima, no al revés: por eso un nodo se lee como una tarjeta chica y no como
-un wireframe. `fl-box` y `fl-box-key` fijan su propio `rx` desde el CSS, así que el `rx="10"` del
-marcado es indiferente — está en la plantilla solo para que el SVG se vea bien sin hoja de estilo.
-`fl-box-key` es amarillo lleno y **va una vez por diagrama**: es el nodo que cierra el flujo.
-
 Tres cosas que hay que respetar:
 
 - **El `id` del marcador debe ser único en toda la página.** Por eso llevan sufijo (`fa-87a`, `fa-89`).
@@ -381,7 +164,9 @@ El buscador filtra por texto de la entrada, ignora tildes y resalta la coinciden
 subsección al documento, ponle un `id` al `<div class="divider">` o al `<h3>` y súmala aquí: es el
 único lugar donde hay que registrarla.
 
-Hay un botón flotante de vuelta al índice que aparece al pasar la primera pantalla.
+Hay un botón flotante de vuelta al índice que aparece al pasar la primera pantalla. La búsqueda
+global también se puede abrir desde el header o con `/` y `Ctrl+K`; lleva al campo principal y
+mantiene el acceso disponible desde cualquier punto del documento.
 
 ## Cómo se usa el tablero de cuentas
 
@@ -471,33 +256,15 @@ funciona igual, con la tipografía de respaldo del sistema.
 **Los acentos de los diagramas usan `var(--accent-ink)`**, no el amarillo fijo: así el mismo diagrama
 se lee tanto en una sección oscura como en una clara.
 
-## Cuándo va el color de marca y cuándo va el token
-
-Esta es la regla que más veces se rompió sola, y siempre por el mismo motivo: el amarillo, el
-verde, el naranja y el rojo de la paleta están calibrados **para leerse sobre tinta**. Puestos
-como texto sobre papel se lavan. El amarillo sobre blanco da 1.4 de contraste; el verde, 1.9.
-
-| Si el color es… | Usa | Por qué |
-|---|---|---|
-| **texto** o una marca chica (viñeta, etiqueta, numerito) | `--accent-ink`, `--ok`, `--warn`, `--bad` | cada superficie los resuelve: sobre tinta son el color de marca, sobre papel bajan a una versión legible |
-| **relleno** (una pastilla, una insignia, una celda destacada) | `--yellow`, `--green`, `--orange`, `--red` | el color es el fondo y el texto encima ya se resuelve aparte |
-| **borde grueso** (el semáforo de severidad, la barra de un aviso) | `--green`, `--orange`, `--red` | 3–5px de color puro se leen bien sobre cualquier fondo |
-
-Y hay una consecuencia que es fácil de pasar por alto: **un componente que fija un color literal
-—`#e4e4e1`, `var(--ink)`, `#fff9d6`— se rompe en cuanto alguien lo mete en una superficie
-distinta.** La tabla llevaba `color:var(--ink)` en el `td` y vivió meses ilegible dentro de la
-única sección oscura que tiene una, además escondida en un `details` cerrado. Si escribes un
-color fijo en un componente, estás decidiendo por él en qué superficie puede vivir.
-
 ---
 
 ## Accesibilidad y navegación: lo que ya está resuelto
 
 No lo rompas sin querer:
 
-- **El menú compacto.** Debajo de 1080px los enlaces del `<nav>` no caben, así que se convierten
-  en un panel que abre el botón `#nav-toggle`. Si agregas un enlace al menú funciona solo; si
-  tocas el header, revisa que el botón siga ahí.
+- **El menú completo.** Los enlaces del `<nav>` viven en un panel desplegable en todos los anchos,
+  porque una fila con diecinueve destinos se corta incluso en escritorio. El botón `#nav-toggle`
+  muestra además la sección activa. Si agregas un enlace, revisa el panel en escritorio y móvil.
 - **Foco visible.** Hay una regla global `:focus-visible` en `01-tokens.css` que usa
   `--accent-ink`, por eso se ve tanto en secciones oscuras como claras. No la sobreescribas con
   `outline:none` en un componente.

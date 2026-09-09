@@ -8,24 +8,8 @@
   var FD = window.FD, $ = FD.$, $$ = FD.$$;
   var fillChips = FD.chips, fillList = FD.lista;
 
-  /* ---------- densidad de las listas escritas a mano ----------
-     Se corre una vez al arrancar: las nubes de mas de siete pastillas pasan a
-     lista en columnas, igual que las que pinta FD.chips. */
-  FD.densificar();
-
-  /* ---------- scroll progress y color del header ----------
-     El header nace oscuro sobre el hero y se aclara al entrar al documento:
-     una barra negra fija sobre un documento claro pesa de mas. */
-  var progress = $("#progress");
-  var headerEl = $(".site-header");
-  function onScroll(){
-    var h = document.documentElement;
-    var max = h.scrollHeight - h.clientHeight;
-    progress.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + "%";
-    if (headerEl) headerEl.classList.toggle("is-claro", h.scrollTop > window.innerHeight - 90);
-  }
-  window.addEventListener("scroll", onScroll, {passive:true});
-  onScroll();
+  /* El progreso de lectura usa scroll-driven animation en CSS. Así no hay un
+     listener ejecutándose en cada frame durante un documento tan largo. */
 
   /* ---------- reveal on scroll ---------- */
   var revealables = $$("[data-reveal]");
@@ -43,6 +27,9 @@
   /* ---------- contadores ---------- */
   function countUp(el){
     var target = parseInt(el.getAttribute("data-count"),10) || 0;
+    /* con movimiento reducido la cifra se escribe de una vez: quien abre esta
+       página cinco veces al día no debería esperar 1,1s para leer un "5". */
+    if (FD.menosMovimiento()){ el.textContent = target; return; }
     var start = null, dur = 1100;
     function tick(ts){
       if (!start) start = ts;
@@ -60,9 +47,9 @@
     counters.forEach(function(el){ioc.observe(el)});
   } else { counters.forEach(function(el){el.textContent = el.getAttribute("data-count")}); }
 
-  /* ---------- menú compacto ----------
-     Debajo de 1080px el nav es un panel: se abre con el botón, se cierra al
-     elegir un enlace, con Escape o al tocar fuera del header. */
+  /* ---------- menú completo ----------
+     Los diecinueve destinos viven en un panel: se abre con el botón, se cierra
+     al elegir un enlace, con Escape o al tocar fuera del header. */
   var header = $(".site-header"), toggle = $("#nav-toggle");
   if (header && toggle){
     function cerrarMenu(){
@@ -84,14 +71,32 @@
     });
   }
 
+  /* La búsqueda sigue siendo accesible aunque el hero ya no esté en pantalla. */
+  var headerSearch = $("#header-search"), globalSearch = $("#q");
+  if (headerSearch && globalSearch){
+    headerSearch.addEventListener("click", function(){
+      if (header && header.classList.contains("nav-abierto")){
+        header.classList.remove("nav-abierto");
+        toggle.setAttribute("aria-expanded","false");
+      }
+      globalSearch.scrollIntoView({behavior:FD.menosMovimiento() ? "auto" : "smooth",block:"center"});
+      window.setTimeout(function(){ globalSearch.focus(); }, FD.menosMovimiento() ? 0 : 320);
+    });
+  }
+
   /* ---------- nav activo ---------- */
   var navLinks = $$("#mainnav a");
+  var navCurrent = $("#nav-current");
   var sections = navLinks.map(function(a){return $(a.getAttribute("href"))}).filter(Boolean);
   if ("IntersectionObserver" in window && sections.length){
     var ion = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
         if (e.isIntersecting){
-          navLinks.forEach(function(a){ a.classList.toggle("is-current", a.getAttribute("href") === "#"+e.target.id); });
+          navLinks.forEach(function(a){
+            var actual = a.getAttribute("href") === "#"+e.target.id;
+            a.classList.toggle("is-current", actual);
+            if (actual && navCurrent) navCurrent.textContent = a.textContent;
+          });
         }
       });
     },{rootMargin:"-45% 0px -50% 0px"});
@@ -125,8 +130,8 @@
       var d = FD.VARIABLES[k];
       var art = document.createElement("div");
       art.className = "card card-light";
-      art.innerHTML = '<span class="card-index">' + d.tag + '</span><h4>' + d.title +
-                      '</h4><p style="margin:12px 0 16px">' + d.desc + '</p><ul class="chips"></ul>';
+      art.innerHTML = '<span class="card-index">' + d.tag + '</span><h3>' + d.title +
+                      '</h3><p style="margin:12px 0 16px">' + d.desc + '</p><ul class="chips"></ul>';
       varsGrid.appendChild(art);
       fillChips(art.querySelector("ul"), d.items);
     });
@@ -143,11 +148,11 @@
     b.setAttribute("aria-selected", i===0 ? "true":"false");
     b.setAttribute("data-step", i);
     b.innerHTML = '<span>'+s.n+'</span><strong>'+s.t+'</strong>';
-    b.addEventListener("click", function(){ setStep(i); });
+    b.addEventListener("click", function(){ setStep(i,true); });
     stepper.appendChild(b);
   });
   var current = 0;
-  function setStep(i){
+  function setStep(i, alinear){
     var s = STEPS[i]; if(!s) return;
     current = i;
     $("#step-tag").textContent = "ETAPA " + s.n;
@@ -160,14 +165,14 @@
       b.classList.toggle("is-active", on);
       b.setAttribute("aria-selected", on ? "true":"false");
     });
-    $("#flow-rail").style.width = (((i+1)/STEPS.length)*100) + "%";
+    $("#flow-rail").style.transform = "scaleX(" + ((i+1)/STEPS.length) + ")";
     var panel = $("#step-panel");
     panel.classList.remove("fade-in"); void panel.offsetWidth; panel.classList.add("fade-in");
     var active = $$(".step")[i];
-    if (active && active.scrollIntoView) active.scrollIntoView({behavior:"smooth", block:"nearest", inline:"center"});
+    if (alinear && active && active.scrollIntoView) active.scrollIntoView({behavior: FD.menosMovimiento() ? "auto" : "smooth", block:"nearest", inline:"center"});
   }
-  $("#step-next").addEventListener("click", function(){ setStep((current+1) % STEPS.length); });
-  setStep(0);
+  $("#step-next").addEventListener("click", function(){ setStep((current+1) % STEPS.length,true); });
+  setStep(0,false);
 
   /* ---------- ciclo de campaña ---------- */
   var CYCLE = FD.CICLO;
@@ -245,6 +250,7 @@
     b.type = "button";
     b.className = "repo-item" + (i===0?" is-active":"");
     b.setAttribute("role","tab");
+    b.setAttribute("aria-selected", i===0 ? "true":"false");
     b.setAttribute("data-repo", i);
     b.innerHTML = "<b>"+r.c+"</b>"+r.t;
     b.addEventListener("click", function(){ setRepo(i); });
@@ -258,7 +264,11 @@
     fillChips($("#repo-items"), r.items);
     var note = $("#repo-note");
     if (r.note){ note.hidden = false; note.textContent = r.note; } else { note.hidden = true; }
-    $$(".repo-item").forEach(function(b,idx){ b.classList.toggle("is-active", idx===i); });
+    $$("#repo-list .repo-item").forEach(function(b,idx){
+      var on = idx === i;
+      b.classList.toggle("is-active", on);
+      b.setAttribute("aria-selected", on ? "true" : "false");
+    });
   }
   setRepo(0);
 
@@ -326,10 +336,10 @@
       b.type = "button";
       b.className = "tab";
       b.setAttribute("role", "tab");
+      b.setAttribute("aria-selected", id === famActiva ? "true" : "false");
       b.textContent = texto;
       b.addEventListener("click", function(){
         famActiva = id;
-        if (campo.value){ campo.value = ""; }
         filtrar();
       });
       barra.appendChild(b);
@@ -340,7 +350,9 @@
 
     function filtrar(){
       var termino = plano((campo.value || "").trim());
-      var porFamilia = !termino && famActiva !== "todo";
+      /* familia y término se combinan: antes se anulaban en silencio, y
+         "Control" + "umbral" era justo lo que un analista pediría. */
+      var porFamilia = famActiva !== "todo";
       var visibles = 0;
       grupos.forEach(function(g){
         var deLaFamilia = !porFamilia || g.fam.id === famActiva;
@@ -361,65 +373,20 @@
         if (deLaFamilia) visibles += enGrupo;
       });
       fichas.forEach(function(f){
-        f.el.classList.toggle("is-active", termino ? f.id === "todo" : f.id === famActiva);
+        var sel = f.id === famActiva;
+        f.el.classList.toggle("is-active", sel);
+        f.el.setAttribute("aria-selected", sel ? "true" : "false");
       });
-      if (termino) marcador.textContent = visibles + " de " + TOTAL;
-      else if (famActiva === "todo") marcador.textContent = TOTAL + " entradas";
-      else marcador.textContent = visibles + " entradas";
+      if (termino) marcador.textContent = visibles + " de " + TOTAL +
+        (porFamilia ? " · filtrado por familia" : "");
+      else if (porFamilia) marcador.textContent = visibles + " entradas en esta familia";
+      else marcador.textContent = TOTAL + " entradas";
       vacio.hidden = visibles > 0;
     }
     campo.addEventListener("input", filtrar);
     campo.addEventListener("search", filtrar);
     filtrar();
   }
-
-
-  /* ---------- recursos: enlaces a lo que ya existe ----------
-     Llena cualquier <div class="recursos" data-recursos="clave"></div> con la
-     lista que le corresponda de FD.RECURSOS. Un recurso sin href se pinta como
-     pendiente y no es enlace: se ve el hueco, que es justo lo que queremos. */
-  FD.$$("[data-recursos]").forEach(function(cont){
-    var lista = (FD.RECURSOS || {})[cont.getAttribute("data-recursos")];
-    if (!lista || !lista.length) return;
-    cont.innerHTML = "";
-    lista.forEach(function(r){
-      var enlazado = !!r.href;
-      var el = document.createElement(enlazado ? "a" : "div");
-      el.className = "recurso" + (enlazado ? "" : " is-pendiente");
-      if (enlazado){
-        el.href = r.href;
-        /* solo los externos abren pestaña: dentro del repo la navegación es directa */
-        if (/^https?:/i.test(r.href)){ el.target = "_blank"; el.rel = "noopener"; }
-      }
-
-      var thumb = document.createElement("span");
-      thumb.className = "recurso-thumb";
-      if (r.img){
-        var img = document.createElement("img");
-        img.src = r.img; img.alt = ""; img.loading = "lazy";
-        thumb.appendChild(img);
-      } else {
-        thumb.innerHTML = '<svg class="ico" aria-hidden="true"><use href="#' + (r.i || "i-file") + '"></use></svg>';
-      }
-
-      var body = document.createElement("span");
-      body.className = "recurso-body";
-      var kind = document.createElement("span");
-      kind.className = "recurso-kind";
-      kind.textContent = enlazado ? r.k : r.k + " · por enlazar";
-      var t = document.createElement("b"); t.textContent = r.t;
-      var d = document.createElement("small"); d.textContent = r.d;
-      body.appendChild(kind); body.appendChild(t); body.appendChild(d);
-
-      var go = document.createElement("span");
-      go.className = "recurso-go";
-      go.setAttribute("aria-hidden", "true");
-      go.textContent = enlazado ? "↗" : "···";
-
-      el.appendChild(thumb); el.appendChild(body); el.appendChild(go);
-      cont.appendChild(el);
-    });
-  });
 
   /* ---------- botón de vuelta al índice ---------- */
   var alIndice = $("#al-indice");
@@ -491,16 +458,135 @@
     }
     $("#sol-copy").addEventListener("click", function(){
       var texto = plantilla(SOL[solActual]);
-      var ok = $("#sol-copy-ok");
-      function avisar(){ ok.classList.add("show"); setTimeout(function(){ ok.classList.remove("show"); }, 2400); }
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(texto).then(avisar).catch(avisar);
-      } else {
-        var ta = document.createElement("textarea");
-        ta.value = texto; document.body.appendChild(ta); ta.select();
-        try { document.execCommand("copy"); } catch(e){}
-        document.body.removeChild(ta); avisar();
-      }
+      FD.copiar(texto, $("#sol-copy-ok"));
     });
   }
+
+  /* ---------- buscador global ----------
+     Antes solo existía el filtro de #indice, que mira 91 títulos. El 95% del
+     texto era inbuscable, y el trabajo primario declarado es la consulta
+     puntual. Esto indexa el DOM ya pintado: sin build, sin dependencias. */
+  (function(){
+    var campo = $("#q"), caja = $("#q-res");
+    if (!campo || !caja) return;
+
+    var indice = null, marcado = -1;
+
+    /* quita tildes conservando la longitud, para que los índices calcen */
+    function plano(t){ return t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,""); }
+    function esc(t){ return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+    /* se construye al primer uso: para entonces contenido.js ya pintó todo */
+    function construir(){
+      indice = [];
+      $$("main section[id]").forEach(function(sec){
+        var h2 = sec.querySelector("h2");
+        var seccion = h2 ? h2.textContent.trim() : sec.id;
+        $$("h2,h3,h4,p,li,figcaption,td,th", sec).forEach(function(el){
+          /* solo hojas: si contiene otro indexable, el hijo ya lo cubre */
+          if (el.querySelector("p,li,td,th,figcaption")) return;
+          var t = el.textContent.replace(/\s+/g," ").trim();
+          if (t.length < 14) return;
+          var conId = el.closest("[id]");
+          var peso = /^H[234]$/.test(el.tagName) ? 0 : 1;
+          indice.push({ t:t, p:plano(t), s:seccion, a:(conId && conId.id) ? conId.id : sec.id, w:peso });
+        });
+      });
+    }
+
+    function resaltar(t, term){
+      var i = plano(t).indexOf(term);
+      if (i < 0) return esc(t);
+      return esc(t.slice(0,i)) + "<mark>" + esc(t.slice(i,i+term.length)) + "</mark>" + esc(t.slice(i+term.length));
+    }
+
+    /* recorta el pasaje alrededor de la coincidencia: el contexto es lo útil */
+    function pasaje(t, term){
+      var i = plano(t).indexOf(term);
+      if (t.length <= 150) return t;
+      var ini = Math.max(0, i - 60);
+      return (ini > 0 ? "…" : "") + t.slice(ini, ini + 150) + (ini + 150 < t.length ? "…" : "");
+    }
+
+    function cerrar(){ caja.hidden = true; caja.innerHTML = ""; marcado = -1; }
+
+    function buscar(){
+      var term = plano(campo.value.trim());
+      if (term.length < 2){ cerrar(); guardarUrl(""); return; }
+      if (!indice) construir();
+
+      var hits = [];
+      for (var i = 0; i < indice.length && hits.length < 400; i++){
+        if (indice[i].p.indexOf(term) >= 0) hits.push(indice[i]);
+      }
+      hits.sort(function(a,b){ return a.w - b.w; });
+      var top = hits.slice(0, 12);
+
+      if (!top.length){
+        caja.innerHTML = '<p class="q-vacio">Sin resultados para “' + esc(campo.value.trim()) +
+                         '”. Prueba con otra palabra.</p>';
+      } else {
+        var html = '<ol>';
+        top.forEach(function(h){
+          html += '<li><a href="#' + h.a + '">' +
+                  '<span class="q-sec">' + esc(h.s) + '</span>' +
+                  '<b>' + resaltar(pasaje(h.t, term), term) + '</b></a></li>';
+        });
+        html += '</ol>';
+        if (hits.length > top.length){
+          html += '<p class="q-vacio">' + hits.length + ' coincidencias en total. Afina la palabra para ver menos.</p>';
+        }
+        caja.innerHTML = html;
+      }
+      caja.hidden = false;
+      marcado = -1;
+      guardarUrl(campo.value.trim());
+    }
+
+    /* el resultado se puede compartir: ?q=pacing */
+    function guardarUrl(v){
+      if (!window.history || !history.replaceState) return;
+      var u = location.pathname + (v ? "?q=" + encodeURIComponent(v) : "") + location.hash;
+      history.replaceState(null, "", u);
+    }
+
+    var t = null;
+    campo.addEventListener("input", function(){ clearTimeout(t); t = setTimeout(buscar, 120); });
+
+    /* teclado: flechas por los resultados, Enter salta, Escape cierra */
+    campo.addEventListener("keydown", function(e){
+      var items = $$("a", caja);
+      if (e.key === "Escape"){ campo.value = ""; cerrar(); guardarUrl(""); return; }
+      if (!items.length) return;
+      if (e.key === "ArrowDown" || e.key === "ArrowUp"){
+        e.preventDefault();
+        marcado += (e.key === "ArrowDown" ? 1 : -1);
+        if (marcado < 0) marcado = items.length - 1;
+        if (marcado >= items.length) marcado = 0;
+        items[marcado].focus();
+      } else if (e.key === "Enter"){
+        e.preventDefault();
+        items[marcado >= 0 ? marcado : 0].click();
+      }
+    });
+
+    caja.addEventListener("keydown", function(e){
+      if (e.key === "Escape"){ campo.focus(); cerrar(); }
+    });
+    caja.addEventListener("click", function(e){ if (e.target.closest("a")) cerrar(); });
+
+    /* "/" y Ctrl+K desde cualquier parte, salvo mientras se escribe en otro campo */
+    document.addEventListener("keydown", function(e){
+      var en = e.target && /^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName);
+      var atajo = (e.key === "/" && !en) || ((e.ctrlKey || e.metaKey) && (e.key === "k" || e.key === "K"));
+      if (!atajo) return;
+      e.preventDefault();
+      campo.scrollIntoView({ behavior: FD.menosMovimiento() ? "auto" : "smooth", block: "center" });
+      campo.focus(); campo.select();
+    });
+
+    /* llegar con ?q= ya buscando */
+    var q = (location.search.match(/[?&]q=([^&]*)/) || [])[1];
+    if (q){ campo.value = decodeURIComponent(q.replace(/\+/g," ")); buscar(); }
+  })();
 })();
