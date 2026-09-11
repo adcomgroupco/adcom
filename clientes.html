@@ -4,49 +4,50 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ADCOM | Hub de informes de clientes</title>
+<link rel="stylesheet" href="assets/css/adcom-tokens.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --yellow: #ffc000;
-      --black: #090909;
-      --ink: #222;
-      --muted: #6f6f6f;
-      --soft: #f7f7f7;
-      --line: #e8e8e8;
-      --white: #fff;
-      --radius: 8px;
-      --shadow: 0 18px 46px rgba(0,0,0,.07);
+      --yellow: #ffd400;
+      --black: #050505;
+      --ink: var(--fg);
+      --muted: var(--fg-muted);
+      --soft: var(--sunken);
+      --line: var(--rule);
+      --white: #fcfcfa;
+
+      --shadow: none
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0 }
 
     body {
       font-family: "Poppins", Arial, sans-serif;
       background: var(--white);
       color: var(--ink);
       min-height: 100vh;
-      line-height: 1.55;
+      line-height: 1.55
     }
 
-    a { color: inherit; }
+    a { color: inherit }
 
     button,
     input,
     select {
-      font: inherit;
+      font: inherit
     }
 
     .app {
       min-height: 100vh;
-      background: var(--white);
+      background: var(--white)
     }
 
     .main {
       width: 100%;
       padding: 32px clamp(18px, 4vw, 54px) 42px;
-      min-width: 0;
+      min-width: 0
     }
 
     .topbar {
@@ -56,16 +57,14 @@
       align-items: flex-start;
       margin-bottom: 26px;
       border-bottom: 1px solid var(--line);
-      padding-bottom: 24px;
+      padding-bottom: 24px
     }
 
     .topbar h2 {
       font-size: clamp(2rem, 4vw, 4.3rem);
       line-height: .96;
-      text-transform: uppercase;
-      letter-spacing: 0;
       max-width: 820px;
-      color: var(--black);
+      color: var(--black)
     }
 
     .view-toggle {
@@ -75,7 +74,7 @@
       border-radius: 999px;
       overflow: hidden;
       flex: 0 0 auto;
-      background: var(--soft);
+      background: var(--soft)
     }
 
     .view-toggle button {
@@ -85,12 +84,12 @@
       padding: 10px 16px;
       font-size: .78rem;
       font-weight: 700;
-      cursor: pointer;
+      cursor: pointer
     }
 
     .view-toggle button.active {
       background: var(--black);
-      color: var(--yellow);
+      color: var(--yellow)
     }
 
     .filters {
@@ -105,20 +104,18 @@
       gap: 12px;
       align-items: end;
       margin-bottom: 22px;
-      box-shadow: 0 18px 42px rgba(0,0,0,.055);
+      box-shadow: none
     }
 
     .field {
       display: grid;
-      gap: 7px;
+      gap: 7px
     }
 
     .field label {
       color: var(--muted);
-      font-size: .68rem;
-      font-weight: 700;
-      letter-spacing: .09em;
-      text-transform: uppercase;
+      font-size: .75rem;
+      font-weight: 700
     }
 
     .field input,
@@ -127,28 +124,28 @@
       border: 1px solid var(--line);
       background: var(--soft);
       color: var(--black);
-      border-radius: 6px;
+      border-radius: var(--radius-sm);
       padding: 11px 12px;
       outline: none;
-      font-weight: 600;
+      font-weight: 600
     }
 
     .field input:focus,
     .field select:focus {
       border-color: var(--yellow);
       background: var(--white);
-      box-shadow: 0 0 0 3px rgba(255,192,0,.18);
+      box-shadow: 0 0 0 3px rgba(255,212,0,.18)
     }
 
     .reset-btn {
       border: 0;
       background: var(--black);
       color: var(--yellow);
-      border-radius: 6px;
+      border-radius: var(--radius-sm);
       padding: 12px 16px;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 12px 24px rgba(0,0,0,.12);
+      box-shadow: none
     }
 
     .category-strip {
@@ -156,7 +153,7 @@
       flex-wrap: wrap;
       gap: 10px;
       margin: 0 0 22px;
-      padding-bottom: 2px;
+      padding-bottom: 2px
     }
 
     .chip {
@@ -168,27 +165,27 @@
       font-size: .78rem;
       font-weight: 700;
       cursor: pointer;
-      transition: background .2s, color .2s, border-color .2s;
+      transition: background .2s, color .2s, border-color .2s
     }
 
     .chip.active,
     .chip:hover {
       background: var(--black);
       color: var(--yellow);
-      border-color: var(--black);
+      border-color: var(--black)
     }
 
     .content-layout {
       display: grid;
       grid-template-columns: minmax(0, 1fr) 360px;
       gap: 22px;
-      align-items: start;
+      align-items: start
     }
 
     .cards {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
+      gap: 16px
     }
 
     .report-card {
@@ -200,7 +197,7 @@
       flex-direction: column;
       overflow: hidden;
       position: relative;
-      transition: transform .18s, box-shadow .18s, border-color .18s;
+      transition: transform .18s, box-shadow .18s, border-color .18s
     }
 
     .report-card::before {
@@ -209,29 +206,29 @@
       inset: 0 0 auto;
       height: 6px;
       background: var(--yellow);
-      z-index: 1;
+      z-index: 1
     }
 
     .report-card:hover {
       transform: translateY(-3px);
       box-shadow: var(--shadow);
-      border-color: #d7d7d7;
+      border-color: #d7d7d7
     }
 
     .card-top {
       background:
-        linear-gradient(135deg, rgba(255,192,0,.16), transparent 48%),
+        linear-gradient(135deg, rgba(255,212,0,.16), transparent 48%),
         var(--soft);
       border-bottom: 1px solid var(--line);
       padding: 22px 16px 16px;
       display: grid;
-      gap: 12px;
+      gap: 12px
     }
 
     .tag-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 7px;
+      gap: 7px
     }
 
     .tag {
@@ -242,28 +239,25 @@
       background: var(--white);
       color: var(--black);
       padding: 5px 9px;
-      font-size: .68rem;
-      font-weight: 700;
-      text-transform: uppercase;
+      font-size: .75rem;
+      font-weight: 700
     }
 
     .tag.primary {
       background: var(--yellow);
-      border-color: var(--yellow);
+      border-color: var(--yellow)
     }
 
     .tag.dark {
       background: var(--black);
       border-color: var(--black);
-      color: var(--yellow);
+      color: var(--yellow)
     }
 
     .report-card h3 {
       color: var(--black);
       font-size: 1.18rem;
-      line-height: 1.16;
-      letter-spacing: 0;
-      text-transform: uppercase;
+      line-height: 1.16
     }
 
     .card-body {
@@ -271,12 +265,12 @@
       display: flex;
       flex: 1;
       flex-direction: column;
-      gap: 14px;
+      gap: 14px
     }
 
     .report-card p {
       color: var(--muted);
-      font-size: .86rem;
+      font-size: .86rem
     }
 
     .meta-grid {
@@ -285,30 +279,28 @@
       grid-template-columns: repeat(2, 1fr);
       border-top: 1px solid var(--line);
       padding-top: 12px;
-      gap: 10px;
+      gap: 10px
     }
 
     .meta-grid span {
       display: block;
       color: var(--muted);
-      font-size: .66rem;
-      font-weight: 700;
-      letter-spacing: .05em;
-      text-transform: uppercase;
+      font-size: .75rem;
+      font-weight: 700
     }
 
     .meta-grid strong {
       display: block;
       color: var(--black);
       font-size: .84rem;
-      margin-top: 2px;
+      margin-top: 2px
     }
 
     .card-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      padding: 0 16px 18px;
+      padding: 0 16px 18px
     }
 
     .card-actions a,
@@ -317,33 +309,33 @@
       border: 1px solid var(--line);
       background: var(--soft);
       color: var(--black);
-      border-radius: 6px;
+      border-radius: var(--radius-sm);
       padding: 10px 12px;
       text-decoration: none;
       font-size: .76rem;
       font-weight: 700;
       cursor: pointer;
-      transition: transform .18s, background .18s, color .18s, border-color .18s;
+      transition: transform .18s, background .18s, color .18s, border-color .18s
     }
 
     .card-actions a:hover,
     .card-actions button:hover,
     .detail-actions a:hover {
       transform: translateY(-1px);
-      border-color: var(--black);
+      border-color: var(--black)
     }
 
     .table-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 7px;
+      gap: 7px
     }
 
     .card-actions a.primary,
     .detail-actions a.primary {
       background: var(--black);
       color: var(--yellow);
-      border-color: var(--black);
+      border-color: var(--black)
     }
 
     .detail {
@@ -352,45 +344,41 @@
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: var(--soft);
-      overflow: hidden;
+      overflow: hidden
     }
 
     .detail-head {
       background: var(--black);
       color: var(--white);
-      padding: 20px;
-      border-left: 7px solid var(--yellow);
-    }
+      padding: 20px;border:1px solid var(--yellow)}
 
     .detail-head span {
       color: var(--yellow);
-      font-size: .72rem;
-      font-weight: 700;
-      letter-spacing: .08em;
-      text-transform: uppercase;
+      font-size: .75rem;
+      font-weight: 700
     }
 
     .detail-head h3 {
       color: var(--white);
       margin-top: 8px;
       font-size: 1.45rem;
-      line-height: 1.12;
+      line-height: 1.12
     }
 
     .detail-body {
       padding: 20px;
       display: grid;
-      gap: 16px;
+      gap: 16px
     }
 
     .detail-body p {
       color: var(--muted);
-      font-size: .9rem;
+      font-size: .9rem
     }
 
     .detail-list {
       display: grid;
-      gap: 10px;
+      gap: 10px
     }
 
     .detail-row {
@@ -399,21 +387,19 @@
       gap: 12px;
       padding-bottom: 10px;
       border-bottom: 1px solid var(--line);
-      font-size: .84rem;
+      font-size: .84rem
     }
 
     .detail-row span {
       color: var(--muted);
       font-weight: 700;
-      text-transform: uppercase;
-      font-size: .66rem;
-      letter-spacing: .06em;
+      font-size: .75rem
     }
 
     .detail-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 9px;
+      gap: 9px
     }
 
     .table-view {
@@ -421,37 +407,32 @@
       border: 1px solid var(--line);
       border-radius: var(--radius);
       overflow: auto;
-      background: var(--white);
+      background: var(--white)
     }
 
-    .table-view.active { display: block; }
+    .table-view.active { display: block }
 
     table {
       width: 100%;
       min-width: 980px;
-      border-collapse: collapse;
+      border-collapse: collapse
     }
 
     th {
-      background: var(--black);
-      color: var(--yellow);
       padding: 13px 14px;
       text-align: left;
-      font-size: .72rem;
-      text-transform: uppercase;
-      letter-spacing: .06em;
-    }
+      font-size: .75rem;color:var(--fg-muted);border-bottom:1px solid var(--rule-strong)}
 
     td {
       padding: 12px 14px;
       border-bottom: 1px solid var(--line);
       color: var(--ink);
       font-size: .84rem;
-      vertical-align: top;
+      vertical-align: top
     }
 
     tr:nth-child(even) td {
-      background: var(--soft);
+      background: var(--soft)
     }
 
     .empty {
@@ -461,47 +442,47 @@
       color: var(--muted);
       background: var(--soft);
       text-align: center;
-      font-weight: 600;
+      font-weight: 600
     }
 
     @media (max-width: 1180px) {
       .content-layout {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr
       }
 
       .detail {
         position: relative;
-        top: 0;
+        top: 0
       }
 
       .cards {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr))
       }
     }
 
     @media (max-width: 840px) {
       .topbar,
       .filters {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr
       }
 
       .topbar {
-        display: grid;
+        display: grid
       }
 
       .cards {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr
       }
     }
 
     @media (max-width: 560px) {
       .main {
         padding-left: 18px;
-        padding-right: 18px;
+        padding-right: 18px
       }
 
       .topbar h2 {
-        font-size: 2.05rem;
+        font-size: 2.05rem
       }
     }
   </style>
@@ -624,7 +605,7 @@
         summary: `${client} tiene ${links.length} acceso${links.length === 1 ? "" : "s"} disponible${links.length === 1 ? "" : "s"}: ${sourceNames.join(", ") || "sin enlaces activos"}.`,
         url: links[0]?.url || "#",
         links
-      };
+      }
     }
 
     let reports = [...defaultReports];
@@ -654,7 +635,7 @@
       populateSourceSelect();
       renderCategoryStrip();
       bindEvents();
-      render();
+      render()
     }
 
     function populateSelect(id, key, label) {
@@ -664,9 +645,9 @@
         const option = document.createElement("option");
         option.value = value;
         option.textContent = value;
-        select.appendChild(option);
+        select.appendChild(option)
       });
-      select.value = filters[key] || "all";
+      select.value = filters[key] || "all"
     }
 
     function populateSourceSelect() {
@@ -677,7 +658,7 @@
         <option value="Zoho">Zoho</option>
         <option value="HTML">HTML</option>
       `;
-      select.value = filters.channel || "all";
+      select.value = filters.channel || "all"
     }
 
     function renderCategoryStrip() {
@@ -691,33 +672,33 @@
         button.addEventListener("click", () => {
           filters.category = cat.value;
           renderCategoryStrip();
-          render();
+          render()
         });
-        categoryStrip.appendChild(button);
-      });
+        categoryStrip.appendChild(button)
+      })
     }
 
     function bindEvents() {
       document.querySelector("#searchInput").addEventListener("input", (event) => {
         filters.search = event.target.value;
-        render();
+        render()
       });
       document.querySelector("#clientFilter").addEventListener("change", (event) => {
         filters.client = event.target.value;
-        render();
+        render()
       });
       document.querySelector("#channelFilter").addEventListener("change", (event) => {
         filters.channel = event.target.value;
-        render();
+        render()
       });
       document.querySelector("#priorityFilter").addEventListener("change", (event) => {
         filters.priority = event.target.value;
-        render();
+        render()
       });
       document.querySelector("#resetBtn").addEventListener("click", resetFilters);
       document.querySelectorAll("[data-view]").forEach((button) => {
-        button.addEventListener("click", () => setView(button.dataset.view));
-      });
+        button.addEventListener("click", () => setView(button.dataset.view))
+      })
     }
 
     function resetFilters() {
@@ -727,7 +708,7 @@
       document.querySelector("#channelFilter").value = "all";
       document.querySelector("#priorityFilter").value = "all";
       renderCategoryStrip();
-      render();
+      render()
     }
 
     function getFilteredReports() {
@@ -739,18 +720,18 @@
           && (filters.client === "all" || report.client === filters.client)
           && (filters.category === "all" || report.category === filters.category)
           && (filters.channel === "all" || (report.links || []).some((link) => link.label === filters.channel))
-          && (filters.priority === "all" || report.priority === filters.priority);
-      });
+          && (filters.priority === "all" || report.priority === filters.priority)
+      })
     }
 
     function render() {
       const filtered = getFilteredReports();
       if (!filtered.some((report) => reportId(report) === selectedId)) {
-        selectedId = filtered[0] ? reportId(filtered[0]) : "";
+        selectedId = filtered[0] ? reportId(filtered[0]) : ""
       }
       renderCards(filtered);
       renderTable(filtered);
-      renderDetail(filtered.find((report) => reportId(report) === selectedId) || filtered[0]);
+      renderDetail(filtered.find((report) => reportId(report) === selectedId) || filtered[0])
     }
 
     function renderCards(filtered) {
@@ -784,10 +765,10 @@
         card.querySelector("[data-select]").addEventListener("click", () => {
           selectedId = reportId(report);
           render();
-          detailPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          detailPanel.scrollIntoView({ behavior: "smooth", block: "nearest" })
         });
-        cardsContainer.appendChild(card);
-      });
+        cardsContainer.appendChild(card)
+      })
     }
 
     function renderTable(filtered) {
@@ -803,8 +784,8 @@
           <td>${coverageLabel(report.priority)}</td>
           <td><div class="table-links">${renderLinkButtons(report.links, false)}</div></td>
         `;
-        tableBody.appendChild(row);
-      });
+        tableBody.appendChild(row)
+      })
     }
 
     function renderDetail(report) {
@@ -813,7 +794,7 @@
           <div class="detail-head"><span>Detalle</span><h3>Sin selección</h3></div>
           <div class="detail-body"><p>No hay informes visibles.</p></div>
         `;
-        return;
+        return
       }
       detailPanel.innerHTML = `
         <div class="detail-head">
@@ -833,16 +814,16 @@
             <a href="https://docs.google.com/spreadsheets/d/1oavWtOKhH9AWnYPnRkPnH6-RoGV62YLcFY2Rxd_2CC0/edit?gid=0#gid=0" target="_blank" rel="noopener noreferrer">Ver matriz</a>
           </div>
         </div>
-      `;
+      `
     }
 
     function setView(view) {
       document.querySelectorAll("[data-view]").forEach((button) => {
-        button.classList.toggle("active", button.dataset.view === view);
+        button.classList.toggle("active", button.dataset.view === view)
       });
       const showTable = view === "table";
       tableView.classList.toggle("active", showTable);
-      cardsView.style.display = showTable ? "none" : "grid";
+      cardsView.style.display = showTable ? "none" : "grid"
     }
 
     function handleCsvUpload(event) {
@@ -859,9 +840,9 @@
         populateSelect("clientFilter", "client", "Todos los clientes");
         populateSourceSelect();
         renderCategoryStrip();
-        render();
+        render()
       };
-      reader.readAsText(file, "utf-8");
+      reader.readAsText(file, "utf-8")
     }
 
     function parseCsv(csv) {
@@ -875,20 +856,20 @@
         const next = csv[i + 1];
         if (char === '"' && next === '"') {
           current += '"';
-          i += 1;
+          i += 1
         } else if (char === '"') {
-          inQuotes = !inQuotes;
+          inQuotes = !inQuotes
         } else if (char === "," && !inQuotes) {
           row.push(current.trim());
-          current = "";
+          current = ""
         } else if ((char === "\n" || char === "\r") && !inQuotes) {
           if (char === "\r" && next === "\n") i += 1;
           row.push(current.trim());
           if (row.some(Boolean)) rows.push(row);
           row = [];
-          current = "";
+          current = ""
         } else {
-          current += char;
+          current += char
         }
       }
 
@@ -900,10 +881,10 @@
       return rows.slice(1).map((cells) => {
         const item = {};
         headers.forEach((header, index) => {
-          item[header] = cells[index] || "";
+          item[header] = cells[index] || ""
         });
-        return item;
-      });
+        return item
+      })
     }
 
     function normalizeImportedReport(row) {
@@ -912,22 +893,22 @@
       const looker = pick(row, ["looker", "lookerstudio", "data studio", "datastudio"]);
       const zoho = pick(row, ["zoho", "zoho analytics"]);
       const html = pick(row, ["html", "url", "link", "enlace"]);
-      return createReport(category, client, looker, zoho, html);
+      return createReport(category, client, looker, zoho, html)
     }
 
     function pick(row, keys) {
       for (const key of keys) {
-        if (row[key]) return row[key];
+        if (row[key]) return row[key]
       }
-      return "";
+      return ""
     }
 
     function renderLinkButtons(links = [], firstPrimary = false) {
       if (!links.length) return `<span class="tag">Sin enlace</span>`;
       return links.map((link, index) => {
         const primary = firstPrimary && index === 0 ? " class=\"primary\"" : "";
-        return `<a${primary} href="${escapeAttribute(link.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>`;
-      }).join("");
+        return `<a${primary} href="${escapeAttribute(link.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>`
+      }).join("")
     }
 
     function coverageLabel(priority) {
@@ -936,14 +917,14 @@
         Media: "2 fuentes",
         Base: "1 fuente"
       };
-      return labels[priority] || priority || "Sin fuente";
+      return labels[priority] || priority || "Sin fuente"
     }
 
     function formatDate(date) {
       if (!date) return "Sin fecha";
       const parsed = new Date(`${date}T00:00:00`);
       if (Number.isNaN(parsed.getTime())) return date;
-      return parsed.toLocaleDateString("es-CO", { year: "numeric", month: "short", day: "2-digit" });
+      return parsed.toLocaleDateString("es-CO", { year: "numeric", month: "short", day: "2-digit" })
     }
 
     function escapeHtml(value) {
@@ -952,11 +933,11 @@
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(/'/g, "&#039;")
     }
 
     function escapeAttribute(value) {
-      return escapeHtml(value).replace(/`/g, "&#096;");
+      return escapeHtml(value).replace(/`/g, "&#096;")
     }
 
     init();

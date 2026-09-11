@@ -13,7 +13,7 @@
 html{scroll-behavior:auto}
 
 body{
-  background:#fff;color:#000;font-size:10.5pt;line-height:1.4;
+  background:#fff;color:#000;font-size:10.5pt;line-height:1.4
 }
 
 /* ---------- fuera del papel ---------- */
@@ -54,7 +54,7 @@ body{
   background:#fff !important;
   color:#000 !important;
   box-shadow:none !important;
-  backdrop-filter:none !important;
+  backdrop-filter:none !important
 }
 .section-dark,.section-light{padding:0 0 14pt}
 .section-dark,
@@ -63,17 +63,17 @@ body{
 .split>div:nth-child(2){
   --fg:#000;--fg-muted:#333;--line:#bbb;--surface:#fff;--surface-2:#fff;
   --accent-ink:#000;--chip-bg:#fff;--chip-bd:#bbb;--chip-fg:#333;
-  --quote-bg:#fff;--quote-bd:#bbb;
+  --quote-bg:#fff;--quote-bd:#bbb
 }
 
 /* el amarillo no existe en papel: se convierte en negro o en un borde */
 .eyebrow,.eyebrow span:first-child,em,.tag-accent,.card-index,.panel-label{
-  color:#000 !important;background:none !important;border-color:#666 !important;
+  color:#000 !important;background:none !important;border-color:#666 !important
 }
 em{font-weight:800}
 
 .card,.roadmap-card,.alert-card,.panel,.quote,.table-wrap,.flow{
-  border:1px solid #bbb !important;
+  border:1px solid #bbb !important
 }
 
 /* ---------- lo plegado se abre ---------- */
@@ -83,7 +83,7 @@ details.mas>.mas-body{display:block !important}
 /* ---------- cortes de página ---------- */
 h2,h3,h4{break-after:avoid;page-break-after:avoid}
 .section-heading,.card,.roadmap-card,.alert-card,.gate,.flow,.quote,tr{
-  break-inside:avoid;page-break-inside:avoid;
+  break-inside:avoid;page-break-inside:avoid
 }
 section[id]{break-before:page;page-break-before:always}
 
@@ -105,7 +105,7 @@ table{font-size:8.5pt}
 
 /* ---------- rejillas: dos columnas máximo en papel ---------- */
 .grid-3,.pillars,.roadmap,.toc-grid{
-  display:grid !important;grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:8pt !important;
+  display:grid !important;grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:8pt !important
 }
 .grid-3>*{grid-column:auto !important}
 .grid-2{gap:8pt !important}

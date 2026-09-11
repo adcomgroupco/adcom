@@ -1,197 +1,77 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Portal interno de Adcom: framework de operación del área digital, tableros por cliente y diagnósticos de sector." />
-  <title>ADCOM | Portal interno</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23090909' stroke='%23ffc000' stroke-width='2'/%3E%3Ctext x='16' y='21.5' font-family='Poppins,Arial,sans-serif' font-size='12' font-weight='900' fill='%23ffc000' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
-  <meta name="theme-color" content="#090909">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Índice del material interno del área digital de Adcom.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#f4f4f1">
+  <title>Adcom | Documentos</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --yellow:#ffc000;
-      --black:#090909;
-      --ink:#222;
-      --muted:#6f6f6f;
-      --soft:#f7f7f7;
-      --line:#e8e8e8;
-      --white:#fff;
-      --radius:18px;
-      --shadow:0 22px 54px rgba(0,0,0,.09);
-    }
-    * { box-sizing:border-box; margin:0; padding:0; }
-    body {
-      font-family:"Poppins", Arial, sans-serif;
-      background:
-        radial-gradient(900px 460px at 92% -10%, rgba(255,192,0,.16), transparent 58%),
-        radial-gradient(680px 420px at -5% 0%, rgba(9,9,9,.05), transparent 55%),
-        var(--white);
-      color:var(--ink);
-      min-height:100vh;
-      line-height:1.6;
-      -webkit-font-smoothing:antialiased;
-      display:flex;
-      justify-content:center;
-      padding:clamp(28px,6vw,80px) clamp(20px,5vw,64px);
-    }
-    .portal { width:100%; max-width:1120px; }
-
-    /* ---------- Intro ---------- */
-    .brand {
-      display:inline-flex; align-items:center; gap:9px;
-      background:var(--black); color:#fff;
-      border-radius:999px; padding:9px 18px;
-      font-size:.72rem; font-weight:600;
-      text-transform:uppercase; letter-spacing:.06em;
-      margin-bottom:26px;
-    }
-    .brand::before { content:""; width:9px; height:9px; border-radius:50%; background:var(--yellow); }
-    h1 {
-      font-size:clamp(2rem,4.4vw,3.4rem);
-      line-height:1.05; letter-spacing:-.02em;
-      color:var(--black); font-weight:800;
-      max-width:800px;
-    }
-    h1 em { font-style:normal; color:var(--muted); }
-    .subtitle {
-      color:var(--muted); font-size:clamp(1rem,1.4vw,1.15rem);
-      margin-top:16px; max-width:660px;
-    }
-    .meta {
-      margin-top:26px; padding-top:22px;
-      border-top:1px solid var(--line);
-      display:flex; flex-wrap:wrap; gap:10px;
-    }
-    .meta span {
-      background:var(--soft); border:1px solid var(--line);
-      border-radius:999px; padding:7px 14px;
-      font-size:.74rem; font-weight:600; color:var(--black);
-      letter-spacing:.02em;
-    }
-
-    /* ---------- Cards ---------- */
-    .section-label {
-      margin-top:44px; margin-bottom:16px;
-      font-size:.7rem; font-weight:700; letter-spacing:.12em;
-      text-transform:uppercase; color:var(--muted);
-      display:flex; align-items:center; gap:10px;
-    }
-    .section-label::after { content:""; flex:1; height:1px; background:var(--line); }
-    .cards {
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(290px,1fr));
-      gap:20px;
-    }
-    .card {
-      position:relative;
-      display:flex; flex-direction:column;
-      background:var(--white);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      padding:28px 26px 24px;
-      text-decoration:none; color:inherit;
-      overflow:hidden;
-      min-height:250px;
-      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-    }
-    .card::before {
-      content:""; position:absolute; top:0; left:0; width:100%; height:6px;
-      background:var(--yellow);
-    }
-    .card:hover {
-      transform:translateY(-5px);
-      box-shadow:var(--shadow);
-      border-color:#d7d7d7;
-    }
-    .card:focus-visible { outline:3px solid var(--yellow); outline-offset:3px; }
-    .card-tag {
-      display:inline-flex; width:max-content;
-      border-radius:999px; padding:6px 13px;
-      font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em;
-      margin-bottom:16px;
-    }
-    .card-tag.dark { background:var(--black); color:var(--yellow); }
-    .card-tag.light { background:var(--soft); color:var(--black); border:1px solid var(--line); }
-    .card h2 {
-      font-size:1.4rem; line-height:1.18; color:var(--black);
-      font-weight:700; letter-spacing:-.01em;
-    }
-    .card p { color:var(--muted); font-size:.92rem; margin-top:12px; }
-    .card-cta {
-      margin-top:auto; padding-top:20px;
-      display:inline-flex; align-items:center; gap:9px;
-      color:var(--black); font-weight:700; font-size:.92rem;
-    }
-    .card-cta .arrow {
-      display:inline-flex; align-items:center; justify-content:center;
-      width:30px; height:30px; border-radius:50%;
-      background:var(--yellow); color:var(--black);
-      font-weight:800; transition:transform .2s ease;
-    }
-    .card:hover .card-cta .arrow { transform:translateX(4px); }
-
-    /* ---------- Footer ---------- */
-    .foot {
-      margin-top:40px; color:var(--muted); font-size:.78rem;
-      display:flex; align-items:center; gap:8px; flex-wrap:wrap;
-    }
-    .foot::before { content:""; width:26px; height:2px; background:var(--yellow); border-radius:2px; }
-    .foot a { color:var(--black); font-weight:600; text-decoration:none; border-bottom:1px solid var(--line); }
-    .foot a:hover { border-color:var(--yellow); }
-
-    @media (max-width:720px) {
-      .cards { grid-template-columns:1fr; }
-      .card { min-height:0; }
-    }
-  </style>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="assets/css/adcom.css">
+  <script defer src="assets/js/adcom.js"></script>
 </head>
 <body>
-  <main class="portal">
-    <div class="brand">ADCOM · Área digital</div>
-    <h1>Cómo trabajamos y <em>qué estamos viendo.</em></h1>
-    <p class="subtitle">
-      Punto de entrada al material interno del área digital: el framework que define la forma de
-      operar, los tableros de cada cuenta y los diagnósticos de sector que sustentan las decisiones
-      de pauta.
-    </p>
+<a class="skip-link" href="#top">Ir a los documentos</a>
 
-    <div class="meta">
-      <span>Documentos internos</span>
-      <span>Sin build ni dependencias</span>
-      <span>Colombia · 2026</span>
-    </div>
+<header class="masthead">
+  <a class="wordmark" href="index.html"><i></i>Adcom <span>documentos</span></a>
+  <nav aria-label="Documentos">
+    <a href="framework/index.html">Framework del área digital</a>
+    <a href="clientes.html">Hub de informes de clientes</a>
+    <a href="diagnostico-educacion.html">Educación superior y leads de valor</a>
+  </nav>
+  <span class="stamp">Colombia</span>
+</header>
 
-    <p class="section-label">Destinos</p>
+<main id="top">
 
-    <div class="cards">
-      <a class="card" href="framework/index.html">
-        <span class="card-tag dark">Documento maestro · v0.3</span>
-        <h2>Framework del área digital</h2>
-        <p>Los mínimos de la operación: cómo entra una solicitud, cómo se controla un presupuesto, cómo se reacciona a una desviación y qué se automatiza. Incluye herramientas interactivas.</p>
-        <span class="card-cta">Abrir framework <span class="arrow">&rarr;</span></span>
-      </a>
+<section class="opening wrap">
+  <h1>Documentos de la cuenta</h1>
+  <p class="lede">El framework de operación, el hub de tableros por cliente y los diagnósticos de sector, en un solo lugar.</p>
 
-      <a class="card" href="clientes.html">
-        <span class="card-tag light">Tableros por cliente</span>
-        <h2>Hub de informes de clientes</h2>
-        <p>Cards y tabla filtrable con accesos a Looker, Zoho y los tableros HTML de cada cuenta.</p>
-        <span class="card-cta">Abrir hub <span class="arrow">&rarr;</span></span>
-      </a>
+</section>
 
-      <a class="card" href="diagnostico-educacion.html">
-        <span class="card-tag light">Diagnóstico · Educación 2026</span>
-        <h2>Educación superior y leads de valor</h2>
-        <p>Informe interactivo del sector: intención de acceso, captación digital, CPA y recomendaciones de pauta, formularios, creatividad y CRM.</p>
-        <span class="card-cta">Abrir diagnóstico <span class="arrow">&rarr;</span></span>
-      </a>
-    </div>
+<section class="grupo wrap" id="documentos">
+  <div class="shelf">
+    <a class="card" href="framework/index.html">
+      <p class="kind">Framework</p>
+      <h2>Framework del área digital</h2>
+      <span class="go">Abrir <svg class="ico" aria-hidden="true"><use href="#i-abrir"></use></svg></span>
+    </a>
 
-    <p class="foot">
-      Material interno de Adcom · <a href="https://github.com/adcomgroupco/adcom">Repositorio</a>
-    </p>
-  </main>
+    <a class="card" href="clientes.html">
+      <p class="kind">Hub</p>
+      <h2>Hub de informes de clientes</h2>
+      <span class="go">Abrir <svg class="ico" aria-hidden="true"><use href="#i-abrir"></use></svg></span>
+    </a>
+
+    <a class="card" href="diagnostico-educacion.html">
+      <p class="kind">Diagnóstico</p>
+      <h2>Educación superior y leads de valor</h2>
+      <span class="go">Abrir <svg class="ico" aria-hidden="true"><use href="#i-abrir"></use></svg></span>
+    </a>
+  </div>
+</section>
+
+<section class="colophon wrap">
+  <dl>
+    <dt>Cuenta</dt><dd>Adcom, área digital</dd>
+    <dt>Uso</dt>
+    <dd>Abrir <code>index.html</code> en el navegador, o servir la carpeta con
+    <code>python -m http.server</code></dd>
+    <dt>Alcance</dt>
+    <dd>Documentos internos de la cuenta</dd>
+  </dl>
+</section>
+
+</main>
+
+<footer class="footer">
+  <span>Adcom, biblioteca de documentos</span>
+  <span>Colombia</span>
+</footer>
+
 </body>
 </html>
