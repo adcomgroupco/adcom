@@ -193,7 +193,7 @@
 /* Suelo papel declarado a mano: hace falta para una franja clara dentro de un
    documento en tinta. Repite los valores de :root a propósito, porque una
    franja no puede depender de cuál sea el suelo de la página que la contiene. */
-[data-suelo="papel"],.section-light,.s-light{
+[data-suelo="papel"],[data-roles="papel"],.section-light,.s-light{
   --ground:#f4f4f1;
   --fg:#050505;
   --fg-secondary:#4a4a47;
@@ -243,7 +243,7 @@
 /* ========================== SUELO TINTA ===================================
    Los mismos roles, resueltos contra un suelo oscuro. Se activa con
    data-suelo="tinta" en el <html>. Nada más cambia. */
-[data-suelo="tinta"],.section-dark,.s-dark{
+[data-suelo="tinta"],[data-roles="tinta"],.section-dark,.s-dark{
   --ground:#050505;
   --fg:#f4f4f1;                 /* 18.5:1 · nunca #fff puro */
   --fg-secondary:#aaa9a4;       /* 8.7:1 · el mismo que usa el .slab de genius */

@@ -89,8 +89,7 @@
 
     .view-toggle button.active {
       background: var(--black);
-      color: var(--yellow)
-    }
+      color:var(--accent)}
 
     .filters {
       background: var(--white);
@@ -132,7 +131,7 @@
 
     .field input:focus,
     .field select:focus {
-      border-color: var(--yellow);
+      border-color:var(--accent-fg);
       background: var(--white);
       box-shadow: 0 0 0 3px rgba(255,212,0,.18)
     }
@@ -140,7 +139,7 @@
     .reset-btn {
       border: 0;
       background: var(--black);
-      color: var(--yellow);
+      color:var(--accent);
       border-radius: var(--radius-sm);
       padding: 12px 16px;
       font-weight: 700;
@@ -171,7 +170,7 @@
     .chip.active,
     .chip:hover {
       background: var(--black);
-      color: var(--yellow);
+      color:var(--accent);
       border-color: var(--black)
     }
 
@@ -245,14 +244,13 @@
 
     .tag.primary {
       background: var(--yellow);
-      border-color: var(--yellow)
+      border-color:var(--accent-fg)
     }
 
     .tag.dark {
       background: var(--black);
       border-color: var(--black);
-      color: var(--yellow)
-    }
+      color:var(--accent)}
 
     .report-card h3 {
       color: var(--black);
@@ -334,7 +332,7 @@
     .card-actions a.primary,
     .detail-actions a.primary {
       background: var(--black);
-      color: var(--yellow);
+      color:var(--accent);
       border-color: var(--black)
     }
 
@@ -353,7 +351,7 @@
       padding: 20px;border:1px solid var(--yellow)}
 
     .detail-head span {
-      color: var(--yellow);
+      color:var(--accent-fg);
       font-size: .75rem;
       font-weight: 700
     }
@@ -791,13 +789,13 @@
     function renderDetail(report) {
       if (!report) {
         detailPanel.innerHTML = `
-          <div class="detail-head"><span>Detalle</span><h3>Sin selección</h3></div>
+          <div class="detail-head" data-roles="tinta"><span>Detalle</span><h3>Sin selección</h3></div>
           <div class="detail-body"><p>No hay informes visibles.</p></div>
         `;
         return
       }
       detailPanel.innerHTML = `
-        <div class="detail-head">
+        <div class="detail-head" data-roles="tinta">
           <span>${escapeHtml(report.client)} · ${escapeHtml(report.category)}</span>
           <h3>${escapeHtml(report.title)}</h3>
         </div>

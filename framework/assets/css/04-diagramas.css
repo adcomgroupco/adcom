@@ -6,7 +6,7 @@
 /* ---------- diagramas de flujo ---------- */
 .flow{margin:0;padding:clamp(16px,2vw,26px);border-radius:var(--radius);border:1px solid var(--line);background:var(--surface);overflow-x:auto}
 .flow+.flow{margin-top:14px}
-.flow svg{display:block;width:100%;min-width:820px;height:auto;color:var(--fg)}
+.flow svg{display:block;width:100%;min-width:820px;height:auto;color:var(--fg-muted)}
 .flow figcaption{margin:14px 0 0;padding-top:13px;border-top:1px solid var(--line);color:var(--fg-muted);font-size:var(--fs-ui);max-width:var(--measure);letter-spacing:var(--tk-body);line-height:var(--lh-ui)}
 .flow figcaption b{color:var(--fg)}
 .fl-band{fill:none;stroke:currentColor;stroke-opacity:.13;stroke-width:1;stroke-dasharray:5 6}
@@ -16,7 +16,7 @@
 .fl-dec{fill:var(--surface-2);stroke:var(--accent-ink);stroke-opacity:.9;stroke-width:1.6}
 .fl-t{fill:currentColor;font-size:var(--fs-body-min);font-weight:600}
 .fl-t-b{fill:currentColor;font-size:12.5px;font-weight:800}
-.fl-t-sm{fill:currentColor;fill-opacity:.6;font-size:var(--fs-min);font-weight:600}
+.fl-t-sm{fill:currentColor;fill-opacity:.6;font-size:var(--fs-body-min);font-weight:600}
 .fl-t-key{fill:var(--accent-ink);font-size:var(--fs-min);font-weight:900;letter-spacing:var(--tk-label)}
 .fl-t-code{fill:var(--accent-ink);font-size:var(--fs-min);font-weight:800}
 .fl-line{fill:none;stroke:currentColor;stroke-opacity:.55;stroke-width:1.5}

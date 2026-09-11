@@ -197,7 +197,7 @@
 /* Suelo papel declarado a mano: hace falta para una franja clara dentro de un
    documento en tinta. Repite los valores de :root a propósito, porque una
    franja no puede depender de cuál sea el suelo de la página que la contiene. */
-[data-suelo="papel"],.section-light,.s-light{
+[data-suelo="papel"],[data-roles="papel"],.section-light,.s-light{
   --ground:#f4f4f1;
   --fg:#050505;
   --fg-secondary:#4a4a47;
@@ -247,7 +247,7 @@
 /* ========================== SUELO TINTA ===================================
    Los mismos roles, resueltos contra un suelo oscuro. Se activa con
    data-suelo="tinta" en el <html>. Nada más cambia. */
-[data-suelo="tinta"],.section-dark,.s-dark{
+[data-suelo="tinta"],[data-roles="tinta"],.section-dark,.s-dark{
   --ground:#050505;
   --fg:#f4f4f1;                 /* 18.5:1 · nunca #fff puro */
   --fg-secondary:#aaa9a4;       /* 8.7:1 · el mismo que usa el .slab de genius */
@@ -449,6 +449,19 @@ button,input,select,textarea{font:inherit}
      · Dos franjas seguidas del mismo suelo son una sola franja.
      · El `.slab` es otra cosa: un momento invertido dentro de una franja, una
        vez por documento. No se usan los dos para lo mismo. */
+/* Declarar el suelo y PINTARLO son dos cosas distintas, y hacen falta las
+   dos por separado.
+
+   `data-suelo` hace las dos: es para una franja, que pinta su suelo de borde
+   a borde. `data-roles` solo declara: es para un panel que YA tiene su
+   propio fondo -- una tarjeta con un blanco translucido, una fila de tabla
+   con su tinte -- y que lo unico que necesita es que los roles de dentro
+   (--fg, --fg-muted, --rule) se resuelvan contra ese fondo y no contra el de
+   la pagina.
+
+   Sin esta distincion, marcar una tarjeta para arreglarle el texto le
+   repintaba el fondo. Medido: en una pasada sobre el corpus eso empeoro
+   quince documentos, uno de ellos en 167 defectos. */
 [data-suelo],.section-dark,.section-light,.s-dark,.s-light{
   background:var(--ground); color:var(--fg)
 }
