@@ -209,6 +209,7 @@ FD.INDICE = [
   {f:"control", a:"control", n:"26—33", t:"Control y alertas", items:[
     {a:"control",            t:"26 · Calculadora de pacing — consumo real contra consumo esperado"},
     {a:"estructura-control", t:"27 · Estructura del control presupuestal — los campos del cuadro"},
+    {a:"pacing-integracion", t:"29.3 · Cómo se va a construir el pacing — API, dataLake y tiempo real"},
     {a:"alertas",            t:"30—31 · Sistema de alertas y alertas críticas"},
     {a:"alertas",            t:"32—33 · Qué monitorea una campaña y con qué frecuencia"}
   ]},

@@ -746,6 +746,78 @@
       <p>Cada cuenta debería tener una lectura periódica del entorno, un brief antes de activar y tres escenarios declarados.</p>
     </div>
 
+    <figure class="flow" tabindex="0" data-reveal>
+      <svg viewBox="0 0 1160 410" role="img" aria-label="Radar, brief y escenarios. El radar de contexto lee el entorno de forma periódica y alimenta las preguntas mínimas; esas preguntas alimentan el brief de activación, que declara la línea base y la señal que obligaría a cambiar. De ahí salen tres escenarios. La operación corre en el escenario base hasta que aparece una señal declarada: si no aparece, se sigue en base; si aparece a favor se pasa al escenario favorable; si aparece en contra se pasa al restrictivo. Cualquiera de los dos cambios entra al análisis del punto 20, y lo aprendido vuelve al radar.">
+        <defs>
+          <marker id="fa-18" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-a" d="M0 0 L10 5 L0 10 z" fill="currentColor" fill-opacity=".5"/></marker>
+          <marker id="fy-18" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-y" d="M0 0 L10 5 L0 10 z" fill="#3aa76d"/></marker>
+          <marker id="fn-18" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-n" d="M0 0 L10 5 L0 10 z" fill="#e04343"/></marker>
+          <marker id="fl-18" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-l" d="M0 0 L10 5 L0 10 z" fill="#ffd400"/></marker>
+        </defs>
+        <text class="fl-t-key" x="20" y="30">DEL ENTORNO A LA ACTIVACIÓN</text>
+
+        <rect class="fl-box" x="20" y="48" width="250" height="58" rx="10"/>
+        <text class="fl-t-b" x="145" y="72" text-anchor="middle">Radar de contexto</text>
+        <text class="fl-t-sm" x="145" y="90" text-anchor="middle">18.1 · lectura periódica</text>
+
+        <rect class="fl-box" x="324" y="48" width="250" height="58" rx="10"/>
+        <text class="fl-t" x="449" y="72" text-anchor="middle">Preguntas mínimas</text>
+        <text class="fl-t-sm" x="449" y="90" text-anchor="middle">18.2 · ¿qué debemos anticipar?</text>
+
+        <rect class="fl-box" x="628" y="48" width="250" height="58" rx="10"/>
+        <text class="fl-t" x="753" y="72" text-anchor="middle">Brief de activación</text>
+        <text class="fl-t-sm" x="753" y="90" text-anchor="middle">19 · trece preguntas</text>
+
+        <rect class="fl-box-key" x="932" y="48" width="208" height="58" rx="10"/>
+        <text class="fl-t-b" x="1036" y="72" text-anchor="middle">Línea base</text>
+        <text class="fl-t-sm" x="1036" y="90" text-anchor="middle">y señal de cambio</text>
+
+        <path class="fl-line" d="M270 77 H318" marker-end="url(#fa-18)"/>
+        <path class="fl-line" d="M574 77 H622" marker-end="url(#fa-18)"/>
+        <path class="fl-line" d="M878 77 H926" marker-end="url(#fa-18)"/>
+
+        <path class="fl-line" d="M1036 106 V132 H150 V172" marker-end="url(#fa-18)"/>
+        <text class="fl-edge" x="590" y="124" text-anchor="middle">se declara antes de activar</text>
+
+        <rect class="fl-box-key" x="20" y="176" width="260" height="64" rx="10"/>
+        <text class="fl-t-b" x="150" y="202" text-anchor="middle">Escenario base</text>
+        <text class="fl-t-sm" x="150" y="221" text-anchor="middle">la operación corre aquí</text>
+
+        <path class="fl-line" d="M280 208 H334" marker-end="url(#fa-18)"/>
+
+        <path class="fl-dec" d="M450 154 L560 208 L450 262 L340 208 Z"/>
+        <text class="fl-t-b" x="450" y="203" text-anchor="middle">¿Apareció una</text>
+        <text class="fl-t-b" x="450" y="220" text-anchor="middle">señal declarada?</text>
+
+        <rect class="fl-box" x="640" y="150" width="340" height="60" rx="10"/>
+        <text class="fl-t" x="810" y="176" text-anchor="middle">Escenario favorable</text>
+        <text class="fl-t-sm" x="810" y="194" text-anchor="middle">dónde ampliamos y con qué señal lo activamos</text>
+
+        <rect class="fl-box" x="640" y="240" width="340" height="60" rx="10"/>
+        <text class="fl-t" x="810" y="266" text-anchor="middle">Escenario restrictivo</text>
+        <text class="fl-t-sm" x="810" y="284" text-anchor="middle">qué protegemos y qué recortamos</text>
+
+        <path class="fl-line-yes" d="M560 208 V180 H634" marker-end="url(#fy-18)"/>
+        <text class="fl-edge-yes" x="597" y="172" text-anchor="middle">a favor</text>
+        <path class="fl-line-no" d="M560 208 V270 H634" marker-end="url(#fn-18)"/>
+        <text class="fl-edge-no" x="597" y="290" text-anchor="middle">en contra</text>
+
+        <path class="fl-line" d="M450 262 V300 H150 V244" marker-end="url(#fa-18)"/>
+        <text class="fl-edge" x="300" y="292" text-anchor="middle">No, se sigue operando en base</text>
+
+        <rect class="fl-box" x="600" y="330" width="400" height="62" rx="10"/>
+        <text class="fl-t-b" x="800" y="356" text-anchor="middle">Análisis · 20</text>
+        <text class="fl-t-sm" x="800" y="374" text-anchor="middle">qué pasó, qué había alrededor, por qué y qué haremos</text>
+
+        <path class="fl-line" d="M980 180 H1030 V361 H1006" marker-end="url(#fa-18)"/>
+        <path class="fl-line" d="M980 270 H1030"/>
+
+        <path class="fl-line-loop" d="M600 361 H8 V77 H16" marker-end="url(#fl-18)"/>
+        <text class="fl-edge" x="300" y="353" text-anchor="middle">lo aprendido entra al siguiente radar</text>
+      </svg>
+      <figcaption><b>18.</b> El escenario no es un número optimista y otro pesimista: es una condición del entorno con una respuesta ya escrita. Por eso el brief declara la señal antes de activar. Si la señal se define después de que el contexto cambió, ya no es anticipación, es reacción.</figcaption>
+    </figure>
+
     <div class="grid-2" data-reveal>
       <div class="card">
         <span class="card-index">18.1 · RADAR DE CONTEXTO</span>
@@ -816,6 +888,59 @@
       <div class="card card-light"><span class="card-index">B</span><h3>Procesos de control</h3><p>Seguimiento presupuestal · sistema de alertas.</p></div>
       <div class="card card-light"><span class="card-index">C</span><h3>Procesos de reacción</h3><p>Optimización de performance · playbooks situacionales.</p></div>
     </div>
+
+    <figure class="flow" tabindex="0" data-reveal>
+      <svg viewBox="0 0 1160 320" role="img" aria-label="Cómo se enganchan las tres familias de procesos. Los procesos recurrentes corren siempre y producen datos. Los procesos de control los observan y preguntan si la desviación exige intervención: si no, la observación continúa; si sí, se activan los procesos de reacción, que cierran con un aprendizaje documentado. Ese aprendizaje entra al cierre mensual, que consolida el periodo y devuelve una proyección a los procesos recurrentes. Del cierre mensual sale el cierre de periodo, que entrega el conocimiento acumulado.">
+        <defs>
+          <marker id="fa-22" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-a" d="M0 0 L10 5 L0 10 z" fill="currentColor" fill-opacity=".5"/></marker>
+          <marker id="fy-22" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-y" d="M0 0 L10 5 L0 10 z" fill="#3aa76d"/></marker>
+          <marker id="fn-22" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-n" d="M0 0 L10 5 L0 10 z" fill="#e04343"/></marker>
+          <marker id="fl-22" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-l" d="M0 0 L10 5 L0 10 z" fill="#ffd400"/></marker>
+        </defs>
+        <text class="fl-t-key" x="20" y="30">LA OPERACIÓN CORRE SIEMPRE</text>
+
+        <rect class="fl-box" x="20" y="60" width="270" height="64" rx="10"/>
+        <text class="fl-t-b" x="155" y="86" text-anchor="middle">A · Recurrentes</text>
+        <text class="fl-t-sm" x="155" y="105" text-anchor="middle">ciclo, materiales y tracking</text>
+
+        <rect class="fl-box" x="330" y="60" width="236" height="64" rx="10"/>
+        <text class="fl-t-b" x="448" y="86" text-anchor="middle">B · Control</text>
+        <text class="fl-t-sm" x="448" y="105" text-anchor="middle">pacing y alertas</text>
+
+        <path class="fl-dec" d="M700 46 L796 92 L700 138 L604 92 Z"/>
+        <text class="fl-t-b" x="700" y="88" text-anchor="middle">¿Exige</text>
+        <text class="fl-t-b" x="700" y="105" text-anchor="middle">intervención?</text>
+
+        <rect class="fl-box" x="852" y="60" width="268" height="64" rx="10"/>
+        <text class="fl-t-b" x="986" y="86" text-anchor="middle">C · Reacción</text>
+        <text class="fl-t-sm" x="986" y="105" text-anchor="middle">optimización y playbooks</text>
+
+        <path class="fl-line" d="M290 92 H324" marker-end="url(#fa-22)"/>
+        <path class="fl-line" d="M566 92 H598" marker-end="url(#fa-22)"/>
+        <path class="fl-line-yes" d="M796 92 H846" marker-end="url(#fy-22)"/>
+        <text class="fl-edge-yes" x="821" y="84" text-anchor="middle">Sí</text>
+
+        <path class="fl-line-no" d="M700 138 V175 H448 V130" marker-end="url(#fn-22)"/>
+        <text class="fl-edge-no" x="574" y="168" text-anchor="middle">No, sigue la observación</text>
+
+        <text class="fl-t-key" x="330" y="216">EL MES Y LA RELACIÓN SE CIERRAN</text>
+
+        <rect class="fl-box-key" x="330" y="232" width="290" height="64" rx="10"/>
+        <text class="fl-t-b" x="475" y="258" text-anchor="middle">Cierre mensual · 42</text>
+        <text class="fl-t-sm" x="475" y="277" text-anchor="middle">consolida, decide y proyecta</text>
+
+        <rect class="fl-box-out" x="700" y="232" width="290" height="64" rx="10"/>
+        <text class="fl-t" x="845" y="258" text-anchor="middle">Cierre de periodo · 43</text>
+        <text class="fl-t-sm" x="845" y="277" text-anchor="middle">entrega el conocimiento acumulado</text>
+
+        <path class="fl-line" d="M986 124 V196 H475 V226" marker-end="url(#fa-22)"/>
+        <text class="fl-edge" x="700" y="188" text-anchor="middle">aprendizaje documentado</text>
+        <path class="fl-line" d="M620 264 H694" marker-end="url(#fa-22)"/>
+        <path class="fl-line-loop" d="M330 264 H10 V92 H14" marker-end="url(#fl-22)"/>
+        <text class="fl-edge" x="170" y="256" text-anchor="middle">proyección del siguiente periodo</text>
+      </svg>
+      <figcaption><b>22.</b> Las tres familias no son tres listas paralelas. <b>A</b> corre siempre, <b>B</b> la observa, y <b>C</b> solo existe porque <b>B</b> encontró algo. Cuando una desviación no pasa por B, la reacción se activa por instinto y no por evidencia.</figcaption>
+    </figure>
 
     <div class="divider" id="ciclo" style="margin-top:0;padding-top:0;border:0">
       <div class="section-heading" data-reveal>
@@ -1028,6 +1153,101 @@
       </details>
     </div>
 
+    <div class="divider" id="pacing-integracion">
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="eyebrow"><span>29.3</span></p>
+          <h2>Cómo se va a construir el pacing</h2>
+          <p class="claim">El cuadro no se llena. <em>Se arma solo.</em></p>
+        </div>
+        <p>El control presupuestal deja de ser una hoja que alguien actualiza y pasa a ser una salida: la inversión de cada medio entra por API, se acumula en un dataLake y se publica como cuadro de seguimiento en tiempo real.</p>
+      </div>
+
+      <figure class="flow" tabindex="0" data-reveal>
+        <svg viewBox="0 0 1160 330" role="img" aria-label="De la plataforma al cuadro en tiempo real. La inversión de Meta, Google Ads, LinkedIn y TikTok entra por las APIs que Media Bridge ya lee, se acumula en un dataLake que actúa como fuente única de inversión, y pasa por una homologación automática que funciona porque la nomenclatura de los puntos 71 a 78 es parseable. El resultado es un cuadro de pacing por producto en tiempo real, que alimenta el sistema de alertas de los puntos 30 a 33 y el cierre mensual del punto 42 sin que nadie rehaga el dato.">
+          <defs>
+            <marker id="fa-293" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-a" d="M0 0 L10 5 L0 10 z" fill="currentColor" fill-opacity=".5"/></marker>
+          </defs>
+          <text class="fl-t-key" x="20" y="30">LA INVERSIÓN ENTRA UNA SOLA VEZ</text>
+          <text class="fl-t-key" x="200" y="228">EL CUADRO DEJA DE LLENARSE A MANO</text>
+
+          <rect class="fl-box" x="20" y="48" width="160" height="40" rx="10"/>
+          <text class="fl-t" x="100" y="73" text-anchor="middle">Meta</text>
+          <rect class="fl-box" x="20" y="96" width="160" height="40" rx="10"/>
+          <text class="fl-t" x="100" y="121" text-anchor="middle">Google Ads</text>
+          <rect class="fl-box" x="20" y="144" width="160" height="40" rx="10"/>
+          <text class="fl-t" x="100" y="169" text-anchor="middle">LinkedIn</text>
+          <rect class="fl-box" x="20" y="192" width="160" height="40" rx="10"/>
+          <text class="fl-t" x="100" y="217" text-anchor="middle">TikTok</text>
+
+          <path class="fl-line" d="M180 68 H220"/>
+          <path class="fl-line" d="M180 116 H220"/>
+          <path class="fl-line" d="M180 164 H220"/>
+          <path class="fl-line" d="M180 212 H220"/>
+          <path class="fl-line" d="M220 68 V212"/>
+          <path class="fl-line" d="M220 140 H274" marker-end="url(#fa-293)"/>
+
+          <rect class="fl-box" x="280" y="110" width="210" height="60" rx="10"/>
+          <text class="fl-t-b" x="385" y="134" text-anchor="middle">Media Bridge</text>
+          <text class="fl-t-sm" x="385" y="153" text-anchor="middle">96 · ya lee las cuatro APIs</text>
+
+          <rect class="fl-box" x="540" y="110" width="210" height="60" rx="10"/>
+          <text class="fl-t-b" x="645" y="134" text-anchor="middle">dataLake</text>
+          <text class="fl-t-sm" x="645" y="153" text-anchor="middle">fuente única de inversión</text>
+          <path class="fl-line" d="M490 140 H534" marker-end="url(#fa-293)"/>
+
+          <rect class="fl-box-key" x="800" y="110" width="250" height="60" rx="10"/>
+          <text class="fl-t-b" x="925" y="134" text-anchor="middle">Homologación automática</text>
+          <text class="fl-t-sm" x="925" y="153" text-anchor="middle">la nomenclatura es la llave</text>
+          <path class="fl-line" d="M750 140 H794" marker-end="url(#fa-293)"/>
+
+          <rect class="fl-box-key" x="540" y="240" width="310" height="64" rx="10"/>
+          <text class="fl-t-b" x="695" y="266" text-anchor="middle">Cuadro de pacing por producto</text>
+          <text class="fl-t-sm" x="695" y="285" text-anchor="middle">en tiempo real, no al cierre del mes</text>
+          <path class="fl-line" d="M925 170 V210 H695 V236" marker-end="url(#fa-293)"/>
+
+          <rect class="fl-box-out" x="900" y="240" width="240" height="64" rx="10"/>
+          <text class="fl-t" x="1020" y="266" text-anchor="middle">Alertas · 30—33</text>
+          <text class="fl-t-sm" x="1020" y="285" text-anchor="middle">el semáforo se dispara solo</text>
+          <path class="fl-line" d="M850 272 H894" marker-end="url(#fa-293)"/>
+
+          <rect class="fl-box-out" x="200" y="240" width="290" height="64" rx="10"/>
+          <text class="fl-t" x="345" y="266" text-anchor="middle">Cierre mensual · 42</text>
+          <text class="fl-t-sm" x="345" y="285" text-anchor="middle">consolida sin rehacer el dato</text>
+          <path class="fl-line" d="M540 272 H496" marker-end="url(#fa-293)"/>
+        </svg>
+        <figcaption><b>29.3.</b> La pieza que hace posible todo lo demás no es el dataLake: es la homologación. Mientras el nombre de una campaña no se pueda leer por máquina, alguien tiene que mantener una tabla que traduzca plataforma a negocio, y esa tabla es el punto donde el tiempo real se vuelve semanal.</figcaption>
+      </figure>
+
+      <div class="grid-2 sep-md" data-reveal>
+        <div class="card">
+          <span class="card-index">29.4 · POR PRODUCTO, NO SOLO POR CAMPAÑA</span>
+          <h3>El negocio no decide por campaña</h3>
+          <p class="sep-sm">Una campaña es una unidad de plataforma. La decisión de mover presupuesto se toma sobre el producto, el programa o la línea de negocio, y eso casi nunca corresponde a una sola campaña ni a una sola plataforma.</p>
+          <p class="sep-sm">Por eso el cuadro suma las cuatro fuentes contra la meta del producto, y el pacing se lee en dos niveles: <b>el producto para decidir, la campaña para ejecutar.</b></p>
+        </div>
+        <div class="card">
+          <span class="card-index">29.5 · LA NOMENCLATURA ES LA LLAVE</span>
+          <h3>Sin nombres parseables no hay automatización</h3>
+          <p class="sep-sm">Hoy la unión entre lo que dice la plataforma y lo que entiende el negocio se hace a mano, en una tabla de homologación que alguien mantiene. Esa tabla existe únicamente porque los nombres de campaña no se pueden leer por máquina.</p>
+          <p class="sep-sm">Con la estructura de <b>71—78</b>, cada posición del nombre es un campo: objetivo, iniciativa, mercado y periodo llegan al dataLake ya separados. La homologación deja de ser un archivo y pasa a ser una consecuencia.</p>
+        </div>
+      </div>
+
+      <div class="grid-2 sep-md" data-reveal>
+        <div class="card">
+          <span class="card-index">29.6 · QUÉ NO CAMBIA</span>
+          <h3>El simulador es criterio, no registro</h3>
+          <p class="sep-sm">El simulador de pacing de esta página no es el sistema de control y no lo va a ser. Sirve para decidir con la cabeza cuando falta el dato o cuando hay que proyectar un escenario. El registro vive en la integración.</p>
+        </div>
+        <div class="card">
+          <span class="card-index">29.7 · DÓNDE ESTÁN LOS ENLACES</span>
+          <h3>Aquí no</h3>
+          <p class="sep-sm">Las hojas de pacing que hoy sirven de referencia son artefactos vivos de un cliente. Siguiendo <b>58.2</b>, sus enlaces viven en la carpeta <b>00 · Inicio</b> de cada cliente. Aquí queda el modelo; allá queda la ubicación.</p>
+        </div>
+      </div>
+    </div>
+
     <div class="divider" id="alertas">
       <div class="section-heading" data-reveal>
         <div>
@@ -1055,6 +1275,75 @@
           <p>Contener, escalar, comunicar y resolver.</p>
         </article>
       </div>
+
+      <figure class="flow" tabindex="0" data-reveal>
+        <svg viewBox="0 0 1160 340" role="img" aria-label="Del dato a la alerta cerrada. Entran dos cosas: la revisión programada dos veces por semana y la señal continua de la operación. Ambas pasan por una validación: si la desviación no es real se registra como ruido y la campaña no se toca. Si es real se clasifica por severidad en crítica, acción u observación. La observación vuelve al siguiente corte. La acción y la crítica terminan en el registro de cierre del punto 41, que alimenta el cierre mensual. La crítica no espera al siguiente ciclo.">
+          <defs>
+          <marker id="fa-30" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-a" d="M0 0 L10 5 L0 10 z" fill="currentColor" fill-opacity=".5"/></marker>
+          <marker id="fy-30" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-y" d="M0 0 L10 5 L0 10 z" fill="#3aa76d"/></marker>
+          <marker id="fn-30" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-n" d="M0 0 L10 5 L0 10 z" fill="#e04343"/></marker>
+          <marker id="fl-30" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-l" d="M0 0 L10 5 L0 10 z" fill="#ffd400"/></marker>
+          </defs>
+          <text class="fl-t-key" x="20" y="30">DOS ENTRADAS, UNA VALIDACIÓN</text>
+          <text class="fl-t-key" x="640" y="34">SE CLASIFICA POR SEVERIDAD</text>
+
+          <rect class="fl-box" x="20" y="48" width="230" height="58" rx="10"/>
+          <text class="fl-t" x="135" y="72" text-anchor="middle">Revisión programada</text>
+          <text class="fl-t-sm" x="135" y="90" text-anchor="middle">dos veces por semana</text>
+
+          <rect class="fl-box" x="20" y="124" width="230" height="58" rx="10"/>
+          <text class="fl-t" x="135" y="148" text-anchor="middle">Señal continua</text>
+          <text class="fl-t-sm" x="135" y="166" text-anchor="middle">pacing, KPI y tracking</text>
+
+          <path class="fl-line" d="M250 77 H290 V115"/>
+          <path class="fl-line" d="M250 153 H290 V115"/>
+          <path class="fl-line" d="M290 115 H324" marker-end="url(#fa-30)"/>
+
+          <path class="fl-dec" d="M430 63 L530 115 L430 167 L330 115 Z"/>
+          <text class="fl-t-b" x="430" y="110" text-anchor="middle">¿La desviación</text>
+          <text class="fl-t-b" x="430" y="127" text-anchor="middle">es real?</text>
+
+          <rect class="fl-box-out" x="320" y="218" width="220" height="58" rx="10"/>
+          <text class="fl-t" x="430" y="242" text-anchor="middle">Se registra como ruido</text>
+          <text class="fl-t-sm" x="430" y="260" text-anchor="middle">la campaña no se toca</text>
+          <path class="fl-line-no" d="M430 167 V212" marker-end="url(#fn-30)"/>
+          <text class="fl-edge-no" x="442" y="196">No</text>
+
+          <path class="fl-line-yes" d="M530 115 H584"/>
+          <text class="fl-edge-yes" x="557" y="107" text-anchor="middle">Sí</text>
+          <path class="fl-line" d="M584 83 V239"/>
+          <path class="fl-line" d="M584 83 H634" marker-end="url(#fa-30)"/>
+          <path class="fl-line" d="M584 161 H634" marker-end="url(#fa-30)"/>
+          <path class="fl-line" d="M584 239 H634" marker-end="url(#fa-30)"/>
+
+          <rect class="fl-box-key" x="640" y="52" width="300" height="62" rx="10"/>
+          <text class="fl-t-b" x="790" y="78" text-anchor="middle">Crítica · S1</text>
+          <text class="fl-t-sm" x="790" y="96" text-anchor="middle">contener, escalar, comunicar y resolver</text>
+
+          <rect class="fl-box" x="640" y="130" width="300" height="62" rx="10"/>
+          <text class="fl-t" x="790" y="156" text-anchor="middle">Acción · S2</text>
+          <text class="fl-t-sm" x="790" y="174" text-anchor="middle">hipótesis, acción y seguimiento</text>
+
+          <rect class="fl-box" x="640" y="208" width="300" height="62" rx="10"/>
+          <text class="fl-t" x="790" y="234" text-anchor="middle">Observación · S3</text>
+          <text class="fl-t-sm" x="790" y="252" text-anchor="middle">monitorear, registrar y revisar</text>
+
+          <rect class="fl-box" x="975" y="130" width="165" height="62" rx="10"/>
+          <text class="fl-t-b" x="1057" y="156" text-anchor="middle">Registro · 41</text>
+          <text class="fl-t-sm" x="1057" y="174" text-anchor="middle">queda escrito</text>
+          <path class="fl-line" d="M940 83 H958 V161 H969" marker-end="url(#fa-30)"/>
+          <path class="fl-line" d="M940 161 H969" marker-end="url(#fa-30)"/>
+
+          <rect class="fl-box-out" x="975" y="228" width="165" height="54" rx="10"/>
+          <text class="fl-t" x="1057" y="250" text-anchor="middle">Cierre mensual</text>
+          <text class="fl-t-sm" x="1057" y="268" text-anchor="middle">punto 42</text>
+          <path class="fl-line" d="M1057 192 V222" marker-end="url(#fa-30)"/>
+
+          <path class="fl-line-loop" d="M940 239 H958 V310 H8 V77 H16" marker-end="url(#fl-30)"/>
+          <text class="fl-edge" x="480" y="302" text-anchor="middle">vuelve al siguiente corte</text>
+        </svg>
+        <figcaption><b>30.</b> La validación es la compuerta que evita optimizar contra ruido: sin ella, cualquier variación diaria se convierte en un cambio de campaña. La crítica es la única que rompe el ritmo de las dos revisiones semanales, y por eso es la única que se define por riesgo y no por magnitud.</figcaption>
+      </figure>
 
       <div class="grid-2 sep-md" data-reveal>
         <div class="card">
@@ -1799,7 +2088,7 @@
         <div class="builder-out" aria-live="polite">
           <div class="output-line"><span>Código de la prueba</span><output id="out-combo"></output></div>
           <div class="output-line"><span>Lectura de la combinación</span><output id="out-combo-read"></output></div>
-          <div class="output-line"><span>Nomenclatura del anuncio · [Formato] | [Ángulo] | [CTA] | [Versión]</span><output id="out-combo-name"></output></div>
+          <div class="output-line"><span>Nomenclatura del anuncio · [FORMATO]_[Ángulo]_[CTA]_[Versión]</span><output id="out-combo-name"></output></div>
           <p class="calc-note sin-margen">Las tres variables se prueban juntas: cada combinación es un anuncio distinto dentro del mismo grupo. La versión cambia cuando se renueva la pieza, no cuando cambia la combinación.</p>
         </div>
       </div>
@@ -2151,6 +2440,64 @@
         </div>
       </div>
 
+      
+      <figure class="flow" tabindex="0" data-reveal>
+        <svg viewBox="0 0 1160 370" role="img" aria-label="Mapa de escalamiento. Paid Media es donde se detecta la situación. Sube a Planner cuando la causa supera Paid Media, cambian los supuestos o el impacto es importante; y de Planner sube a Dirección Digital cuando hay riesgo de inversión, cambio de compromisos o riesgo reputacional. En paralelo pasa de lado a cuatro disciplinas: a Data por dudas sobre datos o necesidad de cruce, a CRM y Comercial por calidad, contactabilidad, venta o capacidad, a Creatividad por fatiga, falta de relevancia o nueva hipótesis, y a Técnica y Tracking por errores de medición, landing, integración o etiquetado.">
+          <defs>
+          <marker id="fa-54" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-a" d="M0 0 L10 5 L0 10 z" fill="currentColor" fill-opacity=".5"/></marker>
+          <marker id="fy-54" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-y" d="M0 0 L10 5 L0 10 z" fill="#3aa76d"/></marker>
+          <marker id="fn-54" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-n" d="M0 0 L10 5 L0 10 z" fill="#e04343"/></marker>
+          <marker id="fl-54" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-l" d="M0 0 L10 5 L0 10 z" fill="#ffd400"/></marker>
+          </defs>
+          <text class="fl-t-key" x="20" y="30">SUBE CUANDO LA DECISIÓN YA NO ES DE PAID MEDIA</text>
+          <text class="fl-t-key" x="700" y="30">PASA DE LADO CUANDO LA CAUSA ESTÁ EN OTRA PARTE</text>
+
+          <rect class="fl-box-key" x="20" y="48" width="300" height="58" rx="10"/>
+          <text class="fl-t-b" x="170" y="72" text-anchor="middle">Dirección Digital</text>
+          <text class="fl-t-sm" x="170" y="90" text-anchor="middle">decide sobre inversión y relación</text>
+
+          <rect class="fl-box" x="20" y="172" width="300" height="58" rx="10"/>
+          <text class="fl-t-b" x="170" y="196" text-anchor="middle">Planner</text>
+          <text class="fl-t-sm" x="170" y="214" text-anchor="middle">decide sobre estrategia y supuestos</text>
+
+          <rect class="fl-box-key" x="20" y="296" width="300" height="58" rx="10"/>
+          <text class="fl-t-b" x="170" y="320" text-anchor="middle">Paid Media · Digital</text>
+          <text class="fl-t-sm" x="170" y="338" text-anchor="middle">donde se detecta la situación</text>
+
+          <path class="fl-line" d="M170 296 V238" marker-end="url(#fa-54)"/>
+          <text class="fl-edge" x="336" y="254">la causa supera Paid Media, cambian los</text>
+          <text class="fl-edge" x="336" y="270">supuestos o el impacto es importante</text>
+
+          <path class="fl-line" d="M170 172 V114" marker-end="url(#fa-54)"/>
+          <text class="fl-edge" x="336" y="130">riesgo de inversión, cambio de compromisos</text>
+          <text class="fl-edge" x="336" y="146">o riesgo reputacional</text>
+
+          <rect class="fl-box" x="700" y="48" width="440" height="58" rx="10"/>
+          <text class="fl-t" x="920" y="72" text-anchor="middle">Data</text>
+          <text class="fl-t-sm" x="920" y="90" text-anchor="middle">dudas sobre datos, inconsistencias o necesidad de cruce</text>
+
+          <rect class="fl-box" x="700" y="126" width="440" height="58" rx="10"/>
+          <text class="fl-t" x="920" y="150" text-anchor="middle">CRM y Comercial</text>
+          <text class="fl-t-sm" x="920" y="168" text-anchor="middle">calidad, contactabilidad, venta o capacidad</text>
+
+          <rect class="fl-box" x="700" y="204" width="440" height="58" rx="10"/>
+          <text class="fl-t" x="920" y="228" text-anchor="middle">Creatividad</text>
+          <text class="fl-t-sm" x="920" y="246" text-anchor="middle">fatiga, falta de relevancia o nueva hipótesis</text>
+
+          <rect class="fl-box" x="700" y="282" width="440" height="58" rx="10"/>
+          <text class="fl-t" x="920" y="306" text-anchor="middle">Técnica y Tracking</text>
+          <text class="fl-t-sm" x="920" y="324" text-anchor="middle">error de medición, landing, integración o etiquetado</text>
+
+          <path class="fl-line" d="M320 325 H660"/>
+          <path class="fl-line" d="M660 325 V77"/>
+          <path class="fl-line" d="M660 77 H694" marker-end="url(#fa-54)"/>
+          <path class="fl-line" d="M660 155 H694" marker-end="url(#fa-54)"/>
+          <path class="fl-line" d="M660 233 H694" marker-end="url(#fa-54)"/>
+          <path class="fl-line" d="M660 311 H694" marker-end="url(#fa-54)"/>
+        </svg>
+        <figcaption><b>54.</b> Escalar no es pedir ayuda: es mover la decisión al nivel que puede tomarla. Hacia arriba cambia quién decide; hacia el lado cambia quién tiene la causa. Lo que no cambia en ningún caso es que Paid Media sigue siendo el punto de contacto de la situación.</figcaption>
+      </figure>
+
       <div class="grid-2 sep-md" data-reveal>
         <div class="card">
           <span class="card-index">54 · ESCALAMIENTO</span>
@@ -2237,7 +2584,7 @@
 
     <div class="divider divider-light" id="donde-vive">
       <h3 class="sub-heading" data-reveal>58.1 · Dónde vive cada cosa hoy</h3>
-      <p class="lead" data-reveal style="margin-bottom:22px">El repositorio es la fuente única de verdad, pero varias piezas viven hoy en herramientas externas. Esta tabla dice en qué herramienta está cada una y con qué punto del framework se corresponde, para que nadie tenga que preguntar dónde buscar.</p>
+      <p class="lead" data-reveal style="margin-bottom:22px">El repositorio es la fuente única de verdad, pero varias piezas viven hoy en herramientas externas. Esta tabla dice en qué herramienta está cada una y con qué punto del framework se corresponde, para que nadie tenga que preguntar dónde buscar. Dos filas tienen fecha de vencimiento: la fuente de datos de medios y el forecast se reemplazan por la integración descrita en <b>29.3</b>.</p>
       <div class="table-wrap" tabindex="0" data-reveal>
         <table>
           <thead><tr><th>Pieza</th><th>Dónde vive hoy</th><th>Punto</th></tr></thead>
@@ -2288,17 +2635,19 @@
           <div class="field"><label for="b-mercado">Mercado</label><input type="text" id="b-mercado" value="CO"></div>
           <div class="field"><label for="b-periodo">Periodo</label><input type="text" id="b-periodo" value="Ago-Sep 2026"></div>
           <div class="field"><label for="b-aud-tipo">Audiencia · tipo</label><select id="b-aud-tipo"><option>Prospección</option><option>Remarketing</option><option>CRM</option><option>Similar</option></select></div>
-          <div class="field"><label for="b-aud-seg">Audiencia · segmento y condición</label><input type="text" id="b-aud-seg" value="Fútbol | Amplia"></div>
+          <div class="field"><label for="b-aud-seg">Audiencia · segmento y condición</label><input type="text" id="b-aud-seg" value="Fútbol_Amplia"></div>
           <div class="field"><label for="b-ad-formato">Anuncio · formato</label><select id="b-ad-formato"><option>Video</option><option>Estático</option><option>Carrusel</option><option>Colección</option></select></div>
           <div class="field"><label for="b-ad-angulo">Anuncio · ángulo o mensaje</label><input type="text" id="b-ad-angulo" value="Bono de bienvenida"></div>
-          <div class="field"><label for="b-ad-cta">Anuncio · CTA y versión</label><input type="text" id="b-ad-cta" value="Regístrate | V01"></div>
+          <div class="field"><label for="b-ad-cta">Anuncio · CTA</label><input type="text" id="b-ad-cta" value="Regístrate"></div>
+          <div class="field"><label for="b-fecha">Fecha · DD-MM-AA</label><input type="text" id="b-fecha" value="10-09-26"></div>
+          <div class="field"><label for="b-version">Versión</label><input type="text" id="b-version" value="V01"></div>
         </form>
 
         <div class="builder-out" aria-live="polite">
-          <div class="output-line"><span>Campaña · [Objetivo] | [Iniciativa] | [Mercado] | [Periodo]</span><output id="out-campana"></output></div>
-          <div class="output-line"><span>Audiencia · [Tipo] | [Segmento] | [Condición]</span><output id="out-audiencia"></output></div>
-          <div class="output-line"><span>Anuncio · [Formato] | [Ángulo / mensaje] | [CTA] | [Versión]</span><output id="out-anuncio"></output></div>
-          <div class="output-line"><span>Documento · [Tipo] | [Tema] | [Periodo]</span><output id="out-doc"></output></div>
+          <div class="output-line"><span>Campaña · [OBJETIVO]_[Iniciativa]_[MERCADO]_[Periodo]</span><output id="out-campana"></output></div>
+          <div class="output-line"><span>Audiencia · [TIPO]_[Segmento]_[Condición]</span><output id="out-audiencia"></output></div>
+          <div class="output-line"><span>Anuncio · [FORMATO]_[Ángulo o mensaje]_[CTA]_[Versión]</span><output id="out-anuncio"></output></div>
+          <div class="output-line"><span>Documento · [CLIENTE]_[TIPO]_[Tema y periodo]_[Fecha]_[Versión]</span><output id="out-doc"></output></div>
           <div class="output-line"><span>Correo · [Cliente] Tema / entregable + periodo</span><output id="out-mail"></output></div>
           <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
             <button class="button button-primary" type="button" id="copy-btn">Copiar nomenclaturas</button>
@@ -2340,7 +2689,7 @@
       <div class="grid-2 sep-md" data-reveal>
         <div class="card card-light">
           <span class="card-index">72 · METADATOS DE DOCUMENTOS</span>
-          <h3>El nombre no debe cargar toda la información</h3>
+          <h3>El nombre lleva lo que sirve para encontrarlo; el resto son metadatos</h3>
           <ul class="chips chips-densa sep"><li>Cliente</li><li>Tipo</li><li>Tema</li><li>Periodo</li><li>Responsable</li><li>Estado</li><li>Visibilidad</li><li>Creación</li><li>Última actualización</li><li>Próxima revisión</li></ul>
           <p class="panel-label" style="color:var(--accent-ink);margin-top:18px">Estados</p>
           <ul class="chips"><li>Borrador</li><li>En revisión</li><li>Aprobado</li><li>Activo</li><li>Cerrado</li><li>Reemplazado</li><li>Archivado</li></ul>
@@ -2363,7 +2712,7 @@
           <h2>Nomenclatura operativa</h2>
         <p class="claim">Lo que ya existe en carpetas y plataforma, <em>escrito igual.</em></p>
         </div>
-        <p>Los modelos que la operación ya usa, reescritos con la estructura de los puntos 71—78. Misma lógica, mismo separador, sin código interno y con la versión en metadatos.</p>
+        <p>Los modelos que la operación ya usa, reescritos con la estructura de los puntos 71—78 y con la regla de escritura del estándar de subida: mayúsculas para siglas y etiquetas, formato oración para descripciones, guion bajo entre partes.</p>
       </div>
 
       <h3 class="sub-heading" data-reveal>71.1 · Nomenclatura de carpetas</h3>
@@ -2373,21 +2722,21 @@
         <table>
           <thead><tr><th>Nivel</th><th>Estructura</th><th>Ejemplo</th></tr></thead>
           <tbody>
-            <tr><td>Carpeta cliente</td><td>[Cliente] | [Agencia] | [Vigencia]</td><td>Compensar | Adcom | Activo</td></tr>
-            <tr><td>Carpetas del repositorio</td><td>[NN] [Nombre]</td><td>04 Estrategia digital</td></tr>
+            <tr><td>Carpeta cliente</td><td>[CLIENTE]_[AGENCIA]_[ESTADO]</td><td>COMPENSAR_ADCOM_ACTIVO</td></tr>
+            <tr><td>Carpetas del repositorio</td><td>[NN]. [NOMBRE]</td><td>04. ESTRATEGIA DIGITAL</td></tr>
             <tr><td>Categoría o división</td><td>[Categoría]</td><td>Educación continua</td></tr>
-            <tr><td>Periodo</td><td>[Cliente] | [Periodo]</td><td>Compensar | 2026-08</td></tr>
-            <tr><td>Documento estratégico</td><td>[Tipo] | [Tema] | [Periodo]</td><td>Estrategia | Adquisición digital | Q3 2026</td></tr>
-            <tr><td>Flow · meta, resultados y presupuesto</td><td>Flow | [Cliente] | [Nota] | [Periodo]</td><td>Flow | Compensar | Sin Google | Ago 2026</td></tr>
-            <tr><td>Ruta o iniciativa estratégica</td><td>Ruta | [Cliente] | [Nota] | [Periodo]</td><td>Ruta | Compensar | 5M | Ago 2026</td></tr>
-            <tr><td>Bitácora</td><td>Bitácora | [Cliente] | [DD-MM]</td><td>Bitácora | Compensar | 24-12</td></tr>
-            <tr><td>Informe</td><td>Informe | [Tema] | [DD-MM]</td><td>Informe | Acciones | 11-01</td></tr>
-            <tr><td>Implementación</td><td>Implementación | [Cliente] | [Periodo]</td><td>Implementación | Compensar | 2026-08</td></tr>
+            <tr><td>Carpeta de periodo</td><td>[CLIENTE]_[AAAA-MM]</td><td>COMPENSAR_2026-08</td></tr>
+            <tr><td>Documento estratégico</td><td>[CLIENTE]_ESTRATEGIA_[Tema y periodo]_[Fecha]_[Versión]</td><td>COMPENSAR_ESTRATEGIA_Adquisición digital Q3 2026_10-09-26_V01</td></tr>
+            <tr><td>Flow · meta, resultados y presupuesto</td><td>[CLIENTE]_FLOW_[Nota y periodo]_[Fecha]_[Versión]</td><td>COMPENSAR_FLOW_Sin Google Ago 2026_10-09-26_V01</td></tr>
+            <tr><td>Ruta o iniciativa estratégica</td><td>[CLIENTE]_RUTA_[Nota y periodo]_[Fecha]_[Versión]</td><td>COMPENSAR_RUTA_5M Ago 2026_10-09-26_V01</td></tr>
+            <tr><td>Bitácora</td><td>[CLIENTE]_BITÁCORA_[Periodo]_[Fecha]_[Versión]</td><td>COMPENSAR_BITÁCORA_Diciembre 2026_24-12-26_V01</td></tr>
+            <tr><td>Informe</td><td>[CLIENTE]_INFORME_[Tema]_[Fecha]_[Versión]</td><td>COMPENSAR_INFORME_Acciones_11-01-26_V01</td></tr>
+            <tr><td>Implementación</td><td>[CLIENTE]_IMPLEMENTACIÓN_[Periodo]_[Fecha]_[Versión]</td><td>COMPENSAR_IMPLEMENTACIÓN_2026-08_10-09-26_V01</td></tr>
           </tbody>
         </table>
       </div></div>
       </details>
-      <p class="lead sep-md" data-reveal>Las carpetas del repositorio conservan la numeración 00—99 del punto 58: el mismo orden para todos los clientes, aunque un cliente no use todas.</p>
+      <p class="lead sep-md" data-reveal>Las carpetas del repositorio conservan la numeración 00—99 del punto 58: el mismo orden para todos los clientes, aunque un cliente no use todas. Las carpetas se nombran con la forma corta <b>NN. NOMBRE</b>; la fórmula de cinco partes es para archivos, no para carpetas.</p>
 
       <h3 class="sub-heading" data-reveal style="margin-top:clamp(38px,4vw,60px)">75.1 · Nomenclatura de objetos en plataforma</h3>
       <details class="mas" data-reveal>
@@ -2396,13 +2745,13 @@
         <table>
           <thead><tr><th>Objeto</th><th>Estructura</th><th>Ejemplo</th></tr></thead>
           <tbody>
-            <tr><td>Campaña</td><td>[Orden en el flow] · [Objetivo] | [Iniciativa] | [Mercado] | [Periodo]</td><td>01 · Conversión | Posgrados | CO | Ago-Sep 2026</td></tr>
-            <tr><td>Grupo de anuncios</td><td>[Orden] · [Tipo] | [Segmento] | [Condición]</td><td>01 · Prospección | Advantage | Amplia</td></tr>
-            <tr><td>Anuncio</td><td>[Orden] · [Formato] | [Ángulo] | [CTA] | [Versión]</td><td>01 · Video | 5 razones | Inscríbete | V01</td></tr>
-            <tr><td>Público guardado</td><td>Prospección | [Segmento] | [Variable]</td><td>Prospección | Educación | Advantage</td></tr>
-            <tr><td>Público personalizado</td><td>Remarketing | [Plataforma · fuente] | [Condición]</td><td>Remarketing | IG · Interacciones | 90 días</td></tr>
-            <tr><td>Público de base de datos</td><td>CRM | [Segmento] | [Fuente]</td><td>CRM | No contactados | CRM</td></tr>
-            <tr><td>Público similar</td><td>Similar | [Base de origen] | [Porcentaje]</td><td>Similar | Seguidores Instagram | 2%</td></tr>
+            <tr><td>Campaña</td><td>[NN]_[OBJETIVO]_[Iniciativa]_[MERCADO]_[Periodo]</td><td>01_CONVERSIÓN_Posgrados_CO_Ago-Sep 2026</td></tr>
+            <tr><td>Grupo de anuncios</td><td>[NN]_[TIPO]_[Segmento]_[Condición]</td><td>01_PROSPECCIÓN_Advantage_Amplia</td></tr>
+            <tr><td>Anuncio</td><td>[NN]_[FORMATO]_[Ángulo]_[CTA]_[Versión]</td><td>01_VIDEO_5 razones_Inscríbete_V01</td></tr>
+            <tr><td>Público guardado</td><td>PROSPECCIÓN_[Segmento]_[Variable]</td><td>PROSPECCIÓN_Educación_Advantage</td></tr>
+            <tr><td>Público personalizado</td><td>REMARKETING_[Plataforma y fuente]_[Condición]</td><td>REMARKETING_IG Interacciones_90 días</td></tr>
+            <tr><td>Público de base de datos</td><td>CRM_[Segmento]_[Fuente]</td><td>CRM_No contactados_CRM</td></tr>
+            <tr><td>Público similar</td><td>SIMILAR_[Base de origen]_[Porcentaje]</td><td>SIMILAR_Seguidores Instagram_2%</td></tr>
           </tbody>
         </table>
       </div></div>
@@ -2413,10 +2762,10 @@
           <span class="card-index">78.1 · REGLAS DE CONVERSIÓN</span>
           <h4>Cómo se traduce lo que ya está nombrado</h4>
           <ul class="list-check sep">
-            <li>El separador es <b>|</b>. El guion bajo se reemplaza.</li>
+            <li>El separador es <b>_</b>. El pipe y el punto medio se reemplazan.</li>
             <li>El número de orden solo se usa en objetos de plataforma, donde el orden del flow importa. En carpetas y documentos no.</li>
-            <li>Los prefijos de versión salen del nombre: versión y estado viven en los metadatos (72).</li>
-            <li>Cliente y categoría no se repiten en cada nivel: los hereda la ruta de carpetas.</li>
+            <li>La versión va en el nombre: <b>V01</b>, <b>V02</b> o <b>FINAL</b>. El estado sigue viviendo solo en los metadatos (72).</li>
+            <li>El cliente abre el nombre de todo archivo, aunque la ruta de carpetas ya lo diga. Así el archivo se sigue entendiendo cuando alguien lo descarga o lo adjunta.</li>
             <li>Periodos: <b>AAAA-MM</b> en carpetas de periodo, <b>Mes AAAA</b> o <b>Q# AAAA</b> en documentos, <b>DD-MM</b> en bitácoras e informes diarios.</li>
             <li>Sigue sin haber código interno adicional (78).</li>
           </ul>
@@ -2426,15 +2775,15 @@
           <h4>Antes y después</h4>
           <div style="margin-top:14px;padding:16px;border-radius:12px;background:var(--paper)">
             <p style="font-size:var(--fs-ui);color:var(--muted-light)">#2_Compensar_Adcom_Activo</p>
-            <p style="font-size:var(--fs-ui);font-weight:700;margin-top:6px">Compensar | Adcom | Activo</p>
+            <p style="font-size:var(--fs-ui);font-weight:700;margin-top:6px">COMPENSAR_ADCOM_ACTIVO</p>
           </div>
           <div style="margin-top:10px;padding:16px;border-radius:12px;background:var(--paper)">
             <p style="font-size:var(--fs-ui);color:var(--muted-light)">1.Conversiones_Posgrado_Administración de empresas</p>
-            <p style="font-size:var(--fs-ui);font-weight:700;margin-top:6px">01 · Conversión | Posgrados · Administración de Empresas | CO | Ago 2026</p>
+            <p style="font-size:var(--fs-ui);font-weight:700;margin-top:6px">01_CONVERSIÓN_Posgrados Administración de Empresas_CO_Ago 2026</p>
           </div>
           <div style="margin-top:10px;padding:16px;border-radius:12px;background:var(--paper)">
             <p style="font-size:var(--fs-ui);color:var(--muted-light)">1.Video_5 Razones_Inscríbete</p>
-            <p style="font-size:var(--fs-ui);font-weight:700;margin-top:6px">01 · Video | 5 razones | Inscríbete | V01</p>
+            <p style="font-size:var(--fs-ui);font-weight:700;margin-top:6px">01_VIDEO_5 razones_Inscríbete_V01</p>
           </div>
           <p style="margin-top:14px;font-size:var(--fs-ui);color:var(--muted-light)">La campaña gana mercado y periodo: sin esos dos campos no se puede leer una campaña fuera de su carpeta.</p>
         </div>
@@ -2565,7 +2914,7 @@
           <h2>Media Bridge: qué existe hoy</h2>
           <p class="claim">No es un plan. <em>Está construido y corriendo.</em></p>
         </div>
-        <p>Una herramienta local que habla directamente con las APIs de las plataformas. Lo que sigue es la capacidad instalada hoy, no la que quisiéramos tener.</p>
+        <p>Una herramienta local que habla directamente con las APIs de las plataformas. Lo que sigue es la capacidad instalada hoy, no la que quisiéramos tener. Es también la base de la ingesta: el pacing automatizado de <b>29.3</b> parte de aquí, no de cero.</p>
       </div>
 
       <div class="grid-3" data-reveal>
@@ -2777,6 +3126,11 @@
         <span class="tag tag-accent">Presupuesto</span>
         <h4>Estandarizar el cuadro</h4>
         <ul class="list-check"><li>Cuadro</li><li>Fórmulas</li><li>Pacing</li><li>Curvas</li><li>Semáforos</li><li>Proyección</li></ul>
+      </article>
+      <article class="roadmap-card">
+        <span class="tag tag-accent">Integración</span>
+        <h4>Pacing desde el dataLake</h4>
+        <ul class="list-check"><li>Ingesta por API de las cuatro plataformas</li><li>Modelo por producto, no solo por campaña</li><li>Homologación automática por nomenclatura</li><li>Cuadros en tiempo real</li><li>Una sola fuente de inversión</li></ul>
       </article>
       <article class="roadmap-card">
         <span class="tag tag-accent">Repositorio</span>

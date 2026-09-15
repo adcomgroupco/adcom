@@ -136,12 +136,14 @@
 
   /* ---------- constructor de nomenclatura ---------- */
   function val(id){ return ($(id).value || "").trim(); }
+  /* MAYÚS para siglas y etiquetas de lista cerrada; formato oración tal cual se escribió */
+  function up(id, ph){ var v = val(id); return v ? v.toUpperCase() : ph; }
   function build(){
-    var obj = val("#b-objetivo"), ini = val("#b-iniciativa"), mer = val("#b-mercado"), per = val("#b-periodo");
-    $("#out-campana").textContent = [obj||"[Objetivo]", ini||"[Iniciativa]", mer||"[Mercado]", per||"[Periodo]"].join(" | ");
-    $("#out-audiencia").textContent = [val("#b-aud-tipo")||"[Tipo]", val("#b-aud-seg")||"[Segmento] | [Condición]"].join(" | ");
-    $("#out-anuncio").textContent = [val("#b-ad-formato")||"[Formato]", val("#b-ad-angulo")||"[Ángulo]", val("#b-ad-cta")||"[CTA] | [Versión]"].join(" | ");
-    $("#out-doc").textContent = ["Estrategia", ini||"[Tema]", per||"[Periodo]"].join(" | ");
+    var ini = val("#b-iniciativa"), per = val("#b-periodo"), ver = val("#b-version") || "[V##]";
+    $("#out-campana").textContent = [up("#b-objetivo","[OBJETIVO]"), ini||"[Iniciativa]", up("#b-mercado","[MERCADO]"), per||"[Periodo]"].join("_");
+    $("#out-audiencia").textContent = [up("#b-aud-tipo","[TIPO]"), val("#b-aud-seg")||"[Segmento]_[Condición]"].join("_");
+    $("#out-anuncio").textContent = [up("#b-ad-formato","[FORMATO]"), val("#b-ad-angulo")||"[Ángulo]", val("#b-ad-cta")||"[CTA]", ver].join("_");
+    $("#out-doc").textContent = [up("#b-cliente","[CLIENTE]"), "ESTRATEGIA", ((ini||"[Tema]")+" "+per).trim(), val("#b-fecha")||"[DD-MM-AA]", ver].join("_");
     $("#out-mail").textContent = "[" + (val("#b-cliente")||"Cliente") + "] " + (ini||"[Tema / entregable]") + " " + (per||"");
   }
   $$("#builder input, #builder select").forEach(function(el){
@@ -164,10 +166,10 @@
   function mix(){
     $("#out-combo").textContent = [optCode("#v-a"), optCode("#v-b"), optCode("#v-c")].join(" / ");
     $("#out-combo-read").textContent = [optText("#v-a"), optText("#v-b"), optText("#v-c")].join(" / ");
-    $("#out-combo-name").textContent = [optText("#v-formato"),
-                                        optText("#v-a") + " · " + optText("#v-b"),
+    $("#out-combo-name").textContent = [optText("#v-formato").toUpperCase(),
+                                        optText("#v-a") + " " + optText("#v-b"),
                                         optText("#v-c"),
-                                        val("#v-version") || "V01"].join(" | ");
+                                        val("#v-version") || "V01"].join("_");
   }
   $$("#vmix input, #vmix select").forEach(function(el){
     el.addEventListener("input", mix);
