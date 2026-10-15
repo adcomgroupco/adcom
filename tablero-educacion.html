@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Tablero Educación</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="assets/css/adcom.css">
+<script defer src="assets/js/adcom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root{
+  --black:#050505;--white:#fcfcfa;--yellow:#ffd400;
+  --gray-50:var(--ground);--gray-100:var(--sunken);--gray-200:var(--rule);--gray-400:var(--fg-muted);--gray-600:var(--fg-secondary);
+  --c-pos:#15803d;--c-mid:#b45309;--c-neg:#b91c1c
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Poppins',sans-serif;background:var(--gray-50);color:var(--black);min-height:100vh;overflow-x:hidden}
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+
+/* TOPBAR */
+.topbar{background:var(--white);border-bottom:1px solid var(--gray-200);padding:10px 20px;position:sticky;top:0;z-index:50;display:flex;flex-direction:column;gap:8px}
+.tb-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.topbar-title{font-size:12px;font-weight:700;margin-right:4px;white-space:nowrap}
+.f-sep{width:1px;height:18px;background:var(--gray-200)}
+.fg{display:flex;align-items:center;gap:5px}
+.fl{font-size:12px;color:var(--gray-600);font-weight:500;white-space:nowrap}
+select,input[type=date]{font-family:'Poppins',sans-serif;font-size:12px;padding:5px 8px;border:1px solid var(--gray-200);border-radius:var(--radius-sm);background:var(--white);color:var(--black);outline:none}
+select{cursor:pointer;max-width:220px}
+select:focus,input:focus{border-color:var(--accent-fg)}
+.qbtn{font-family:'Poppins',sans-serif;font-size:12px;font-weight:500;padding:4px 10px;border:1px solid var(--gray-200);background:var(--white);border-radius:999px;cursor:pointer;color:var(--gray-600)}
+.qbtn:hover{border-color:var(--black);color:var(--black)}
+.qbtn.on{background:var(--black);color:var(--white);border-color:var(--black)}
+.btn-reset{font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;padding:5px 10px;background:var(--black);color:var(--white);border:none;border-radius:var(--radius-sm);cursor:pointer}
+.last-upd{margin-left:auto;font-size:12px;color:var(--gray-400)}
+
+/* CONTENT */
+.content{padding:18px 20px;min-width:0}
+.sec-title{font-size:13px;font-weight:700;margin:4px 0 10px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;scroll-margin-top:110px}
+.sec-title>span:first-child{display:inline-block;width:3px;height:13px;background:var(--yellow);flex-shrink:0}
+.sec-note{font-size:12px;color:var(--gray-400);font-weight:400;margin-left:6px}
+.sec-tools{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.box{background:var(--white);border-radius:var(--radius);border:1px solid var(--gray-200)}
+
+/* KPIs */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.kpi-card{padding:14px}
+.kpi-label{font-size:12px;color:var(--gray-600);font-weight:600;margin-bottom:3px}
+.kpi-value{font-size:20px;font-weight:700;line-height:1.15;font-variant-numeric:tabular-nums}
+.kpi-sub{font-size:12px;color:var(--gray-400);margin-top:3px}
+.kpi-bwrap{margin-top:8px}
+.kpi-brow{display:flex;justify-content:space-between;font-size:12px;color:var(--gray-600);margin-bottom:3px}
+.kpi-bar{height:4px;background:var(--gray-200);overflow:hidden}
+.kpi-bfill{height:100%}
+.bg-pos{background:var(--c-pos)} .bg-mid{background:var(--c-mid)} .bg-neg{background:var(--c-neg)}
+.t-pos{color:var(--c-pos);font-weight:600} .t-mid{color:var(--c-mid);font-weight:600} .t-neg{color:var(--c-neg);font-weight:600} .t-mute{color:var(--gray-400)}
+
+/* COMPARATIVO */
+.cmp{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin-bottom:20px}
+.bars-card{max-width:760px}
+.cmp .tcard{margin-bottom:0}
+.bars-card{padding:16px 18px}
+.bars-card h3{font-size:13px;font-weight:700;margin-bottom:4px}
+.bars-card .bars-note{font-size:12px;color:var(--gray-400);margin-bottom:14px}
+.bars-card .bar-head .val{font-size:1.05rem}
+
+/* GRÁFICOS Y FUENTES */
+.chart-card{padding:14px;margin-bottom:20px}
+.chart-wrap{height:270px;position:relative}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.nivel-card{padding:16px}
+.nivel-tag{display:inline-block;justify-self:start;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;margin-bottom:12px}
+.tag-pau{background:#FFF3B0;color:#7A5B00} .tag-org{background:#E0F2FE;color:#075985} .tag-otr{background:var(--gray-100);color:var(--gray-600)}
+.nm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 10px}
+.nm-label{font-size:12px;color:var(--gray-400);font-weight:500}
+.nm-value{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+
+/* TABLAS */
+.tcard{margin-bottom:20px;overflow:hidden}
+.tscroll{overflow-x:auto}
+.tscroll table{width:100%;min-width:0;border-collapse:collapse;font-size:12px}
+.tscroll thead tr{background:var(--gray-50);border-bottom:2px solid var(--gray-200)}
+.tscroll thead th{font-weight:700;padding:9px 10px;text-align:left;white-space:nowrap;color:var(--fg-muted);border-bottom:0;position:sticky;top:0;background:var(--gray-50)}
+.tscroll thead th.r{text-align:right}
+.tscroll thead th.grp,.tscroll tbody td.grp{border-left:1px solid var(--gray-200)}
+.tscroll tbody tr{border-bottom:1px solid var(--gray-100)}
+.tscroll tbody td{padding:7px 10px;color:var(--gray-600);white-space:nowrap;text-align:left;vertical-align:middle;border-top:0}
+.tscroll tbody td.r{text-align:right;font-variant-numeric:tabular-nums}
+.tscroll tbody tr:hover td{background:var(--gray-50)}
+.tscroll .tr-total td{font-weight:700;color:var(--black);background:var(--gray-50) !important;border-top:2px solid var(--gray-200) !important}
+.lv1 td{font-weight:600;color:var(--black)}
+.lv3 td:first-child{padding-left:30px;color:var(--gray-600)}
+.foot-note{font-size:12px;color:var(--gray-400);padding:8px 12px;border-top:1px solid var(--gray-100);line-height:1.55}
+.foot-note b{color:var(--gray-600)}
+.empty{padding:18px;text-align:center;color:var(--gray-400);font-size:12px}
+@media(max-width:1700px){.tscroll thead th,.tscroll tbody td{font-size:12px;padding:6px 8px}}
+
+/* FUENTE (pie del riel) */
+.src-list{display:grid;gap:3px;margin-top:6px}
+.src-list div{display:flex;justify-content:space-between;gap:8px}
+.src-err{color:#ff6b6b}
+
+/* LOADING */
+#loading{position:fixed;inset:0;background:rgba(10,10,10,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:12px}
+.ld-logo img{height:36px}
+.spinner{width:28px;height:28px;border:3px solid #222;border-top-color:var(--yellow);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#ld-msg{color:#949289;font-size:12px}
+@media(prefers-reduced-motion:reduce){.spinner{animation:none}}
+
+@media(max-width:1300px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.three-col{grid-template-columns:1fr}}
+@media(max-width:900px){.content{padding:14px 16px}.topbar{position:static}}
+@media(max-width:560px){.kpi-grid{grid-template-columns:1fr}.nm-grid{grid-template-columns:repeat(2,1fr)}
+  .fg,#quick{flex-wrap:wrap}.f-sep{display:none}.last-upd{margin-left:0}select{max-width:100%}.topbar,.content{padding-inline:16px}
+  .bar-head{flex-wrap:wrap}.sec-tools{margin-left:0}}
+.main,.content,.tb-row{min-width:0}
+</style>
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+</head>
+<body class="con-shell">
+<a class="skip-link" href="#sec-kpi">Ir al resumen</a>
+<div id="loading">
+  <div class="ld-logo"><img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/wAARCABkAGQDASIAAhEBAxEB/8QAHAAAAgMBAQEBAAAAAAAAAAAAAAUEBgcDAgH/xAA4EAACAQMDAgQEBAUEAwAAAAABAgMABBEFEiExBhNBUWEicYGRBxQjMqEVQlKxwdHwJGJy4fH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A2miiigCiiigCiiigCiiigCiiigCiiigCiiigCiiigCiiigCiiigCiio+oahb6Xp8t7dOUhiALEKWPJAHABJ5IoJFFeW41O3t7KO7kEgjkxsATLMT0AA5JrMT/aBpKXnkLFeNG0bOt0Ihs4zgMCeQRgjt3oA9FY5vjlpYlnBtLwQQP5T3JiHlhsZXBBOQfXFaltcRXdrFcQNuilQSIcEZBGR19KAqiiqnxBqsuj2SXEdub2SR9gt4s5c8kkdOMc0Au8TeLNK8Krbf2k8im4LiIRxlySBk9B24815n/bHRlRXa3u0VwSpaIYY4OAw7E4OP3r578e/Etl4u1K31OGzmtLi3DxOjuHVlO04IwMHJPbpXkmtanHJp9rbWNq1rbRbnz57SSSSWZieSSSf3oA9P1j9pOl2Msq2tvPdmN2Utj92xHr15r0v4b8U6T4s092029WQKQJIY2VpIs/3AAkA+xr5Lk0u9e1nuBZzNDA5SSQRna3bAPr1FX3wftY7bVJNSmvmskFuwjxGSJJpMBFXBHopz6mgD7bRRRQBRRRQBRRRQBXif4oQadqmqadb67ZXGs6Tpk6SX9lYSokpJBKHk+jDjGPWvbVSdU0m01izNneozwllfaDg5U5U/mBQB868OeIfDP8A9Rfw4fDkNzqyT/ZLq/nj3K6uSMyE/MQCoyvPFeoeDfjJpOptZaIkV1LqxXyo1mTapZfmHJbKgDn6V48fhX4aMt/HFG6G0meFGKgFlUnv0PFQPC1xNoXxT0y7s5pFjg1KJFDkHZl9pGR1HNAHutFFFAFcOorXriigCiiigCiiigCiiigP/9k=" alt="Universidad Católica"></div>
+  <div class="spinner"></div>
+  <div id="ld-msg">Cargando datos...</div>
+</div>
+
+<nav class="app-sidebar">
+  <div class="app-sidebar-top">
+    <a class="app-sidebar-brand" href="index.html"><i></i>Adcom</a>
+    <div class="app-sidebar-client">
+      <span class="app-sidebar-client-label">Cuenta</span>
+      <strong class="app-sidebar-client-name">Educación, pauta digital</strong>
+      <span class="app-sidebar-client-period">UAN · EIA · Compensar · Católica · Corpas</span>
+    </div>
+  </div>
+  <div class="app-sidebar-nav">
+    <span class="app-sidebar-nav-title">Secciones</span>
+    <a href="#sec-kpi" class="active"><b></b>Resumen</a>
+    <a href="#sec-cliente" id="nav-cliente"><b></b>Por cliente</a>
+    <a href="#sec-mes"><b></b>Mes a mes</a>
+    <a href="#sec-medio"><b></b>Nivel y medio</a>
+    <a href="#sec-fuentes"><b></b>Pauta vs otras fuentes</a>
+  </div>
+  <div class="app-sidebar-foot">
+    Fuente actualizada
+    <div class="src-list" id="src-list">—</div>
+    <button class="tbtn btn-reset" style="margin-top:8px" onclick="load()">Volver a cargar</button>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="tb-row">
+      <span class="topbar-title">Tablero Educación</span>
+      <div class="f-sep"></div>
+      <div class="fg"><span class="fl">Desde</span><input type="date" id="f-desde" onchange="onDate()"></div>
+      <div class="fg"><span class="fl">Hasta</span><input type="date" id="f-hasta" onchange="onDate()"></div>
+      <div class="f-sep"></div>
+      <div id="quick" class="fg"></div>
+      <span class="last-upd" id="last-upd"></span>
+    </div>
+    <div class="tb-row">
+      <div class="fg"><span class="fl">Cliente</span><select id="f-cli" onchange="onSel()"><option value="">Todos</option></select></div>
+      <div class="fg"><span class="fl">Nivel</span><select id="f-niv" onchange="onSel()"><option value="">Todos (sin B2B)</option></select></div>
+      <div class="fg"><span class="fl">Medio</span><select id="f-medio" onchange="onSel()"><option value="">Todos</option></select></div>
+      <button class="btn-reset" onclick="resetFilters()">Limpiar filtros</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="sec-title" id="sec-kpi"><span></span>Resumen del rango<span class="sec-note" id="rango-note"></span></div>
+    <div class="kpi-grid" id="kpi-grid"></div>
+
+    <div id="blk-cliente">
+      <div class="sec-title" id="sec-cliente"><span></span>Por cliente<span class="sec-note">metas de pauta del periodo 2027-1, proporcionales al rango</span></div>
+      <div class="cmp">
+        <div class="box tcard"><div class="tscroll"><table><thead id="cli-head"></thead><tbody id="cli-body"></tbody></table></div></div>
+        <div class="box bars-card">
+          <h3>Costo por matrícula</h3>
+          <p class="bars-note">La raya marca el costo meta (presupuesto / meta de matrículas). En rojo, el cliente que lo supera.</p>
+          <div class="bars grow" id="cli-bars"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-title" id="sec-mes"><span></span>Mes a mes<span class="sec-note" id="mes-note">cada etapa del CRM cuenta en su propia fecha</span></div>
+    <div class="box chart-card"><div class="chart-wrap"><canvas id="chart-mes"></canvas></div></div>
+    <div class="box tcard"><div class="tscroll"><table><thead id="mes-head"></thead><tbody id="mes-body"></tbody></table></div><div class="foot-note" id="mes-foot"></div></div>
+
+    <div class="sec-title" id="sec-medio"><span></span>Por nivel y medio<span class="sec-note">el medio del CRM sale de cada cliente; EIA no lo trae</span>
+      <span class="sec-tools"><button class="qbtn on" data-mv="niv" onclick="setMedioVista('niv')">Nivel · medio</button><button class="qbtn" data-mv="medio" onclick="setMedioVista('medio')">Solo medio</button><button class="qbtn" data-mv="cli" onclick="setMedioVista('cli')">Cliente · nivel</button></span></div>
+    <div class="box tcard"><div class="tscroll"><table><thead id="medio-head"></thead><tbody id="medio-body"></tbody></table></div></div>
+
+    <div class="sec-title" id="sec-fuentes"><span></span>Pauta vs orgánico y otras fuentes<span class="sec-note">leads y matrículas del CRM de todas las fuentes · conversión = matrículas / leads del rango · aplican fechas, cliente y nivel</span></div>
+    <div class="three-col" id="fuente-cards"></div>
+    <div class="box chart-card"><div class="chart-wrap"><canvas id="chart-fu"></canvas></div></div>
+    <div class="box tcard"><div class="tscroll"><table><thead id="fu-head"></thead><tbody id="fu-body"></tbody></table></div>
+      <div class="foot-note">
+        <b>Fuente</b>: hoja Consolidado Educación (pestañas EMBUDO, FUENTES y METAS), que arma un Apps Script cada hora con la misma lógica de cada tablero por cliente.
+        <b>Inversión y leads plataforma</b>: solo conversión; branding y eventos quedan fuera. <b>Matrículas</b>: en Compensar son pagos; en todos, sin cancelados.
+        <b>Etapas</b>: UAN no mide inscritos; en EIA los inscritos son solicitudes; en Corpas los admitidos son "pendiente de pago". Cada % del embudo se calcula solo con los clientes que miden las dos etapas.
+        <b>Metas</b>: solo las de pauta del periodo 2027-1; con el botón "Meta 2027-1" encendido se toma la meta completa, apagado la parte proporcional a los días del rango. Con un medio elegido no se muestran metas.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SHEET_ID = '1XnjNw2N-DByviPLCeNgJB6LbcTV-pzrlNKgnrqRmNQ4';
+const SRC = { embudo: 'gid=0', fuentes: 'gid=1051276507', metas: 'gid=2062283911', log: 'sheet=LOG' };
+const URL_DE = q => `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&headers=1&${q}&_=${Date.now()}`;
+const CLIENTES = ['Compensar', 'UAN', 'Católica', 'EIA', 'Corpas'];
+const NIVELES = ['Pregrado', 'Posgrado', 'Técnico laboral', 'Educación continuada', 'General', 'Soluciones empresariales'];
+const B2B = 'Soluciones empresariales';
+const MEDIOS = ['Meta', 'Google Ads', 'TikTok', 'LinkedIn', 'Programática', 'Otro', 'Sin medio'];
+const MEDIO_LBL = { 'Meta': 'Meta (Facebook e Instagram)', 'Sin medio': 'Sin medio (CRM de EIA)' };
+const META_PER = '2027-1';
+const MESES = ['','ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+
+let RAW = [], FUE = [], METAS = [], STG = {}, QUICK = 'mes', META_TOTAL = false, MEDIO_VISTA = 'niv', CHART_MES = null, CHART_FU = null;
+
+// ── Parsers y formato ─────────────────────────────────────────────────────────
+function num(v){ const s = String(v ?? '').replace(/[$\s%]/g,''); if(!s) return 0;
+  return parseFloat(s.indexOf(',') >= 0 ? s.replace(/\./g,'').replace(',','.') : s.replace(/\./g,'')) || 0 }
+function iso(v){ const m = String(v||'').match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if(m) return `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;
+  const i = String(v||'').match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
+  return i ? `${i[1]}-${i[2].padStart(2,'0')}-${i[3].padStart(2,'0')}` : '' }
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fCOP = n => (n && isFinite(n)) ? '$' + Math.round(n).toLocaleString('es-CO') : '—';
+const fN = n => (n && isFinite(n)) ? Math.round(n).toLocaleString('es-CO') : '—';
+const fP = n => (n === null || !isFinite(n)) ? '—' : (n*100).toLocaleString('es-CO',{maximumFractionDigits:1}) + '%';
+const div = (a,b) => b ? a/b : null;
+const fDate = s => { const p = s.split('-'); return `${+p[2]} ${MESES[+p[1]]}` };
+const mesLbl = k => MESES[+k.slice(5,7)].replace(/^./, c => c.toUpperCase()) + ' ' + k.slice(0,4);
+function days(a,b){ return Math.round((Date.parse(b) - Date.parse(a)) / 864e5) + 1 }
+function addDays(s,n){ const d = new Date(Date.parse(s) + n*864e5); return d.toISOString().slice(0,10) }
+const todayISO = () => { const d = new Date(); return new Date(d.getTime() - d.getTimezoneOffset()*6e4).toISOString().slice(0,10) };
+function cls(p){ return p === null ? 't-mute' : p >= .8 ? 't-pos' : p >= .5 ? 't-mid' : 't-neg' }
+function bgc(p){ return p >= .8 ? 'bg-pos' : p >= .5 ? 'bg-mid' : 'bg-neg' }
+function difCls(d){ return d === null ? 't-mute' : Math.abs(d) <= .1 ? 't-pos' : Math.abs(d) <= .25 ? 't-mid' : 't-neg' }
+const css = v => getComputedStyle(document.body).getPropertyValue(v).trim();
+
+// ── Carga ────────────────────────────────────────────────────────────────────
+function fetchTab(q){ return new Promise((ok, ko) => Papa.parse(URL_DE(q), { download:true, header:true, skipEmptyLines:true,
+  complete: r => ok(r.data), error: ko })) }
+function load(){
+  document.getElementById('loading').style.display = 'flex';
+  document.getElementById('ld-msg').textContent = 'Cargando datos...';
+  Promise.all([fetchTab(SRC.embudo), fetchTab(SRC.fuentes), fetchTab(SRC.metas), fetchTab(SRC.log).catch(() => [])]).then(([e, fu, me, log]) => {
+    build(e, fu, me); renderLog(log); prepare();
+    const t = new Date().toLocaleString('es-CO', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
+    document.getElementById('last-upd').textContent = 'Datos cargados: ' + t;
+    document.getElementById('loading').style.display = 'none';
+  }).catch(() => { document.getElementById('ld-msg').textContent = 'No se pudo leer la hoja Consolidado Educación' });
+}
+
+function build(e, fu, me){
+  RAW = []; FUE = []; METAS = []; STG = {};
+  e.forEach(x => {
+    const d = iso(x.fecha), cli = String(x.cliente||'').trim(); if(!d || !cli) return;
+    // un cliente "mide" una etapa si su columna viene con dato (vacío = no la tiene)
+    const s = STG[cli] = STG[cli] || { ins:false, adm:false };
+    if(String(x.inscritos ?? '').trim() !== '') s.ins = true;
+    if(String(x.admitidos ?? '').trim() !== '') s.adm = true;
+    RAW.push({ d, mes: d.slice(0,7), cli, niv: String(x.nivel||'').trim(), medio: String(x.medio||'').trim() || 'Otro',
+      inv: num(x.inversion), lp: num(x.leads_plataforma), lc: num(x.leads_crm), ins: num(x.inscritos), adm: num(x.admitidos), mat: num(x.matriculas) });
+  });
+  fu.forEach(x => { const d = iso(x.fecha); if(!d) return;
+    FUE.push({ d, cli: String(x.cliente||'').trim(), niv: String(x.nivel||'').trim(), fu: String(x.fuente||'').trim(), lc: num(x.leads), mat: num(x.matriculas) }) });
+  me.forEach(x => { const ini = iso(x.inicio), fin = iso(x.fin); if(!ini || !fin) return;
+    METAS.push({ cli: String(x.cliente||'').trim(), per: String(x.periodo||'').trim(), ini, fin, niv: String(x.nivel||'').trim(),
+      ppto: num(x.presupuesto), lm: num(x.meta_leads), mm: num(x.meta_matriculas) }) });
+  const ord = (L) => (a, b) => (L.indexOf(a) + 1 || 99) - (L.indexOf(b) + 1 || 99) || a.localeCompare(b);
+  fill('f-cli', [...new Set(RAW.map(r => r.cli))].sort(ord(CLIENTES)), document.getElementById('f-cli').value);
+  fill('f-niv', [...new Set(RAW.map(r => r.niv))].sort(ord(NIVELES)), document.getElementById('f-niv').value);
+  fill('f-medio', [...new Set(RAW.map(r => r.medio))].sort(ord(MEDIOS)), document.getElementById('f-medio').value, m => MEDIO_LBL[m] || m);
+}
+// última corrida de cada cliente según el LOG del Apps Script
+function renderLog(log){
+  const ult = {};
+  log.forEach(x => { const c = String(x.cliente||'').trim(); if(CLIENTES.includes(c) && !ult[c]) ult[c] = x });
+  document.getElementById('src-list').innerHTML = CLIENTES.map(c => { const x = ult[c];
+    return `<div><span>${c}</span><span class="${x && x.estado !== 'OK' ? 'src-err' : ''}">${x ? esc(String(x.corrida).slice(0,16)) + (x.estado !== 'OK' ? ' · ' + esc(x.estado) : '') : 'sin datos'}</span></div>` }).join('');
+}
+
+// ── Filtros ──────────────────────────────────────────────────────────────────
+function fill(id, opts, sel, labelFn){ const el = document.getElementById(id), first = el.options[0].outerHTML;
+  el.innerHTML = first + opts.map(o => `<option value="${esc(o)}"${o===sel?' selected':''}>${esc(labelFn ? labelFn(o) : o)}</option>`).join('');
+  if(sel && !opts.includes(sel)) el.value = '' }
+function prepare(){
+  const q = [['mes','Este mes'],['mesAnt','Mes pasado'],['3m','Últimos 3 meses'],['anio','Este año']];
+  document.getElementById('quick').innerHTML = q.map(([k,l]) => `<button class="qbtn" data-q="${k}" onclick="setQuick('${k}')">${l}</button>`).join('')
+    + `<span class="f-sep"></span><button class="qbtn" data-mt onclick="toggleMetaTotal()" title="Meta completa del periodo ${META_PER}; las fechas no cambian">Meta ${META_PER}</button>`;
+  if(!QUICK && document.getElementById('f-desde').value && document.getElementById('f-hasta').value) render();
+  else setQuick(QUICK || 'mes');
+}
+function setQuick(k){
+  const hoy = todayISO(); let a = hoy.slice(0,8) + '01', b = hoy;
+  if(k === 'mesAnt'){ b = addDays(a, -1); a = b.slice(0,8) + '01' }
+  else if(k === '3m'){ const d = new Date(+hoy.slice(0,4), +hoy.slice(5,7) - 3, 1); a = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-01` }
+  else if(k === 'anio'){ a = hoy.slice(0,4) + '-01-01' }
+  document.getElementById('f-desde').value = a; document.getElementById('f-hasta').value = b;
+  QUICK = k; render() }
+function toggleMetaTotal(){ META_TOTAL = !META_TOTAL; render() }
+function onDate(){ QUICK = ''; render() }
+function onSel(){ render() }
+function resetFilters(){ ['f-cli','f-niv','f-medio'].forEach(id => document.getElementById(id).value = ''); META_TOTAL = false; setQuick('mes') }
+function F(){ const g = id => document.getElementById(id).value;
+  return { desde: g('f-desde'), hasta: g('f-hasta'), cli: g('f-cli'), niv: g('f-niv'), medio: g('f-medio') } }
+const pasaNiv = (niv, f) => f.niv ? niv === f.niv : niv !== B2B;
+const pasa = (r, f) => r.d >= f.desde && r.d <= f.hasta && (!f.cli || r.cli === f.cli) && pasaNiv(r.niv, f) && (!f.medio || r.medio === f.medio);
+// Parte de una meta que entra en el filtro: la meta completa del periodo con el botón encendido;
+// si no, proporcional a los días del rango que caen dentro de la meta.
+function share(m, f){
+  if(META_TOTAL) return 1;
+  const a = m.ini > f.desde ? m.ini : f.desde, b = m.fin < f.hasta ? m.fin : f.hasta;
+  return a > b ? 0 : days(a, b) / days(m.ini, m.fin) }
+function metasEn(f){ if(f.medio) return [];
+  return METAS.filter(m => m.per === META_PER && (!f.cli || m.cli === f.cli) && pasaNiv(m.niv, f)).map(m => ({ ...m, s: share(m, f) })).filter(m => m.s) }
+
+// ── Cálculo ──────────────────────────────────────────────────────────────────
+// Además de los totales se guardan los de "clientes que miden la etapa", para que cada % del
+// embudo compare solo a quien tiene las dos etapas (UAN no tiene inscritos, por ejemplo).
+const Z = () => ({ inv:0, lp:0, lc:0, ins:0, adm:0, mat:0, lcI:0, invI:0, insA:0, admI:0, matA:0, invA:0, ppto:0, lm:0, mm:0, cli:new Set() });
+function add(a, r){
+  a.inv += r.inv; a.lp += r.lp; a.lc += r.lc; a.ins += r.ins; a.adm += r.adm; a.mat += r.mat; a.cli.add(r.cli);
+  const s = STG[r.cli] || {};
+  if(s.ins){ a.lcI += r.lc; a.invI += r.inv }
+  if(s.ins && s.adm){ a.insA += r.ins; a.admI += r.adm }
+  if(s.adm){ a.matA += r.mat; a.invA += r.inv }
+  return a }
+function addMeta(a, m){ a.ppto += m.ppto * m.s; a.lm += m.lm * m.s; a.mm += m.mm * m.s; return a }
+function M(e){ return { ...e, dif: e.lp ? e.lc/e.lp - 1 : null, cplP: div(e.inv, e.lp), cplC: div(e.inv, e.lc),
+  pLI: div(e.ins, e.lcI), pIA: div(e.admI, e.insA), pAM: div(e.matA, e.adm), conv: div(e.mat, e.lc),
+  cpi: div(e.invI, e.ins), cpa: div(e.invA, e.adm), cpm: div(e.inv, e.mat),
+  cumL: div(e.lc, e.lm), cumM: div(e.mat, e.mm), cumI: div(e.inv, e.ppto), cpmMeta: div(e.ppto, e.mm) } }
+function agrupar(rows, keyFn){ const g = {}; rows.forEach(r => { const k = keyFn(r); add(g[k] = g[k] || Z(), r) }); return g }
+// clientes de la vista sin una etapa (para las notas)
+function sinEtapa(rows, k){ return [...new Set(rows.map(r => r.cli))].filter(c => STG[c] && !STG[c][k]) }
+
+// ── Render ───────────────────────────────────────────────────────────────────
+let ROWS = [];
+function render(){
+  const f = F(); if(!f.desde || !f.hasta) return;
+  document.querySelectorAll('.qbtn[data-q]').forEach(b => b.classList.toggle('on', b.dataset.q === QUICK));
+  document.querySelectorAll('.qbtn[data-mt]').forEach(b => b.classList.toggle('on', META_TOTAL));
+  ROWS = RAW.filter(r => pasa(r, f));
+  const T = M(metasEn(f).reduce(addMeta, ROWS.reduce(add, Z())));
+  document.getElementById('rango-note').textContent = `${fDate(f.desde)}-${fDate(f.hasta)} ${f.hasta.slice(0,4)} · ${days(f.desde, f.hasta)} días`;
+  renderKPIs(T);
+  const todos = !f.cli;
+  document.getElementById('blk-cliente').style.display = todos ? '' : 'none';
+  document.getElementById('nav-cliente').style.display = todos ? '' : 'none';
+  if(todos) renderClientes(f);
+  renderMes(f); renderMedio(f); renderFuentes(f);
+}
+
+function bar(p, lbl){ if(p === null) return '';
+  return `<div class="kpi-bwrap"><div class="kpi-brow"><span>${lbl}</span><span class="${cls(p)}">${fP(p)}</span></div><div class="kpi-bar"><div class="kpi-bfill ${bgc(p)}" style="width:${Math.min(p*100,100)}%"></div></div></div>` }
+function renderKPIs(T){
+  const k = (l, v, sub, extra) => `<div class="box kpi-card"><div class="kpi-label">${l}</div><div class="kpi-value">${v}</div>${sub ? `<div class="kpi-sub">${sub}</div>` : ''}${extra || ''}</div>`;
+  const sinI = sinEtapa(ROWS, 'ins'), sinA = sinEtapa(ROWS, 'adm'), nota = l => l.length ? ` (sin ${l.join(', ')})` : '';
+  const cplMeta = div(T.ppto, T.lm);
+  document.getElementById('kpi-grid').innerHTML = [
+    k('Inversión', fCOP(T.inv), 'solo conversión, sin branding', bar(T.cumI, (META_TOTAL ? 'Ejecución vs presupuesto del periodo ' : 'Ejecución vs presupuesto del rango ') + fCOP(T.ppto))),
+    k('Leads plataforma', fN(T.lp), 'CPL plataforma ' + fCOP(T.cplP)),
+    k('Leads CRM', fN(T.lc), `<span class="${difCls(T.dif)}">${T.dif === null ? '' : (T.dif > 0 ? '+' : '') + fP(T.dif) + ' vs plataforma'}</span>`, bar(T.cumL, 'Meta ' + fN(T.lm))),
+    k('CPL CRM', fCOP(T.cplC), cplMeta ? 'CPL meta ' + fCOP(cplMeta) : ''),
+    k('Inscritos', fN(T.ins), fP(T.pLI) + ' de los leads CRM' + nota(sinI)),
+    k('Admitidos', fN(T.adm), fP(T.pIA) + ' de los inscritos' + nota(sinA)),
+    k('Matrículas', fN(T.mat), fP(T.conv) + ' de los leads CRM', bar(T.cumM, 'Meta ' + fN(T.mm))),
+    k('Costo por matrícula', fCOP(T.cpm), T.cpmMeta ? 'meta ' + fCOP(T.cpmMeta) : ''),
+  ].join('');
+}
+
+// columnas de las tablas: [clave, título, tipo, separador]
+const COLS = [['inv','Inversión','cop'],['lp','Leads plat.','n'],['lc','Leads CRM','n'],['dif','CRM vs plat.','dif'],['cplP','CPL plat.','cop'],['cplC','CPL CRM','cop'],
+  ['ins','Inscritos','n',1],['pLI','Lead → insc.','pct'],['adm','Admitidos','n'],['pIA','Insc. → adm.','pct'],['mat','Matrículas','n'],['pAM','Adm. → mat.','pct'],
+  ['cpm','Costo / mat.','cop',1],['conv','Lead → mat.','pct']];
+const COLS_META = [['mm','Meta mat.','n',1],['cumM','Cumpl. mat.','cum'],['ppto','Presupuesto','cop'],['cumI','Ejecución','cum']];
+function cell(e, [k, , t, grp]){ const v = e[k], g = grp ? ' grp' : '';
+  if(t === 'cop') return `<td class="r${g}">${fCOP(v)}</td>`;
+  if(t === 'n') return `<td class="r${g}">${fN(v)}</td>`;
+  if(t === 'pct') return `<td class="r${g}">${fP(v)}</td>`;
+  if(t === 'dif') return `<td class="r${g} ${difCls(v)}">${v === null ? '—' : (v > 0 ? '+' : '') + fP(v)}</td>`;
+  if(t === 'cum') return `<td class="r${g} ${cls(v)}">${fP(v)}</td>` }
+const head = (first, cols) => '<tr><th>' + first + '</th>' + cols.map(c => `<th class="r${c[3] ? ' grp' : ''}">${c[1]}</th>`).join('') + '</tr>';
+const fila = (cl, lab, e, cols) => `<tr${cl ? ` class="${cl}"` : ''}><td>${lab}</td>` + cols.map(c => cell(M(e), c)).join('') + '</tr>';
+
+function renderClientes(f){
+  const g = agrupar(ROWS, r => r.cli), ms = metasEn(f);
+  ms.forEach(m => addMeta(g[m.cli] = g[m.cli] || Z(), m));
+  const T = Object.values(g).reduce((a, e) => { ['inv','lp','lc','ins','adm','mat','lcI','invI','insA','admI','matA','invA','ppto','lm','mm'].forEach(k => a[k] += e[k]); return a }, Z());
+  const cols = [['inv','Inversión','cop'],['pInv','% inversión','pct'],['lc','Leads CRM','n'],['dif','CRM vs plat.','dif'],['cplC','CPL CRM','cop'],
+    ['ins','Insc.','n',1],['adm','Adm.','n'],['mat','Matrículas','n'],['cpm','Costo / mat.','cop',1],['conv','Lead → mat.','pct'],...COLS_META];
+  const cs = Object.keys(g).sort((a, b) => g[b].inv - g[a].inv);
+  document.getElementById('cli-head').innerHTML = head('Cliente', cols);
+  const row = (lab, e, tot) => { const m = M(e); m.pInv = div(e.inv, T.inv);
+    const etapa = (k, v) => STG[lab] && !STG[lab][k] ? '<td class="r t-mute' + (k === 'ins' ? ' grp' : '') + '">no mide</td>' : null;
+    return `<tr${tot ? ' class="tr-total"' : ''}><td>${esc(lab)}</td>` + cols.map(c => (!tot && (c[0] === 'ins' || c[0] === 'adm') && etapa(c[0])) || cell(m, c)).join('') + '</tr>' };
+  document.getElementById('cli-body').innerHTML = cs.length ? cs.map(c => row(c, g[c])).join('') + row('Total', T, true)
+    : `<tr><td colspan="${cols.length + 1}" class="empty">Sin datos en el rango</td></tr>`;
+  // barras: costo por matrícula de cada cliente contra su costo meta
+  const items = cs.map(c => ({ c, m: M(g[c]) })).filter(x => x.m.cpm !== null);
+  const mx = Math.max(...items.map(x => Math.max(x.m.cpm, x.m.cpmMeta || 0)), 1);
+  document.getElementById('cli-bars').innerHTML = items.length ? items.sort((a, b) => a.m.cpm - b.m.cpm).map(({c, m}) => `<div class="bar-row">
+      <div class="bar-head"><span class="name">${esc(c)}</span><span class="val">${fCOP(m.cpm)}</span></div>
+      <div class="bar-track"><i class="${m.cpmMeta && m.cpm > m.cpmMeta ? 'is-over' : ''}" style="width:${m.cpm / mx * 100}%"></i>${m.cpmMeta ? `<span class="bar-mark" style="left:${m.cpmMeta / mx * 100}%" title="meta ${fCOP(m.cpmMeta)}"></span>` : ''}</div>
+    </div>`).join('') : '<p class="empty">Sin matrículas en el rango</p>';
+}
+
+function renderMes(f){
+  const g = agrupar(ROWS, r => r.mes), ks = Object.keys(g).sort();
+  document.getElementById('mes-head').innerHTML = head('Mes', COLS);
+  const T = ROWS.reduce(add, Z());
+  document.getElementById('mes-body').innerHTML = ks.length ? ks.slice().reverse().map(k => fila('', mesLbl(k), g[k], COLS)).join('') + fila('tr-total', 'Total', T, COLS)
+    : `<tr><td colspan="${COLS.length + 1}" class="empty">Sin datos en el rango</td></tr>`;
+  const sinI = sinEtapa(ROWS, 'ins');
+  document.getElementById('mes-foot').innerHTML = '<b>CRM vs plat.</b>: leads CRM sobre leads de plataforma, menos 1. <b>Lead → insc., Insc. → adm., Adm. → mat.</b>: cada paso sobre la etapa anterior' +
+    (sinI.length ? `, sin ${sinI.join(', ')} en los pasos que tocan inscritos (no los mide)` : '') + '. <b>Lead → mat.</b>: matrículas sobre leads CRM.';
+  const fg = css('--fg-muted') || '#888', ink = css('--fg') || '#111', s1 = css('--serie-1') || '#2a78d6';
+  const data = { labels: ks.map(mesLbl), datasets: [
+    { type:'bar', label:'Inversión', data: ks.map(k => Math.round(g[k].inv)), backgroundColor:'rgba(255,212,0,.6)', yAxisID:'y1', order:3 },
+    { type:'line', label:'Leads CRM', data: ks.map(k => g[k].lc), borderColor: ink, backgroundColor: ink, tension:.25, yAxisID:'y', order:1 },
+    { type:'line', label:'Matrículas', data: ks.map(k => g[k].mat), borderColor: s1, backgroundColor: s1, borderDash:[4,3], tension:.25, yAxisID:'y2', order:0 } ] };
+  const opts = { responsive:true, maintainAspectRatio:false, interaction:{mode:'index', intersect:false},
+    plugins:{ legend:{labels:{boxWidth:10, font:{family:'Poppins', size:12}, color:fg}},
+      tooltip:{callbacks:{label: c => c.dataset.label + ': ' + (c.dataset.yAxisID === 'y1' ? fCOP(c.raw) : fN(c.raw))}} },
+    scales:{ x:{ticks:{color:fg, font:{size:12}}, grid:{display:false}},
+      y:{position:'left', beginAtZero:true, ticks:{color:fg, font:{size:12}}, title:{display:true, text:'Leads CRM', color:fg, font:{size:12}}},
+      y2:{position:'left', beginAtZero:true, display:false},
+      y1:{position:'right', beginAtZero:true, grid:{display:false}, ticks:{color:fg, font:{size:12}, callback: v => '$' + (v/1e6).toLocaleString('es-CO') + 'M'}} } };
+  if(CHART_MES) CHART_MES.destroy();
+  CHART_MES = new Chart(document.getElementById('chart-mes'), { data, options: opts });
+}
+
+function setMedioVista(k){ MEDIO_VISTA = k; document.querySelectorAll('[data-mv]').forEach(b => b.classList.toggle('on', b.dataset.mv === k)); renderMedio(F()) }
+function renderMedio(f){
+  const ord = L => (a, b) => (L.indexOf(a) + 1 || 99) - (L.indexOf(b) + 1 || 99) || a.localeCompare(b);
+  const con = g => k => g[k].inv || g[k].lp || g[k].lc || g[k].ins || g[k].adm || g[k].mat;
+  const sub = (rs, keyFn, L, lab, cl) => { const g = agrupar(rs, keyFn); return Object.keys(g).filter(con(g)).sort(ord(L)).map(k => fila(cl, esc(lab ? lab(k) : k), g[k], COLS)).join('') };
+  const mlab = m => MEDIO_LBL[m] || m;
+  let h = '', first = 'Nivel / medio';
+  if(MEDIO_VISTA === 'niv'){
+    const g = agrupar(ROWS, r => r.niv);
+    Object.keys(g).sort(ord(NIVELES)).forEach(n => { h += fila('lv1', esc(n), g[n], COLS) + sub(ROWS.filter(r => r.niv === n), r => r.medio, MEDIOS, mlab, 'lv3') });
+  } else if(MEDIO_VISTA === 'medio'){ first = 'Medio'; h = sub(ROWS, r => r.medio, MEDIOS, mlab, '') }
+  else {
+    first = 'Cliente / nivel';
+    const g = agrupar(ROWS, r => r.cli);
+    Object.keys(g).sort((a, b) => g[b].inv - g[a].inv).forEach(c => { h += fila('lv1', esc(c), g[c], COLS) + sub(ROWS.filter(r => r.cli === c), r => r.niv, NIVELES, null, 'lv3') });
+  }
+  document.getElementById('medio-head').innerHTML = head(first, COLS);
+  document.getElementById('medio-body').innerHTML = h ? h + fila('tr-total', 'Total', ROWS.reduce(add, Z()), COLS)
+    : `<tr><td colspan="${COLS.length + 1}" class="empty">Sin datos en el rango</td></tr>`;
+}
+
+// ── Pauta vs orgánico y otras fuentes ────────────────────────────────────────
+const FUENTES = ['Pauta', 'Orgánico', 'Otras fuentes'];
+const FU_TAG = {'Pauta':'tag-pau', 'Orgánico':'tag-org', 'Otras fuentes':'tag-otr'};
+function renderFuentes(f){
+  const rows = FUE.filter(r => r.d >= f.desde && r.d <= f.hasta && (!f.cli || r.cli === f.cli) && pasaNiv(r.niv, f)), Zf = () => ({lc:0, mat:0});
+  const T = {}, MES = {};
+  FUENTES.forEach(k => T[k] = Zf());
+  rows.forEach(r => { if(!T[r.fu]) return; const m = r.d.slice(0,7); MES[m] = MES[m] || Object.fromEntries(FUENTES.map(k => [k, Zf()]));
+    [T[r.fu], MES[m][r.fu]].forEach(x => { x.lc += r.lc; x.mat += r.mat }) });
+  const tl = FUENTES.reduce((a, k) => a + T[k].lc, 0), tm = FUENTES.reduce((a, k) => a + T[k].mat, 0);
+  const it = (l, v) => `<div><div class="nm-label">${l}</div><div class="nm-value">${v}</div></div>`;
+  document.getElementById('fuente-cards').innerHTML = FUENTES.map(k => `<div class="box nivel-card"><span class="nivel-tag ${FU_TAG[k]}">${k}</span><div class="nm-grid">
+    ${it('Leads CRM', fN(T[k].lc))}${it('% de los leads', fP(div(T[k].lc, tl)))}${it('Conversión', fP(div(T[k].mat, T[k].lc)))}
+    ${it('Matrículas', fN(T[k].mat))}${it('% de las matrículas', fP(div(T[k].mat, tm)))}</div></div>`).join('');
+  const ks = Object.keys(MES).sort();
+  document.getElementById('fu-head').innerHTML = '<tr><th>Mes</th>' + FUENTES.map(k => `<th class="r grp">Leads ${k.toLowerCase()}</th><th class="r">Matrículas</th><th class="r">Conversión</th>`).join('') + '<th class="r grp">% leads de pauta</th></tr>';
+  const tr = (lab, x, tot) => `<tr${tot ? ' class="tr-total"' : ''}><td>${lab}</td>` + FUENTES.map(k => `<td class="r grp">${fN(x[k].lc)}</td><td class="r">${fN(x[k].mat)}</td><td class="r">${fP(div(x[k].mat, x[k].lc))}</td>`).join('') +
+    `<td class="r grp">${fP(div(x['Pauta'].lc, FUENTES.reduce((a, k) => a + x[k].lc, 0)))}</td></tr>`;
+  document.getElementById('fu-body').innerHTML = ks.length ? ks.slice().reverse().map(k => tr(mesLbl(k), MES[k])).join('') + tr('Total', T, true)
+    : '<tr><td colspan="11" class="empty">Sin datos en el rango</td></tr>';
+  const fg = css('--fg-muted') || '#888', col = { 'Pauta': 'rgba(255,212,0,.8)', 'Orgánico': css('--serie-1') || '#2a78d6', 'Otras fuentes': css('--ramp-3') || '#9a9992' };
+  const line = { 'Pauta': css('--accent-fg') || '#7d6800', 'Orgánico': css('--serie-1') || '#2a78d6', 'Otras fuentes': css('--fg-muted') || '#656560' };
+  const data = { labels: ks.map(mesLbl), datasets: [
+    ...FUENTES.map((k, i) => ({ type:'bar', label:'Leads ' + k.toLowerCase(), data: ks.map(m => MES[m][k].lc), backgroundColor: col[k], borderColor: css('--ground') || '#f4f4f1', borderWidth:{top:2}, stack:'leads', yAxisID:'y', order:5 + i })),
+    ...FUENTES.map((k, i) => ({ type:'line', label:'Conversión ' + k.toLowerCase(), data: ks.map(m => MES[m][k].lc ? MES[m][k].mat / MES[m][k].lc * 100 : null), borderColor: line[k], backgroundColor: line[k], borderWidth:2, tension:.25, spanGaps:true, yAxisID:'y1', order:i })) ] };
+  const opts = { responsive:true, maintainAspectRatio:false, interaction:{mode:'index', intersect:false},
+    plugins:{ legend:{labels:{boxWidth:10, font:{family:'Poppins', size:12}, color:fg}},
+      tooltip:{callbacks:{label: c => c.dataset.label + ': ' + (c.dataset.yAxisID === 'y1' ? (c.raw === null ? '—' : c.raw.toLocaleString('es-CO', {maximumFractionDigits:1}) + '%') : fN(c.raw))}} },
+    scales:{ x:{stacked:true, ticks:{color:fg, font:{size:12}}, grid:{display:false}},
+      y:{stacked:true, position:'left', beginAtZero:true, ticks:{color:fg, font:{size:12}}, title:{display:true, text:'Leads CRM', color:fg, font:{size:12}}},
+      y1:{position:'right', beginAtZero:true, grid:{display:false}, ticks:{color:fg, font:{size:12}, callback: v => v + '%'}, title:{display:true, text:'Conversión lead → matrícula', color:fg, font:{size:12}}} } };
+  if(CHART_FU) CHART_FU.destroy();
+  CHART_FU = new Chart(document.getElementById('chart-fu'), { data, options: opts });
+}
+
+load();
+</script>
+</body>
+</html>

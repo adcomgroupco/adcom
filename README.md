@@ -13,6 +13,7 @@ adcom/
 ├── index.html                    portal: intro y cards hacia cada destino
 ├── clientes.html                 hub de tableros por cliente (Looker, Zoho, HTML)
 ├── diagnostico-educacion.html    diagnóstico del sector de educación superior
+├── tablero-educacion.html        tablero general de pauta de los clientes de educación (lee la hoja Consolidado Educación)
 ├── framework/                    framework del área digital · v0.3
 │   ├── index.html                el documento completo, con herramientas interactivas
 │   ├── assets/{css,js}           estilos y scripts del framework
