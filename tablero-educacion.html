@@ -66,6 +66,22 @@ select:focus,input:focus{border-color:var(--accent-fg)}
 .bars-card h3{font-size:13px;font-weight:700;margin-bottom:4px}
 .bars-card .bars-note{font-size:12px;color:var(--gray-400);margin-bottom:14px}
 .bars-card .bar-head .val{font-size:1.05rem}
+/* cumplimiento por cliente: tres barras por cliente; la raya marca el 100% (la barra llega hasta 150%) */
+.cum-cli{display:grid;gap:6px;padding:10px 0;border-top:1px solid var(--gray-100)}
+.cum-cli:first-child{border-top:0;padding-top:0}
+.cum-cli .name{font-weight:700;font-size:13px}
+.cum-line{display:grid;grid-template-columns:118px minmax(0,1fr) 64px;gap:10px;align-items:center;font-size:12px;color:var(--gray-600)}
+.cum-line .val{text-align:right;font-variant-numeric:tabular-nums}
+.cum-track{position:relative;height:10px;background:var(--sunken)}
+.cum-track i{display:block;height:100%}
+.cum-track b{position:absolute;top:-3px;bottom:-3px;left:66.667%;width:2px;background:var(--ink)}
+.cum-line .det{grid-column:2 / 4;font-size:11px;color:var(--gray-400);margin-top:-4px}
+/* mes a mes: mes → cliente → nivel */
+.mm-chip{cursor:pointer;user-select:none;white-space:nowrap}
+.mm-chip .car{display:inline-block;font-size:9px;color:var(--gray-400);margin-right:6px;transition:transform .15s}
+.mm-chip.open .car{transform:rotate(90deg)}
+.lv2 td:first-child{padding-left:20px}
+.mm-l3 td:first-child{padding-left:40px;color:var(--gray-600)}
 
 /* GRÁFICOS Y FUENTES */
 .chart-card{padding:14px;margin-bottom:20px}
@@ -180,8 +196,8 @@ select:focus,input:focus{border-color:var(--accent-fg)}
       <div class="cmp">
         <div class="box tcard"><div class="tscroll"><table><thead id="cli-head"></thead><tbody id="cli-body"></tbody></table></div></div>
         <div class="box bars-card">
-          <h3>Costo por matrícula</h3>
-          <p class="bars-note">La raya marca el costo meta (presupuesto / meta de matrículas). En rojo, el cliente que lo supera.</p>
+          <h3>Cumplimiento por cliente</h3>
+          <p class="bars-note">Presupuesto y leads contra la meta mensual de cada cliente (la parte de los días del rango); matrículas contra la meta de pauta del periodo. La raya marca el 100%.</p>
           <div class="bars grow" id="cli-bars"></div>
         </div>
       </div>
@@ -211,7 +227,7 @@ select:focus,input:focus{border-color:var(--accent-fg)}
 
 <script>
 const SHEET_ID = '1XnjNw2N-DByviPLCeNgJB6LbcTV-pzrlNKgnrqRmNQ4';
-const SRC = { embudo: 'gid=0', fuentes: 'gid=1051276507', metas: 'gid=2062283911', log: 'sheet=LOG' };
+const SRC = { embudo: 'gid=0', fuentes: 'gid=1051276507', metas: 'gid=2062283911', mmes: 'sheet=METAS_MENSUAL', log: 'sheet=LOG' };
 const URL_DE = q => `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&headers=1&${q}&_=${Date.now()}`;
 const CLIENTES = ['Compensar', 'UAN', 'Católica', 'EIA', 'Corpas'];
 const NIVELES = ['Pregrado', 'Posgrado', 'Técnico laboral', 'Educación continuada', 'General', 'Soluciones empresariales'];
@@ -221,7 +237,7 @@ const MEDIO_LBL = { 'Meta': 'Meta (Facebook e Instagram)', 'Sin medio': 'Sin med
 const META_PER = '2027-1';
 const MESES = ['','ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 
-let RAW = [], FUE = [], METAS = [], STG = {}, QUICK = 'mes', META_TOTAL = false, MEDIO_VISTA = 'niv', CHART_MES = null, CHART_FU = null;
+let MMES = [], OPEN_MM = {}, RAW = [], FUE = [], METAS = [], STG = {}, QUICK = 'mes', META_TOTAL = false, MEDIO_VISTA = 'niv', CHART_MES = null, CHART_FU = null;
 
 // ── Parsers y formato ─────────────────────────────────────────────────────────
 function num(v){ const s = String(v ?? '').replace(/[$\s%]/g,''); if(!s) return 0;
@@ -251,16 +267,19 @@ function fetchTab(q){ return new Promise((ok, ko) => Papa.parse(URL_DE(q), { dow
 function load(){
   document.getElementById('loading').style.display = 'flex';
   document.getElementById('ld-msg').textContent = 'Cargando datos...';
-  Promise.all([fetchTab(SRC.embudo), fetchTab(SRC.fuentes), fetchTab(SRC.metas), fetchTab(SRC.log).catch(() => [])]).then(([e, fu, me, log]) => {
-    build(e, fu, me); renderLog(log); prepare();
+  Promise.all([fetchTab(SRC.embudo), fetchTab(SRC.fuentes), fetchTab(SRC.metas), fetchTab(SRC.log).catch(() => []), fetchTab(SRC.mmes).catch(() => [])]).then(([e, fu, me, log, mm]) => {
+    build(e, fu, me, mm); renderLog(log); prepare();
     const t = new Date().toLocaleString('es-CO', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
     document.getElementById('last-upd').textContent = 'Datos cargados: ' + t;
     document.getElementById('loading').style.display = 'none';
   }).catch(() => { document.getElementById('ld-msg').textContent = 'No se pudo leer la hoja Consolidado Educación' });
 }
 
-function build(e, fu, me){
+function build(e, fu, me, mm){
   RAW = []; FUE = []; METAS = []; STG = {};
+  // metas mensuales por cliente y nivel (METAS_MENSUAL: fecha · mes · cliente · periodo · nivel · presupuesto · meta_leads)
+  MMES = (mm || []).map(x => ({ mes: String(x.mes||'').trim().slice(0,7) || iso(x.fecha).slice(0,7), cli: String(x.cliente||'').trim(),
+    niv: String(x.nivel||'').trim(), ppto: num(x.presupuesto), lm: num(x.meta_leads) })).filter(m => /^\d{4}-\d{2}$/.test(m.mes) && m.cli);
   e.forEach(x => {
     const d = iso(x.fecha), cli = String(x.cliente||'').trim(); if(!d || !cli) return;
     // un cliente "mide" una etapa si su columna viene con dato (vacío = no la tiene)
@@ -320,13 +339,25 @@ function share(m, f){
   if(META_TOTAL) return 1;
   const a = m.ini > f.desde ? m.ini : f.desde, b = m.fin < f.hasta ? m.fin : f.hasta;
   return a > b ? 0 : days(a, b) / days(m.ini, m.fin) }
+// Meta mensual (METAS_MENSUAL) del rango: cada mes aporta su meta × días del mes dentro del rango / días del mes.
+// Con el botón de meta encendido, los meses que tocan el rango cuentan completos. test filtra por mes, cliente o nivel.
+const finMes = k => addDays(new Date(Date.UTC(+k.slice(0,4), +k.slice(5,7), 1)).toISOString().slice(0,10), -1);
+function metaMes(f, test){
+  const out = { pm:0, lmm:0 }; if(f.medio) return out;
+  MMES.forEach(m => {
+    if((f.cli && m.cli !== f.cli) || !pasaNiv(m.niv, f) || (test && !test(m))) return;
+    const ini = m.mes + '-01', fin = finMes(m.mes);
+    if(fin < f.desde || ini > f.hasta) return;
+    const a = META_TOTAL || f.desde < ini ? ini : f.desde, b = META_TOTAL || f.hasta > fin ? fin : f.hasta;
+    const s = days(a, b) / days(ini, fin); out.pm += m.ppto * s; out.lmm += m.lm * s });
+  return out }
 function metasEn(f){ if(f.medio) return [];
   return METAS.filter(m => m.per === META_PER && (!f.cli || m.cli === f.cli) && pasaNiv(m.niv, f)).map(m => ({ ...m, s: share(m, f) })).filter(m => m.s) }
 
 // ── Cálculo ──────────────────────────────────────────────────────────────────
 // Además de los totales se guardan los de "clientes que miden la etapa", para que cada % del
 // embudo compare solo a quien tiene las dos etapas (UAN no tiene inscritos, por ejemplo).
-const Z = () => ({ inv:0, lp:0, lc:0, ins:0, adm:0, mat:0, lcI:0, invI:0, insA:0, admI:0, matA:0, invA:0, ppto:0, lm:0, mm:0, cli:new Set() });
+const Z = () => ({ inv:0, lp:0, lc:0, ins:0, adm:0, mat:0, lcI:0, invI:0, insA:0, admI:0, matA:0, invA:0, ppto:0, lm:0, mm:0, pm:0, lmm:0, cli:new Set() });
 function add(a, r){
   a.inv += r.inv; a.lp += r.lp; a.lc += r.lc; a.ins += r.ins; a.adm += r.adm; a.mat += r.mat; a.cli.add(r.cli);
   const s = STG[r.cli] || {};
@@ -338,7 +369,8 @@ function addMeta(a, m){ a.ppto += m.ppto * m.s; a.lm += m.lm * m.s; a.mm += m.mm
 function M(e){ return { ...e, dif: e.lp ? e.lc/e.lp - 1 : null, cplP: div(e.inv, e.lp), cplC: div(e.inv, e.lc),
   pLI: div(e.ins, e.lcI), pIA: div(e.admI, e.insA), pAM: div(e.matA, e.adm), conv: div(e.mat, e.lc),
   cpi: div(e.invI, e.ins), cpa: div(e.invA, e.adm), cpm: div(e.inv, e.mat),
-  cumL: div(e.lc, e.lm), cumM: div(e.mat, e.mm), cumI: div(e.inv, e.ppto), cpmMeta: div(e.ppto, e.mm) } }
+  cumL: div(e.lc, e.lm), cumM: div(e.mat, e.mm), cumI: div(e.inv, e.ppto), cpmMeta: div(e.ppto, e.mm),
+  cumP: div(e.inv, e.pm), cumLm: div(e.lc, e.lmm), cplM: div(e.pm, e.lmm) } }
 function agrupar(rows, keyFn){ const g = {}; rows.forEach(r => { const k = keyFn(r); add(g[k] = g[k] || Z(), r) }); return g }
 // clientes de la vista sin una etapa (para las notas)
 function sinEtapa(rows, k){ return [...new Set(rows.map(r => r.cli))].filter(c => STG[c] && !STG[c][k]) }
@@ -395,7 +427,7 @@ const fila = (cl, lab, e, cols) => `<tr${cl ? ` class="${cl}"` : ''}><td>${lab}<
 function renderClientes(f){
   const g = agrupar(ROWS, r => r.cli), ms = metasEn(f);
   ms.forEach(m => addMeta(g[m.cli] = g[m.cli] || Z(), m));
-  const T = Object.values(g).reduce((a, e) => { ['inv','lp','lc','ins','adm','mat','lcI','invI','insA','admI','matA','invA','ppto','lm','mm'].forEach(k => a[k] += e[k]); return a }, Z());
+  const T = Object.values(g).reduce((a, e) => { ['inv','lp','lc','ins','adm','mat','lcI','invI','insA','admI','matA','invA','ppto','lm','mm','pm','lmm'].forEach(k => a[k] += e[k]); return a }, Z());
   const cols = [['inv','Inversión','cop'],['pInv','% inversión','pct'],['lc','Leads CRM','n'],['dif','CRM vs plat.','dif'],['cplC','CPL CRM','cop'],
     ['ins','Insc.','n',1],['adm','Adm.','n'],['mat','Matrículas','n'],['cpm','Costo / mat.','cop',1],['conv','Lead → mat.','pct'],...COLS_META];
   const cs = Object.keys(g).sort((a, b) => g[b].inv - g[a].inv);
@@ -405,24 +437,47 @@ function renderClientes(f){
     return `<tr${tot ? ' class="tr-total"' : ''}><td>${esc(lab)}</td>` + cols.map(c => (!tot && (c[0] === 'ins' || c[0] === 'adm') && etapa(c[0])) || cell(m, c)).join('') + '</tr>' };
   document.getElementById('cli-body').innerHTML = cs.length ? cs.map(c => row(c, g[c])).join('') + row('Total', T, true)
     : `<tr><td colspan="${cols.length + 1}" class="empty">Sin datos en el rango</td></tr>`;
-  // barras: costo por matrícula de cada cliente contra su costo meta
-  const items = cs.map(c => ({ c, m: M(g[c]) })).filter(x => x.m.cpm !== null);
-  const mx = Math.max(...items.map(x => Math.max(x.m.cpm, x.m.cpmMeta || 0)), 1);
-  document.getElementById('cli-bars').innerHTML = items.length ? items.sort((a, b) => a.m.cpm - b.m.cpm).map(({c, m}) => `<div class="bar-row">
-      <div class="bar-head"><span class="name">${esc(c)}</span><span class="val">${fCOP(m.cpm)}</span></div>
-      <div class="bar-track"><i class="${m.cpmMeta && m.cpm > m.cpmMeta ? 'is-over' : ''}" style="width:${m.cpm / mx * 100}%"></i>${m.cpmMeta ? `<span class="bar-mark" style="left:${m.cpmMeta / mx * 100}%" title="meta ${fCOP(m.cpmMeta)}"></span>` : ''}</div>
-    </div>`).join('') : '<p class="empty">Sin matrículas en el rango</p>';
+  // cumplimiento de cada cliente: presupuesto y leads contra la meta mensual; matrículas contra la meta del periodo
+  const linea = (lbl, real, meta, fmt) => { const p = div(real, meta);
+    if(p === null) return `<div class="cum-line"><span>${lbl}</span><div class="cum-track"><b></b></div><span class="val t-mute">sin meta</span></div>`;
+    return `<div class="cum-line"><span>${lbl}</span><div class="cum-track"><i class="${bgc(p)}" style="width:${Math.min(p, 1.5) / 1.5 * 100}%"></i><b></b></div>` +
+      `<span class="val ${cls(p)}">${fP(p)}</span><span class="det">${fmt(real)} de ${fmt(meta)}</span></div>` };
+  document.getElementById('cli-bars').innerHTML = cs.length ? cs.map(c => { const e = g[c], mm = metaMes(f, m => m.cli === c);
+    return `<div class="cum-cli"><span class="name">${esc(c)}</span>` + linea('Presupuesto', e.inv, mm.pm, fCOP) + linea('Leads CRM', e.lc, mm.lmm, fN) +
+      linea('Matrículas', e.mat, e.mm, fN) + '</div>' }).join('') : '<p class="empty">Sin datos en el rango</p>';
 }
 
+const COLS_MM = [['pm','Ppto meta','cop',1],['cumP','Ejec. ppto','cum'],['lmm','Meta leads','n'],['cumLm','Cumpl. leads','cum'],['cplM','CPL meta','cop']];
+function togMM(k){ OPEN_MM[k] = !OPEN_MM[k]; renderMes(F()) }
 function renderMes(f){
-  const g = agrupar(ROWS, r => r.mes), ks = Object.keys(g).sort();
-  document.getElementById('mes-head').innerHTML = head('Mes', COLS);
-  const T = ROWS.reduce(add, Z());
-  document.getElementById('mes-body').innerHTML = ks.length ? ks.slice().reverse().map(k => fila('', mesLbl(k), g[k], COLS)).join('') + fila('tr-total', 'Total', T, COLS)
-    : `<tr><td colspan="${COLS.length + 1}" class="empty">Sin datos en el rango</td></tr>`;
+  const g = agrupar(ROWS, r => r.mes), ks = Object.keys(g).sort(), cols = COLS.concat(COLS_MM);
+  const ord = L => (a, b) => (L.indexOf(a) + 1 || 99) - (L.indexOf(b) + 1 || 99) || a.localeCompare(b);
+  // fila con chip: abre el siguiente nivel (mes → cliente → nivel)
+  const chip = (id, lab) => `<span class="mm-chip${OPEN_MM[id] ? ' open' : ''}" onclick="togMM('${id.replace(/'/g, "\\'")}')"><span class="car">▶</span>${lab}</span>`;
+  const filaMM = (cl, lab, e) => `<tr${cl ? ` class="${cl}"` : ''}><td>${lab}</td>` + cols.map(c => cell(M(e), c)).join('') + '</tr>';
+  let h = '';
+  ks.slice().reverse().forEach(k => {
+    const e = Object.assign(g[k], metaMes(f, m => m.mes === k));
+    h += filaMM('lv1', chip(k, mesLbl(k)), e);
+    if(!OPEN_MM[k]) return;
+    const rk = ROWS.filter(r => r.mes === k), gc = agrupar(rk, r => r.cli);
+    MMES.filter(m => m.mes === k && (!f.cli || m.cli === f.cli) && pasaNiv(m.niv, f)).forEach(m => { gc[m.cli] = gc[m.cli] || Z() });
+    Object.keys(gc).sort(ord(CLIENTES)).forEach(c => {
+      const id = k + '|' + c, ec = Object.assign(gc[c], metaMes(f, m => m.mes === k && m.cli === c));
+      h += filaMM('lv2', chip(id, esc(c)), ec);
+      if(!OPEN_MM[id]) return;
+      const gn = agrupar(rk.filter(r => r.cli === c), r => r.niv);
+      MMES.filter(m => m.mes === k && m.cli === c && pasaNiv(m.niv, f)).forEach(m => { gn[m.niv] = gn[m.niv] || Z() });
+      Object.keys(gn).sort(ord(NIVELES)).forEach(n => h += filaMM('mm-l3', esc(n), Object.assign(gn[n], metaMes(f, m => m.mes === k && m.cli === c && m.niv === n))));
+    });
+  });
+  document.getElementById('mes-head').innerHTML = head('Mes', cols);
+  const T = Object.assign(ROWS.reduce(add, Z()), metaMes(f));
+  document.getElementById('mes-body').innerHTML = ks.length ? h + filaMM('tr-total', 'Total', T)
+    : `<tr><td colspan="${cols.length + 1}" class="empty">Sin datos en el rango</td></tr>`;
   const sinI = sinEtapa(ROWS, 'ins');
   document.getElementById('mes-foot').innerHTML = '<b>CRM vs plat.</b>: leads CRM sobre leads de plataforma, menos 1. <b>Lead → insc., Insc. → adm., Adm. → mat.</b>: cada paso sobre la etapa anterior' +
-    (sinI.length ? `, sin ${sinI.join(', ')} en los pasos que tocan inscritos (no los mide)` : '') + '. <b>Lead → mat.</b>: matrículas sobre leads CRM.';
+    (sinI.length ? `, sin ${sinI.join(', ')} en los pasos que tocan inscritos (no los mide)` : '') + '. <b>Lead → mat.</b>: matrículas sobre leads CRM. <b>Ppto meta, Meta leads</b>: meta mensual de cada cliente por nivel (METAS_MENSUAL, sin branding), la parte de los días del rango; con el botón de meta encendido, el mes completo. <b>Ejec. ppto</b> = inversión / ppto meta; <b>Cumpl. leads</b> = leads CRM / meta leads. Con filtro de medio no hay meta. Haz clic en un mes para abrirlo por cliente y en un cliente para abrirlo por nivel.';
   const fg = css('--fg-muted') || '#888', ink = css('--fg') || '#111', s1 = css('--serie-1') || '#2a78d6';
   const data = { labels: ks.map(mesLbl), datasets: [
     { type:'bar', label:'Inversión', data: ks.map(k => Math.round(g[k].inv)), backgroundColor:'rgba(255,212,0,.6)', yAxisID:'y1', order:3 },
