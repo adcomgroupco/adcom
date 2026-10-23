@@ -14,6 +14,7 @@ adcom/
 ├── clientes.html                 hub de tableros por cliente (Looker, Zoho, HTML)
 ├── diagnostico-educacion.html    diagnóstico del sector de educación superior
 ├── tablero-educacion.html        tablero general de pauta de los clientes de educación (lee la hoja Consolidado Educación)
+├── playbook-creativo/            biblioteca visual de formatos y posibilidades de pauta
 ├── framework/                    framework del área digital · v0.3
 │   ├── index.html                el documento completo, con herramientas interactivas
 │   ├── assets/{css,js}           estilos y scripts del framework
@@ -24,6 +25,9 @@ adcom/
 
 Cada pieza es autocontenida: `framework/` trae sus propios `assets/`, y los informes de la raíz
 llevan su CSS embebido. Mover una carpeta no rompe a las demás.
+
+El playbook creativo abre desde `playbook-creativo/index.html` y funciona con doble clic, sin servidor.
+Sus fichas editoriales viven en `assets/data.js`; las referencias, en `assets/references.js`.
 
 ## Cómo agregar un destino al portal
 
