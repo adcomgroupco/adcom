@@ -19,21 +19,25 @@ visual, franja papel para la biblioteca, Poppins y amarillo Adcom.
 - `assets/branding/`: logo de Adcom proporcionado para la cabecera y favicon.
 - `assets/logos/`: iconos locales de Meta, TikTok, Google, YouTube, Spotify, Twitch y Kick,
   tomados de Simple Icons 16.35.0 (CC0). Programática, CTV y DOOH usan etiquetas de categoría.
-- `assets/photos/`: diez fotografías originales generadas para estos ejemplos y utilizadas en
-  las composiciones SVG de respaldo.
+- `assets/photos/`: fotografías originales generadas para estos ejemplos. `dooh-neutral-street.png`
+  y `dooh-rainy-street.png` comparten el encuadre y la pantalla; el anuncio y el clima de la calle cambian juntos.
 - `assets/thumbnails/` y `assets/safe-zones/`: material heredado del paquete v2 que la interfaz
   ya no carga. Se conserva como insumo de origen.
 - `tools/generate_mockups.py`: regenera las composiciones SVG de respaldo. Requiere solo Python
   estándar; la página funciona sin Python.
-- `script.js`: búsqueda, filtros, fichas y demos interactivas.
+- `script.js`: búsqueda, selección de medios por logo, fichas y demos interactivas.
 
-La exploración presenta un selector de medios y muestra sus formatos en páginas de cuatro tarjetas
+La exploración presenta los logos de los medios como único filtro y muestra sus formatos en páginas de cuatro tarjetas
 con previews de altura uniforme. La búsqueda recorre todos los medios. Hay fichas de Meta, TikTok,
-Google, Spotify, Programática, CTV, Twitch / Kick y DOOH. Las fichas de Meta y TikTok incluyen una guía
-visual orientativa de zonas seguras. DCO y los formatos activados por datos muestran un registro
-ficticio, la regla y la pieza resultante, incluido un escenario sin dato válido, desde la tarjeta
-de preview. La ficha de Performance Max reúne seis superficies de Google en un solo visual.
-Las imágenes de las tarjetas y de las fichas se pueden ampliar con un clic. TikTok incluye
+Google, Spotify, Programática, CTV, Twitch / Kick y DOOH. Al ampliar un formato de Meta o TikTok se puede
+activar una guía orientativa de zonas seguras sobre la misma imagen. DCO comienza con la estructura
+de una plantilla y después muestra las variables de catálogo y las piezas dentro de una página editorial simulada, incluido
+un respaldo sin stock. DOOH mantiene el encuadre y la pantalla; la calle se ve seca o lluviosa y el anuncio cambia entre
+sol, lluvia y ausencia de dato; el clima es solo un ejemplo de señal integrable. Estas secuencias
+cambian automáticamente y se pueden pausar o controlar a mano.
+La ficha de Performance Max reúne seis superficies de Google en un solo visual.
+Las imágenes de las tarjetas se pueden ampliar con un clic; la ficha abre con la explicación y ofrece un enlace a la imagen.
+TikTok incluye
 TopView, Pulse y Top Feed; Google incluye YouTube Masthead. Estos formatos de reserva requieren
 validar acceso, inventario, mercado y compra antes de producir.
 

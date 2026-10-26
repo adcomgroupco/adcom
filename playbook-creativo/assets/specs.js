@@ -41,6 +41,6 @@ window.CMP_SPECS = {
   'dooh-screen': { size:'1080 × 1920 px vertical de ejemplo', ratio:'Según pantalla', detail:'Pide resolución, orientación y área visible exactas al operador.' },
   'dooh-motion': { size:'1920 × 1080 px horizontal de ejemplo', ratio:'Según pantalla', detail:'Geometría, perspectiva y reproducción dependen del soporte concreto.' },
   'dooh-daypart': { size:'1080 × 1920 px vertical de ejemplo', ratio:'Según pantalla', detail:'Todas las variantes deben compartir el tamaño exacto del inventario.' },
-  'dooh-data': { size:'1080 × 1920 px vertical de ejemplo', ratio:'Según pantalla', detail:'Prepara variantes para cada condición y un respaldo sin datos.' },
+  'dooh-data': { size:'1080 × 1920 px vertical de ejemplo', ratio:'Según pantalla', detail:'Clima es solo un ejemplo: hora, lugar, inventario, afluencia u otra señal integrable y autorizada pueden activar variantes. Prepara un respaldo sin datos.' },
   'dooh-special': { size:'1080 × 1920 px vertical de ejemplo', ratio:'Según pantalla', detail:'La activación necesita plano técnico, distancia de lectura y prueba en sitio.' }
 };

@@ -28,30 +28,26 @@
       <div class="hero-copy">
         <p class="eyebrow">Biblioteca creativa de medios digitales</p>
         <h1 id="hero-title">Playbook creativo de medios digitales</h1>
-        <p class="hero-sub">Explora formatos. Descubre posibilidades. Diseña mejores anuncios.</p>
+        <p class="hero-sub">Una idea puede vivir en una historia, una búsqueda, una canción, una transmisión o una pantalla en la ciudad. Cada medio abre una forma distinta de contarla.</p>
+        <p class="hero-purpose">Esta guía ayuda a entender qué permite cada formato de pauta, cómo se ve en contexto y qué conviene resolver antes de producir. Para que la creatividad elija el medio con intención y no se quede solo en redes sociales.</p>
         <a class="button button-light" href="#medios">Elegir un medio <span aria-hidden="true">↗</span></a>
       </div>
-      <div class="hero-art">
-        <div class="hero-art-head"><span>UN FORMATO EN CONTEXTO</span><span id="hero-count"></span></div>
-        <img src="assets/interfaces/goo-instream.webp" alt="Interfaz ilustrativa de YouTube con video publicitario y módulo lateral de productos" width="1600" height="900">
-        <p>Ejemplos visuales originales para reconocer cada formato en su contexto.</p>
-      </div>
+      <div class="hero-story" aria-label="De la idea a la pieza"><span>LA IDEA</span><p>¿Qué queremos provocar?</p><span>EL MEDIO</span><p>¿Dónde cobra sentido?</p><span>LA PIEZA</span><p>¿Qué debemos producir?</p></div>
     </section>
 
     <section class="wrap media-section" id="medios" aria-labelledby="medios-title">
-      <div class="section-intro"><p class="eyebrow">Explorar por medio</p><h2 id="medios-title">¿Dónde vivirá la idea?</h2><p>Elige un medio para ver sus formatos. Puedes cambiar de medio en cualquier momento.</p></div>
+      <div class="section-intro"><p class="eyebrow">Explorar por medio</p><h2 id="medios-title">¿Dónde vivirá la idea?</h2><p>Elige un medio para ver sus formatos. Puedes cambiarlo en cualquier momento.</p></div>
       <nav class="media-index" id="media-grid" aria-label="Medios disponibles"></nav>
     </section>
 
     <section class="explore-section" data-suelo="papel" id="explorar" aria-labelledby="explorar-title">
       <div class="wrap">
-        <div class="section-intro"><p class="eyebrow">Biblioteca de formatos</p><h2 id="explorar-title">Formatos para imaginar y producir</h2><p>Busca por medio, formato o por lo que quieres lograr con la idea.</p></div>
+        <h2 id="explorar-title" class="visually-hidden">Explorar formatos</h2>
         <div class="filters">
-          <label class="search-wrap"><span class="visually-hidden">Buscar formatos</span><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Buscar un formato, idea o acción…" autocomplete="off"></label>
-          <label class="select-wrap">Medio <select id="medium-filter"><option value="">Todos los medios</option></select></label>
-          <label class="select-wrap">Posibilidad <select id="opportunity-filter"><option value="">Todas las posibilidades</option></select></label>
+          <label class="search-wrap"><span class="visually-hidden">Buscar formatos</span><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Buscar formato o idea…" autocomplete="off"></label>
+          <button id="clear-filters" class="text-button" type="button" hidden>Limpiar búsqueda</button>
         </div>
-        <div class="result-line"><p id="result-count" role="status" aria-live="polite"></p><button id="clear-filters" class="text-button" type="button" hidden>Limpiar filtros</button></div>
+        <p id="result-count" class="visually-hidden" role="status" aria-live="polite"></p>
         <div class="format-sections" id="format-grid"></div>
         <nav class="format-pager" id="format-pager" aria-label="Páginas de formatos" hidden></nav>
         <p class="empty-state" id="empty-state" hidden>No hay formatos para esta búsqueda. Prueba otro término o quita un filtro.</p>
@@ -69,16 +65,15 @@
     </section>
   </main>
 
-  <footer class="footer wrap"><span>Playbook creativo de medios digitales · Adcom</span><span>Contenido revisado: 23 de octubre de 2026</span><a href="../index.html">Volver al portal</a></footer>
+  <footer class="footer wrap"><span>Playbook creativo de medios digitales · Adcom</span><span>Contenido revisado: 26 de octubre de 2026</span><a href="../index.html">Volver al portal</a></footer>
 
   <dialog id="format-dialog" class="format-dialog" aria-labelledby="detail-title">
     <div class="dialog-shell">
       <div class="dialog-head"><span id="detail-breadcrumb"></span><button class="close-button" id="close-dialog" type="button" aria-label="Cerrar ficha">×</button></div>
       <div class="dialog-scroll" id="dialog-scroll">
-        <div class="detail-visual"><button class="detail-image-button" id="detail-image-button" type="button" aria-label="Ampliar imagen de la ficha"><img id="detail-image" alt="" width="1200" height="780"><span aria-hidden="true">Ampliar imagen ↗</span></button></div>
-        <div id="demo-region"></div>
         <div class="detail-content">
-          <div class="detail-lead"><p class="detail-type" id="detail-type"></p><h2 id="detail-title"></h2><p id="detail-promise"></p><p class="visual-observation" id="detail-observation"></p></div>
+          <div class="detail-lead"><p class="detail-type" id="detail-type"></p><h2 id="detail-title"></h2><p id="detail-promise"></p><p class="visual-observation" id="detail-observation"></p><button id="detail-image-button" class="detail-image-link" type="button">Ver formato en contexto ↗</button></div>
+          <div id="demo-region"></div>
           <section class="detail-specs" aria-labelledby="detail-specs-title"><div><p class="detail-spec-label">Lienzo de trabajo</p><h3 id="detail-specs-title">Dimensiones</h3></div><div><strong id="detail-size"></strong><span id="detail-ratio"></span><p id="detail-spec-note"></p></div></section>
           <div class="detail-columns"><section><h3>Cómo aprovecharlo</h3><ul id="detail-routes"></ul></section><section><h3>¿Qué hace la persona?</h3><p id="detail-action"></p></section></div>
           <section class="tip-panel"><h3>Recomendaciones para producir</h3><ol id="detail-tips"></ol></section>
@@ -89,8 +84,9 @@
   </dialog>
   <dialog id="image-lightbox" class="image-lightbox" aria-labelledby="image-lightbox-title">
     <div class="image-lightbox-shell">
-      <div class="image-lightbox-head"><strong id="image-lightbox-title"></strong><button id="close-image-lightbox" type="button" aria-label="Cerrar imagen ampliada">Cerrar ×</button></div>
-      <img id="image-lightbox-image" alt="">
+      <div class="image-lightbox-head"><strong id="image-lightbox-title"></strong><div class="image-lightbox-actions"><button id="toggle-safe-zone" type="button" aria-pressed="false" hidden>Ver zonas seguras</button><button id="close-image-lightbox" type="button" aria-label="Cerrar imagen ampliada">Cerrar ×</button></div></div>
+      <div class="image-lightbox-stage"><img id="image-lightbox-image" alt=""><div id="image-safe-overlay" class="image-safe-overlay" hidden aria-hidden="true"><span class="safe-area-label">Área recomendada para mensaje clave</span></div></div>
+      <p id="image-safe-note" class="image-safe-note" hidden>Las áreas sombreadas pueden quedar tapadas por los controles del medio. Guía orientativa: valida la vista previa de la ubicación antes de producir.</p>
     </div>
   </dialog>
 </body>

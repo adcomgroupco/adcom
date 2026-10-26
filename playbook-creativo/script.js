@@ -10,10 +10,20 @@
   const dialog = $('#format-dialog');
   const lightbox = $('#image-lightbox');
   const search = $('#search');
-  const mediumFilter = $('#medium-filter');
-  const opportunityFilter = $('#opportunity-filter');
   const pager = $('#format-pager');
   const dataPreviewState = new Map();
+  const previewCleanups = [];
+  let detailCycleCleanup = null;
+  let selectedMedium = '';
+  const safeBounds = {
+    'meta-reels':['14%','35%','6%'], 'meta-stories':['14%','23%','6%'],
+    'meta-carrusel':['8%','18%','8%'], 'meta-collection':['10%','22%','8%'],
+    'meta-instant':['10%','15%','7%'], 'meta-mensajes':['8%','19%','8%'],
+    'tik-infeed':['12%','32%','8%'], 'tik-spark':['12%','34%','8%'],
+    'tik-addons':['12%','42%','8%'], 'tik-votacion':['12%','45%','8%'],
+    'tik-countdown':['12%','40%','8%'], 'tik-topview':['18%','29%','8%'],
+    'tik-pulse':['12%','34%','8%'], 'tik-topfeed':['12%','34%','8%']
+  };
   const pageSize = 4;
   let currentPage = 1;
   let lastTrigger = null;
@@ -66,6 +76,14 @@
     const enlarged = $('#image-lightbox-image');
     enlarged.src = imageSource(item.id);
     enlarged.alt = `Recreación visual ampliada de ${item.nombre} en ${item.medio}`;
+    const toggle = $('#toggle-safe-zone');
+    const hasSafeArea = /^(meta-|tik-)/.test(item.id);
+    toggle.hidden = !hasSafeArea;
+    toggle.dataset.format = item.id;
+    toggle.setAttribute('aria-pressed', 'false');
+    toggle.textContent = 'Ver zonas seguras';
+    $('#image-safe-overlay').hidden = true;
+    $('#image-safe-note').hidden = true;
     lightbox.showModal();
   }
   function imagePreviewButton(item) {
@@ -94,26 +112,33 @@
   }
   function renderMedia() {
     const host = $('#media-grid');
+    const all = el('button', 'media-index-item media-index-all');
+    all.type = 'button';
+    all.dataset.medium = '';
+    all.textContent = 'Todos';
+    all.setAttribute('aria-label', 'Ver formatos de todos los medios');
+    all.addEventListener('click', () => selectMedium(''));
+    host.append(all);
     media.forEach(item => {
       const button = el('button', 'media-index-item');
       button.type = 'button';
       button.dataset.medium = item.id;
       button.setAttribute('aria-label', `Ver formatos de ${item.id}`);
-      const count = formats.filter(format => format.medio === item.id).length;
-      button.append(mediaLogo(item.id), el('span', 'media-index-name', item.id), el('span', 'media-index-intro', item.intro), el('span', 'media-index-count', `${count} formatos`), el('span', 'media-index-arrow', '↗'));
-      button.addEventListener('click', () => {
-        mediumFilter.value = item.id;
-        opportunityFilter.value = '';
-        search.value = '';
-        currentPage = 1;
-        renderFormats();
-        history.replaceState(null, '', `#${mediumKey(item.id)}`);
-        $('#explorar').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
-      });
+      button.title = item.id;
+      button.append(mediaLogo(item.id));
+      if (['Programática','CTV','DOOH'].includes(item.id)) button.append(el('span', 'media-index-name', item.id));
+      else button.classList.add('is-icon-only');
+      button.addEventListener('click', () => selectMedium(item.id));
       host.append(button);
-      mediumFilter.append(new Option(item.id, item.id));
     });
-    window.CMP_OPPORTUNITIES.forEach(item => opportunityFilter.append(new Option(item, item)));
+  }
+  function selectMedium(id) {
+    selectedMedium = id;
+    search.value = '';
+    currentPage = 1;
+    renderFormats();
+    history.replaceState(null, '', id ? `#${mediumKey(id)}` : '#explorar');
+    $('#explorar').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
   }
   function renderPager(total) {
     const pageCount = Math.ceil(total / pageSize);
@@ -141,9 +166,15 @@
   }
   function dataExamples(id) {
     if (id === 'pro-dco') return [
+      {label:'Plantilla', template:true, data:{imagen:'Foto del producto',nombre:'Nombre del producto',precio:'Precio',stock:'Disponibilidad'}, rule:'Una pieza visual con campos que se llenan según el catálogo', signal:'plantilla base'},
       {label:'Silla', data:{sku:'CASA-042',nombre:'Silla Alba',precio_cop:899000,stock:12,zona:'Bogotá'}, rule:'stock > 0 → mostrar producto y precio', art:['CASA · CATÁLOGO','Silla Alba · $899.000','Descubre el producto'], photo:'living-room', signal:'stock: 12'},
       {label:'Audio', data:{sku:'LUMA-018',nombre:'Auriculares Luma',precio_cop:349000,stock:7,zona:'Bogotá'}, rule:'stock > 0 → llenar la misma plantilla', art:['LUMA · CATÁLOGO','Auriculares · $349.000','Descubre el producto'], photo:'headphones', signal:'stock: 7'},
       {label:'Sin stock', data:{sku:'CASA-042',nombre:'Silla Alba',precio_cop:899000,stock:0,zona:'Bogotá'}, rule:'stock = 0 → mostrar respaldo', art:['CASA · INSPIRACIÓN','Encuentra tu próximo favorito','Explorar colección'], photo:'living-room', signal:'stock: 0'}
+    ];
+    if (id === 'dooh-data') return [
+      {label:'Sol', data:{ciudad:'Bogotá',clima:'soleado',temperatura_c:24}, rule:'clima = sol → mostrar versión de exterior', signal:'clima: sol', tone:'sun', headline:'Sol para salir', cta:'Explora el plan'},
+      {label:'Lluvia', data:{ciudad:'Bogotá',clima:'lluvia',temperatura_c:15}, rule:'clima = lluvia → mostrar versión para lluvia', signal:'clima: lluvia', tone:'rain', headline:'Llueve. El plan sigue.', cta:'Descubre tu ruta'},
+      {label:'Sin dato', data:{ciudad:'Bogotá',clima:null,estado:'sin dato'}, rule:'dato ausente → mostrar versión neutra', signal:'clima: sin dato', tone:'neutral', headline:'Un plan para hoy', cta:'Explorar'}
     ];
     return [
       {label:'Sol', data:{ciudad:'Bogotá',clima:'soleado',temperatura_c:24,estado:'válido'}, rule:'clima = soleado → variante exterior', art:['CONTEXTO · SOL','Sal a disfrutar el día','Mensaje activado por regla'], photo:'breakfast', signal:'clima: soleado'},
@@ -151,46 +182,158 @@
       {label:'Sin dato', data:{ciudad:'Bogotá',clima:null,temperatura_c:null,estado:'sin dato'}, rule:'dato ausente → mostrar respaldo', art:['SIN DATO VÁLIDO','Encuentra un plan para hoy','Sin afirmar el clima'], photo:'living-room', signal:'clima: sin dato'}
     ];
   }
-  function renderDataCard(item) {
+  function animateChange(stage) {
+    stage.classList.remove('context-refresh');
+    void stage.offsetWidth;
+    stage.classList.add('context-refresh');
+  }
+  function createContextCycle(host, advance) {
+    let playing = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let visible = false;
+    let timer = null;
+    const toggle = el('button', 'context-cycle-toggle');
+    toggle.type = 'button';
+    function update() {
+      toggle.textContent = playing ? 'Pausar secuencia' : 'Reproducir secuencia';
+      toggle.setAttribute('aria-pressed', String(playing));
+      clearInterval(timer);
+      timer = visible && playing ? setInterval(advance, 3600) : null;
+    }
+    toggle.addEventListener('click', () => { playing = !playing; update(); });
+    const observer = new IntersectionObserver(entries => {
+      visible = entries[0].isIntersecting;
+      update();
+    }, {threshold: 0.2});
+    observer.observe(host);
+    update();
+    return {toggle, pause() { playing = false; update(); }, cleanup() { clearInterval(timer); observer.disconnect(); }};
+  }
+  function buildDcoTemplate(example) {
+    const template = el('div', 'dco-template');
+    if (example) template.classList.add('is-filled');
+    const photo = el('div', 'dco-template-photo', example ? '' : 'FOTO DEL PRODUCTO');
+    if (example) photo.style.backgroundImage = `url("assets/photos/${example.photo}.jpg")`;
+    const hasStock = example && example.data.stock > 0;
+    template.append(
+      el('span', 'dco-template-brand', example ? example.art[0] : 'MARCA'),
+      photo,
+      el('strong', '', example ? (hasStock ? example.data.nombre : example.art[1]) : 'Nombre del producto'),
+      el('span', 'dco-template-price', example ? (hasStock ? '$' + new Intl.NumberFormat('es-CO').format(example.data.precio_cop) : ' ') : 'Precio'),
+      el('span', 'dco-template-cta', example ? example.art[2] : 'Ver producto')
+    );
+    return template;
+  }
+  function buildDoohScene() {
+    const scene = el('div', 'dooh-scene');
+    scene.setAttribute('role', 'img');
+    const street = el('img');
+    street.src = 'assets/photos/dooh-neutral-street.png';
+    street.alt = '';
+    street.width = 1672;
+    street.height = 940;
+    const screen = el('div', 'dooh-screen-content');
+    screen.setAttribute('aria-hidden', 'true');
+    scene.append(street, screen);
+    function update(example) {
+      const photo = {sun:'travel',rain:'rainy-car',neutral:'living-room'}[example.tone];
+      street.src = example.tone === 'rain' ? 'assets/photos/dooh-rainy-street.png' : 'assets/photos/dooh-neutral-street.png';
+      screen.dataset.tone = example.tone;
+      screen.style.backgroundImage = `linear-gradient(180deg,#0004,#0002 42%,#000b),url("assets/photos/${photo}.jpg")`;
+      screen.replaceChildren(
+        el('span', 'dooh-ad-brand', 'MODO'),
+        el('strong', '', example.headline),
+        el('span', 'dooh-ad-cta', example.cta + ' ↗')
+      );
+      scene.setAttribute('aria-label', `La misma pantalla digital en la misma calle, ${example.tone === 'rain' ? 'bajo la lluvia' : 'sin lluvia'}, muestra la versión ${example.label}: ${example.headline}.`);
+      animateChange(screen);
+    }
+    return {scene,update};
+  }
+  function renderDoohCard(item) {
     const examples = dataExamples(item.id);
-    const preview = el('div', 'format-data-preview');
+    let activeIndex = 0;
+    const preview = el('div', 'format-data-preview is-dooh-preview');
     const head = el('div', 'format-data-head');
-    head.append(el('span', '', 'Prueba el dato'), el('code'));
-    const art = el('div', 'format-data-art');
+    head.append(el('span', '', 'Misma pantalla · cambia el anuncio'), el('code'));
+    const mockup = buildDoohScene();
     const controls = el('div', 'format-data-controls');
     controls.setAttribute('role', 'group');
-    controls.setAttribute('aria-label', `Cambiar datos de ${item.nombre}`);
+    controls.setAttribute('aria-label', 'Cambiar la condición del anuncio en la misma pantalla');
     const rule = el('p', 'format-data-rule');
+    let cycle;
     const buttons = examples.map((example, index) => {
-      const button = makeButton(example.label, false, () => show(index));
+      const button = makeButton(example.label, false, () => { show(index); cycle.pause(); });
       controls.append(button);
       return button;
     });
     function show(index) {
       const example = examples[index];
+      activeIndex = index;
       dataPreviewState.set(item.id, index);
       $('code', head).textContent = example.signal;
-      art.style.backgroundImage = `linear-gradient(90deg, #000b, #0002), url("assets/photos/${example.photo}.jpg")`;
-      art.replaceChildren(...example.art.map((word, position) => el(position === 1 ? 'strong' : 'span', '', word)));
+      mockup.update(example);
       rule.textContent = example.rule;
       buttons.forEach((button, buttonIndex) => button.setAttribute('aria-pressed', String(index === buttonIndex)));
     }
+    cycle = createContextCycle(preview, () => show((activeIndex + 1) % examples.length));
+    controls.append(cycle.toggle);
+    previewCleanups.push(cycle.cleanup);
+    preview.append(head, mockup.scene, controls, rule);
+    show(0);
+    return preview;
+  }
+  function renderDataCard(item) {
+    if (item.id === 'dooh-data') return renderDoohCard(item);
+    const examples = dataExamples(item.id);
+    let activeIndex = item.id === 'pro-dco' ? 0 : dataPreviewState.get(item.id) || 0;
+    const preview = el('div', 'format-data-preview');
+    const head = el('div', 'format-data-head');
+    head.append(el('span', '', 'El dato cambia la pieza'), el('code'));
+    const art = el('div', 'format-data-art');
+    const controls = el('div', 'format-data-controls');
+    controls.setAttribute('role', 'group');
+    controls.setAttribute('aria-label', `Cambiar datos de ${item.nombre}`);
+    const rule = el('p', 'format-data-rule');
+    let cycle;
+    const buttons = examples.map((example, index) => {
+      const button = makeButton(example.label, false, () => { show(index); cycle.pause(); });
+      controls.append(button);
+      return button;
+    });
+    function show(index) {
+      const example = examples[index];
+      activeIndex = index;
+      dataPreviewState.set(item.id, index);
+      $('code', head).textContent = example.signal;
+      art.classList.toggle('is-template', item.id === 'pro-dco');
+      if (item.id === 'pro-dco') {
+        art.style.backgroundImage = '';
+        art.replaceChildren(buildDcoTemplate(example.template ? undefined : example));
+      } else {
+        art.style.backgroundImage = `linear-gradient(90deg, #000b, #0002), url("assets/photos/${example.photo}.jpg")`;
+        art.replaceChildren(...example.art.map((word, position) => el(position === 1 ? 'strong' : 'span', '', word)));
+      }
+      animateChange(art);
+      rule.textContent = example.rule;
+      buttons.forEach((button, buttonIndex) => button.setAttribute('aria-pressed', String(index === buttonIndex)));
+    }
+    cycle = createContextCycle(preview, () => show((activeIndex + 1) % examples.length));
+    controls.append(cycle.toggle);
+    previewCleanups.push(cycle.cleanup);
     preview.append(head, art, controls, rule);
-    show(dataPreviewState.get(item.id) || 0);
+    show(activeIndex);
     return preview;
   }
   function renderFormats() {
     const q = normalize(search.value.trim());
-    const medium = mediumFilter.value;
-    const opportunity = opportunityFilter.value;
     const visible = formats.filter(item => {
-      if (medium && item.medio !== medium) return false;
-      if (opportunity && item.oportunidad !== opportunity) return false;
+      if (selectedMedium && item.medio !== selectedMedium) return false;
       return !q || normalize([item.medio,item.familia,item.nombre,item.promesa,item.oportunidad,item.accion,...item.rutas,window.CMP_ALIASES?.[item.id] || ''].join(' ')).includes(q);
     });
     const total = visible.length;
     currentPage = Math.min(currentPage, Math.max(1, Math.ceil(total / pageSize)));
     const pageItems = visible.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+    previewCleanups.splice(0).forEach(cleanup => cleanup());
     grid.replaceChildren();
     const fragment = document.createDocumentFragment();
     media.forEach(group => {
@@ -200,8 +343,8 @@
       section.id = mediumKey(group.id);
       const heading = el('div', 'format-section-head');
       const headingCopy = el('div');
-      const groupTotal = visible.filter(item => item.medio === group.id).length;
-      headingCopy.append(mediaLogo(group.id), el('p', 'format-section-kicker', `${groupTotal} ${groupTotal === 1 ? 'formato' : 'formatos'}`), el('h3', '', group.id), el('p', '', group.intro));
+      headingCopy.append(el('h3', '', group.id));
+      if (!selectedMedium) headingCopy.append(el('p', '', group.intro));
       heading.append(headingCopy);
       section.append(heading);
       const cards = el('div', 'format-grid');
@@ -218,6 +361,7 @@
         const button = el('button');
         button.type = 'button';
         button.setAttribute('aria-label', `Abrir ficha de ${item.nombre} en ${item.medio}`);
+        button.className = 'format-explore-button';
         button.append(el('span', '', 'Explorar ficha'), el('span', '', '↗'));
         button.addEventListener('click', () => openDetail(item, button));
         body.append(button);
@@ -232,8 +376,9 @@
     const last = Math.min(currentPage * pageSize, total);
     $('#result-count').textContent = total ? `Mostrando ${first}–${last} de ${total} ${total === 1 ? 'formato' : 'formatos'}` : '0 formatos para explorar';
     $('#empty-state').hidden = total > 0;
-    $('#clear-filters').hidden = !(q || opportunity || (medium && medium !== media[0].id));
-    document.querySelectorAll('.media-index-item').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.medium === medium)));
+    $('#clear-filters').hidden = !(q || selectedMedium);
+    $('#clear-filters').textContent = selectedMedium ? 'Ver todos los medios' : 'Limpiar búsqueda';
+    document.querySelectorAll('.media-index-item').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.medium === selectedMedium)));
     renderPager(total);
   }
   function fillList(selector, values) {
@@ -242,19 +387,15 @@
   }
   function openDetail(item, trigger = null) {
     lastTrigger = trigger || document.activeElement;
-    returnHash = `#${mediumKey(item.medio)}`;
+    returnHash = selectedMedium ? `#${mediumKey(selectedMedium)}` : '#explorar';
     dialog.dataset.format = item.id;
     const ref = references.get(item.ref);
-    const dataFirst = ['pro-dco','dooh-data','pro-realtime'].includes(item.id);
-    const visual = $('.detail-visual');
-    const demo = $('#demo-region');
-    if (dataFirst) visual.before(demo);
-    else visual.after(demo);
     $('#detail-breadcrumb').textContent = `${item.medio} / ${item.familia}`;
     $('#detail-type').textContent = `${item.oportunidad} · ${item.activacion}`;
     $('#detail-title').textContent = item.nombre;
     $('#detail-promise').textContent = item.promesa;
     $('#detail-observation').textContent = `Qué mirar: ${window.CMP_OBSERVATIONS[item.id] || item.promesa}`;
+    $('#detail-image-button').hidden = ['pro-dco','dooh-data'].includes(item.id);
     const spec = specs[item.id];
     $('#detail-size').textContent = spec?.size || 'Definir con el proveedor';
     $('#detail-ratio').textContent = spec?.ratio || 'Variable';
@@ -262,14 +403,6 @@
     $('#detail-action').textContent = item.accion;
     fillList('#detail-routes', item.rutas);
     fillList('#detail-tips', item.tips);
-    $('#detail-image').src = imageSource(item.id);
-    $('#detail-image').onerror = () => { $('#detail-image').onerror = null; $('#detail-image').src = `assets/mockups/${item.id}.svg`; };
-    $('#detail-image').alt = `Recreación visual de ${item.nombre} en ${item.medio}`;
-    const portrait = isPortrait(item.id);
-    $('#detail-image').width = portrait ? 780 : 1200;
-    $('#detail-image').height = portrait ? 1200 : 780;
-    $('.detail-visual').classList.toggle('is-mobile', portrait);
-    $('.detail-visual').classList.toggle('has-interface', interfaceIds.has(item.id));
     $('#detail-status').textContent = item.activacion === 'Habitual'
       ? 'Habitual: confirma especificaciones y disponibilidad actuales.'
       : item.activacion === 'Especializada'
@@ -282,6 +415,8 @@
     if (ref && validUrl(ref.url_fuente)) links.append(link('Ver referencia original', ref.url_fuente));
     const official = officialSource(item);
     if (official && validUrl(official) && official !== ref?.url_fuente) links.append(link('Consultar guía oficial', official));
+    detailCycleCleanup?.cleanup();
+    detailCycleCleanup = null;
     renderDemo(item);
     $('#dialog-scroll').scrollTop = 0;
     dialog.showModal();
@@ -320,59 +455,118 @@
     button.addEventListener('click', handler);
     return button;
   }
+  function renderDcoDetail(host) {
+    const examples = dataExamples('pro-dco');
+    let activeIndex = 0;
+    const section = el('section', 'demo dco-flow-demo');
+    section.append(el('h3', '', 'Una plantilla, muchas piezas'));
+    const controls = el('div', 'demo-controls');
+    const flow = el('div', 'dco-flow');
+    const templatePanel = el('div', 'dco-flow-panel');
+    templatePanel.append(el('p', 'data-label', '01 · Estructura fija'), buildDcoTemplate());
+    const variablesPanel = el('div', 'dco-flow-panel');
+    variablesPanel.append(el('p', 'data-label', '02 · Variables que llegan del catálogo'));
+    const values = el('dl', 'dco-variable-list');
+    const rule = el('p', 'dco-flow-rule');
+    variablesPanel.append(values, rule);
+    const outputPanel = el('div', 'dco-flow-panel is-output');
+    outputPanel.append(el('p', 'data-label', '03 · La pieza dentro de una página'));
+    const context = el('div', 'dco-context');
+    const contextHeader = el('div', 'dco-context-header');
+    contextHeader.append(el('strong', '', 'REVISTA NORTE'), el('span', '', 'ESTILO DE VIDA   ·   IDEAS   ·   GUÍAS'));
+    const contextBody = el('div', 'dco-context-body');
+    const article = el('div', 'dco-context-article');
+    article.append(
+      el('span', '', 'ESTILO DE VIDA'),
+      el('h4', '', 'Pequeñas ideas para vivir mejor cada día'),
+      el('p', '', 'Una selección de espacios, objetos y experiencias para inspirar la rutina.'),
+      el('div', 'dco-context-article-image')
+    );
+    const adSlot = el('aside', 'dco-context-ad');
+    adSlot.append(el('span', '', 'Publicidad'));
+    const output = el('div', 'dco-output');
+    adSlot.append(output);
+    contextBody.append(article, adSlot);
+    context.append(contextHeader, contextBody);
+    outputPanel.append(context);
+    flow.append(templatePanel, variablesPanel, outputPanel);
+    const buttons = examples.map((example, index) => {
+      const button = makeButton(example.label, index === 0, () => { show(index); detailCycleCleanup?.pause(); });
+      controls.append(button);
+      return button;
+    });
+    function show(index) {
+      const example = examples[index];
+      activeIndex = index;
+      dataPreviewState.set('pro-dco', index);
+      const fields = example.template
+        ? [['Imagen','Foto del producto'],['Nombre','Nombre del producto'],['Precio','Precio de catálogo'],['Stock','Disponibilidad']]
+        : [['Imagen','Foto de ' + example.data.nombre],['Nombre',example.data.nombre],['Precio','$' + new Intl.NumberFormat('es-CO').format(example.data.precio_cop)],['Stock',String(example.data.stock)]];
+      values.replaceChildren(...fields.flatMap(([name,value]) => [el('dt', '', name), el('dd', '', value)]));
+      rule.textContent = example.rule;
+      output.replaceChildren(buildDcoTemplate(example.template ? undefined : example));
+      animateChange(output);
+      buttons.forEach((button, buttonIndex) => button.setAttribute('aria-pressed', String(index === buttonIndex)));
+    }
+    section.append(controls, flow, el('p', '', 'La composición conserva marca, jerarquía y CTA. El feed llena los campos; si la regla no permite mostrar un producto, entra la versión de respaldo. Datos y precios ficticios.'));
+    host.append(section);
+    show(0);
+    const cycle = createContextCycle(section, () => show((activeIndex + 1) % examples.length));
+    controls.append(cycle.toggle);
+    detailCycleCleanup = cycle;
+  }
+  function renderDoohDetail(host) {
+    const examples = dataExamples('dooh-data');
+    let activeIndex = 0;
+    const section = el('section', 'demo dooh-demo');
+    section.append(el('h3', '', 'Una pantalla. Tres anuncios según el dato.'));
+    const controls = el('div', 'demo-controls');
+    const mockup = buildDoohScene();
+    mockup.scene.classList.add('is-detail');
+    const signal = el('div', 'dooh-signal');
+    const code = el('code');
+    const rule = el('strong');
+    signal.append(el('span', '', 'Dato recibido'), code, el('span', '', 'Regla aplicada'), rule);
+    const buttons = examples.map((example, index) => {
+      const button = makeButton(example.label, index === 0, () => { show(index); detailCycleCleanup?.pause(); });
+      controls.append(button);
+      return button;
+    });
+    function show(index) {
+      const example = examples[index];
+      activeIndex = index;
+      dataPreviewState.set('dooh-data', index);
+      mockup.update(example);
+      code.textContent = example.signal;
+      rule.textContent = example.rule;
+      buttons.forEach((button, buttonIndex) => button.setAttribute('aria-pressed', String(index === buttonIndex)));
+    }
+    section.append(
+      controls, mockup.scene, signal,
+      el('p', 'dooh-data-explainer', 'El clima es solo un ejemplo. La misma lógica puede usar hora, ubicación, inventario, afluencia, eventos o datos propios: cualquier señal que el proveedor pueda integrar y que tengamos permiso de usar. Cada condición necesita su pieza y una versión de respaldo.')
+    );
+    host.append(section);
+    show(0);
+    const cycle = createContextCycle(section, () => show((activeIndex + 1) % examples.length));
+    controls.append(cycle.toggle);
+    detailCycleCleanup = cycle;
+  }
   function renderDemo(item) {
     const host = $('#demo-region');
     host.replaceChildren();
-    if (/^(meta-|tik-)/.test(item.id) || item.id === 'goo-shorts') {
-      const section = el('section', 'demo');
-      section.append(el('h3', '', 'Zonas seguras · guía visual'));
-      const controls = el('div', 'demo-controls');
-      const stage = el('div', 'safe-stage');
-      const photo = {
-        'meta-reels':'plants','meta-stories':'travel','meta-carrusel':'sneakers',
-        'meta-collection':'perfume','meta-instant':'living-room','meta-mensajes':'living-room',
-        'tik-infeed':'coffee','tik-spark':'sneakers','tik-addons':'skincare',
-        'tik-votacion':'perfume','tik-countdown':'breakfast','tik-topview':'travel',
-        'tik-pulse':'breakfast','tik-topfeed':'sneakers','goo-shorts':'plants'
-      }[item.id];
-      stage.style.backgroundImage = `linear-gradient(180deg, #0003, transparent 40%, #000a), url("assets/photos/${photo}.jpg")`;
-      stage.style.aspectRatio = item.id === 'meta-carrusel' ? '1 / 1' : ['meta-collection','meta-mensajes'].includes(item.id) ? '4 / 5' : '9 / 16';
-      stage.append(el('div', 'stage-copy', 'Una idea que se ve'));
-      const mask = el('div', 'safe-mask');
-      mask.setAttribute('aria-label', 'Guía orientativa de espacio visible e interfaz');
-      const bounds = {
-        'meta-reels':['14%','35%','6%'], 'meta-stories':['14%','23%','6%'],
-        'meta-carrusel':['8%','18%','8%'], 'meta-collection':['10%','22%','8%'],
-        'meta-instant':['10%','15%','7%'], 'meta-mensajes':['8%','19%','8%'],
-        'tik-infeed':['12%','32%','8%'], 'tik-spark':['12%','34%','8%'],
-        'tik-addons':['12%','42%','8%'], 'tik-votacion':['12%','45%','8%'],
-        'tik-countdown':['12%','40%','8%'], 'tik-topview':['18%','29%','8%'],
-        'tik-pulse':['12%','34%','8%'], 'tik-topfeed':['12%','34%','8%'],
-        'goo-shorts':['12%','30%','8%']
-      }[item.id];
-      mask.style.setProperty('--top', bounds[0]);
-      mask.style.setProperty('--bottom', bounds[1]);
-      mask.style.setProperty('--side', bounds[2]);
-      mask.append(el('div', 'safe-top'), el('div', 'safe-bottom'), el('div', 'safe-left'), el('div', 'safe-right'), el('div', 'safe-center'));
-      stage.append(mask);
-      const toggle = makeButton('Ocultar guía', true, () => {
-        mask.hidden = !mask.hidden;
-        toggle.textContent = mask.hidden ? 'Mostrar guía' : 'Ocultar guía';
-        toggle.setAttribute('aria-pressed', String(!mask.hidden));
-      });
-      controls.append(toggle);
-      section.append(controls, stage, el('p', '', 'Área amarilla: zona sugerida para texto, logo y producto clave. Franjas naranjas: espacio que puede cubrir la interfaz. Las posiciones son orientativas y cambian según placement, texto y componentes; verifica la plantilla y el preview oficiales.'));
-      host.append(section);
-      if (item.id === 'meta-carrusel') {
-        const carousel = el('section', 'demo'); carousel.append(el('h3', '', 'Demo · cada tarjeta agrega algo'));
-        const frame = el('div', 'carousel-stage'); const slide = el('div', 'carousel-slide');
-        const labels = ['01 · El problema','02 · La solución','03 · El resultado']; let current = 0;
-        const prev = el('button', '', '‹'); const next = el('button', '', '›');
-        prev.type = next.type = 'button'; prev.setAttribute('aria-label','Tarjeta anterior'); next.setAttribute('aria-label','Tarjeta siguiente');
-        function update(){slide.textContent = labels[current]; slide.style.backgroundImage = `linear-gradient(180deg, #0002, #000a), url("assets/photos/${['sneakers','living-room','travel'][current]}.jpg")`; prev.disabled = current === 0; next.disabled = current === labels.length-1;}
-        prev.addEventListener('click',()=>{current--;update();}); next.addEventListener('click',()=>{current++;update();});
-        frame.append(prev,slide,next); carousel.append(frame,el('p','','Secuencia simulada: cada tarjeta cambia el argumento, no solo el color.')); host.append(carousel); update();
-      }
+    if (item.id === 'pro-dco') {
+      renderDcoDetail(host);
+    } else if (item.id === 'dooh-data') {
+      renderDoohDetail(host);
+    } else if (item.id === 'meta-carrusel') {
+      const carousel = el('section', 'demo'); carousel.append(el('h3', '', 'Demo · cada tarjeta agrega algo'));
+      const frame = el('div', 'carousel-stage'); const slide = el('div', 'carousel-slide');
+      const labels = ['01 · El problema','02 · La solución','03 · El resultado']; let current = 0;
+      const prev = el('button', '', '‹'); const next = el('button', '', '›');
+      prev.type = next.type = 'button'; prev.setAttribute('aria-label','Tarjeta anterior'); next.setAttribute('aria-label','Tarjeta siguiente');
+      function update(){slide.textContent = labels[current]; slide.style.backgroundImage = `linear-gradient(180deg, #0002, #000a), url("assets/photos/${['sneakers','living-room','travel'][current]}.jpg")`; prev.disabled = current === 0; next.disabled = current === labels.length-1;}
+      prev.addEventListener('click',()=>{current--;update();}); next.addEventListener('click',()=>{current++;update();});
+      frame.append(prev,slide,next); carousel.append(frame,el('p','','Secuencia simulada: cada tarjeta cambia el argumento, no solo el color.')); host.append(carousel); update();
     } else if (item.id === 'pro-display') {
       const section = el('section', 'demo'); section.append(el('h3', '', 'Demo · menos texto, más claridad'));
       const controls = el('div', 'demo-controls'); const stage = el('div', 'banner-stage');
@@ -388,9 +582,10 @@
       const after = makeButton('Optimizado', true, () => setBusy(false));
       controls.append(before,after); section.append(controls,stage,el('p','','Simulación interna a escala aproximada de banner 300 × 250. Comprueba legibilidad al tamaño final.'));
       host.append(section); setBusy(false);
-    } else if (['pro-dco','pro-realtime','dooh-data'].includes(item.id)) {
+    } else if (item.id === 'pro-realtime') {
       const isDco = item.id === 'pro-dco';
       const examples = dataExamples(item.id);
+      let activeIndex = dataPreviewState.get(item.id) || 0;
       const section = el('section', 'demo data-demo');
       section.append(el('h3', '', isDco ? 'Del catálogo a la pieza' : 'El dato cambia la pieza'));
       const controls = el('div', 'demo-controls');
@@ -406,21 +601,26 @@
       const stage = el('div', 'dco-stage'); output.append(stage);
       layout.append(input,rule,output);
       const buttons = examples.map((example, index) => {
-        const button = makeButton(example.label, index === 0, () => show(index));
+        const button = makeButton(example.label, index === 0, () => { show(index); detailCycleCleanup?.pause(); });
         controls.append(button);
         return button;
       });
       function show(index) {
         const example = examples[index];
+        activeIndex = index;
         dataPreviewState.set(item.id, index);
         code.textContent = JSON.stringify(example.data, null, 2);
         ruleText.textContent = example.rule;
         stage.style.backgroundImage = `linear-gradient(90deg, #000b, #0002), url("assets/photos/${example.photo}.jpg")`;
         stage.replaceChildren(...example.art.map((word, position) => el(position === 1 ? 'strong' : 'span', '', word)));
+        animateChange(stage);
         buttons.forEach((button, buttonIndex) => button.setAttribute('aria-pressed', String(index === buttonIndex)));
       }
-      section.append(controls,layout,el('p','','Datos y precios ficticios. La demo no consulta una fuente real; para producción define permiso, actualización, validación y respaldo.'));
-      host.append(section); show(dataPreviewState.get(item.id) || 0);
+      section.append(controls,layout,el('p','','La secuencia muestra tres escenarios con datos ficticios: el dato activa una regla y la regla elige una pieza. Para producción define permiso, actualización, validación y respaldo.'));
+      host.append(section); show(activeIndex);
+      const cycle = createContextCycle(section, () => show((activeIndex + 1) % examples.length));
+      controls.append(cycle.toggle);
+      detailCycleCleanup = cycle;
     }
   }
   function closeDialog() { dialog.close(); }
@@ -430,20 +630,33 @@
     if (item) openImage(item);
   });
   $('#close-image-lightbox').addEventListener('click', () => lightbox.close());
+  $('#toggle-safe-zone').addEventListener('click', () => {
+    const toggle = $('#toggle-safe-zone');
+    const overlay = $('#image-safe-overlay');
+    const bounds = safeBounds[toggle.dataset.format];
+    if (!bounds) return;
+    overlay.style.setProperty('--safe-top', bounds[0]);
+    overlay.style.setProperty('--safe-bottom', bounds[1]);
+    overlay.style.setProperty('--safe-side', bounds[2]);
+    overlay.hidden = !overlay.hidden;
+    $('#image-safe-note').hidden = overlay.hidden;
+    toggle.setAttribute('aria-pressed', String(!overlay.hidden));
+    toggle.textContent = overlay.hidden ? 'Ver zonas seguras' : 'Ocultar zonas seguras';
+  });
   lightbox.addEventListener('click', event => { if (event.target === lightbox) lightbox.close(); });
   dialog.addEventListener('click', event => { if (event.target === dialog) closeDialog(); });
   dialog.addEventListener('close', () => {
+    detailCycleCleanup?.cleanup();
+    detailCycleCleanup = null;
     if (location.hash.slice(1) === dialog.dataset.format) history.replaceState(null, '', returnHash);
     lastTrigger?.focus?.();
   });
-  search.addEventListener('input', () => { if (search.value.trim()) mediumFilter.value = ''; currentPage = 1; renderFormats(); });
-  [mediumFilter, opportunityFilter].forEach(control => control.addEventListener('change', () => { currentPage = 1; renderFormats(); }));
-  $('#clear-filters').addEventListener('click', () => { search.value=''; mediumFilter.value=media[0].id; opportunityFilter.value=''; currentPage = 1; renderFormats(); search.focus(); });
+  search.addEventListener('input', () => { if (search.value.trim()) selectedMedium = ''; currentPage = 1; renderFormats(); });
+  $('#clear-filters').addEventListener('click', () => { search.value=''; selectedMedium=''; currentPage = 1; renderFormats(); search.focus(); });
   renderMedia();
   const initialMedium = media.find(item => mediumKey(item.id) === location.hash.slice(1));
-  mediumFilter.value = initialMedium?.id || media[0].id;
+  selectedMedium = initialMedium?.id || '';
   renderFormats();
-  $('#hero-count').textContent = `01 / ${formats.length}`;
   const initial = formats.find(item => item.id === location.hash.slice(1));
   if (initial) openDetail(initial);
   else if (initialMedium) $('#explorar').scrollIntoView();
