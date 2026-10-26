@@ -14,6 +14,7 @@ adcom/
 ├── clientes.html                 hub de tableros por cliente (Looker, Zoho, HTML)
 ├── diagnostico-educacion.html    diagnóstico del sector de educación superior
 ├── tablero-educacion.html        tablero general de pauta de los clientes de educación (lee la hoja Consolidado Educación)
+├── acta-entrega-vacaciones.html  acta temporal de continuidad durante vacaciones
 ├── playbook-creativo/            biblioteca visual de formatos y posibilidades de pauta
 ├── framework/                    framework del área digital · v0.3
 │   ├── index.html                el documento completo, con herramientas interactivas

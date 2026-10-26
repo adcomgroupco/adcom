@@ -356,7 +356,7 @@ function metasEn(f){ if(f.medio) return [];
 
 // ── Cálculo ──────────────────────────────────────────────────────────────────
 // Además de los totales se guardan los de "clientes que miden la etapa", para que cada % del
-// embudo compare solo a quien tiene las dos etapas (UAN no tiene inscritos, por ejemplo).
+// embudo compare solo a quien tiene las dos etapas (algunos no tienen inscritos).
 const Z = () => ({ inv:0, lp:0, lc:0, ins:0, adm:0, mat:0, lcI:0, invI:0, insA:0, admI:0, matA:0, invA:0, ppto:0, lm:0, mm:0, pm:0, lmm:0, cli:new Set() });
 function add(a, r){
   a.inv += r.inv; a.lp += r.lp; a.lc += r.lc; a.ins += r.ins; a.adm += r.adm; a.mat += r.mat; a.cli.add(r.cli);
