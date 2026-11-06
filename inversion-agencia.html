@@ -23,13 +23,10 @@ svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 
 /* Entrada */
 .gate{min-height:100dvh;display:grid;place-items:center;padding:24px;background:var(--shell-bg);color:var(--shell-fg)}
-.gate form{width:min(400px,100%);display:flex;flex-direction:column;gap:12px}
+.gate .gbox{width:min(400px,100%);display:flex;flex-direction:column;gap:12px}
 .gate h1{font-size:2rem;line-height:1.05;font-weight:600;letter-spacing:-.03em}
 .gate h1 em{font-style:normal;color:var(--accent)}
 .gate p{color:var(--shell-fg-muted)}
-.gate input{height:48px;border-radius:var(--radius-sm);border:1px solid var(--shell-rule);background:rgba(244,244,241,.06);padding:0 16px;color:var(--shell-fg);outline:0}
-.gate input:focus{border-color:var(--accent)}
-.gate .err{color:#ff8a80;font-size:.8rem}
 .btn{height:48px;border:0;border-radius:var(--radius-sm);background:var(--accent);color:var(--accent-ink);font-weight:600}
 .btn:hover{background:var(--accent-hi)}
 .wordmark{font-weight:700;letter-spacing:-.04em;font-size:1.5rem;display:flex;align-items:center;gap:8px}
@@ -149,15 +146,12 @@ td.tot{font-weight:600}
 <body>
 
 <section id="gate" class="gate hide">
-  <form id="gate-form">
+  <div class="gbox">
     <div class="wordmark">adcom<i></i></div>
     <h1>Inversión de la agencia, <em>cliente por cliente</em></h1>
-    <p>Entra con la clave del tablero.</p>
-    <label class="hide" for="clave">Clave</label>
-    <input id="clave" type="password" placeholder="Clave" autocomplete="current-password">
-    <button class="btn" type="submit">Entrar</button>
-    <p class="err hide" id="gate-err" role="alert"></p>
-  </form>
+    <p id="gate-msg" role="alert"></p>
+    <button class="btn" id="reintentar" type="button">Reintentar</button>
+  </div>
 </section>
 
 <div id="app" class="app hide">
@@ -182,10 +176,10 @@ td.tot{font-weight:600}
 </div>
 
 <script>
-/* ======================= CONFIG =======================
-   API_URL: la URL …/exec del Apps Script de «[Adcom] Fuente General» (scripts/agency/inversion_api.gs).
-   Este archivo es público: no lleva datos ni la clave. */
-const API_URL = '';
+/* Este archivo es la fuente del tablero. En producción se sirve desde el Apps Script de
+   «[Adcom] Fuente General» (scripts/agency/inversion_api.gs + Tablero.html que genera
+   scripts/agency/build_tablero.py), restringido a cuentas adcom.group: los datos entran por
+   google.script.run y aquí no hay claves ni datos. Con ?demo muestra cifras inventadas. */
 
 const MEDIOS = [['Facebook','Meta'],['Google','Google'],['TikTok','TikTok'],['LinkedIn','LinkedIn'],['Twitter','X'],['Programatica','Programática']];
 const MEDIO_COL = {Facebook:'var(--serie-1)',Google:'var(--serie-2)',TikTok:'var(--serie-3)',LinkedIn:'var(--ramp-4)',Twitter:'var(--ramp-3)',Programatica:'var(--ramp-2)'};
@@ -202,13 +196,6 @@ const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>'
 const nf = new Intl.NumberFormat('es-CO', {maximumFractionDigits:0});
 const nm = new Intl.NumberFormat('es-CO', {minimumFractionDigits:1, maximumFractionDigits:1});
 const S = {anio:new Date().getFullYear(), area:(AREAS.find(a => a.id === new URLSearchParams(location.search).get('area')) || AREAS[0]).id, mes:'', unidad:'M', q:'', data:null, cli:{}, ppto:{}, clientes:[], meses:[], medios:[]};
-let TOKEN = '';
-
-const store = {
-  get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
-  set(k,v){ try { localStorage.setItem(k,v); } catch(e){} },
-  del(k){ try { localStorage.removeItem(k); } catch(e){} }
-};
 
 /* ---------- formato ---------- */
 const money = (v, u) => { u = u || S.unidad; return u === 'M' ? (v ? nm.format(v/1e6) + ' M' : '—') : (v ? '$' + nf.format(v) : '—'); };
@@ -219,14 +206,14 @@ const medioName = k => (MEDIOS.find(x => x[0] === k) || [k,k])[1];
 const clName = c => c === 'Other' ? 'Otros (sin clasificar)' : c;
 
 /* ---------- datos ---------- */
-async function cargar(fresco){
-  if (DEMO) return demo(S.anio);
-  if (!API_URL) throw new Error('Falta la URL del script (API_URL).');
-  const u = API_URL + '?action=inversion&anio=' + S.anio + '&token=' + encodeURIComponent(TOKEN) + (fresco ? '&fresco=1' : '');
-  const r = await fetch(u);
-  const j = await r.json();
-  if (!j.ok) { const e = new Error(j.error === 'token' ? 'Clave incorrecta.' : 'El script respondió: ' + j.error); e.code = j.error; throw e; }
-  return j;
+function cargar(fresco){
+  if (DEMO) return Promise.resolve(demo(S.anio));
+  if (!(window.google && google.script && google.script.run))
+    return Promise.reject(new Error('Esta copia no tiene datos. Abre el tablero desde la dirección del Apps Script, con tu cuenta adcom.group.'));
+  return new Promise((ok, ko) => google.script.run
+    .withSuccessHandler(j => (j && j.ok) ? ok(j) : ko(new Error((j && j.error) || 'Respuesta vacía del script.')))
+    .withFailureHandler(e => ko(new Error((e && e.message) || String(e))))
+    .datosInversion(S.anio, !!fresco));
 }
 
 function indexar(d){
@@ -393,7 +380,7 @@ function pintar(){
   pintarNav();
   $('#titulo').textContent = AREAS.find(a => a.id === S.area).t;
   $('#anio').innerHTML = [S.anio+1 > new Date().getFullYear() ? null : S.anio+1, S.anio, S.anio-1].filter(Boolean).map(y => `<option ${y===S.anio?'selected':''}>${y}</option>`).join('');
-  $('#foot').textContent = S.data && S.data.actualizado ? 'Consulta: ' + S.data.actualizado.replace('T',' ').slice(0,16) : '';
+  $('#foot').innerHTML = S.data && S.data.actualizado ? 'Consulta: ' + S.data.actualizado.replace('T',' ').slice(0,16) + (S.data.usuario ? '<br>' + esc(S.data.usuario) : '') : '';
   const v = {resumen:vResumen, clientes:vClientes, presupuesto:vPresupuesto, datos:vDatos}[S.area]();
   $('#main').innerHTML = (DEMO ? '<div class="banner">Datos de ejemplo: las cifras son inventadas para revisar el diseño. No son inversión real.</div>' : '') + `<div class="view">${v}</div>`;
 }
@@ -405,14 +392,13 @@ async function iniciar(fresco){
     $('#gate').classList.add('hide'); $('#app').classList.remove('hide');
     pintar();
   } catch(e) {
-    if (e.code === 'token') { store.del('adcom_inv_tk'); TOKEN = ''; mostrarGate(e.message); }
-    else if (S.data) { $('#main').insertAdjacentHTML('afterbegin', `<div class="banner neg">No se pudo actualizar: ${esc(e.message)}</div>`); }
+    if (S.data) { $('#main').insertAdjacentHTML('afterbegin', `<div class="banner neg">No se pudo actualizar: ${esc(e.message)}</div>`); }
     else mostrarGate(e.message || 'No se pudo cargar.');
   } finally { b.classList.remove('spin'); }
 }
 function mostrarGate(msg){
   $('#app').classList.add('hide'); $('#gate').classList.remove('hide');
-  const er = $('#gate-err'); er.textContent = msg || ''; er.classList.toggle('hide', !msg);
+  $('#gate-msg').textContent = msg || '';
 }
 
 document.addEventListener('click', e => {
@@ -427,7 +413,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') cerrar(); })
 $('#q').addEventListener('input', e => { S.q = e.target.value; pintar(); $('#q').focus(); });
 $('#anio').addEventListener('change', e => { S.anio = +e.target.value; S.mes = ''; iniciar(); });
 $('#refresh').addEventListener('click', () => iniciar(true));
-$('#gate-form').addEventListener('submit', e => { e.preventDefault(); TOKEN = $('#clave').value.trim(); if (!TOKEN) return; store.set('adcom_inv_tk', TOKEN); $('#clave').value = ''; iniciar(); });
+$('#reintentar').addEventListener('click', () => iniciar(true));
 
 /* ---------- datos de ejemplo (?demo): inventados, para revisar el diseño ---------- */
 function demo(anio){
@@ -451,12 +437,7 @@ function demo(anio){
   return {ok:true, anio, actualizado: hoy.toISOString().slice(0,19), ultimoDia: anio === hoy.getFullYear() ? d : anio + '-12-31', filas, presupuesto: ppto, avisos:{sinFecha:0, gastoTexto:0}};
 }
 
-(function arrancar(){
-  TOKEN = store.get('adcom_inv_tk') || '';
-  if (DEMO || TOKEN) iniciar();
-  else if (!API_URL) mostrarGate('Falta la URL del script: pon API_URL en este archivo. Mientras tanto, agrega ?demo a la dirección para ver el diseño con datos de ejemplo.');
-  else mostrarGate('');
-})();
+iniciar();
 </script>
 </body>
 </html>
