@@ -109,6 +109,27 @@
       color: var(--shell-fg-muted)
     }
 
+    .gate form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px
+    }
+
+    .gate input {
+      height: 48px;
+      padding: 0 14px;
+      border: 1px solid rgba(255, 255, 255, .22);
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: inherit;
+      font: inherit
+    }
+
+    .gate input:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px
+    }
+
     .btn {
       height: 48px;
       border: 0;
@@ -810,6 +831,11 @@
       <div class="wordmark">adcom<i></i></div>
       <h1>Inversión de la agencia, <em>cliente por cliente</em></h1>
       <p id="gate-msg" role="alert"></p>
+      <form id="lf" class="hide" autocomplete="on">
+        <input id="u" name="usuario" type="text" placeholder="Usuario" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+        <input id="p" name="clave" type="password" placeholder="Clave" autocomplete="current-password" required>
+        <button class="btn" type="submit">Entrar</button>
+      </form>
       <button class="btn" id="reintentar" type="button">Reintentar</button>
     </div>
   </section>
@@ -843,10 +869,12 @@
   </div>
 
   <script>
-    /* Fuente del tablero. En producción se sirve desde el Apps Script de
-       «[Adcom] Fuente General» (scripts/agency/inversion_api.gs + Tablero.html que genera
-       scripts/agency/build_tablero.py), restringido a cuentas adcom.group: los datos entran por
-       google.script.run y aquí no hay claves ni datos. Con ?demo muestra cifras inventadas. */
+    /* Fuente del tablero. Se sirve desde GitHub Pages con usuario y clave por integrante: el login
+       lo valida el Apps Script de «[Adcom] Fuente General» (scripts/agency/inversion_api.gs; los
+       usuarios se crean en su pestaña USUARIOS) y solo entonces devuelve gasto y presupuesto. Aquí
+       no hay claves ni datos. Con ?demo muestra cifras inventadas. */
+
+    const API_URL = 'https://script.google.com/macros/s/AKfycbylBcwX1SlQsLSWOebGXdtfqeCswMCmlu1ob4VbEOIExkGchYcIOBcf0TPyMEFv4pq7uA/exec';
 
     const MEDIOS = [['Facebook', 'Meta'], ['Google', 'Google'], ['TikTok', 'TikTok'], ['LinkedIn', 'LinkedIn'], ['Twitter', 'X'], ['Programatica', 'Programática']];
     const MEDIO_COL = { Facebook: 'var(--serie-1)', Google: 'var(--serie-2)', TikTok: 'var(--serie-3)', LinkedIn: 'var(--ramp-4)', Twitter: 'var(--ramp-3)', Programatica: 'var(--ramp-2)' };
@@ -873,14 +901,33 @@
     const clName = c => c === 'Other' ? 'Otros (sin clasificar)' : c;
 
     /* ---------- datos ---------- */
-    function cargar(fresco) {
-      if (DEMO) return Promise.resolve(demo(S.anio));
-      if (!(window.google && google.script && google.script.run))
-        return Promise.reject(new Error('Esta copia no tiene datos. Abre el tablero desde la dirección del Apps Script, con tu cuenta adcom.group.'));
-      return new Promise((ok, ko) => google.script.run
-        .withSuccessHandler(j => (j && j.ok) ? ok(j) : ko(new Error((j && j.error) || 'Respuesta vacía del script.')))
-        .withFailureHandler(e => ko(new Error((e && e.message) || String(e))))
-        .datosInversion(S.anio, !!fresco));
+    let SESION = '';
+    try { SESION = sessionStorage.getItem('inv_sesion') || ''; } catch (e) { }
+    const guardar = v => { SESION = v; try { v ? sessionStorage.setItem('inv_sesion', v) : sessionStorage.removeItem('inv_sesion'); } catch (e) { } };
+    const falloLogin = msg => Object.assign(new Error(msg), { login: true });
+
+    async function post(o) {
+      let r;
+      try { r = await fetch(API_URL, { method: 'POST', body: JSON.stringify(o) }); }
+      catch (e) { throw new Error('No se pudo conectar con el servidor de datos.'); }
+      const j = await r.json().catch(() => null);
+      if (!j) throw new Error('El servidor de datos respondió algo inválido.');
+      return j;
+    }
+
+    async function entrar(usuario, clave) {
+      const j = await post({ accion: 'login', usuario, clave });
+      if (!j.ok) throw falloLogin(j.error || 'No se pudo entrar.');
+      guardar(j.sesion);
+    }
+
+    async function cargar(fresco) {
+      if (DEMO) return demo(S.anio);
+      if (!SESION) throw falloLogin('Entra con tu usuario y clave para ver la inversión.');
+      const j = await post({ accion: 'datos', sesion: SESION, anio: S.anio, fresco: !!fresco });
+      if (j.sesionVencida) { guardar(''); throw falloLogin(j.error); }
+      if (!j.ok) throw new Error(j.error || 'Respuesta vacía del servidor.');
+      return j;
     }
 
     function indexar(d) {
@@ -1049,7 +1096,7 @@
       pintarNav();
       $('#titulo').textContent = AREAS.find(a => a.id === S.area).t;
       $('#anio').innerHTML = [S.anio + 1 > new Date().getFullYear() ? null : S.anio + 1, S.anio, S.anio - 1].filter(Boolean).map(y => `<option ${y === S.anio ? 'selected' : ''}>${y}</option>`).join('');
-      $('#foot').innerHTML = S.data && S.data.actualizado ? 'Consulta: ' + S.data.actualizado.replace('T', ' ').slice(0, 16) + (S.data.usuario ? '<br>' + esc(S.data.usuario) : '') : '';
+      $('#foot').innerHTML = S.data && S.data.actualizado ? 'Consulta: ' + S.data.actualizado.replace('T', ' ').slice(0, 16) + (S.data.usuario ? '<br>' + esc(S.data.usuario) + ' · <a href="#" data-salir>Salir</a>' : '') : '';
       const v = { resumen: vResumen, clientes: vClientes, presupuesto: vPresupuesto, datos: vDatos }[S.area]();
       $('#main').innerHTML = (DEMO ? '<div class="banner">Datos de ejemplo: las cifras son inventadas para revisar el diseño. No son inversión real.</div>' : '') + `<div class="view">${v}</div>`;
     }
@@ -1062,12 +1109,14 @@
         pintar();
       } catch (e) {
         if (S.data) { $('#main').insertAdjacentHTML('afterbegin', `<div class="banner neg">No se pudo actualizar: ${esc(e.message)}</div>`); }
-        else mostrarGate(e.message || 'No se pudo cargar.');
+        else mostrarGate(e.message || 'No se pudo cargar.', e.login);
       } finally { b.classList.remove('spin'); }
     }
-    function mostrarGate(msg) {
+    function mostrarGate(msg, login) {
       $('#app').classList.add('hide'); $('#gate').classList.remove('hide');
       $('#gate-msg').textContent = msg || '';
+      $('#lf').classList.toggle('hide', !login); $('#reintentar').classList.toggle('hide', !!login);
+      if (login) $('#u').focus();
     }
 
     document.addEventListener('click', e => {
@@ -1083,6 +1132,16 @@
     $('#anio').addEventListener('change', e => { S.anio = +e.target.value; S.mes = ''; iniciar(); });
     $('#refresh').addEventListener('click', () => iniciar(true));
     $('#reintentar').addEventListener('click', () => iniciar(true));
+    $('#lf').addEventListener('submit', async e => {
+      e.preventDefault(); const b = $('#lf .btn'); b.disabled = true;
+      try { await entrar($('#u').value, $('#p').value); $('#p').value = ''; await iniciar(true); }
+      catch (err) { $('#gate-msg').textContent = err.message; }
+      finally { b.disabled = false; }
+    });
+    document.addEventListener('click', e => {
+      if (!e.target.closest('[data-salir]')) return;
+      e.preventDefault(); guardar(''); S.data = null; mostrarGate('Cerraste la sesión.', true);
+    });
 
     /* ---------- datos de ejemplo (?demo): inventados, para revisar el diseño ---------- */
     function demo(anio) {
