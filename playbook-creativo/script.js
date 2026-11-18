@@ -26,7 +26,6 @@
   };
   const pageSize = 4;
   let currentPage = 1;
-  let lastTrigger = null;
   let returnHash = '#explorar';
 
   function el(tag, className, content) {
@@ -363,7 +362,7 @@
         button.setAttribute('aria-label', `Abrir ficha de ${item.nombre} en ${item.medio}`);
         button.className = 'format-explore-button';
         button.append(el('span', '', 'Explorar ficha'), el('span', '', '↗'));
-        button.addEventListener('click', () => openDetail(item, button));
+        button.addEventListener('click', () => openDetail(item));
         body.append(button);
         card.append(body);
         cards.append(card);
@@ -385,8 +384,7 @@
     const list = $(selector);
     list.replaceChildren(...values.map(value => el('li', '', value)));
   }
-  function openDetail(item, trigger = null) {
-    lastTrigger = trigger || document.activeElement;
+  function openDetail(item) {
     returnHash = selectedMedium ? `#${mediumKey(selectedMedium)}` : '#explorar';
     dialog.dataset.format = item.id;
     const ref = references.get(item.ref);
@@ -418,6 +416,8 @@
     detailCycleCleanup?.cleanup();
     detailCycleCleanup = null;
     renderDemo(item);
+    $('.tip-panel').open = false;
+    $('.detail-validation').open = false;
     $('#dialog-scroll').scrollTop = 0;
     dialog.showModal();
     history.replaceState(null, '', `#${item.id}`);
@@ -643,13 +643,24 @@
     toggle.setAttribute('aria-pressed', String(!overlay.hidden));
     toggle.textContent = overlay.hidden ? 'Ver zonas seguras' : 'Ocultar zonas seguras';
   });
-  lightbox.addEventListener('click', event => { if (event.target === lightbox) lightbox.close(); });
-  dialog.addEventListener('click', event => { if (event.target === dialog) closeDialog(); });
+  if (!('closedBy' in HTMLDialogElement.prototype)) {
+    const outside = (event, target) => {
+      const bounds = target.getBoundingClientRect();
+      return event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom;
+    };
+    [dialog, lightbox].forEach(target => {
+      let pressedOutside = false;
+      target.addEventListener('pointerdown', event => { pressedOutside = outside(event, target); });
+      target.addEventListener('pointerup', event => {
+        if (pressedOutside && outside(event, target)) target.close();
+        pressedOutside = false;
+      });
+    });
+  }
   dialog.addEventListener('close', () => {
     detailCycleCleanup?.cleanup();
     detailCycleCleanup = null;
     if (location.hash.slice(1) === dialog.dataset.format) history.replaceState(null, '', returnHash);
-    lastTrigger?.focus?.();
   });
   search.addEventListener('input', () => { if (search.value.trim()) selectedMedium = ''; currentPage = 1; renderFormats(); });
   $('#clear-filters').addEventListener('click', () => { search.value=''; selectedMedium=''; currentPage = 1; renderFormats(); search.focus(); });

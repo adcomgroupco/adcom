@@ -2,8 +2,9 @@
 
 Biblioteca estática para el equipo creativo. Abrir `index.html` con doble clic o desde el portal de Adcom.
 No requiere build ni servidor; los recursos del playbook son locales, salvo la fuente web opcional.
-El diseño usa los tokens compartidos de `../assets/css/adcom-tokens.css`: suelo tinta para lectura
-visual, franja papel para la biblioteca, Poppins y amarillo Adcom.
+El diseño usa los tokens compartidos de `../assets/css/adcom-tokens.css`: portada tinta,
+biblioteca papel, Poppins y amarillo Adcom. `redesign.css` reúne la capa de presentación de la
+página; `styles.css` conserva los estilos de los mockups y las demos.
 
 ## Contenido
 
@@ -26,6 +27,8 @@ visual, franja papel para la biblioteca, Poppins y amarillo Adcom.
 - `tools/generate_mockups.py`: regenera las composiciones SVG de respaldo. Requiere solo Python
   estándar; la página funciona sin Python.
 - `script.js`: búsqueda, selección de medios por logo, fichas y demos interactivas.
+- `redesign.css`: portada compacta, navegación por logos, tarjetas adaptables y fichas con
+  recomendaciones y validación desplegables.
 
 La exploración presenta los logos de los medios como único filtro y muestra sus formatos en páginas de cuatro tarjetas
 con previews de altura uniforme. La búsqueda recorre todos los medios. Hay fichas de Meta, TikTok,
