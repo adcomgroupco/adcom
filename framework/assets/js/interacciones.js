@@ -56,86 +56,56 @@
     counters.forEach(function(el){ioc.observe(el)});
   } else { counters.forEach(function(el){el.textContent = el.getAttribute("data-count")}); }
 
-  /* ---------- menú completo ----------
-     Los diecinueve destinos viven en un panel: se abre con el botón, se cierra
-     al elegir un enlace, con Escape o al tocar fuera del header. */
-  var header = $(".site-header"), toggle = $("#nav-toggle");
-  if (header && toggle){
-    function cerrarMenu(){
-      header.classList.remove("nav-abierto");
-      toggle.setAttribute("aria-expanded","false");
-      toggle.setAttribute("aria-label","Abrir el menú");
-    }
-    toggle.addEventListener("click", function(){
-      var abierto = header.classList.toggle("nav-abierto");
-      toggle.setAttribute("aria-expanded", abierto ? "true" : "false");
-      toggle.setAttribute("aria-label", abierto ? "Cerrar el menú" : "Abrir el menú");
+  function destino(id){
+    if (document.getElementById(id)) return "#" + id;
+    var pagina = Object.keys(FD.ANCLAS).find(function(nombre){
+      return FD.ANCLAS[nombre].includes(id);
     });
-    $$("#mainnav a").forEach(function(a){ a.addEventListener("click", cerrarMenu); });
-    document.addEventListener("keydown", function(e){
-      if (e.key === "Escape" && header.classList.contains("nav-abierto")){ cerrarMenu(); toggle.focus(); }
-    });
-    document.addEventListener("click", function(e){
-      if (header.classList.contains("nav-abierto") && !header.contains(e.target)) cerrarMenu();
-    });
+    return (pagina ? pagina + ".html" : "index.html") + "#" + id;
   }
 
-  /* La búsqueda sigue siendo accesible aunque el hero ya no esté en pantalla. */
-  var headerSearch = $("#header-search"), globalSearch = $("#q");
-  if (headerSearch && globalSearch){
+  function abrirEnlaceAnterior(){
+    var id = location.hash.slice(1);
+    if (!id || document.getElementById(id)) return;
+    var href = destino(id);
+    if (!href.startsWith("index.html")) location.replace(href);
+  }
+  abrirEnlaceAnterior();
+  window.addEventListener("hashchange", abrirEnlaceAnterior);
+
+  var headerSearch = $("#header-search");
+  if (headerSearch){
     headerSearch.addEventListener("click", function(){
-      var commandDialog = $("#command-dialog");
-      if (commandDialog && typeof commandDialog.showModal === "function"){
+      var dialog = $("#command-dialog");
+      if (dialog && typeof dialog.showModal === "function"){
         document.dispatchEvent(new CustomEvent("open-command"));
-        return;
+      } else {
+        $("#q").focus();
       }
-      if (header && header.classList.contains("nav-abierto")){
-        header.classList.remove("nav-abierto");
-        toggle.setAttribute("aria-expanded","false");
-      }
-      globalSearch.scrollIntoView({behavior:FD.menosMovimiento() ? "auto" : "smooth",block:"center"});
-      window.setTimeout(function(){ globalSearch.focus(); }, FD.menosMovimiento() ? 0 : 320);
     });
-  }
-
-  /* ---------- nav activo ---------- */
-  var navLinks = $$("#mainnav a");
-  var navCurrent = $("#nav-current");
-  var sections = navLinks.map(function(a){return $(a.getAttribute("href"))}).filter(Boolean);
-  if ("IntersectionObserver" in window && sections.length){
-    var ion = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if (e.isIntersecting){
-          navLinks.forEach(function(a){
-            var actual = a.getAttribute("href") === "#"+e.target.id;
-            a.classList.toggle("is-current", actual);
-            if (actual && navCurrent) navCurrent.textContent = a.textContent;
-          });
-        }
-      });
-    },{rootMargin:"-45% 0px -50% 0px"});
-    sections.forEach(function(s){ion.observe(s)});
   }
 
   /* ---------- pilares ---------- */
-  var PILLARS = FD.PILARES;
-  function setPillar(n){
-    var d = PILLARS[n]; if(!d) return;
-    $("#pillar-tag").textContent = d.tag;
-    $("#pillar-title").textContent = d.title;
-    $("#pillar-question").textContent = d.q;
-    $("#pillar-quote").textContent = d.q;
-    fillChips($("#pillar-items"), d.items);
-    $$(".pillar").forEach(function(b){
-      var on = b.getAttribute("data-pillar") === String(n);
-      b.classList.toggle("is-active", on);
-      b.setAttribute("aria-selected", on ? "true":"false");
-    });
-    var panel = $("#pillar-panel");
-    panel.classList.remove("fade-in"); void panel.offsetWidth; panel.classList.add("fade-in");
+  if ($("#pillar-panel")){
+    var PILLARS = FD.PILARES;
+    function setPillar(n){
+      var d = PILLARS[n]; if(!d) return;
+      $("#pillar-tag").textContent = d.tag;
+      $("#pillar-title").textContent = d.title;
+      $("#pillar-question").textContent = d.q;
+      $("#pillar-quote").textContent = d.q;
+      fillChips($("#pillar-items"), d.items);
+      $$(".pillar").forEach(function(b){
+        var on = b.getAttribute("data-pillar") === String(n);
+        b.classList.toggle("is-active", on);
+        b.setAttribute("aria-selected", on ? "true":"false");
+      });
+      var panel = $("#pillar-panel");
+      panel.classList.remove("fade-in"); void panel.offsetWidth; panel.classList.add("fade-in");
+    }
+    $$(".pillar").forEach(function(b){ b.addEventListener("click", function(){ setPillar(b.getAttribute("data-pillar")); }); });
+    setPillar(1);
   }
-  $$(".pillar").forEach(function(b){ b.addEventListener("click", function(){ setPillar(b.getAttribute("data-pillar")); }); });
-  setPillar(1);
 
   /* ---------- variables (06): tres tarjetas desde contenido.js ---------- */
   var varsGrid = $("#vars-grid");
@@ -147,49 +117,51 @@
       art.className = "card card-light";
       /* controlables, influenciables, externas: el margen de acción baja de 3 a 1 */
       art.style.setProperty("--nivel", grupos.length - idx);
-      art.innerHTML = '<span class="card-index">' + d.tag + '</span><h3>' + d.title +
-                      '</h3><p style="margin:12px 0 16px">' + d.desc + '</p><ul class="chips"></ul>';
+      art.innerHTML = '<span class="card-index">' + d.tag + '</span><h5>' + d.title +
+                      '</h5><p style="margin:12px 0 16px">' + d.desc + '</p><ul class="chips"></ul>';
       varsGrid.appendChild(art);
       fillChips(art.querySelector("ul"), d.items);
     });
   }
 
   /* ---------- línea de trabajo ---------- */
-  var STEPS = FD.ETAPAS;
-  var stepper = $("#stepper");
-  STEPS.forEach(function(s,i){
-    var b = document.createElement("button");
-    b.className = "step" + (i===0 ? " is-active":"");
-    b.type = "button";
-    b.setAttribute("role","tab");
-    b.setAttribute("aria-selected", i===0 ? "true":"false");
-    b.setAttribute("data-step", i);
-    b.innerHTML = '<span>'+s.n+'</span><strong>'+s.t+'</strong>';
-    b.addEventListener("click", function(){ setStep(i,true); });
-    stepper.appendChild(b);
-  });
-  var current = 0;
-  function setStep(i, alinear){
-    var s = STEPS[i]; if(!s) return;
-    current = i;
-    $("#step-tag").textContent = "ETAPA " + s.n;
-    $("#step-title").textContent = s.t;
-    $("#step-desc").textContent = s.d;
-    $("#step-label").textContent = s.label;
-    fillChips($("#step-items"), s.items);
-    $$(".step").forEach(function(b,idx){
-      var on = idx === i;
-      b.classList.toggle("is-active", on);
-      b.setAttribute("aria-selected", on ? "true":"false");
+  if ($("#stepper")){
+    var STEPS = FD.ETAPAS;
+    var stepper = $("#stepper");
+    STEPS.forEach(function(s,i){
+      var b = document.createElement("button");
+      b.className = "step" + (i===0 ? " is-active":"");
+      b.type = "button";
+      b.setAttribute("role","tab");
+      b.setAttribute("aria-selected", i===0 ? "true":"false");
+      b.setAttribute("data-step", i);
+      b.innerHTML = '<span>'+s.n+'</span><strong>'+s.t+'</strong>';
+      b.addEventListener("click", function(){ setStep(i,true); });
+      stepper.appendChild(b);
     });
-    $("#flow-rail").style.transform = "scaleX(" + ((i+1)/STEPS.length) + ")";
-    var panel = $("#step-panel");
-    panel.classList.remove("fade-in"); void panel.offsetWidth; panel.classList.add("fade-in");
-    var active = $$(".step")[i];
-    if (alinear && active && active.scrollIntoView) active.scrollIntoView({behavior: FD.menosMovimiento() ? "auto" : "smooth", block:"nearest", inline:"center"});
+    var current = 0;
+    function setStep(i, alinear){
+      var s = STEPS[i]; if(!s) return;
+      current = i;
+      $("#step-tag").textContent = "ETAPA " + s.n;
+      $("#step-title").textContent = s.t;
+      $("#step-desc").textContent = s.d;
+      $("#step-label").textContent = s.label;
+      fillChips($("#step-items"), s.items);
+      $$(".step").forEach(function(b,idx){
+        var on = idx === i;
+        b.classList.toggle("is-active", on);
+        b.setAttribute("aria-selected", on ? "true":"false");
+      });
+      $("#flow-rail").style.transform = "scaleX(" + ((i+1)/STEPS.length) + ")";
+      var panel = $("#step-panel");
+      panel.classList.remove("fade-in"); void panel.offsetWidth; panel.classList.add("fade-in");
+      var active = $$(".step")[i];
+      if (alinear && active && active.scrollIntoView) active.scrollIntoView({behavior: FD.menosMovimiento() ? "auto" : "smooth", block:"nearest", inline:"center"});
+    }
+    $("#step-next").addEventListener("click", function(){ setStep((current+1) % STEPS.length,true); });
+    setStep(0,false);
   }
-  $("#step-next").addEventListener("click", function(){ setStep((current+1) % STEPS.length,true); });
-  setStep(0,false);
 
   /* ---------- ciclo de campaña ---------- */
   var CYCLE = FD.CICLO;
@@ -260,34 +232,36 @@
   }
 
   /* ---------- repositorio ---------- */
-  var REPO = FD.REPOSITORIO;
-  var repoList = $("#repo-list");
-  REPO.forEach(function(r,i){
-    var b = document.createElement("button");
-    b.type = "button";
-    b.className = "repo-item" + (i===0?" is-active":"");
-    b.setAttribute("role","tab");
-    b.setAttribute("aria-selected", i===0 ? "true":"false");
-    b.setAttribute("data-repo", i);
-    b.innerHTML = "<b>"+r.c+"</b>"+r.t;
-    b.addEventListener("click", function(){ setRepo(i); });
-    repoList.appendChild(b);
-  });
-  function setRepo(i){
-    var r = REPO[i]; if(!r) return;
-    $("#repo-tag").textContent = r.c;
-    $("#repo-title").textContent = r.t;
-    $("#repo-desc").textContent = r.d;
-    fillChips($("#repo-items"), r.items);
-    var note = $("#repo-note");
-    if (r.note){ note.hidden = false; note.textContent = r.note; } else { note.hidden = true; }
-    $$("#repo-list .repo-item").forEach(function(b,idx){
-      var on = idx === i;
-      b.classList.toggle("is-active", on);
-      b.setAttribute("aria-selected", on ? "true" : "false");
+  if ($("#repo-list")){
+    var REPO = FD.REPOSITORIO;
+    var repoList = $("#repo-list");
+    REPO.forEach(function(r,i){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "repo-item" + (i===0?" is-active":"");
+      b.setAttribute("role","tab");
+      b.setAttribute("aria-selected", i===0 ? "true":"false");
+      b.setAttribute("data-repo", i);
+      b.innerHTML = "<b>"+r.c+"</b>"+r.t;
+      b.addEventListener("click", function(){ setRepo(i); });
+      repoList.appendChild(b);
     });
+    function setRepo(i){
+      var r = REPO[i]; if(!r) return;
+      $("#repo-tag").textContent = r.c;
+      $("#repo-title").textContent = r.t;
+      $("#repo-desc").textContent = r.d;
+      fillChips($("#repo-items"), r.items);
+      var note = $("#repo-note");
+      if (r.note){ note.hidden = false; note.textContent = r.note; } else { note.hidden = true; }
+      $$("#repo-list .repo-item").forEach(function(b,idx){
+        var on = idx === i;
+        b.classList.toggle("is-active", on);
+        b.setAttribute("aria-selected", on ? "true" : "false");
+      });
+    }
+    setRepo(0);
   }
-  setRepo(0);
 
   /* Motion-style view transitions for native details. The DOM remains native
      and accessible; supported browsers animate the layout, others toggle as usual. */
@@ -342,7 +316,7 @@
       b.type = "button";
       b.className = "tab";
       b.setAttribute("aria-controls", f.id);
-      b.textContent = f.getAttribute("data-tab") || (f.querySelector("h3,h4") || f).textContent.trim();
+      b.textContent = f.getAttribute("data-tab") || (f.querySelector("h3,h4,h5") || f).textContent.trim();
       b.addEventListener("click", function(){ ir(i); });
       tabs.appendChild(b);
       return b;
@@ -424,7 +398,7 @@
       var fam = FD.FAMILIAS.filter(function(f){ return f.id === b.f; })[0];
       if (fam && !famDe[b.a]) famDe[b.a] = fam.t;
     });
-    $$("main > section[id]").forEach(function(sec){
+    $$("[data-framework-section]").forEach(function(sec){
       var cabeza = sec.querySelector(".wrap > .section-heading");
       if (!cabeza) return;
       var ceja = cabeza.querySelector(".eyebrow");
@@ -434,15 +408,15 @@
         s.textContent = famDe[sec.id];
         ceja.insertBefore(s, ceja.firstChild);
       }
-      var destinos = $$(".divider[id], h3.sub-heading[id]", sec);
+      var destinos = $$(".divider[id], .sub-heading[id]", sec);
       if (destinos.length < 2) return;
       var nav = document.createElement("nav");
       nav.className = "en-seccion";
-      nav.setAttribute("aria-label", "En esta sección");
+      nav.setAttribute("aria-label", "En " + cabeza.querySelector("h2").textContent.trim());
       var html = '<p>En esta sección</p><ol>';
       destinos.forEach(function(d){
-        if (d.matches("h3") && d.closest(".divider[id]")) return;
-        var h = d.matches("h3") ? d : d.querySelector("h2, h3");
+        if (d.matches(".sub-heading") && d.closest(".divider[id]")) return;
+        var h = d.matches(".sub-heading") ? d : d.querySelector("h3, h4");
         if (!h) return;
         var titulo = h.textContent.replace(/\s+/g, " ").trim();
         var num = "";
@@ -487,13 +461,13 @@
       sec.setAttribute("data-fam", fam.id);
       sec.setAttribute("aria-label", fam.t);
       var total = suyos.reduce(function(n, b){ return n + b.items.length; }, 0);
-      var h = '<header class="toc-fam-h"><span>' + fam.r + '</span><b>' + fam.t +
-              '</b><small>' + fam.d + '</small></header><div class="toc-grid">';
+      var h = '<header class="toc-fam-h"><span>' + fam.r + '</span><h3>' + fam.t +
+              '</h3><small>' + fam.d + '</small></header><div class="toc-grid">';
       suyos.forEach(function(b){
-        h += '<article class="toc-block"><a class="toc-h" href="#' + b.a + '"><b>' + b.n + '</b> <span>' + b.t + '</span></a><ul class="toc-list">';
+        h += '<article class="toc-block"><a class="toc-h" href="' + destino(b.a) + '"><b>' + b.n + '</b> <span>' + b.t + '</span></a><ul class="toc-list">';
         b.items.forEach(function(it){
           var x = partir(it.t);
-          h += '<li><a href="#' + it.a + '"><b class="toc-n">' + escapar(x.n) + '</b> <span class="toc-t">' + escapar(x.t) + '</span></a></li>';
+          h += '<li><a href="' + destino(it.a) + '"><b class="toc-n">' + escapar(x.n) + '</b> <span class="toc-t">' + escapar(x.t) + '</span></a></li>';
         });
         h += '</ul></article>';
       });
@@ -544,7 +518,7 @@
 
     function filtrar(){
       var termino = plano((campo.value || "").trim());
-      /* familia y término se combinan: "Control" + "umbral" es justo lo que un analista pediría */
+      /* Sección y término se combinan para acotar la consulta. */
       var porFamilia = famActiva !== "todo";
       var visibles = 0, porFam = {};
       grupos.forEach(function(g){
@@ -574,9 +548,9 @@
         f.cuenta.textContent = n;
         f.el.classList.toggle("is-cero", n === 0 && !sel);
       });
-      if (termino) marcador.textContent = visibles + " de " + TOTAL + " entradas" + (porFamilia ? " en esta familia" : "");
-      else if (porFamilia) marcador.textContent = visibles + " entradas en esta familia";
-      else marcador.textContent = TOTAL + " entradas en cinco familias";
+      if (termino) marcador.textContent = visibles + " de " + TOTAL + " entradas" + (porFamilia ? " en esta sección" : "");
+      else if (porFamilia) marcador.textContent = visibles + " entradas en esta sección";
+      else marcador.textContent = TOTAL + " entradas en " + FD.FAMILIAS.length + " secciones";
       vacio.hidden = visibles > 0;
     }
     campo.addEventListener("input", filtrar);
@@ -675,21 +649,50 @@
     function esc(t){ return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
     /* se construye al primer uso: para entonces contenido.js ya pintó todo */
-    function construir(){
-      indice = [];
-      $$("main section[id]").forEach(function(sec){
-        var h2 = sec.querySelector("h2");
-        var seccion = h2 ? h2.textContent.trim() : sec.id;
-        $$("h2,h3,h4,p,li,figcaption,td,th", sec).forEach(function(el){
+    function leerPagina(doc, pagina){
+      $$("main > section[id]:not(.framework-area), [data-framework-section], .area-intro", doc).forEach(function(sec){
+        if (sec.id === "indice") return;
+        var heading = sec.querySelector("h1,h2,h3");
+        var area = sec.closest(".framework-area");
+        var seccion = (area ? doc.getElementById(area.getAttribute("aria-labelledby")).textContent.trim() + " / " : "") +
+          (heading ? heading.textContent.trim() : sec.id);
+        $$("h1,h2,h3,h4,h5,p,li,figcaption,td,th", sec).forEach(function(el){
           /* solo hojas: si contiene otro indexable, el hijo ya lo cubre */
           if (el.querySelector("p,li,td,th,figcaption")) return;
           if (el.closest(".en-seccion")) return;
           var t = el.textContent.replace(/\s+/g," ").trim();
           if (t.length < 14) return;
           var conId = el.closest("[id]");
-          var peso = /^H[234]$/.test(el.tagName) ? 0 : 1;
-          indice.push({ t:t, p:plano(t), s:seccion, a:(conId && conId.id) ? conId.id : sec.id, w:peso });
+          var peso = /^H[1-5]$/.test(el.tagName) ? 0 : 1;
+          var id = (conId && conId.id) || sec.id || (area ? area.id : "inicio");
+          indice.push({ t:t, p:plano(t), s:seccion, a:pagina + "#" + id, w:peso });
         });
+      });
+    }
+
+    function construir(){
+      indice = [];
+      leerPagina(document, "");
+      // El índice permite encontrar también capítulos que viven en otra página.
+      FD.INDICE.forEach(function(bloque){
+        if (document.getElementById(bloque.a)) return;
+        var area = FD.FAMILIAS.find(function(f){ return f.id === bloque.f; });
+        [{a: bloque.a, t: bloque.t}].concat(bloque.items).forEach(function(item){
+          indice.push({t:item.t, p:plano(item.t), s:area.t, a:destino(item.a), w:0});
+        });
+      });
+      if (!/^https?:$/.test(location.protocol)) return;
+      FD.FAMILIAS.forEach(function(familia){
+        if (document.getElementById(familia.id)) return;
+        var pagina = familia.id + ".html";
+        fetch(pagina).then(function(response){
+          if (!response.ok) return null;
+          return response.text();
+        }).then(function(html){
+          if (!html) return;
+          leerPagina(new DOMParser().parseFromString(html, "text/html"), pagina);
+          if (!caja.hidden && campo.value.trim().length >= 2) buscar();
+        }).catch(function(){ /* El índice de capítulos sigue disponible. */ });
       });
     }
 
@@ -727,7 +730,7 @@
       } else {
         var html = '<ol>';
         top.forEach(function(h){
-          html += '<li><a href="#' + h.a + '">' +
+          html += '<li><a href="' + esc(h.a) + '">' +
                   '<span class="q-sec">' + esc(h.s) + '</span>' +
                   '<b>' + resaltar(pasaje(h.t, term), term) + '</b></a></li>';
         });
@@ -745,8 +748,10 @@
     /* el resultado se puede compartir: ?q=pacing */
     function guardarUrl(v){
       if (!window.history || !history.replaceState) return;
-      var u = location.pathname + (v ? "?q=" + encodeURIComponent(v) : "") + location.hash;
-      history.replaceState(null, "", u);
+      var url = new URL(location.href);
+      if (v) url.searchParams.set("q", v);
+      else url.searchParams.delete("q");
+      if (url.href !== location.href && location.protocol !== "file:") history.replaceState(null, "", url);
     }
 
     var t = null;
@@ -790,8 +795,8 @@
     });
 
     /* llegar con ?q= ya buscando */
-    var q = (location.search.match(/[?&]q=([^&]*)/) || [])[1];
-    if (q){ campo.value = decodeURIComponent(q.replace(/\+/g," ")); buscar(); }
+    var q = new URLSearchParams(location.search).get("q");
+    if (q){ campo.value = q; buscar(); }
   })();
 
   /* ---------- command palette · CommandDialog sin dependencia ---------- */
@@ -818,6 +823,9 @@
       else dialog.removeAttribute("open");
     }
     document.addEventListener("open-command", open);
+    if (globalResults) new MutationObserver(function(){
+      if (dialog.open) syncResults();
+    }).observe(globalResults, {childList:true});
     close.addEventListener("click", shut);
     dialog.addEventListener("click", function(e){ if (e.target === dialog) shut(); });
     input.addEventListener("input", function(){
@@ -825,7 +833,6 @@
         globalSearch.value = input.value;
         globalSearch.dispatchEvent(new Event("input", {bubbles:true}));
       }
-      window.setTimeout(syncResults, 145);
     });
     input.addEventListener("keydown", function(e){
       if (e.key === "Escape"){ e.preventDefault(); shut(); return; }

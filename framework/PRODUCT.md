@@ -16,7 +16,7 @@ Las dos audiencias comparten la página y tienen necesidades opuestas de navegac
 
 ## Product Purpose
 
-Landing interna que documenta **y opera** el framework de trabajo del Área Digital de Adcom (v0.3): su sistema de operación, control, reacción y aprendizaje.
+Sitio interno del framework de trabajo del Área Digital de Adcom (v0.3). Estrategia define el problema y los acuerdos entre áreas. Operación y táctica convierte esa dirección en solicitudes, ejecución, control y pruebas. Automatización e IA explica qué se delega y qué requiere aprobación.
 
 Existe para que las reglas del área sean aplicables en el momento en que hacen falta, en lugar de vivir en un documento que nadie abre. El éxito no es que la página se lea entera: es que alguien encuentre lo que buscaba, o ejecute una herramienta, y siga trabajando.
 
@@ -36,15 +36,13 @@ Un documento de framework equivalente en cualquier otra agencia describe el proc
 ## Capabilities and Constraints
 
 **Funcionalidad confirmada**
-- 20 secciones de contenido y 19 destinos en `<nav id="mainnav">`: el hero se alcanza mediante
-  `#inicio`, las 18 secciones principales tienen ancla propia y el cierre funciona como remate,
-  no como destino independiente.
+- Tres páginas independientes con introducción y mapas propios. Estrategia integra la coordinación entre áreas. Automatización e IA concentra los criterios de delegación, aprobación y auditoría. La portada conserva el índice compartido y los accesos a herramientas. Las anclas y los números anteriores siguen funcionando.
 - Cinco herramientas interactivas en `assets/js/herramientas.js`.
 - Índice, tablero de cuentas y requisitos de solicitud se pintan desde `assets/js/contenido.js`.
-- Resaltado automático del enlace activo del menú por observación de secciones.
+- Navegación visible con indicación de la página actual.
 - **Dos niveles de búsqueda.** El buscador global del hero (`#q`) consulta títulos y texto completo,
-  se abre desde el header, `/` o `Ctrl+K`; el buscador del índice (`#toc-q`) filtra las 94 entradas
-  por familia y conserva su contador y estado vacío.
+  se abre desde el header, `/` o `Ctrl+K`; el buscador del índice (`#toc-q`) filtra las entradas
+  por sección y conserva su contador y estado vacío.
 
 **Restricciones durables**
 - **Sitio estático: sin build, sin dependencias, sin paso de compilación.** Se sirve como archivos planos desde la intranet.
@@ -54,7 +52,7 @@ Un documento de framework equivalente en cualquier otra agencia describe el proc
 - La página se escribe **en español**.
 
 **Fuente de verdad**
-- `index.html` es la única fuente de verdad. `_archivo/framework-area-digital-v03-detallado.md` es referencia histórica: le faltan los puntos 86—99 que la página sí tiene, e incluye los puntos 42, 43 y 82 que la página omite. Editarlo no cambia nada.
+- `estrategia.html` y `operacion-tactica.html` contienen los capítulos vigentes. `_archivo/framework-area-digital-v03-detallado.md` es referencia histórica: le faltan los puntos 86—99 que la página sí tiene, e incluye los puntos 42, 43 y 82 que la página omite. Editarlo no cambia nada.
 - `_archivo/` guarda versiones sustituidas.
 
 ## Brand Commitments
@@ -82,6 +80,9 @@ Restricciones fijadas explícitamente por el usuario para este ciclo de trabajo:
 3. **El onboarding no puede estorbar al experto.** La ruta de entrada para quien llega nuevo tiene que existir sin imponerle fricción a quien ya sabe dónde va.
 4. **Alcanzable o no existe.** Contenido que no se puede navegar es contenido que no está: toda sección debe tener una vía de acceso.
 5. **Cero fricción de arranque.** Sin build ni dependencias: cualquier persona del área debe poder abrir, editar y publicar sin instalar nada.
+6. **Cada guía apoya una decisión distinta.** Estrategia acuerda la dirección con las áreas aliadas.
+   Operación y táctica guía la ejecución y devuelve evidencia. Automatización e IA define la delegación,
+   la aprobación y el registro.
 
 ## Accessibility & Inclusion
 

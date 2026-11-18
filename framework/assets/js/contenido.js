@@ -149,82 +149,50 @@ FD.CUENTAS = {
    `a` es el ancla de destino (el id que existe en index.html). */
 /* Familias del índice: agrupan las secciones para poder consultar por bloque */
 FD.FAMILIAS = [
-  {id:"fundamentos", t:"Fundamentos", r:"00—06", d:"Por qué existe el framework y cómo leemos un resultado"},
-  {id:"operacion",   t:"Operación",   r:"07—25 · 42—43 · 93—94", d:"Cómo entra el trabajo, quién lo hace y con qué procesos"},
-  {id:"control",     t:"Control",     r:"26—33", d:"Presupuesto, pacing y alertas"},
-  {id:"reaccion",    t:"Reacción",    r:"34—57 · 86—92", d:"Qué hacemos cuando algo se desvía"},
-  {id:"sistema",     t:"Sistema",     r:"58—99", d:"Dónde queda documentado, qué automatizamos y qué sigue"}
+  {id:"estrategia", t:"Estrategia", r:"Decidir", d:"Problema de negocio, contexto, hipótesis, escenarios y éxito"},
+  {id:"operacion-tactica", t:"Operación y táctica", r:"Actuar", d:"Solicitudes, ejecución, control, pruebas y aprendizaje"},
+  {id:"automatizacion", t:"Automatización e IA", r:"Delegar", d:"Consulta, simulación, aprobación y auditoría"}
 ];
 
 FD.INDICE = [
-  {f:"fundamentos", a:"contexto", n:"00—03", t:"Punto de partida", items:[
-    {a:"contexto", t:"El reto: convertir capacidad individual en capacidad colectiva"},
-    {a:"contexto", t:"02—03 · Qué queremos evitar: burocracia, rigidez y control innecesario"},
+  {f:"estrategia", a:"contexto", n:"00—03", t:"El problema de negocio", items:[
+    {a:"contexto", t:"Pregunta, evidencia y decisión antes de activar"},
     {a:"objetivo",  t:"01 · Los quince resultados que el sistema debe habilitar"}
   ]},
-  {f:"fundamentos", a:"pilares", n:"04", t:"Cinco pilares", items:[
+  {f:"estrategia", a:"pilares", n:"04", t:"Cinco pilares", items:[
     {a:"pilares", t:"4.1 · Excelencia operativa — hacer bien el trabajo de forma consistente"},
     {a:"pilares", t:"4.2 · Inteligencia estratégica — conectar la ejecución con el negocio"},
     {a:"pilares", t:"4.3 · Experimentación — aprender de manera sistemática"},
     {a:"pilares", t:"4.4 · Gestión contextual — lo que pasa fuera de la plataforma"},
     {a:"pilares", t:"4.5 · Documentación y trazabilidad — convertir conocimiento en capacidad"}
   ]},
-  {f:"fundamentos", a:"modelo", n:"05—06", t:"Cómo leemos los resultados", items:[
+  {f:"estrategia", a:"modelo", n:"05—06", t:"Cómo leemos los resultados", items:[
     {a:"modelo",    t:"05 · La ecuación del resultado digital"},
     {a:"variables", t:"6.1 · Variables controlables — presupuesto, segmentación, pujas, medición"},
     {a:"variables", t:"6.2 · Variables influenciables — creatividad, oferta, landing, CRM"},
     {a:"variables", t:"6.3 · Variables externas — estacionalidad, competencia, regulación"}
   ]},
-  {f:"operacion", a:"flujo", n:"07", t:"Línea general de trabajo", items:[
-    {a:"flujo", t:"7.1 Entrada · 7.2 Clasificación · 7.3 Análisis de contexto"},
-    {a:"flujo", t:"7.4 Diagnóstico · 7.5 Definición de acción · 7.6 Ejecución"},
-    {a:"flujo", t:"7.7 Control de calidad · 7.8 Activación · 7.9 Monitoreo · 7.10 Aprendizaje"}
-  ]},
-  {f:"operacion", a:"equipo", n:"08—17", t:"Equipo e interfaces", items:[
-    {a:"equipo",     t:"09 · Dirigir el sistema — dirección digital"},
-    {a:"equipo",     t:"10 · Conectar y traducir — planner"},
-    {a:"equipo",     t:"11 · Operar con criterio — performance / trafficker"},
-    {a:"reparto",    t:"12 · Cómo se reparte el trabajo entre Planner y Performance"},
-    {a:"interfaces", t:"14—17 · Conexiones con Cuentas, Martech y áreas aliadas"}
-  ]},
-  {f:"operacion", a:"cuentas", n:"93", t:"Distribución de cuentas", items:[
-    {a:"cuentas", t:"Tablero de reparto por persona — se mueve arrastrando las fichas"},
-    {a:"cuentas", t:"93.1 · Cómo se lee la carga: campañas, no cuentas"},
-    {a:"cuentas", t:"93.2 · Qué no decide este tablero"}
-  ]},
-  {f:"operacion", a:"inteligencia", n:"18—21", t:"Inteligencia estratégica", items:[
+  {f:"estrategia", a:"inteligencia", n:"18—21", t:"Inteligencia estratégica", items:[
     {a:"inteligencia", t:"18 · Radar de contexto — qué se vigila y con qué frecuencia"},
     {a:"inteligencia", t:"19 · Ruta estratégica de activación"},
-    {a:"analisis",     t:"20 · Las cuatro preguntas que cierran un análisis"},
+    {a:"analisis",     t:"20 · Qué acordar antes de elegir una ruta de medios"},
     {a:"escenarios",   t:"21 · Tres escenarios: base, favorable y restrictivo"}
   ]},
-  {f:"operacion", a:"procesos", n:"22—25 · 42—43", t:"Procesos recurrentes", items:[
-    {a:"procesos",       t:"22 · Las tres familias: recurrentes, de control y de reacción"},
-    {a:"ciclo",          t:"23 · Ciclo de campaña — las diez estaciones de una vuelta completa"},
-    {a:"ciclo",          t:"24 · Cuadro de materiales — qué comunicar, no cuántas piezas"},
-    {a:"implementacion", t:"25 · Implementación y tracking — las seis compuertas de QA"},
-    {a:"first-party",    t:"25.1—25.3 · First-Party Data — de Pixel + API a valor confirmado"},
-    {a:"cierres",        t:"42 · Cierre mensual — el informe es una salida del cierre, no el cierre"},
-    {a:"cierres",        t:"43 · Cierre de periodo o contrato — continuidad, accesos y aprendizajes"}
+  {f:"estrategia", a:"interfaces", n:"14—17", t:"Cómo decidimos con otras áreas", items:[
+    {a:"martech", t:"Martech y CRM · Definir la señal que guiará la inversión."},
+    {a:"cuentas-alianza", t:"Cuentas · Acordar qué se hará y qué queda fuera del alcance."},
+    {a:"investigacion", t:"Estrategia e investigación · Elegir audiencia, momento y oportunidad."},
+    {a:"creatividad", t:"Creatividad, arte y audiovisual · Elegir la propuesta creativa y su prueba."},
+    {a:"organico", t:"Redes sociales orgánicas · Acordar cuándo y qué amplificar."},
+    {a:"financiera", t:"Financiera · Definir inversión y límites de compromiso."}
   ]},
-  {f:"control", a:"control", n:"26—33", t:"Control y alertas", items:[
-    {a:"control",            t:"26 · Calculadora de pacing — consumo real contra consumo esperado"},
-    {a:"estructura-control", t:"27 · Estructura del control presupuestal — los campos del cuadro"},
-    {a:"pacing-integracion", t:"29.3 · Cómo se va a construir el pacing — API, dataLake y tiempo real"},
-    {a:"alertas",            t:"30—31 · Sistema de alertas y alertas críticas"},
-    {a:"alertas",            t:"32—33 · Qué monitorea una campaña y con qué frecuencia"}
+  {f:"estrategia", a:"futuro", n:"83—85", t:"Evolución y criterio de éxito", items:[
+    {a:"futuro",         t:"83 · Qué se construye en la versión 0.4"},
+    {a:"madurez-medicion", t:"83.1 · Roadmap de señal — Pixel + API y First-Party Data"},
+    {a:"criterio-exito", t:"84 · Criterio de éxito del framework"},
+    {a:"cierre-title",   t:"85 · Principio final"}
   ]},
-  {f:"reaccion", a:"reaccion", n:"34—41", t:"Optimización de performance", items:[
-    {a:"reaccion",  t:"34 · Los cuatro momentos: dudar, mirar, mover, registrar"},
-    {a:"ciclo-semanal", t:"34.1 · Sistema operativo semanal — Health, Diagnosis, Experiments y Decisions"},
-    {a:"reaccion",  t:"35 · Etapa 1 — validar la alerta y no optimizar por ruido"},
-    {a:"reaccion",  t:"36 · Etapa 2 — negocio, categoría, comercial, creatividad y plataforma"},
-    {a:"localizar", t:"37 · Cadena de localización — dónde se rompe el resultado"},
-    {a:"hipotesis", t:"38 · Etapa 4 — cómo se escribe una hipótesis"},
-    {a:"hipotesis", t:"40—41 · Observación y registro de cierre"},
-    {a:"acciones",  t:"39 · Acciones según diagnóstico"}
-  ]},
-  {f:"operacion", a:"solicitudes", n:"94", t:"Cómo se nos solicitan las cosas", items:[
+  {f:"operacion-tactica", a:"solicitudes", n:"94", t:"Cómo se nos solicitan las cosas", items:[
     {a:"solicitudes", t:"94.0 · Los cinco datos que trae cualquier solicitud"},
     {a:"solicitudes", t:"94.8 · Qué pasa si falta algo: se devuelve, no se ejecuta a medias"},
     {a:"requisitos",  t:"94.1 · Propuesta o tema estratégico — ruta, meta y línea base"},
@@ -236,7 +204,49 @@ FD.INDICE = [
     {a:"requisitos",  t:"94.7 · Incendio — qué está roto y qué está en riesgo"},
     {a:"requisitos",  t:"Plantilla de solicitud lista para copiar"}
   ]},
-  {f:"reaccion", a:"optimizacion", n:"86—92", t:"Proceso de optimización · pauta", items:[
+  {f:"operacion-tactica", a:"flujo", n:"07", t:"Línea general de trabajo", items:[
+    {a:"flujo", t:"7.1 Entrada · 7.2 Clasificación · 7.3 Análisis de contexto"},
+    {a:"flujo", t:"7.4 Diagnóstico · 7.5 Definición de acción · 7.6 Ejecución"},
+    {a:"flujo", t:"7.7 Control de calidad · 7.8 Activación · 7.9 Monitoreo · 7.10 Aprendizaje"}
+  ]},
+  {f:"operacion-tactica", a:"equipo", n:"08—13", t:"Responsables y traspasos", items:[
+    {a:"equipo",     t:"09 · Dirigir el sistema — dirección digital"},
+    {a:"equipo",     t:"10 · Conectar y traducir — planner"},
+    {a:"equipo",     t:"11 · Operar con criterio — performance / trafficker"},
+    {a:"reparto",    t:"12 · Cómo se reparte el trabajo entre Planner y Performance"}
+  ]},
+  {f:"operacion-tactica", a:"cuentas", n:"93", t:"Distribución de cuentas", items:[
+    {a:"cuentas", t:"Tablero de reparto por persona — se mueve arrastrando las fichas"},
+    {a:"cuentas", t:"93.1 · Cómo se lee la carga: campañas, no cuentas"},
+    {a:"cuentas", t:"93.2 · Qué no decide este tablero"}
+  ]},
+  {f:"operacion-tactica", a:"procesos", n:"22—25 · 42—43", t:"Procesos recurrentes", items:[
+    {a:"procesos",       t:"22 · Las tres familias: recurrentes, de control y de reacción"},
+    {a:"ciclo",          t:"23 · Ciclo de campaña — las diez estaciones de una vuelta completa"},
+    {a:"ciclo",          t:"24 · Cuadro de materiales — qué comunicar, no cuántas piezas"},
+    {a:"implementacion", t:"25 · Implementación y tracking — las seis compuertas de QA"},
+    {a:"first-party",    t:"25.1—25.3 · First-Party Data — de Pixel + API a valor confirmado"},
+    {a:"cierres",        t:"42 · Cierre mensual — el informe es una salida del cierre, no el cierre"},
+    {a:"cierres",        t:"43 · Cierre de periodo o contrato — continuidad, accesos y aprendizajes"}
+  ]},
+  {f:"operacion-tactica", a:"control", n:"26—33", t:"Control y alertas", items:[
+    {a:"control",            t:"26 · Calculadora de pacing — consumo real contra consumo esperado"},
+    {a:"estructura-control", t:"27 · Estructura del control presupuestal — los campos del cuadro"},
+    {a:"pacing-integracion", t:"29.3 · Cómo se va a construir el pacing — API, dataLake y tiempo real"},
+    {a:"alertas",            t:"30—31 · Sistema de alertas y alertas críticas"},
+    {a:"alertas",            t:"32—33 · Qué monitorea una campaña y con qué frecuencia"}
+  ]},
+  {f:"operacion-tactica", a:"reaccion", n:"34—41", t:"Optimización de performance", items:[
+    {a:"reaccion",  t:"34 · Los cuatro momentos: dudar, mirar, mover, registrar"},
+    {a:"ciclo-semanal", t:"34.1 · Sistema operativo semanal — Health, Diagnosis, Experiments y Decisions"},
+    {a:"reaccion",  t:"35 · Etapa 1 — validar la alerta y no optimizar por ruido"},
+    {a:"reaccion",  t:"36 · Etapa 2 — negocio, categoría, comercial, creatividad y plataforma"},
+    {a:"localizar", t:"37 · Cadena de localización — dónde se rompe el resultado"},
+    {a:"hipotesis", t:"38 · Etapa 4 — cómo se escribe una hipótesis"},
+    {a:"hipotesis", t:"40—41 · Observación y registro de cierre"},
+    {a:"acciones",  t:"39 · Acciones según diagnóstico"}
+  ]},
+  {f:"operacion-tactica", a:"optimizacion", n:"86—92", t:"Proceso de optimización · pauta", items:[
     {a:"priorizacion",     t:"86 · Sistema de priorización de solicitudes y tiempos de gestión"},
     {a:"ruta",             t:"87 · Ruta de la solicitud — de la recepción al cierre"},
     {a:"seguimiento",      t:"88 · Ciclo de seguimiento: bitácora y consumos"},
@@ -245,7 +255,7 @@ FD.INDICE = [
     {a:"ejemplo",          t:"91 · Ejemplo de planteamiento de optimización"},
     {a:"estructura-medio", t:"92 · Estructuras simples: producción consolidada y tests justificados"}
   ]},
-  {f:"reaccion", a:"playbooks", n:"44—57", t:"Playbooks de reacción", items:[
+  {f:"operacion-tactica", a:"playbooks", n:"44—57", t:"Playbooks de reacción", items:[
     {a:"playbooks",    t:"44—45 · Los cuatro momentos de un playbook"},
     {a:"playbooks",    t:"46 · Ficha estándar de playbook"},
     {a:"playbooks",    t:"47 · Niveles de severidad: crítica, relevante y seguimiento"},
@@ -255,7 +265,7 @@ FD.INDICE = [
     {a:"criterio",     t:"54 · Escalamiento · 56—57 · Cierre y aprendizaje"},
     {a:"comunicacion", t:"55 · Comunicación: las seis piezas de un mensaje"}
   ]},
-  {f:"sistema", a:"sistema", n:"58—81", t:"Sistema documental", items:[
+  {f:"operacion-tactica", a:"sistema", n:"58—81", t:"Sistema documental", items:[
     {a:"sistema",                t:"58—70 · Repositorio por cliente — carpetas 00 a 99"},
     {a:"donde-vive",            t:"58.1 · Dónde vive cada cosa hoy: hojas, repositorios y dashboards"},
     {a:"donde-vive",            t:"58.2—58.3 · Los enlaces viven en el repositorio, no en el framework"},
@@ -266,9 +276,13 @@ FD.INDICE = [
     {a:"nomenclatura-operativa", t:"71.1 · Nomenclatura de carpetas"},
     {a:"nomenclatura-operativa", t:"75.1 · Nomenclatura de objetos en plataforma y públicos"},
     {a:"nomenclatura-operativa", t:"78.1—78.2 · Reglas de conversión y equivalencias"},
+    {a:"utm",                    t:"75.2—75.4 · Estándar UTM: parámetros y reglas de escritura"},
+    {a:"utm",                    t:"75.5 · Catálogo de fuente y medio por canal"},
+    {a:"utm",                    t:"75.6—75.7 · UTM por plataforma, QA y constructor en Excel"},
+    {a:"utm",                    t:"75.8 · UTM en apuestas deportivas: producto, eventos, bonos y afiliados"},
     {a:"reglas",                 t:"81 · Las quince reglas no negociables"}
   ]},
-  {f:"sistema", a:"ia", n:"95—99", t:"Automatización e IA", items:[
+  {f:"automatizacion", a:"ia", n:"95—99", t:"Automatización e IA", items:[
     {a:"ia",           t:"95 · Qué automatizamos y qué no: la herramienta propone, la persona decide"},
     {a:"mediabridge",  t:"96 · Media Bridge: consulta, alertas, presupuesto y agentes"},
     {a:"mediabridge",  t:"96.7 · Dónde queda lo que produce la herramienta"},
@@ -277,12 +291,6 @@ FD.INDICE = [
     {a:"auditor",      t:"98.3 · Los cinco controles del auditor"},
     {a:"auditor",      t:"98.4—98.5 · Cómo se registra lo automatizado y lo rechazado"},
     {a:"riesgos-ia",   t:"99 · Riesgos declarados de automatizar y cómo se controlan"}
-  ]},
-  {f:"sistema", a:"futuro", n:"83—85", t:"Próximas iteraciones", items:[
-    {a:"futuro",         t:"83 · Qué se construye en la versión 0.4"},
-    {a:"madurez-medicion", t:"83.1 · Roadmap de señal — Pixel + API y First-Party Data"},
-    {a:"criterio-exito", t:"84 · Criterio de éxito del framework"},
-    {a:"cierre-title",   t:"85 · Principio final"}
   ]}
 ];
 
@@ -402,3 +410,45 @@ FD.LOCALIZAR = [
   {n:"6", t:"Contexto",   q:"¿Cambió algo fuera de la campaña?",           m:"Demanda · competencia · calendario · oferta",
    falla:"No hay nada que optimizar en plataforma. Hay que ajustar expectativa, estrategia u oferta y comunicarlo."}
 ];
+
+/* Destinos de los enlaces compartidos antes de dividir el documento. */
+FD.ANCLAS = {
+  "estrategia": [
+    "analisis", "cierre-title", "contexto", "contexto-title", "creatividad", "criterio-exito", "cuentas-alianza", "escenarios",
+    "estrategia", "estrategia-title", "fa-06", "fa-18", "financiera", "fl-18", "fn-18", "futuro",
+    "futuro-title", "fy-18", "intel-title", "inteligencia", "interfaces", "interfaces-title", "investigacion", "madurez-medicion",
+    "martech", "modelo", "modelo-title", "objetivo", "organico", "pilares", "pilares-title", "pillar-items",
+    "pillar-panel", "pillar-question", "pillar-quote", "pillar-tag", "pillar-title", "variables", "vars-grid"
+  ],
+  "operacion-tactica": [
+    "acciones", "alertas", "arbol", "b-ad-angulo", "b-ad-cta", "b-ad-formato", "b-aud-seg", "b-aud-tipo",
+    "b-cliente", "b-fecha", "b-iniciativa", "b-mercado", "b-objetivo", "b-periodo", "b-version", "board",
+    "board-aviso", "builder", "c-budget", "c-curve", "c-curve-field", "c-daily", "c-days", "c-days-left",
+    "c-days-nota", "c-expected", "c-forecast", "c-forecast-var", "c-left", "c-meter", "c-model", "c-pacing",
+    "c-required", "c-spent", "c-status", "c-status-label", "c-total-days", "c-var-abs", "c-var-pct", "calc",
+    "ciclo", "ciclo-semanal", "cierres", "comunicacion", "control", "control-title", "copy-btn", "copy-ok",
+    "criterio", "cuentas", "cuentas-nota", "cuentas-reset", "cuentas-title", "cuentas-total", "cycle-ask", "cycle-desc",
+    "cycle-dots", "cycle-name", "cycle-next", "cycle-stage", "cycle-step", "cycle-title", "donde-vive", "ejemplo",
+    "equipo", "equipo-title", "estructura-control", "estructura-medio", "fa-07", "fa-22", "fa-25", "fa-293",
+    "fa-30", "fa-34", "fa-37", "fa-54", "fa-87a", "fa-87b", "fa-88", "fa-89",
+    "fa-90", "fa-91", "fa-92a", "fa-92b", "fa-94", "first-party", "fl-07", "fl-22",
+    "fl-30", "fl-34", "fl-54", "fl-89", "fl-92a", "flow-rail", "flujo", "flujo-title",
+    "fn-22", "fn-30", "fn-54", "fn-87a", "fn-87b", "fn-89", "fn-94", "fy-22",
+    "fy-30", "fy-54", "fy-87a", "fy-87b", "fy-89", "fy-94", "h-arbol", "h-combinador",
+    "h-nomenclatura", "h-pacing", "h-utm", "h-utm-apuestas", "hipotesis", "implementacion", "loc-tbody", "localizar",
+    "matriz", "msg-note", "msg-parts", "nomenclatura", "nomenclatura-operativa", "operacion-tactica", "operacion-tactica-title", "optimizacion",
+    "optimizacion-title", "out-anuncio", "out-audiencia", "out-campana", "out-combo", "out-combo-name", "out-combo-read", "out-doc",
+    "out-mail", "pacing-integracion", "playbooks", "playbooks-title", "priorizacion", "procesos", "procesos-title", "reaccion",
+    "reaccion-title", "reglas", "reparto", "repo-desc", "repo-items", "repo-list", "repo-note", "repo-tag",
+    "repo-title", "requisitos", "ruta", "seguimiento", "sistema", "sistema-title", "sol-conecta", "sol-copy",
+    "sol-copy-ok", "sol-des", "sol-list", "sol-min", "sol-nota", "sol-pregunta", "sol-sale", "sol-sla",
+    "sol-tag", "sol-title", "solicitudes", "solicitudes-title", "step-desc", "step-items", "step-label", "step-next",
+    "step-panel", "step-tag", "step-title", "stepper", "testeo", "tree-actions", "tree-path", "tree-question",
+    "tree-reset", "tree-result", "utm", "v-a", "v-b", "v-c", "v-formato", "v-version",
+    "vmix"
+  ],
+  "automatizacion": [
+    "auditor", "automatizacion", "automatizacion-title", "autonomia", "fa-95", "fn-95", "fy-95", "ia",
+    "ia-title", "mediabridge", "riesgos-ia"
+  ],
+};

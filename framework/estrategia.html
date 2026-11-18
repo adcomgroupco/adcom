@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="es" data-suelo="tinta">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Lee el contexto, formula una hipótesis y acuerda qué señal justificaría sostener o cambiar el rumbo.">
+<title>Estrategia | Framework Digital de Adcom</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23050505' stroke='%23ffd400' stroke-width='2'/%3E%3Ctext x='16' y='21.5' font-family='Poppins,Arial,sans-serif' font-size='13' font-weight='900' fill='%23ffd400' text-anchor='middle'%3EFD%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#050505">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap">
+<link rel="stylesheet" href="assets/css/01-tokens.css">
+<link rel="stylesheet" href="assets/css/02-layout.css">
+<link rel="stylesheet" href="assets/css/03-componentes.css">
+<link rel="stylesheet" href="assets/css/04-diagramas.css">
+<link rel="stylesheet" href="assets/css/05-responsive.css">
+<link rel="stylesheet" href="assets/css/06-impresion.css" media="print">
+<noscript><style>[data-reveal]{opacity:1;transform:none}</style></noscript>
+</head>
+<body>
+<a class="skip-link" href="#hero-title">Saltar al contenido</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
+<symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 12 19 6"/></symbol>
+<symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></symbol>
+<symbol id="i-loop" viewBox="0 0 24 24"><path d="M20.5 12a8.5 8.5 0 1 1-2.6-6.1"/><path d="M21 3v5h-5"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20.5 20.5 16.2 16.2"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.7-7 9-4-1.3-7-4.5-7-9V6l7-3Z"/><path d="M9 12l2 2 4-4"/></symbol>
+<symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5"/></symbol>
+<symbol id="i-code" viewBox="0 0 24 24"><path d="M9 18l-5-6 5-6"/><path d="M15 6l5 6-5 6"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></symbol>
+<symbol id="i-badge" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.2 13.8 7 22l5-2.8L17 22l-1.2-8.2"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.8-7 10-7 10 7 10 7-3.8 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-chev-l" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+<symbol id="i-chev-r" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+<symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.5.4.8 1 .9 1.6h5.2c.1-.6.4-1.2.9-1.6A6 6 0 0 0 12 3Z"/></symbol>
+</defs></svg>
+
+<header class="site-header page-header">
+  <a class="brand" href="index.html" aria-label="Inicio del Framework Digital">
+    <span class="brand-mark" aria-hidden="true">FD</span><span class="page-wordmark">Framework Digital<small>Adcom</small></span>
+  </a>
+  <button class="header-search" id="header-search" type="button" aria-label="Buscar en el framework">
+    <svg class="ico" aria-hidden="true"><use href="#i-search"/></svg><span>Buscar</span>
+  </button>
+  <nav class="page-nav" aria-label="Secciones del framework">
+      <a href="estrategia.html" aria-current="page">Estrategia</a>
+      <a href="operacion-tactica.html">Operación y táctica</a>
+      <a href="automatizacion.html">Automatización e IA</a>
+      <a href="index.html#indice">Índice</a>
+  </nav>
+</header>
+
+<dialog class="command-dialog" id="command-dialog" aria-labelledby="command-title">
+  <div class="command-panel">
+    <div class="command-head">
+      <div>
+        <p class="command-kicker">Consulta rápida</p>
+        <h2 id="command-title">Buscar en el framework</h2>
+      </div>
+      <button class="command-close" id="command-close" type="button" aria-label="Cerrar búsqueda">Esc</button>
+    </div>
+    <label class="command-input-wrap" for="command-q">
+      <svg class="ico" aria-hidden="true"><use href="#i-search"/></svg>
+      <input type="search" id="command-q" autocomplete="off" placeholder="Busca una sección, concepto o regla…" aria-controls="command-results">
+      <kbd>⌘K</kbd>
+    </label>
+    <div class="command-shortcuts" aria-label="Acciones rápidas">
+      <span class="command-group-label">Ir directo a</span>
+      <a href="index.html#indice"><span class="command-icon">⌘</span> Índice <kbd>⌘1</kbd></a>
+      <a href="#interfaces"><span class="command-icon">↔</span> Conexiones <kbd>⌘2</kbd></a>
+      <a href="operacion-tactica.html#solicitudes"><span class="command-icon">→</span> Solicitudes <kbd>⌘3</kbd></a>
+      <a href="operacion-tactica.html#optimizacion"><span class="command-icon">↗</span> Optimización <kbd>⌘4</kbd></a>
+    </div>
+    <div class="command-results" id="command-results" role="region" aria-live="polite" aria-label="Resultados de búsqueda"></div>
+    <div class="command-foot"><span>↑ ↓ navegar</span><span>Enter abrir</span><span>Esc cerrar</span></div>
+  </div>
+</dialog>
+
+<main id="inicio" tabindex="-1">
+<section class="framework-area" id="estrategia" aria-labelledby="estrategia-title" tabindex="-1">
+  <header class="area-intro page-intro section-dark">
+  <div class="wrap">
+    <p class="page-kicker" id="estrategia-title">Estrategia</p>
+    <h1 id="hero-title" tabindex="-1">Decisiones de negocio y de medios</h1>
+    <p class="page-lead">Antes de definir campañas, acuerda qué resultado debe cambiar, qué barrera lo limita y qué áreas pueden aportar la evidencia.</p>
+    <figure class="route-diagram decision-map">
+      <figcaption>Qué reúne una decisión de medios</figcaption>
+      <ul role="list">
+        <li><a href="#contexto"><strong>Prioridad de negocio</strong><span>Resultado, audiencia y restricción comercial.</span></a></li>
+        <li><a href="#modelo"><strong>Evidencia disponible</strong><span>Plataforma, contexto y resultado confirmado.</span></a></li>
+        <li><a href="#interfaces"><strong>Acuerdo con otras áreas</strong><span>La pregunta que cada equipo ayuda a resolver.</span></a></li>
+      </ul>
+      <p class="decision-result"><a href="#escenarios">Acordar escenario, inversión y señal de revisión</a></p>
+    </figure>
+    <p class="page-example"><strong>Ejemplo</strong> Si suben los leads y cae la calidad, valida primero con Martech dónde cae la conversión. Con Cuentas, acuerda qué calidad necesita el negocio. Esa evidencia define si conviene ajustar la oferta, el formulario o la compra de medios.</p>
+    <nav class="chapter-nav" aria-label="Capítulos de estrategia">
+      <ul class="area-topics" aria-label="Capítulos de estrategia">
+        <li><a href="#contexto">Contexto y objetivos</a></li>
+        <li><a href="#pilares">Pilares</a></li>
+        <li><a href="#modelo">Modelo de resultados</a></li>
+        <li><a href="#inteligencia">Inteligencia estratégica</a></li>
+        <li><a href="#interfaces">Cómo decidimos con otras áreas</a></li>
+        <li><a href="#futuro">Evolución y éxito</a></li>
+      </ul>
+    </nav>
+    <div class="page-search">
+    <form class="buscador" id="buscador" role="search">
+      <label class="sr-only" for="q">Buscar en el framework</label>
+      <input id="q" type="search" autocomplete="off" placeholder="Busca un tema o una regla…">
+    </form>
+    <div class="q-res" id="q-res" aria-live="polite" hidden></div>
+  </div>
+  </div>
+</header>
+
+<!-- Contexto y objetivos -->
+<section class="section-light" id="contexto" data-framework-section tabindex="-1" aria-labelledby="contexto-title" data-roles="papel">
+  <div class="wrap">
+    <div class="section-heading" data-reveal>
+      <div>
+        <p class="eyebrow eyebrow-dark"><span>00</span></p>
+        <h2 id="contexto-title">El problema de negocio</h2>
+
+      </div>
+      <p>Parte de un resultado que importe al cliente y de una barrera que podamos investigar. Documenta solo lo que ayude al equipo a decidir y a retomar la decisión después.</p>
+    </div>
+
+    <div class="strategic-brief">
+      <h3>Qué se comparte antes de decidir</h3>
+      <dl>
+        <div><dt>Pregunta</dt><dd>Qué resultado queremos mejorar y para quién.</dd></div>
+        <div><dt>Evidencia</dt><dd>Qué sabemos, qué suponemos y qué área puede confirmar el supuesto.</dd></div>
+        <div><dt>Decisión</dt><dd>Qué priorizamos, qué dejamos pendiente y cuándo revisamos.</dd></div>
+      </dl>
+    </div>
+
+    <div class="divider divider-light" id="objetivo">
+      <h3 class="sub-heading" data-reveal><span class="num">01</span> Quince resultados que el sistema debe habilitar</h3>
+      <details class="mas" data-reveal>
+        <summary>Ver los quince resultados</summary>
+        <div class="mas-body"><ol class="rules" style="--d:80ms">
+        <li><b>01</b>Mantener la agilidad operativa actual</li>
+        <li><b>02</b>Preservar la autonomía profesional</li>
+        <li><b>03</b>Estandarizar criterios mínimos de trabajo</li>
+        <li><b>04</b>Aumentar la capacidad estratégica del equipo</li>
+        <li><b>05</b>Mejorar la conexión entre estrategia y ejecución</li>
+        <li><b>06</b>Incorporar factores externos al análisis</li>
+        <li><b>07</b>Conectar Paid Media con sus áreas aliadas y negocio</li>
+        <li><b>08</b>Detectar desviaciones a tiempo</li>
+        <li><b>09</b>Mejorar el seguimiento presupuestal</li>
+        <li><b>10</b>Generar una forma común de reaccionar</li>
+        <li><b>11</b>Documentar decisiones y aprendizajes</li>
+        <li><b>12</b>Reducir dependencia de personas específicas</li>
+        <li><b>13</b>Mejorar la trazabilidad de las cuentas</li>
+        <li><b>14</b>Hacer la información entendible para el cliente</li>
+        <li><b>15</b>Construir repositorios como fuente única de verdad</li>
+      </ol></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- Pilares -->
+<section class="section-dark" id="pilares" data-framework-section tabindex="-1" aria-labelledby="pilares-title">
+  <div class="wrap">
+    <div class="section-heading" data-reveal>
+      <div>
+        <p class="eyebrow"><span>04</span></p>
+        <h2 id="pilares-title">Los cinco pilares del modelo</h2>
+        <p class="claim">Cinco pilares. <em>Una sola lógica.</em></p>
+      </div>
+      <p>Cada pilar responde una pregunta distinta. Selecciona uno para ver qué incluye y qué busca resolver.</p>
+    </div>
+
+    <div class="pillars" role="tablist" aria-label="Pilares del modelo" data-reveal>
+      <button class="pillar is-active" role="tab" aria-selected="true" aria-controls="pillar-panel" data-pillar="1"><span>4.1</span><div class="pillar-txt"><strong>Excelencia operativa</strong><small>Hacer bien el trabajo, siempre.</small></div></button>
+      <button class="pillar" role="tab" aria-selected="false" aria-controls="pillar-panel" data-pillar="2"><span>4.2</span><div class="pillar-txt"><strong>Inteligencia estratégica</strong><small>Conectar con el negocio.</small></div></button>
+      <button class="pillar" role="tab" aria-selected="false" aria-controls="pillar-panel" data-pillar="3"><span>4.3</span><div class="pillar-txt"><strong>Experimentación</strong><small>Aprender de forma sistemática.</small></div></button>
+      <button class="pillar" role="tab" aria-selected="false" aria-controls="pillar-panel" data-pillar="4"><span>4.4</span><div class="pillar-txt"><strong>Gestión contextual</strong><small>Mirar fuera de la plataforma.</small></div></button>
+      <button class="pillar" role="tab" aria-selected="false" aria-controls="pillar-panel" data-pillar="5"><span>4.5</span><div class="pillar-txt"><strong>Documentación</strong><small>Convertir conocimiento en capacidad.</small></div></button>
+    </div>
+
+    <div class="panel" id="pillar-panel" role="tabpanel" data-reveal>
+      <div class="panel-head">
+        <div>
+          <span class="tag tag-accent" id="pillar-tag">PILAR 4.1</span>
+          <h3 id="pillar-title">Excelencia operativa</h3>
+          <p id="pillar-question">¿Cómo hacemos bien el trabajo de forma consistente?</p>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div>
+          <p class="panel-label">Pregunta que responde</p>
+          <p class="quote" id="pillar-quote" style="font-size:var(--fs-body)">¿Cómo hacemos bien el trabajo de forma consistente?</p>
+        </div>
+        <div>
+          <p class="panel-label">Qué incluye</p>
+          <ul class="chips chips-accent" id="pillar-items"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modelo de resultados -->
+<section class="section-light" id="modelo" data-framework-section tabindex="-1" aria-labelledby="modelo-title" data-roles="papel">
+  <div class="wrap">
+    <div class="section-heading" data-reveal>
+      <div>
+        <p class="eyebrow eyebrow-dark"><span>05</span></p>
+        <h2 id="modelo-title">Cómo leemos un resultado</h2>
+        <p class="claim">El resultado digital no vive solo <em>en la plataforma.</em></p>
+      </div>
+      <p>Los indicadores de pauta siguen siendo fundamentales, pero no son suficientes para explicar el comportamiento del negocio.</p>
+    </div>
+
+    <div data-reveal>
+      <p class="panel-label" style="color:var(--accent-ink)">Modelo general</p>
+      <div class="equation">
+        <b>Resultado digital</b><i>=</i>
+        <span class="eq-term has-tip" tabindex="0" data-tip="Canales, formatos, pujas y distribución de la inversión.">medios</span><i>+</i>
+        <span class="eq-term has-tip" tabindex="0" data-tip="La idea, el mensaje, la pieza y la experiencia creativa.">creatividad</span><i>+</i>
+        <span class="eq-term has-tip" tabindex="0" data-tip="La razón para elegir ahora: beneficio, precio y condiciones.">oferta</span><i>+</i>
+        <span class="eq-term has-tip" tabindex="0" data-tip="Lo que la persona encuentra después del clic.">producto</span><i>+</i>
+        <span class="eq-term has-tip" tabindex="0" data-tip="El recorrido completo hasta convertir o volver.">experiencia</span><i>+</i>
+        <span class="eq-term has-tip" tabindex="0" data-tip="La capacidad de atender, calificar y cerrar la demanda.">gestión comercial</span><i>+</i>
+        <span class="eq-term has-tip" tabindex="0" data-tip="Eventos, calidad de señal, CRM y fuentes propias.">medición</span><i>+</i>
+        <span class="eq-term has-tip" tabindex="0" data-tip="Mercado, competencia, estacionalidad y coyuntura.">contexto</span>
+      </div>
+      <p class="lead">Analizar más allá de CPM, CPC, CTR, CPA, ROAS y CPL. Esos indicadores describen la plataforma; el resultado ocurre en el negocio.</p>
+    </div>
+
+    <ol class="linea" aria-label="Ruta para leer un resultado" data-reveal>
+      <li class="card card-light"><span class="card-index">01 · SEÑAL</span><h3>Qué cambió</h3><p>Entrega, atención, tráfico, conversión, costo o volumen. Primero describimos el dato sin explicar todavía.</p></li>
+      <li class="card card-light"><span class="card-index">02 · CONTEXTO</span><h3>Qué estaba alrededor</h3><p>Negocio, mercado, competencia, oferta, creatividad, CRM, producto y estacionalidad.</p></li>
+      <li class="card card-light"><span class="card-index">03 · VALOR</span><h3>Qué significa</h3><p>Conectamos la conversión con calidad, ingreso, margen, recurrencia y sostenibilidad.</p></li>
+      <li class="card card-light"><span class="card-index">04 · DECISIÓN</span><h3>Qué hacemos ahora</h3><p>La lectura termina en una acción priorizada, con responsable, señal de cambio y siguiente medición.</p></li>
+    </ol>
+
+    <div class="columnas sep-lg" data-reveal>
+      <div class="card card-light">
+        <span class="card-index">05.1 · SISTEMA DE PERFORMANCE 2026</span>
+        <h3>La ventaja ya no está en multiplicar campañas</h3>
+        <p class="sep-sm">Está en combinar calidad de señal, creatividad, experimentación, medición y economía del negocio. Si una capa es débil, limita a las demás.</p>
+      </div>
+      <div class="card card-light">
+        <span class="card-index">LECTURA OPERATIVA</span>
+        <h3>La plataforma ayuda a localizar</h3>
+        <p class="sep-sm">CPM, CTR, CPC, CVR, CPA, frecuencia y ROAS sirven para diagnosticar entrega, atención, tráfico y conversión. No sustituyen la lectura comercial.</p>
+      </div>
+      <div class="card card-light">
+        <span class="card-index">LECTURA DE NEGOCIO</span>
+        <h3>La decisión termina en valor</h3>
+        <p class="sep-sm">CAC, margen de contribución, ingreso real, LTV y payback definen si el resultado es sostenible. Un ROAS alto por sí solo no garantiza rentabilidad.</p>
+      </div>
+    </div>
+
+    <p class="quote sep-lg" data-reveal>Se captura demanda y también se genera demanda. Search, Shopping y remarketing no cumplen el mismo papel que video, social, creators o awareness; compararlos solo con last click castiga el trabajo que crea la búsqueda futura.<small>Regla de lectura full-funnel</small></p>
+
+    <div class="divider divider-light" id="variables">
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="eyebrow eyebrow-dark"><span>06</span></p>
+          <h3>Clasificación de variables</h3>
+        <p class="claim">Ni responsables de todo, ni <em>víctimas del contexto.</em></p>
+        </div>
+        <p>Tres grupos para ubicar cada variable y definir qué podemos hacer con ella. Lo que cambia entre los grupos no es la importancia: es el margen de acción.</p>
+      </div>
+
+      <figure class="flow" tabindex="0" data-reveal>
+        <svg viewBox="0 0 1160 330" role="img" aria-label="Las variables se clasifican en tres grupos según lo que Digital puede hacer con ellas: sobre las controlables ejecuta directamente, sobre las influenciables analiza y recomienda, y las externas solo las vigila e incorpora al análisis. Las tres explican el resultado, y diagnosticar es decidir cuál de las tres explica la variación.">
+          <defs>
+            <marker id="fa-06" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-a" d="M0 0 L10 5 L0 10 z" fill="currentColor" fill-opacity=".5"/></marker>
+          </defs>
+          <text class="fl-t-key" x="20" y="24">QUÉ PODEMOS HACER CON CADA VARIABLE</text>
+
+          <rect class="fl-box" x="20" y="40" width="330" height="72" rx="10"/>
+          <text class="fl-t-b" x="185" y="66" text-anchor="middle">6.1 · Controlables</text>
+          <text class="fl-t-sm" x="185" y="86" text-anchor="middle">presupuesto · segmentación · pujas</text>
+          <text class="fl-t-sm" x="185" y="102" text-anchor="middle">estructura · configuración · medición</text>
+
+          <rect class="fl-box" x="20" y="130" width="330" height="72" rx="10"/>
+          <text class="fl-t-b" x="185" y="156" text-anchor="middle">6.2 · Influenciables</text>
+          <text class="fl-t-sm" x="185" y="176" text-anchor="middle">creatividad · mensaje · oferta · precio</text>
+          <text class="fl-t-sm" x="185" y="192" text-anchor="middle">landing · CRM · gestión comercial</text>
+
+          <rect class="fl-box" x="20" y="220" width="330" height="72" rx="10"/>
+          <text class="fl-t-b" x="185" y="246" text-anchor="middle">6.3 · Externas</text>
+          <text class="fl-t-sm" x="185" y="266" text-anchor="middle">estacionalidad · competencia · eventos</text>
+          <text class="fl-t-sm" x="185" y="282" text-anchor="middle">regulación · demanda · coyuntura</text>
+
+          <path class="fl-line" d="M350 76 C 430 76, 450 150, 526 156" marker-end="url(#fa-06)"/>
+          <text class="fl-edge" x="440" y="98" text-anchor="middle">Digital ejecuta</text>
+          <path class="fl-line" d="M350 166 H526" marker-end="url(#fa-06)"/>
+          <text class="fl-edge" x="438" y="156" text-anchor="middle">Digital analiza y recomienda</text>
+          <path class="fl-line" d="M350 256 C 430 256, 450 182, 526 176" marker-end="url(#fa-06)"/>
+          <text class="fl-edge" x="440" y="248" text-anchor="middle">Digital vigila e incorpora</text>
+
+          <rect class="fl-box-key" x="532" y="130" width="190" height="72" rx="10"/>
+          <text class="fl-t-b" x="627" y="160" text-anchor="middle">Resultado</text>
+          <text class="fl-t-sm" x="627" y="180" text-anchor="middle">las tres lo explican</text>
+
+          <path class="fl-line" d="M722 166 H776" marker-end="url(#fa-06)"/>
+
+          <rect class="fl-box" x="782" y="118" width="358" height="96" rx="10"/>
+          <text class="fl-t-b" x="961" y="148" text-anchor="middle">Diagnosticar es decidir</text>
+          <text class="fl-t" x="961" y="170" text-anchor="middle">cuál de las tres explica la variación</text>
+          <text class="fl-t-sm" x="961" y="192" text-anchor="middle">confundirlas produce culpar a la plataforma</text>
+        </svg>
+        <figcaption><b>06.</b> El error habitual no es equivocarse en la acción: es equivocarse de grupo. Tratar una variable externa como si fuera controlable produce optimizaciones que no pueden funcionar, y tratar una controlable como externa produce resignación.</figcaption>
+      </figure>
+
+      <div class="columnas escala sep-lg" id="vars-grid" aria-label="El riel de cada grupo muestra el margen de acción de Digital" data-reveal></div>
+    </div>
+  </div>
+</section>
+
+<!-- Inteligencia estratégica -->
+<section class="section-dark" id="inteligencia" data-framework-section tabindex="-1" aria-labelledby="intel-title">
+  <div class="wrap">
+    <div class="section-heading" data-reveal>
+      <div>
+        <p class="eyebrow"><span>18—21</span></p>
+        <h2 id="intel-title">Radar, ruta y escenarios</h2>
+        <p class="claim">Radar de contexto, ruta y <em>escenarios.</em></p>
+      </div>
+      <p>Cada cuenta debería tener una lectura periódica del entorno, una ruta antes de activar y tres escenarios declarados.</p>
+    </div>
+
+    <figure class="flow" tabindex="0" data-reveal>
+        <svg viewBox="0 0 1160 410" role="img" aria-label="Radar, ruta y escenarios. El radar de contexto lee el entorno de forma periódica y alimenta las preguntas mínimas; esas preguntas alimentan la ruta de activación, que declara la línea base y la señal que obligaría a cambiar. De ahí salen tres escenarios. La operación corre en el escenario base hasta que aparece una señal declarada: si no aparece, se sigue en base; si aparece a favor se pasa al escenario favorable; si aparece en contra se pasa al restrictivo. Cualquiera de los dos cambios entra al análisis del punto 20, y lo aprendido vuelve al radar.">
+        <defs>
+          <marker id="fa-18" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-a" d="M0 0 L10 5 L0 10 z" fill="currentColor" fill-opacity=".5"/></marker>
+          <marker id="fy-18" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-y" d="M0 0 L10 5 L0 10 z" fill="#3aa76d"/></marker>
+          <marker id="fn-18" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-n" d="M0 0 L10 5 L0 10 z" fill="#e04343"/></marker>
+          <marker id="fl-18" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-l" d="M0 0 L10 5 L0 10 z" fill="#ffd400"/></marker>
+        </defs>
+        <text class="fl-t-key" x="20" y="30">DEL ENTORNO A LA ACTIVACIÓN</text>
+
+        <rect class="fl-box" x="20" y="48" width="250" height="58" rx="10"/>
+        <text class="fl-t-b" x="145" y="72" text-anchor="middle">Radar de contexto</text>
+        <text class="fl-t-sm" x="145" y="90" text-anchor="middle">18.1 · lectura periódica</text>
+
+        <rect class="fl-box" x="324" y="48" width="250" height="58" rx="10"/>
+        <text class="fl-t" x="449" y="72" text-anchor="middle">Preguntas mínimas</text>
+        <text class="fl-t-sm" x="449" y="90" text-anchor="middle">18.2 · ¿qué debemos anticipar?</text>
+
+        <rect class="fl-box" x="628" y="48" width="250" height="58" rx="10"/>
+        <text class="fl-t" x="753" y="72" text-anchor="middle">Ruta de activación</text>
+        <text class="fl-t-sm" x="753" y="90" text-anchor="middle">19 · trece preguntas</text>
+
+        <rect class="fl-box-key" x="932" y="48" width="208" height="58" rx="10"/>
+        <text class="fl-t-b" x="1036" y="72" text-anchor="middle">Línea base</text>
+        <text class="fl-t-sm" x="1036" y="90" text-anchor="middle">y señal de cambio</text>
+
+        <path class="fl-line" d="M270 77 H318" marker-end="url(#fa-18)"/>
+        <path class="fl-line" d="M574 77 H622" marker-end="url(#fa-18)"/>
+        <path class="fl-line" d="M878 77 H926" marker-end="url(#fa-18)"/>
+
+        <path class="fl-line" d="M1036 106 V132 H150 V172" marker-end="url(#fa-18)"/>
+        <text class="fl-edge" x="590" y="124" text-anchor="middle">se declara antes de activar</text>
+
+        <rect class="fl-box-key" x="20" y="176" width="260" height="64" rx="10"/>
+        <text class="fl-t-b" x="150" y="202" text-anchor="middle">Escenario base</text>
+        <text class="fl-t-sm" x="150" y="221" text-anchor="middle">la operación corre aquí</text>
+
+        <path class="fl-line" d="M280 208 H334" marker-end="url(#fa-18)"/>
+
+        <path class="fl-dec" d="M450 154 L560 208 L450 262 L340 208 Z"/>
+        <text class="fl-t-b" x="450" y="203" text-anchor="middle">¿Apareció una</text>
+        <text class="fl-t-b" x="450" y="220" text-anchor="middle">señal declarada?</text>
+
+        <rect class="fl-box" x="640" y="150" width="340" height="60" rx="10"/>
+        <text class="fl-t" x="810" y="176" text-anchor="middle">Escenario favorable</text>
+        <text class="fl-t-sm" x="810" y="194" text-anchor="middle">dónde ampliamos y con qué señal lo activamos</text>
+
+        <rect class="fl-box" x="640" y="240" width="340" height="60" rx="10"/>
+        <text class="fl-t" x="810" y="266" text-anchor="middle">Escenario restrictivo</text>
+        <text class="fl-t-sm" x="810" y="284" text-anchor="middle">qué protegemos y qué recortamos</text>
+
+        <path class="fl-line-yes" d="M560 208 V180 H634" marker-end="url(#fy-18)"/>
+        <text class="fl-edge-yes" x="597" y="172" text-anchor="middle">a favor</text>
+        <path class="fl-line-no" d="M560 208 V270 H634" marker-end="url(#fn-18)"/>
+        <text class="fl-edge-no" x="597" y="290" text-anchor="middle">en contra</text>
+
+        <path class="fl-line" d="M450 262 V300 H150 V244" marker-end="url(#fa-18)"/>
+        <text class="fl-edge" x="300" y="292" text-anchor="middle">No, se sigue operando en base</text>
+
+        <rect class="fl-box" x="600" y="330" width="400" height="62" rx="10"/>
+        <text class="fl-t-b" x="800" y="356" text-anchor="middle">Análisis · 20</text>
+        <text class="fl-t-sm" x="800" y="374" text-anchor="middle">qué pasó, qué había alrededor, por qué y qué haremos</text>
+
+        <path class="fl-line" d="M980 180 H1030 V361 H1006" marker-end="url(#fa-18)"/>
+        <path class="fl-line" d="M980 270 H1030"/>
+
+        <path class="fl-line-loop" d="M600 361 H8 V77 H16" marker-end="url(#fl-18)"/>
+        <text class="fl-edge" x="300" y="353" text-anchor="middle">lo aprendido entra al siguiente radar</text>
+      </svg>
+        <figcaption><b>18.</b> El escenario no es un número optimista y otro pesimista: es una condición del entorno con una respuesta ya escrita. Por eso la ruta declara la señal antes de activar. Si la señal se define después de que el contexto cambió, ya no es anticipación, es reacción.</figcaption>
+    </figure>
+
+    <div class="notas" data-reveal>
+      <div class="card">
+        <span class="card-index">18.1 · RADAR DE CONTEXTO</span>
+        <h3>Qué se lee de forma periódica</h3>
+        <ul class="chips chips-accent chips-densa sep-md"><li>Mercado</li><li>Categoría</li><li>Competencia</li><li>Estacionalidad</li><li>Eventos</li><li>Regulación</li><li>Tendencias</li><li>Comportamiento de búsqueda</li><li>Oferta</li><li>Precio</li><li>Coyuntura</li><li>Variables comerciales</li><li>Cambios de plataforma</li></ul>
+        <p style="margin-top:22px"><span class="tag tag-accent">18.2 · Preguntas mínimas</span></p>
+        <ul class="list-check sep"><li>¿Qué cambió? ¿Qué puede cambiar?</li><li>¿Qué puede favorecer o afectar resultados?</li><li>¿Qué debemos anticipar?</li><li>¿Qué oportunidad existe?</li><li>¿Qué hipótesis nace del contexto?</li></ul>
+      </div>
+
+      <div class="card">
+        <span class="card-index">19 · RUTA ESTRATÉGICA DE ACTIVACIÓN</span>
+        <h3>Trece preguntas antes de una activación relevante</h3>
+        <ol class="list-check" style="margin-top:16px;counter-reset:none">
+          <li>¿Qué está pasando en el negocio?</li>
+          <li>¿Qué está pasando en la categoría?</li>
+          <li>¿Qué comportamiento esperamos?</li>
+          <li>¿Qué barrera queremos vencer?</li>
+          <li>¿Qué oferta tenemos?</li>
+          <li>¿Qué hipótesis de medios queremos probar?</li>
+          <li>¿Qué hipótesis creativa necesitamos?</li>
+          <li>¿Qué factores externos podrían afectar?</li>
+          <li>¿Cuál es nuestra línea base?</li>
+          <li>¿Qué resultado esperamos?</li>
+          <li>¿Qué señal nos obligaría a cambiar?</li>
+          <li>¿Cómo mediremos?</li>
+          <li>¿Qué áreas necesitamos involucrar?</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="divider" id="analisis">
+      <h3 class="sub-heading" data-reveal><span class="num">20</span> Qué debe quedar acordado antes de elegir una ruta</h3>
+      <p class="lead" style="margin:-14px 0 30px" data-reveal>Usa estas preguntas para comparar opciones de medios y registrar qué podría cambiar la decisión.</p>
+      <ol class="linea" data-reveal>
+        <li class="card"><h4>¿Qué resultado importa?</h4><p>Define el resultado de negocio y la referencia contra la que se medirá.</p></li>
+        <li class="card"><h4>¿Qué explica la oportunidad?</h4><p>Separa la evidencia de los supuestos e identifica quién puede verificar lo que falta.</p></li>
+        <li class="card"><h4>¿Qué opciones tenemos?</h4><p>Compara el rol de cada canal, la inversión que exige y sus riesgos.</p></li>
+        <li class="card"><h4>¿Cuándo revisamos la decisión?</h4><p>Acuerda la ruta, su responsable, la fecha de revisión y la señal que activaría otro escenario.</p></li>
+      </ol>
+    </div>
+
+    <div class="divider" id="escenarios">
+      <h3 class="sub-heading" data-reveal><span class="num">21</span> Planificamos en tres escenarios, no en uno</h3>
+      <p class="lead" style="margin:-14px 0 30px" data-reveal>Cada escenario declara supuestos, presupuesto, resultado esperado, riesgos, señales y acción. El escenario no es un número: es una condición del entorno con una respuesta preparada.</p>
+      <div class="columnas" aria-label="Tres escenarios de planificación" data-reveal>
+        <article class="card" style="--tono:var(--yellow)">
+          <span class="card-index">01 · ESCENARIO BASE</span>
+          <h4>Condiciones normales</h4>
+          <p>La referencia contra la que se leen los otros dos escenarios.</p>
+          <dl class="filas-dato"><div><dt>Se activa cuando</dt><dd>El contexto se mantiene dentro de la línea base.</dd></div><div><dt>Respuesta</dt><dd>Operar, monitorear y aprender sin sobrerreaccionar.</dd></div></dl>
+        </article>
+        <article class="card" style="--tono:var(--green)">
+          <span class="card-index">02 · ESCENARIO FAVORABLE</span>
+          <h4>Más demanda o eficiencia</h4>
+          <p>El contexto empuja a favor y aparece una señal declarada.</p>
+          <dl class="filas-dato"><div><dt>Señal</dt><dd>Más volumen, mejor calidad o menor costo sostenible.</dd></div><div><dt>Respuesta</dt><dd>Ampliar donde la señal se sostiene y proteger el aprendizaje.</dd></div></dl>
+        </article>
+        <article class="card" style="--tono:var(--red-soft)">
+          <span class="card-index">03 · ESCENARIO RESTRICTIVO</span>
+          <h4>Menos demanda o más costo</h4>
+          <p>El contexto se cierra y la respuesta ya está preparada.</p>
+          <dl class="filas-dato"><div><dt>Señal</dt><dd>Menor calidad, mayor costo o riesgo comercial.</dd></div><div><dt>Respuesta</dt><dd>Proteger prioridades, recortar exposición y anticipar al cliente.</dd></div></dl>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-light" id="interfaces" data-framework-section tabindex="-1" aria-labelledby="interfaces-title">
+  <div class="wrap">
+    <div class="section-heading" data-reveal>
+      <div><p class="eyebrow eyebrow-dark"><span>14—17</span></p><h2 id="interfaces-title">Cómo decidimos con otras áreas</h2></div>
+      <p>Digital convoca a partir de una pregunta de negocio. El Planner coordina el intercambio, registra el acuerdo y deja explícita la decisión que debe tomar el equipo.</p>
+    </div>
+    <div class="alliance-grid">
+      <article class="alliance" id="martech">
+        <h3>Martech y CRM</h3>
+        <p>¿El resultado tiene valor comercial?</p>
+        <dl><div><dt>Digital aporta</dt><dd>Evento, periodo y segmentos que queremos comparar.</dd></div>
+          <div><dt>El área aporta</dt><dd>Resultado validado en CRM, línea base y límites del dato.</dd></div>
+          <div><dt>Decisión conjunta</dt><dd>Definir la señal que guiará la inversión.</dd></div></dl>
+      </article>
+      <article class="alliance" id="cuentas-alianza">
+        <h3>Cuentas</h3>
+        <p>¿Qué cambio de negocio tiene prioridad?</p>
+        <dl><div><dt>Digital aporta</dt><dd>Opciones, costo, plazo y riesgos para el cliente.</dd></div>
+          <div><dt>El área aporta</dt><dd>Prioridad, alcance y aprobación del cliente.</dd></div>
+          <div><dt>Decisión conjunta</dt><dd>Acordar qué se hará y qué queda fuera del alcance.</dd></div></dl>
+      </article>
+      <article class="alliance" id="investigacion">
+        <h3>Estrategia e investigación</h3>
+        <p>¿Dónde está la oportunidad de demanda?</p>
+        <dl><div><dt>Digital aporta</dt><dd>Audiencias, búsquedas y resultados observados en pauta.</dd></div>
+          <div><dt>El área aporta</dt><dd>Lectura de categoría, competidores y estacionalidad.</dd></div>
+          <div><dt>Decisión conjunta</dt><dd>Elegir audiencia, momento y oportunidad.</dd></div></dl>
+      </article>
+      <article class="alliance" id="creatividad">
+        <h3>Creatividad, arte y audiovisual</h3>
+        <p>¿Qué mensaje puede vencer la barrera?</p>
+        <dl><div><dt>Digital aporta</dt><dd>Audiencia, barrera, oferta e hipótesis que se quiere probar.</dd></div>
+          <div><dt>El área aporta</dt><dd>Concepto, mensajes y variaciones viables.</dd></div>
+          <div><dt>Decisión conjunta</dt><dd>Elegir la propuesta creativa y su prueba.</dd></div></dl>
+      </article>
+      <article class="alliance" id="organico">
+        <h3>Redes sociales orgánicas</h3>
+        <p>¿Qué conversación debemos amplificar?</p>
+        <dl><div><dt>Digital aporta</dt><dd>Resultados de pauta y preguntas sobre la audiencia.</dd></div>
+          <div><dt>El área aporta</dt><dd>Calendario, publicaciones y respuesta de la comunidad.</dd></div>
+          <div><dt>Decisión conjunta</dt><dd>Acordar cuándo y qué amplificar.</dd></div></dl>
+      </article>
+      <article class="alliance" id="financiera">
+        <h3>Financiera</h3>
+        <p>¿Qué compromiso de inversión es viable?</p>
+        <dl><div><dt>Digital aporta</dt><dd>Proyección por periodo, escenarios y soportes disponibles.</dd></div>
+          <div><dt>El área aporta</dt><dd>Disponibilidad, condiciones de compra y fechas de cierre.</dd></div>
+          <div><dt>Decisión conjunta</dt><dd>Definir inversión y límites de compromiso.</dd></div></dl>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Evolución y éxito -->
+<section class="section-dark" id="futuro" data-framework-section tabindex="-1" aria-labelledby="futuro-title">
+  <div class="wrap">
+    <div class="section-heading" data-reveal>
+      <div>
+        <p class="eyebrow"><span>83—84</span></p>
+        <h2 id="futuro-title">Evolución y criterio de éxito</h2>
+        <p class="claim">Qué construimos en la <em>versión 0.4.</em></p>
+      </div>
+      <p>El éxito no se medirá por la cantidad de documentos creados.</p>
+    </div>
+
+    <div class="table-wrap tabla-frentes" tabindex="0" data-reveal>
+      <table>
+        <caption class="sr-only">Siete frentes de trabajo de la versión 0.4</caption>
+        <thead><tr><th>Frente</th><th>Qué se construye</th><th>Alcance</th></tr></thead>
+        <tbody>
+          <tr><td>Playbooks piloto</td><td>Cinco situaciones</td><td><ul class="chips"><li>Caída de performance</li><li>Desviación de presupuesto</li><li>Falla de tracking</li><li>Baja calidad de leads</li><li>Bloqueo / incidente de cuenta</li></ul></td></tr>
+          <tr><td>Sistema de alertas</td><td>Definir umbrales</td><td><ul class="chips"><li>KPI por tipo de cuenta</li><li>Frecuencia</li><li>Umbrales</li><li>Responsables</li><li>Fuentes</li><li>Forma de notificación</li><li>Registro</li></ul></td></tr>
+          <tr><td>Presupuesto</td><td>Estandarizar el cuadro</td><td><ul class="chips"><li>Cuadro</li><li>Fórmulas</li><li>Pacing</li><li>Curvas</li><li>Semáforos</li><li>Proyección</li></ul></td></tr>
+          <tr><td>Integración</td><td>Pacing desde el dataLake</td><td><ul class="chips"><li>Ingesta por API de las cuatro plataformas</li><li>Modelo por producto, no solo por campaña</li><li>Homologación automática por nomenclatura</li><li>Cuadros en tiempo real</li><li>Una sola fuente de inversión</li></ul></td></tr>
+          <tr><td>Repositorio</td><td>Probar la estructura</td><td><ul class="chips"><li>Una cuenta sencilla</li><li>Una cuenta compleja</li></ul></td></tr>
+          <tr><td>Ficha de proceso</td><td>Versión definitiva</td><td><ul class="chips"><li>Desarrollar la ficha estándar de proceso</li></ul></td></tr>
+          <tr><td>Validación</td><td>Qué sobra y qué falta</td><td><ul class="chips"><li>Qué sobra</li><li>Qué falta</li><li>Qué se usa realmente</li><li>Qué puede automatizarse</li><li>Qué es demasiado burocrático</li></ul></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="divider" id="madurez-medicion">
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="eyebrow"><span>83.1</span></p>
+          <h3>Roadmap de madurez de señal</h3>
+          <p class="claim">De la señal disponible hoy a <em>decisiones más completas.</em></p>
+        </div>
+        <p>La operación actual parte de Pixel + API. El siguiente salto es conectar First-Party Data con la pauta para mejorar la calidad de señal, el aprendizaje y las decisiones de negocio.</p>
+      </div>
+
+      <ol class="linea" data-reveal>
+        <li class="card">
+          <span class="card-index">HOY · OPERACIÓN</span>
+          <h4>Pixel + API como base</h4>
+          <p class="sep-sm">Eventos, etiquetas, APIs, analítica y convenciones de plataforma sostienen la optimización cotidiana de campañas, anuncios, keywords, creatividades y landings.</p>
+          <ul class="chips chips-accent sep"><li>Eventos</li><li>UTM</li><li>API</li><li>Calidad</li><li>QA</li></ul>
+        </li>
+        <li class="card">
+          <span class="card-index">SIGUIENTE · CALIDAD DE SEÑAL</span>
+          <h4>First-Party Data conectado con negocio</h4>
+          <p class="sep-sm">CRM, estados comerciales, ventas offline, ingreso y margen permiten optimizar hacia conversiones de mayor calidad y leer el resultado más allá del formulario.</p>
+          <ul class="chips chips-accent sep"><li>Identidad</li><li>Calidad</li><li>Valor</li><li>Gobierno</li><li>Feedback</li></ul>
+        </li>
+        <li class="card">
+          <span class="card-index">ORDEN DE CONSTRUCCIÓN</span>
+          <h4>Señal propia → decisiones</h4>
+          <p class="sep-sm">La ruta es asegurar fuentes confiables, documentar límites, conectar estados de negocio y devolver aprendizajes a la operación de medios.</p>
+          <ul class="chips chips-accent sep"><li>Fuente</li><li>Permisos</li><li>Estados</li><li>Valor</li><li>Aprendizaje</li></ul>
+        </li>
+      </ol>
+    </div>
+
+    <div class="divider" id="criterio-exito">
+      <h3 class="sub-heading" data-reveal><span class="num">84</span> Criterio de éxito del framework</h3>
+      <details class="mas" data-reveal>
+        <summary>Ver los doce criterios de éxito</summary>
+        <div class="mas-body"><ul class="chips chips-accent chips-densa" style="gap:9px">
+        <li>Menor dependencia de individuos</li><li>Mayor claridad de decisiones</li><li>Menos errores repetidos</li><li>Mayor capacidad de anticipación</li><li>Mejor lectura estratégica</li><li>Mejor comunicación con clientes</li><li>Mayor integración entre áreas</li><li>Mejor control presupuestal</li><li>Respuesta más rápida a anomalías</li><li>Mayor capacidad de aprendizaje</li><li>Mayor trazabilidad</li><li>Incorporación más fácil de nuevos integrantes</li>
+      </ul></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+  <div class="area-handoff section-light">
+    <div class="wrap"><p>La dirección acordada se convierte en un plan de trabajo. Cada prueba y cada cierre devuelven evidencia para revisarla.</p><a href="operacion-tactica.html#operacion-tactica">Continuar a operación y táctica</a></div>
+  </div>
+</section>
+
+<!-- ============ CIERRE ============ -->
+<section class="section-dark closing" aria-labelledby="cierre-title">
+  <p class="eyebrow" data-reveal><span>85</span></p>
+  <h2 id="cierre-title" data-reveal>El área digital no administra únicamente plataformas. <em>Interpreta la relación entre negocio, audiencia, creatividad, medios, datos y contexto;</em> y convierte esa lectura en hipótesis, acciones, medición y aprendizaje.</h2>
+  <p data-reveal style="--d:120ms">El framework existe para que esa capacidad no dependa únicamente de quién esté sentado frente a la cuenta, sino que se convierta en una capacidad permanente del equipo.</p>
+</section>
+
+</main>
+
+
+<footer>
+  <span>Framework Área Digital · Versión 0.3 · Borrador en construcción</span>
+  <span>Documento interno de trabajo</span>
+</footer>
+
+<script src="assets/js/base.js"></script>
+<script src="assets/js/contenido.js"></script>
+<script src="assets/js/interacciones.js"></script>
+
+</body>
+</html>

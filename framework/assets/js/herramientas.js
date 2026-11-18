@@ -328,5 +328,5 @@
 
   /* Se arranca aquí, el último script, porque para este punto todas las
      pestañas (índice, etapas, solicitudes, repositorio) ya están pintadas. */
-  if (window.FD && FD.tabs) FD.tabs();
+
 })();

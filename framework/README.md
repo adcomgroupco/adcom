@@ -3,6 +3,19 @@
 Landing interna del framework de trabajo del área digital de Adcom.
 Es un sitio estático: **se abre haciendo doble clic en `index.html`**, sin servidor, sin build, sin dependencias.
 
+Se organiza en tres guías, con entrada directa desde la portada y el menú:
+
+- **Estrategia** (`estrategia.html`): contexto y objetivos, pilares, modelo de resultados,
+  inteligencia estratégica, coordinación con otras áreas y evolución con criterio de éxito.
+- **Operación y táctica** (`operacion-tactica.html`): solicitudes, flujo de trabajo, equipo,
+  distribución de cuentas, campañas y QA, presupuesto y alertas, diagnóstico, optimización
+  y pruebas, playbooks y repositorio.
+- **Automatización e IA** (automatizacion.html): Media Bridge, niveles de autonomía, aprobación, auditoría y riesgos.
+
+La táctica define acciones, ajustes y pruebas; la operación define responsables, plazos,
+validación y registro. La numeración original se conserva como referencia, aunque la lectura
+se ordena por propósito. Los capítulos mantienen sus anclas y no se duplican.
+
 Vive dentro del repositorio [`adcomgroupco/adcom`](https://github.com/adcomgroupco/adcom) y se
 abre también desde el portal de la raíz (`../index.html`).
 
@@ -12,7 +25,10 @@ abre también desde el portal de la raíz (`../index.html`).
 
 ```
 framework/
-├── index.html                    ← todo el contenido visible (markup + diagramas SVG)
+├── index.html                    ← portada, herramientas e índice compartido
+├── estrategia.html               ← estrategia, ruta de decisión y capítulos
+├── operacion-tactica.html         ← operación y táctica, flujos y herramientas
+├── automatizacion.html          ← IA, supervisión y gobernanza
 ├── assets/
 │   ├── css/
 │   │   ├── 01-tokens.css         colores, tipografía, reset, animaciones
@@ -40,7 +56,7 @@ framework/
 > **Ojo con el `.md` de `_archivo/`.** Era el documento fuente, pero `index.html` ya lo superó: la página
 > incluye los puntos 86—99 (optimización de pauta, distribución de cuentas, solicitudes y
 > automatización) que el `.md` no tiene, y omite los puntos 42, 43 y 82 que el `.md` sí trae.
-> Hoy la fuente de verdad es `index.html`. El `.md` se conserva como referencia histórica; si
+> Hoy la fuente de verdad son las páginas de capítulos. El `.md` se conserva como referencia histórica; si
 > alguien lo edita esperando que se refleje en la página, no va a pasar nada.
 
 `06-impresion.css` se carga con `media="print"`, así que no afecta la pantalla. Si agregas una
@@ -62,12 +78,12 @@ resuelve la cascada. Si agregas uno, ponlo en la posición que le corresponda y 
 | Una entrada del índice | `assets/js/contenido.js`, bloque `FD.INDICE` |
 | Las personas o las cuentas del tablero | `assets/js/contenido.js`, bloque `FD.CUENTAS` |
 | Lo que se pide para aceptar una solicitud | `assets/js/contenido.js`, bloque `FD.SOLICITUDES` |
-| Cualquier otro texto de la página | `index.html`, en la sección correspondiente |
-| Un diagrama de flujo | `index.html`, dentro del `<figure class="flow">` |
+| Cualquier otro texto de la página | El HTML de la guía correspondiente |
+| Un diagrama de flujo | El HTML de la guía, en su elemento `figure` |
 | El aspecto de los diagramas | `assets/css/04-diagramas.css` |
 | Cómo se comporta la calculadora o el constructor | `assets/js/herramientas.js` |
-| Lo que dice el capítulo de automatización e IA | `index.html`, sección `#ia` |
-| Agregar un enlace al menú | `index.html`, dentro de `<nav id="mainnav">` |
+| Lo que dice el capítulo de automatización e IA | `automatizacion.html`, sección `#ia` |
+| Agregar un capítulo a la navegación | Su página, dentro de `.chapter-nav` |
 
 **Regla práctica:** si es texto que aparece dentro de un panel que cambia al hacer clic, está en
 `contenido.js`. Si es texto fijo, está en `index.html`.
@@ -108,28 +124,29 @@ y ajustes de un diagrama.
 
 ## Cómo agregar una sección
 
-1. Copia el bloque de una sección existente en `index.html` (desde `<section` hasta `</section>`).
+1. Copia un capítulo con `data-framework-section` en la página correspondiente.
 2. Cámbiale el `id`, el `aria-labelledby` y alterna la clase `section-dark` / `section-light`
    respecto a la sección vecina.
-3. Agrega el enlace en `<nav id="mainnav">`. El resaltado activo del menú es automático: el JS
-   observa cualquier sección que esté enlazada desde ahí.
+3. Agrega el enlace a la navegación de capítulos y a FD.INDICE con la familia correspondiente.
+   Registra el ancla en FD.ANCLAS para que el índice y los enlaces compartidos lleguen a esa página.
+   El título de la página es h1, el del capítulo h2 y sus temas empiezan en h3.
 4. Marca con `data-reveal` los bloques que deban aparecer al hacer scroll.
 
 ## Títulos: tres niveles y el número del punto
 
 - **Apertura de sección** (`.wrap > .section-heading`): en escritorio, título y frase a la izquierda;
   entradilla y mapa de la sección a la derecha. La línea de arriba (`.eyebrow`) es la ubicación: el JS
-  le antepone la familia del índice (Fundamentos, Operación, Control, Reacción, Sistema).
+  le antepone la sección del índice (Estrategia u Operación y táctica).
 - **Subsección** (`.divider > .section-heading`): el número del punto va en pastilla, en la misma línea
-  del título. Si la subsección usa `h3.sub-heading`, el número se escribe así:
+  del título. Si la subsección usa `h4.sub-heading`, el número se escribe así:
 
   ```html
-  <h3 class="sub-heading" data-reveal><span class="num">86</span> Sistema de priorización de solicitudes</h3>
+  <h4 class="sub-heading" data-reveal><span class="num">86</span> Sistema de priorización de solicitudes</h4>
   ```
 
   No escribas `86 · Título` a mano: pierde la pastilla y el mapa de la sección no separa el número.
-- **Mapa de la sección** (`.en-seccion`): se arma solo con cada `.divider[id]` y `h3.sub-heading[id]`
-  de la sección, cuando hay dos o más. Para que una subsección aparezca, basta con darle `id`.
+- **Mapa de la sección** (`.en-seccion`): se arma solo con cada `.divider[id]` y `.sub-heading[id]`
+  del capítulo, cuando hay dos o más. Para que un tema aparezca, basta con darle `id`.
 - **Las fichas del resumen son enlaces** (`a.card-link`): cada una lleva a su sección. Si cambia el
   `id` de una sección, actualiza el `href` de su ficha.
 
@@ -202,14 +219,14 @@ La sección `#indice` se arma sola desde `FD.INDICE`. Cada bloque es una secció
 entrada consultable; `a` es el ancla de destino y tiene que existir como `id` en `index.html`.
 
 ```js
-{a:"sistema", n:"58—81", t:"Sistema documental", items:[
+{f:"operacion-tactica", a:"sistema", n:"58—81", t:"Sistema documental", items:[
   {a:"nomenclatura", t:"71—77 · Nomenclatura y constructor de nombres"}
 ]}
 ```
 
 Si el texto de una entrada empieza con el número del punto seguido de ` · ` (por ejemplo
 `"58.1 · Dónde vive cada cosa hoy"`), el índice lo separa solo en su propia columna. Una entrada sin
-ese formato se muestra sin número. Las familias del riel izquierdo son filtros que se prenden y se
+ese formato se muestra sin número. Las guías del riel izquierdo son filtros que se prenden y se
 apagan, y su conteo sigue a la búsqueda.
 
 El buscador filtra por texto de la entrada, ignora tildes y resalta la coincidencia. Si agregas una
@@ -314,9 +331,7 @@ se lee tanto en una sección oscura como en una clara.
 
 No lo rompas sin querer:
 
-- **El menú completo.** Los enlaces del `<nav>` viven en un panel desplegable en todos los anchos,
-  porque una fila con diecinueve destinos se corta incluso en escritorio. El botón `#nav-toggle`
-  muestra además la sección activa. Si agregas un enlace, revisa el panel en escritorio y móvil.
+- **Navegación principal.** Los enlaces entre páginas están siempre visibles. El capítulo se elige en la apertura de cada página o desde el índice compartido.
 - **Foco visible.** Hay una regla global `:focus-visible` en `01-tokens.css` que usa
   `--accent-ink`, por eso se ve tanto en secciones oscuras como claras. No la sobreescribas con
   `outline:none` en un componente.

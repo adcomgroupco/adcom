@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="es" data-suelo="tinta">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Consulta, simulación, aprobación y auditoría de automatizaciones de pauta.">
+<title>Automatización e IA | Framework Digital de Adcom</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23050505' stroke='%23ffd400' stroke-width='2'/%3E%3Ctext x='16' y='21.5' font-family='Poppins,Arial,sans-serif' font-size='13' font-weight='900' fill='%23ffd400' text-anchor='middle'%3EFD%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#050505">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap">
+<link rel="stylesheet" href="assets/css/01-tokens.css">
+<link rel="stylesheet" href="assets/css/02-layout.css">
+<link rel="stylesheet" href="assets/css/03-componentes.css">
+<link rel="stylesheet" href="assets/css/04-diagramas.css">
+<link rel="stylesheet" href="assets/css/05-responsive.css">
+<link rel="stylesheet" href="assets/css/06-impresion.css" media="print">
+<noscript><style>[data-reveal]{opacity:1;transform:none}</style></noscript>
+</head>
+<body>
+<a class="skip-link" href="#hero-title">Saltar al contenido</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
+<symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 12 19 6"/></symbol>
+<symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></symbol>
+<symbol id="i-loop" viewBox="0 0 24 24"><path d="M20.5 12a8.5 8.5 0 1 1-2.6-6.1"/><path d="M21 3v5h-5"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20.5 20.5 16.2 16.2"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.7-7 9-4-1.3-7-4.5-7-9V6l7-3Z"/><path d="M9 12l2 2 4-4"/></symbol>
+<symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5"/></symbol>
+<symbol id="i-code" viewBox="0 0 24 24"><path d="M9 18l-5-6 5-6"/><path d="M15 6l5 6-5 6"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></symbol>
+<symbol id="i-badge" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.2 13.8 7 22l5-2.8L17 22l-1.2-8.2"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.8-7 10-7 10 7 10 7-3.8 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-chev-l" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+<symbol id="i-chev-r" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+<symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.5.4.8 1 .9 1.6h5.2c.1-.6.4-1.2.9-1.6A6 6 0 0 0 12 3Z"/></symbol>
+</defs></svg>
+
+<header class="site-header page-header">
+  <a class="brand" href="index.html" aria-label="Inicio del Framework Digital">
+    <span class="brand-mark" aria-hidden="true">FD</span><span class="page-wordmark">Framework Digital<small>Adcom</small></span>
+  </a>
+  <button class="header-search" id="header-search" type="button" aria-label="Buscar en el framework">
+    <svg class="ico" aria-hidden="true"><use href="#i-search"/></svg><span>Buscar</span>
+  </button>
+  <nav class="page-nav" aria-label="Secciones del framework">
+      <a href="estrategia.html">Estrategia</a>
+      <a href="operacion-tactica.html">Operación y táctica</a>
+      <a href="automatizacion.html" aria-current="page">Automatización e IA</a>
+      <a href="index.html#indice">Índice</a>
+  </nav>
+</header>
+
+<dialog class="command-dialog" id="command-dialog" aria-labelledby="command-title">
+  <div class="command-panel">
+    <div class="command-head">
+      <div>
+        <p class="command-kicker">Consulta rápida</p>
+        <h2 id="command-title">Buscar en el framework</h2>
+      </div>
+      <button class="command-close" id="command-close" type="button" aria-label="Cerrar búsqueda">Esc</button>
+    </div>
+    <label class="command-input-wrap" for="command-q">
+      <svg class="ico" aria-hidden="true"><use href="#i-search"/></svg>
+      <input type="search" id="command-q" autocomplete="off" placeholder="Busca una sección, concepto o regla…" aria-controls="command-results">
+      <kbd>⌘K</kbd>
+    </label>
+    <div class="command-shortcuts" aria-label="Acciones rápidas">
+      <span class="command-group-label">Ir directo a</span>
+      <a href="index.html#indice"><span class="command-icon">⌘</span> Índice <kbd>⌘1</kbd></a>
+      <a href="estrategia.html#interfaces"><span class="command-icon">↔</span> Conexiones <kbd>⌘2</kbd></a>
+      <a href="operacion-tactica.html#solicitudes"><span class="command-icon">→</span> Solicitudes <kbd>⌘3</kbd></a>
+      <a href="operacion-tactica.html#optimizacion"><span class="command-icon">↗</span> Optimización <kbd>⌘4</kbd></a>
+    </div>
+    <div class="command-results" id="command-results" role="region" aria-live="polite" aria-label="Resultados de búsqueda"></div>
+    <div class="command-foot"><span>↑ ↓ navegar</span><span>Enter abrir</span><span>Esc cerrar</span></div>
+  </div>
+</dialog>
+
+<main id="inicio" tabindex="-1">
+<section class="framework-area" id="automatizacion" aria-labelledby="automatizacion-title">
+  <header class="area-intro page-intro section-dark">
+  <div class="wrap">
+    <p class="page-kicker" id="automatizacion-title">Automatización e IA</p>
+    <h1 id="hero-title" tabindex="-1">Qué delegamos y quién aprueba</h1>
+    <p class="page-lead">Usa esta referencia para distinguir lo que puede consultar una herramienta, lo que puede proponer y lo que requiere aprobación antes de ejecutarse.</p>
+    <figure class="route-diagram route-sequence">
+      <figcaption>Control de un cambio propuesto</figcaption>
+      <ol role="list">
+        <li><a href="#mediabridge"><strong>Consulta</strong><span>Verifica fuente, alcance y periodo.</span></a></li>
+        <li><a href="#autonomia"><strong>Simula</strong><span>Revisa el efecto esperado antes de tocar la cuenta.</span></a></li>
+        <li><a href="#auditor"><strong>Aprueba o devuelve</strong><span>El auditor valida evidencia, riesgo y responsable.</span></a></li>
+        <li><a href="#riesgos-ia"><strong>Registra</strong><span>Deja decisión, motivo y seguimiento, incluso si se descarta.</span></a></li>
+      </ol>
+    </figure>
+    <div class="page-search">
+    <form class="buscador" id="buscador" role="search">
+      <label class="sr-only" for="q">Buscar en el framework</label>
+      <input id="q" type="search" autocomplete="off" placeholder="Busca un tema o una regla…">
+    </form>
+    <div class="q-res" id="q-res" aria-live="polite" hidden></div>
+  </div>
+  </div>
+</header>
+<!-- Automatización e IA -->
+<section class="section-dark" id="ia" data-framework-section tabindex="-1" aria-labelledby="ia-title">
+  <div class="wrap">
+    <div class="section-heading" data-reveal>
+      <div>
+        <p class="eyebrow"><span>95—99</span></p>
+        <h2 id="ia-title">Automatización e inteligencia artificial</h2>
+        <p class="claim">La herramienta propone. <em>La decisión sigue siendo nuestra.</em></p>
+      </div>
+      <p>Media Bridge conecta las plataformas de pauta con el trabajo del área: consulta, vigila, simula y —solo cuando alguien lo firma— ejecuta. Este capítulo define qué automatizamos, hasta dónde llega la herramienta y quién responde por lo que produce.</p>
+    </div>
+
+    <figure class="flow" tabindex="0" data-reveal>
+      <svg viewBox="0 0 1160 300" role="img" aria-label="El dato de plataforma alimenta una regla o un agente; la regla produce una propuesta simulada en modo dry-run; la propuesta pasa por un auditor humano: si la aprueba, se ejecuta y queda registrada con firma nominal en la bitácora del punto 88; si no la aprueba, se descarta y la regla se corrige, volviendo al inicio.">
+        <defs>
+          <marker id="fa-95" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-a" d="M0 0 L10 5 L0 10 z" fill="currentColor" fill-opacity=".5"/></marker>
+          <marker id="fy-95" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-y" d="M0 0 L10 5 L0 10 z" fill="#3aa76d"/></marker>
+          <marker id="fn-95" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-n" d="M0 0 L10 5 L0 10 z" fill="#e04343"/></marker>
+        </defs>
+        <text class="fl-t-key" x="20" y="28">NINGUNA ACCIÓN SE EJECUTA SOLA</text>
+
+        <rect class="fl-box" x="20" y="70" width="180" height="58" rx="10"/>
+        <text class="fl-t" x="110" y="94" text-anchor="middle">Dato de plataforma</text>
+        <text class="fl-t-sm" x="110" y="112" text-anchor="middle">Meta · Google · LinkedIn · TikTok</text>
+
+        <rect class="fl-box" x="234" y="70" width="180" height="58" rx="10"/>
+        <text class="fl-t" x="324" y="94" text-anchor="middle">Regla o agente</text>
+        <text class="fl-t-sm" x="324" y="112" text-anchor="middle">KPI · umbral · ventana</text>
+
+        <rect class="fl-box-key" x="448" y="70" width="190" height="58" rx="10"/>
+        <text class="fl-t-b" x="543" y="94" text-anchor="middle">Propuesta simulada</text>
+        <text class="fl-t-sm" x="543" y="112" text-anchor="middle">dry-run por defecto</text>
+
+        <path class="fl-dec" d="M790 41 L908 99 L790 157 L672 99 Z"/>
+        <text class="fl-t-b" x="790" y="94" text-anchor="middle">¿El auditor</text>
+        <text class="fl-t-b" x="790" y="111" text-anchor="middle">lo aprueba?</text>
+
+        <rect class="fl-box-key" x="960" y="70" width="180" height="58" rx="10"/>
+        <text class="fl-t-b" x="1050" y="94" text-anchor="middle">Ejecuta y registra</text>
+        <text class="fl-t-sm" x="1050" y="112" text-anchor="middle">firma nominal · bitácora 88</text>
+
+        <path class="fl-line" d="M200 99 H228" marker-end="url(#fa-95)"/>
+        <path class="fl-line" d="M414 99 H442" marker-end="url(#fa-95)"/>
+        <path class="fl-line" d="M638 99 H666" marker-end="url(#fa-95)"/>
+        <path class="fl-line-yes" d="M908 99 H954" marker-end="url(#fy-95)"/>
+        <text class="fl-edge-yes" x="931" y="89" text-anchor="middle">Sí</text>
+
+        <rect class="fl-box-out" x="660" y="205" width="280" height="58" rx="10"/>
+        <text class="fl-t" x="800" y="229" text-anchor="middle">Se descarta</text>
+        <text class="fl-t-sm" x="800" y="247" text-anchor="middle">y se corrige la regla</text>
+        <path class="fl-line-no" d="M790 157 V199" marker-end="url(#fn-95)"/>
+        <text class="fl-edge-no" x="804" y="182">No</text>
+        <path class="fl-line" d="M660 234 H324 V134" marker-end="url(#fa-95)"/>
+        <text class="fl-edge" x="336" y="176">se ajusta el umbral</text>
+      </svg>
+      <figcaption><b>95.</b> El dry-run no es una opción de seguridad que se activa cuando hay dudas: es el estado por defecto de todo lo que modifica una cuenta. Salir de él exige una confirmación explícita de una persona con nombre, y esa persona —no la herramienta— es la responsable del cambio.</figcaption>
+    </figure>
+
+    <div class="versus sep-md" data-reveal>
+      <div class="card versus-si">
+        <span class="card-index">95.1 · QUÉ AUTOMATIZAMOS</span>
+        <h3>Lo repetitivo, lo que se vigila y lo que se puede verificar</h3>
+        <ul class="list-check sep">
+          <li><b>Recolección:</b> traer el dato de cuatro plataformas sin entrar a cada una.</li>
+          <li><b>Vigilancia:</b> comparar contra la semana anterior y avisar cuando algo se sale.</li>
+          <li><b>Cálculo:</b> pacing, variaciones, proyecciones y consolidados.</li>
+          <li><b>Simulación:</b> mostrar qué pasaría antes de que pase.</li>
+          <li><b>Borradores:</b> el primer texto de un informe, nunca el definitivo.</li>
+        </ul>
+      </div>
+      <div class="card versus-no">
+        <span class="card-index">95.2 · QUÉ NO AUTOMATIZAMOS</span>
+        <h3>Lo que exige criterio, contexto o compromiso con el cliente</h3>
+        <ul class="list-check list-cross sep">
+          <li>La hipótesis: por qué creemos que pasó (38).</li>
+          <li>La lectura de contexto: negocio, categoría, comercial y creatividad (36).</li>
+          <li>La decisión de mover presupuesto ya comprometido con el cliente.</li>
+          <li>Apagar una campaña.</li>
+          <li>Lo que se le dice al cliente cuando algo se rompe (55).</li>
+        </ul>
+        <p class="quote quote-sm sep-md">Automatizar la detección no es automatizar el diagnóstico.<small>95.2</small></p>
+      </div>
+    </div>
+
+    <div class="divider" id="mediabridge">
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="eyebrow"><span>96</span></p>
+          <h3>Media Bridge: qué existe hoy</h3>
+          <p class="claim">No es un plan. <em>Está construido y corriendo.</em></p>
+        </div>
+        <p>Una herramienta local que habla directamente con las APIs de las plataformas. Lo que sigue es la capacidad instalada hoy, no la que quisiéramos tener. Es también la base de la ingesta: el pacing automatizado de <b>29.3</b> parte de aquí, no de cero.</p>
+      </div>
+
+      <div class="bridge-capabilities" data-reveal aria-label="Capacidades instaladas de Media Bridge">
+        <article class="bridge-capability">
+          <header><span>96.1</span><b>Consulta</b></header>
+          <h4>Las cuatro plataformas en un solo lugar</h4>
+          <p>Cuentas, campañas, conjuntos, anuncios e insights de Meta, Google Ads, LinkedIn y TikTok, más GA4. Filtro por cliente, cuenta, rango y nivel, con exportación a CSV y Excel.</p>
+          <small>Meta · Google Ads · LinkedIn · TikTok · GA4</small>
+        </article>
+        <article class="bridge-capability">
+          <header><span>96.2</span><b>Alertas</b></header>
+          <h4>Dos revisiones automáticas por semana</h4>
+          <p>Reglas por cuenta y campaña comparan siete días completos contra los siete anteriores y notifican por Google Chat al canal del cliente.</p>
+          <small>Martes y jueves · 8:00 a. m.</small>
+        </article>
+        <article class="bridge-capability">
+          <header><span>96.3</span><b>Incidentes</b></header>
+          <h4>La alerta no se repite: se sigue</h4>
+          <p>Abre incidente, actualiza mientras la condición siga activa, recuerda una sola vez a las 48 horas y resuelve al volver a estado sano.</p>
+          <small>Incluye inversión con cero resultados</small>
+        </article>
+        <article class="bridge-capability">
+          <header><span>96.4</span><b>Seguimiento</b></header>
+          <h4>Una hoja compartida con el estado real</h4>
+          <p>Cada ciclo registra cliente, cuenta, plataforma, campaña, KPI, variación, estado, tipo de alerta y fechas. Los incidentes abiertos permanecen hasta resolverse.</p>
+          <small>Fuente compartida de estado</small>
+        </article>
+        <article class="bridge-capability">
+          <header><span>96.5</span><b>Presupuesto</b></header>
+          <h4>Cambiar el diario sin entrar a la plataforma</h4>
+          <p>Consulta de consumo y ajuste de presupuesto diario o total. El comando simula siempre; aplicar exige una instrucción explícita.</p>
+          <small>Dry-run por defecto</small>
+        </article>
+        <article class="bridge-capability">
+          <header><span>96.6</span><b>Agentes</b></header>
+          <h4>Preguntar en lenguaje natural</h4>
+          <p>Un servidor consulta y diagnostica; otro puede pausar, cambiar estado y ajustar presupuesto, siempre en simulación mientras no se confirme.</p>
+          <small>Lectura · propuesta · ejecución confirmada</small>
+        </article>
+      </div>
+
+      <div class="bridge-output sep-md" data-reveal>
+        <div><span class="card-index">96.7 · DÓNDE QUEDA LO QUE PRODUCE</span><h4>El entregable sale de la herramienta, siempre</h4></div>
+        <p>Los informes y archivos se enrutan al repositorio del cliente o a una carpeta de salida. La fuente única de verdad es el repositorio, no la herramienta que produjo el archivo.</p>
+        <p class="quote quote-sm">Lo que solo existe dentro de la herramienta todavía no está documentado.<small>Extensión de la regla 81 · 12</small></p>
+      </div>
+    </div>
+
+    <div class="divider" id="autonomia">
+      <h3 class="sub-heading" data-reveal><span class="num">97</span> Los tres niveles de autonomía</h3>
+      <p data-reveal style="margin-top:-6px;color:var(--fg-muted);max-width:70ch">Toda función de la herramienta cae en uno de tres niveles. El nivel define quién puede usarla y qué se necesita antes. Ninguna función sube de nivel sola.</p>
+
+      <div class="columnas escala sep-lg" aria-label="Tres niveles de autonomía, de menor a mayor" data-reveal>
+        <div class="card" style="--nivel:1">
+          <span class="card-index">97.1 · NIVEL 1 · CONSULTAR</span>
+          <h4>Lee y reporta. No toca nada.</h4>
+          <p>Consultas, insights, informes y análisis conversacional de solo lectura.</p>
+          <p class="escala-nota">Cualquiera del equipo · sin aprobación</p>
+        </div>
+        <div class="card" style="--nivel:2">
+          <span class="card-index">97.2 · NIVEL 2 · PROPONER</span>
+          <h4>Señala y simula. No aplica.</h4>
+          <p>Alertas, diagnósticos y cambios en modo simulación. La herramienta muestra qué haría y qué efecto tendría.</p>
+          <p class="escala-nota">Trafficker o planner · auditor asignado</p>
+        </div>
+        <div class="card" style="--nivel:3">
+          <span class="card-index">97.3 · NIVEL 3 · EJECUTAR</span>
+          <h4>Aplica el cambio en la plataforma.</h4>
+          <p>Pausar, cambiar estado o mover presupuesto exige confirmación explícita en el momento.</p>
+          <p class="escala-nota">Firma nominal · registro en bitácora (88)</p>
+        </div>
+      </div>
+
+      <div class="notas sep-lg" data-reveal>
+        <div class="card">
+          <span class="card-index">97.4 · LA REGLA DEL NIVEL 3</span>
+          <h4>Una acción automatizada tiene el mismo responsable que una hecha a mano</h4>
+          <p class="sep-xs">Quien confirma responde por el cambio. No existe la explicación “lo hizo la herramienta”: la herramienta propuso, una persona aprobó, y esa persona es la que sostiene la decisión frente al cliente y frente al equipo.</p>
+        </div>
+        <div class="card">
+          <span class="card-index">97.5 · LO QUE NO SE PROGRAMA</span>
+          <h4>Nada queda en ejecución automática permanente</h4>
+          <p class="sep-xs">Lo único que corre solo es la vigilancia: consultar y avisar. Ninguna regla queda configurada para modificar la cuenta sin pasar por una persona, por conveniente que parezca. Una automatización que ejecuta sola deja de ser una herramienta y se vuelve un riesgo sin dueño.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider" id="auditor">
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="eyebrow"><span>98</span></p>
+          <h3>El rol del auditor</h3>
+          <p class="claim">No es quien usa la herramienta. <em>Es quien responde por lo que produce.</em></p>
+        </div>
+        <p>La automatización no elimina el trabajo de criterio: lo desplaza. Lo que antes era ejecutar ahora es verificar, y verificar mal es más grave que ejecutar mal, porque el error se multiplica por todas las cuentas donde corre la misma regla.</p>
+      </div>
+
+      <div class="auditor-map" data-reveal>
+        <div class="auditor-core"><span class="card-index">98.1 · QUIÉN ES</span><strong>Un nombre por cuenta</strong><p>El auditor responde por las reglas que corren sobre ella y por lo que producen. No hay un auditor general de la IA.</p></div>
+        <div class="auditor-scope"><span>Cuenta</span><b>Auditor asignado</b><small>Tablero de distribución (93)</small></div>
+        <div class="auditor-scope auditor-scope-wide"><span>Dirección Digital</span><b>Audita lo transversal</b><small>Reglas comunes y umbrales que afectan al portafolio completo.</small></div>
+        <div class="auditor-nondelegate"><span class="card-index">98.2 · QUÉ NO DELEGA</span><h4>Cinco decisiones que se leen antes de firmar</h4><ol><li>Aceptar una causa sin contrastarla con el contexto.</li><li>Aprobar presupuesto que altera un compromiso.</li><li>Enviar un informe generado sin leerlo completo.</li><li>Dejar activa una regla con falsos positivos.</li><li>Confirmar un objeto que no verificó.</li></ol></div>
+      </div>
+
+      <h3 class="sub-heading" data-reveal style="margin-top:clamp(38px,4vw,60px)"><span class="num">98.3</span> Los cinco controles del auditor</h3>
+      <p data-reveal style="margin-top:-6px;color:var(--fg-muted);max-width:70ch">La auditoría no es un momento al final. Son cinco puntos distintos del ciclo, y cada uno tiene una consecuencia concreta si nadie lo hace.</p>
+      <ol class="auditor-controls sep-md" data-reveal aria-label="Cinco controles del auditor">
+        <li><span>01</span><div><b>Antes de crear la regla</b><p>KPI, umbral, ventana y cuenta deben corresponder a cómo se lee realmente.</p></div><small>Si falla: la alerta genera ruido y se ignora.</small></li>
+        <li><span>02</span><div><b>Antes de concluir</b><p>Volumen suficiente, ventana completa, retrasos de señal y cambios recientes de tracking.</p></div><small>Si falla: se optimiza sobre una variación inexistente.</small></li>
+        <li><span>03</span><div><b>Antes de ejecutar</b><p>La acción debe corresponder a la hipótesis y al objeto correcto.</p></div><small>Si falla: se pausa lo que no era o se mueve presupuesto comprometido.</small></li>
+        <li><span>04</span><div><b>Antes de salir al cliente</b><p>El texto generado debe coincidir con lo que pasó en cuenta y negocio.</p></div><small>Si falla: se comunica una causa inventada.</small></li>
+        <li><span>05</span><div><b>Después</b><p>Se registra qué propuso la herramienta, qué se aprobó, qué se rechazó y por qué.</p></div><small>Si falla: el falso positivo se repite cada semana.</small></li>
+      </ol>
+
+      <div class="notas sep-lg" data-reveal>
+        <div class="card">
+          <span class="card-index">98.4 · CÓMO SE REGISTRA</span>
+          <h4>La bitácora no cambia porque el cambio lo haya propuesto una máquina</h4>
+          <p class="sep-xs">Toda acción ejecutada desde la herramienta entra al mismo registro de cierre del punto 41: alerta, fecha, contexto, diagnóstico, hipótesis, acción, periodo observado, resultado y aprendizaje. Se agregan dos campos:</p>
+          <ul class="list-check sep">
+            <li><b>Origen:</b> qué regla o agente la propuso.</li>
+            <li><b>Auditor:</b> quién la aprobó, con nombre.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="card-index">98.5 · LO QUE SE RECHAZA TAMBIÉN SE REGISTRA</span>
+          <h4>Una propuesta descartada es información sobre la regla</h4>
+          <p class="sep-xs">Igual que una solicitud rechazada cierra y se documenta (87.2), una propuesta de la herramienta que el auditor descarta se anota con el motivo. Ese motivo es lo único que permite ajustar el umbral: sin él, la regla seguirá disparando lo mismo y nadie sabrá por qué se ignora.</p>
+          <p class="quote quote-sm sep-md">Toda acción automatizada tiene un auditor con nombre.<small>Regla propuesta · 81 · 16</small></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider" id="riesgos-ia">
+      <h3 class="sub-heading" data-reveal><span class="num">99</span> Riesgos declarados de automatizar</h3>
+      <p data-reveal style="margin-top:-6px;color:var(--fg-muted);max-width:70ch">No son objeciones a la herramienta: son las seis formas conocidas en que una automatización de pauta falla. Están escritas para reconocerlas antes de que ocurran.</p>
+      <details class="mas" data-reveal>
+        <summary>Ver los seis riesgos y cómo se controlan</summary>
+        <div class="mas-body"><div class="table-wrap" tabindex="0">
+        <table>
+          <thead><tr><th>Riesgo</th><th>Cómo se manifiesta</th><th>Control</th></tr></thead>
+          <tbody>
+            <tr><td><b>La alerta ruidosa</b></td><td>Un umbral mal calibrado dispara todas las semanas y el equipo empieza a cerrar la notificación sin leerla.</td><td>Dos falsos positivos seguidos obligan a revisar la regla o a desactivarla.</td></tr>
+            <tr><td><b>La ventana incompleta</b></td><td>Comparar contra días parciales produce caídas que no existen, sobre todo en cuentas con conversión diferida.</td><td>La comparación usa semanas completas y excluye el día en curso.</td></tr>
+            <tr><td><b>La causa inventada</b></td><td>Un modelo de lenguaje explica con seguridad una caída que no ocurrió por lo que dice, porque no conoce el evento, la promoción ni la conversación con el cliente.</td><td>Toda causa se contrasta contra el análisis del punto 36 antes de escribirse en un informe.</td></tr>
+            <tr><td><b>El único que sabe usarla</b></td><td>Una sola persona opera la herramienta y la automatización termina aumentando la dependencia en lugar de reducirla.</td><td>Cada cuenta necesita auditor y respaldo, igual que los accesos del punto 58.3.</td></tr>
+            <tr><td><b>Las credenciales</b></td><td>Tokens y accesos de plataforma copiados en un documento, un chat o un archivo compartido.</td><td>Los accesos viven solo en el archivo local de entorno. Nunca en el código, el repositorio ni un mensaje.</td></tr>
+            <tr><td><b>El entregable huérfano</b></td><td>Un informe que existe únicamente dentro de la herramienta y que nadie encuentra tres meses después.</td><td>Todo entregable se enruta al repositorio del cliente (96.7).</td></tr>
+          </tbody>
+        </table>
+      </div></div>
+      </details>
+
+      <div class="card sep-lg" data-reveal>
+        <span class="card-index">99.1 · SE CONECTA CON</span>
+        <h4>Este capítulo no reemplaza nada: le pone herramienta a lo que ya estaba escrito</h4>
+        <ul class="list-check sep">
+          <li><b>30—33 · Sistema de alertas</b> — las dos revisiones semanales dejan de ser manuales, pero las severidades y los umbrales los sigue definiendo el framework.</li>
+          <li><b>26—29 · Control presupuestal</b> — el pacing y la proyección se calculan solos; la decisión de redistribuir no.</li>
+          <li><b>35 · Validar la alerta</b> — sigue siendo el primer paso, ahora ejecutado por el auditor sobre lo que propuso la herramienta.</li>
+          <li><b>88 · Bitácora de optimización</b> — es el lugar donde queda el rastro de lo automatizado, con origen y auditor.</li>
+          <li><b>81 · Reglas del sistema documental</b> — se mantienen íntegras; la regla 16 propuesta las extiende a lo automatizado.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+</section>
+</main>
+
+
+<footer>
+  <span>Framework Área Digital · Versión 0.3 · Borrador en construcción</span>
+  <span>Documento interno de trabajo</span>
+</footer>
+
+<script src="assets/js/base.js"></script>
+<script src="assets/js/contenido.js"></script>
+<script src="assets/js/interacciones.js"></script>
+
+</body>
+</html>

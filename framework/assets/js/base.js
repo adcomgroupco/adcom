@@ -140,3 +140,6 @@ window.FD = window.FD || {};
     FD.$$('[role="tablist"]').forEach(sincronizar);
   };
 })(window.FD);
+
+/* Inicializa las pestañas también en las páginas que no cargan herramientas. */
+document.addEventListener("DOMContentLoaded", function(){ window.FD.tabs(); });
