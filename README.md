@@ -56,6 +56,11 @@ Lo mínimo que cumple toda página:
 Las páginas que aún los cargan los reciben con `adcom-v2.css` encima, que re-apunta sus tokens a v2.
 Cuando v2 se apruebe para los clientes, `adcom-v2.css` pasa a `sistema/` y entra al sync.
 
+Los enlaces a `adcom-v2.css`, `formatos.css` y `css/*.css` llevan `?v=AAAAMMDD`. Al cambiar uno de esos
+archivos, sube ese número en las páginas que lo enlazan: sin él, el navegador (y GitHub Pages) siguen
+sirviendo la hoja anterior y las páginas se ven sin los estilos de los componentes. Para verlo al momento
+basta con recargar sin caché (Ctrl+Shift+R).
+
 Cada pieza es autocontenida: `framework/` trae sus propios `assets/`, y los informes de la raíz
 llevan su CSS embebido. Mover una carpeta no rompe a las demás.
 
