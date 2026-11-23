@@ -1,0 +1,225 @@
+/* ============================================================================
+   Tablero de seguimiento · banco de formatos · sistema v2
+   Tokens de ../../assets/css/adcom-v2.css. Prefijo ts- para no chocar con
+   formatos.css. Estados (--pos, --warn, --neg) son los PROVISIONALES de v2.
+   KPIs, tarjetas, barras, tablas, lecturas, chips y estados vienen del sistema (ad-*);
+   aquí queda el marco del tablero (riel, barra de filtros, embudo, tablas densas).
+   ========================================================================= */
+
+/* ---------- marco: riel lateral + columna principal ---------- */
+body.ts{display:flex;align-items:stretch;min-height:100vh;margin:0;font-size:15px;line-height:1.55;background:var(--washi);color:var(--sumi);overflow-x:hidden}
+.ts *{box-sizing:border-box}
+.ts-main{flex:1;min-width:0;display:flex;flex-direction:column}
+
+/* riel: mueble oscuro, negro-escena con texto sobre-oscuro */
+.ts-riel{width:248px;flex:0 0 auto;position:sticky;top:0;align-self:flex-start;height:100vh;overflow-y:auto;scrollbar-width:thin;display:flex;flex-direction:column;background:var(--shell-bg);color:var(--shell-fg)}
+.ts-riel__top{padding:20px 16px 16px;border-bottom:1px solid var(--shell-rule)}
+.ts-marca{display:inline-flex;align-items:center;gap:8px;min-height:var(--target-min);color:var(--shell-fg);text-decoration:none;font:500 18px var(--font-display);letter-spacing:-.01em}
+.ts-marca:hover{color:var(--shell-fg)}
+.ts-marca i{width:8px;height:8px;border-radius:50%;background:var(--lima)}
+.ts-cuenta{margin-top:8px;padding:10px 12px;border:1px solid var(--shell-rule);border-radius:var(--radius-card)}
+.ts-cuenta span{display:block;font-size:13px;color:var(--shell-fg-muted)}
+.ts-cuenta strong{display:block;margin:2px 0;font:500 16px/1.3 var(--font-display)}
+.ts-riel nav{padding:12px 10px;flex:1}
+.ts-riel__titulo{display:block;padding:4px 12px 6px;font-size:13px;color:var(--shell-fg-muted)}
+.ts-riel nav a{display:flex;align-items:center;gap:10px;min-height:var(--target-min);padding:0 12px;border-radius:var(--radius-pill);color:var(--shell-fg-muted);text-decoration:none;font-size:14px;line-height:1.25}
+.ts-riel nav a b{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.5;flex:none}
+.ts-riel nav a:hover{background:var(--shell-active);color:var(--shell-fg)}
+.ts-riel nav a[aria-current="true"]{background:var(--lima);color:var(--sumi);font-weight:500}
+.ts-riel nav a[aria-current="true"] b{background:var(--sumi);opacity:1}
+.ts-riel a:focus-visible,.ts-riel button:focus-visible{outline:2px solid var(--shell-fg);outline-offset:-3px}
+.ts-riel nav a[aria-current="true"]:focus-visible{outline-color:var(--sumi)}
+.ts-riel__pie{padding:14px 16px 18px;border-top:1px solid var(--shell-rule);font-size:13px;color:var(--shell-fg-muted)}
+.ts-riel__pie p{margin:0 0 6px;color:var(--shell-fg)}
+.ts-riel__pie a{display:inline-flex;align-items:center;min-height:var(--target-min);color:var(--shell-fg)}
+.ts-riel__fuentes{list-style:none;margin:0 0 10px;padding:0;display:grid;gap:6px}
+.ts-riel__fuentes li{display:grid;gap:0}
+.ts-riel__fuentes li span:last-child{color:var(--shell-fg)}
+
+/* ---------- barra de filtros ---------- */
+.ts-barra{position:sticky;top:0;z-index:20;display:grid;gap:8px;padding:10px 24px;background:var(--papel);border-bottom:1px solid var(--piedra)}
+.ts-barra__fila{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.ts-titulo{margin:0 8px 0 0;font:500 17px/1.2 var(--font-display);letter-spacing:-.01em}
+.ts-campo{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--tinta-suave)}
+.ts-campo input,.ts-campo select{font:inherit;font-size:14px;min-height:var(--target-min);padding:0 10px;max-width:170px;border:1px solid var(--piedra-borde);border-radius:var(--radius-input);background:var(--papel);color:var(--sumi)}
+.ts-campo select{cursor:pointer}
+.ts-campo input:focus-visible,.ts-campo select:focus-visible{border-color:var(--sumi)}
+.ts-rapidos,.ts-vistas,.ts-herramientas{display:flex;flex-wrap:wrap;gap:6px}
+.ts-actualizado{margin-left:auto;font-size:13px;color:var(--tinta-suave)}
+
+/* lo que se toca es redondo */
+/* chips y botones: .ad-chip y .ad-btn del sistema; aquí solo el tamaño compacto de la barra y el riel */
+.ts-barra .ad-chip,.ts-herramientas .ad-chip,.ts-vistas .ad-chip{font-size:13px;padding:0 16px;white-space:nowrap}
+.ts-barra .ad-chip:hover{border-color:var(--sumi)}
+.ts-limpiar{min-height:var(--target-min);padding:0 20px;font-size:13px}
+.ts-chip--riel{color:var(--shell-fg);border-color:rgba(247,246,242,.32);font-size:13px;padding:0 16px}
+.ts-chip--riel:hover{background:var(--shell-active);border-color:var(--shell-fg)}
+/* el rango rápido es el filtro principal: su opción activa va en lima (relleno, texto sumi) */
+.ts-rango[aria-pressed="true"]{background:var(--lima);border-color:var(--lima);color:var(--sumi)}
+/* el rango rápido es el filtro principal: su opción activa es la lima de la pantalla */
+
+/* ---------- contenido ---------- */
+.ts-contenido{padding:24px;min-width:0}
+.ts-plantilla{margin:0 0 16px}
+.ts-plantilla code{font-size:13px}
+.ts-carga,.ts-aviso{margin:0 0 16px;font-size:14px;color:var(--tinta-secundaria)}
+.ts-carga[hidden],.ts-aviso[hidden]{display:none}
+.ts-aviso{padding:10px 14px;border:1px solid var(--neg);border-radius:var(--radius-card);background:var(--papel);color:var(--neg)}
+.ts-oculto{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ts-sec{padding-block:8px 32px;scroll-margin-top:180px}
+.ts-h2{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin:8px 0 14px;font:500 22px/1.25 var(--font-display);letter-spacing:-.015em}
+.ts-h2-fila{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px}
+.ts-h2-fila .ts-h2{margin-bottom:8px}
+.ts-h3{margin:20px 0 10px;font:500 16px/1.3 var(--font-display)}
+.ts-nota{font:400 13px/1.5 var(--font-body);letter-spacing:0;color:var(--tinta-suave)}
+.ts-caja{background:var(--papel);border:1px solid var(--piedra);border-radius:var(--radius-card)}
+.ts-lectura{max-width:80ch;margin:10px 0 16px}
+.ts-lectura:has(p:empty){display:none}
+.ts-caja-tabla{overflow:hidden}
+.ts-vacio{padding:18px;margin:0;text-align:center;color:var(--tinta-suave);font-size:14px}
+
+/* estados (provisionales de v2) */
+.ts-pos{color:var(--pos)} .ts-warn{color:var(--warn)} .ts-neg{color:var(--neg)} .ts-mute{color:var(--tinta-suave)}
+
+/* ---------- KPI: .ad-kpis / .ad-kpi del sistema; ocho cifras en cuatro columnas ---------- */
+.ts-kpis{grid-template-columns:repeat(4,minmax(0,1fr))}
+.ts-kpis .ad-kpi__n{font-size:32px}
+.ts-kpis .ad-kpi__n .ts-mute{font-size:24px;letter-spacing:-.02em}
+.ts-kpi__meta{display:flex;justify-content:space-between;gap:8px;margin-top:12px;font-size:13px;color:var(--tinta-secundaria)}
+.ts-kpi__meta span:last-child{white-space:nowrap;font-weight:500}
+.ts-kpi__barra{margin-top:4px;height:8px}
+
+/* tarjetas de medio y de fuente: .ad-card del sistema */
+.ts-medio,.ts-fuente{padding:14px 16px;gap:0}
+.ts-medio h3{margin:0;font:500 15px/1.3 var(--font-display)}
+.ts-medio p{margin:0}
+.ts-medio .ad-card__d{margin-top:4px;font-size:13px;line-height:1.45;color:var(--tinta-suave)}
+.ts-medio__v{margin-top:6px!important;font:300 26px/1.1 var(--font-display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.ts-medios{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.ts-medio__v{margin-top:6px!important;font:300 26px/1.1 var(--font-display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.ts-medio__f{display:grid;gap:0;padding:6px 0;border-top:1px solid var(--piedra);font-size:13px;color:var(--tinta-secundaria)}
+.ts-medio__f:first-of-type{margin-top:10px}
+.ts-medio__f > span:last-child{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 8px}
+.ts-medio__f b{font:400 17px/1.3 var(--font-display);color:var(--sumi);font-variant-numeric:tabular-nums}
+.ts-medio__f small{font-size:12px;color:var(--tinta-suave)}
+
+/* ---------- embudo: barras .ad-barra, la del resultado final en lima ---------- */
+.ts-emb__f .ad-barra{display:block;height:14px}
+.ts-embudo{padding:8px 16px}
+.ts-emb__f{display:grid;grid-template-columns:150px minmax(0,1fr) 200px 150px;align-items:center;gap:8px 16px;padding:10px 0;border-top:1px solid var(--piedra)}
+.ts-emb__f:first-child{border-top:0}
+.ts-emb__h{font-size:12px;color:var(--tinta-suave);padding:6px 0}
+.ts-emb__l{font-size:14px}
+.ts-emb__v b{font:300 22px/1.1 var(--font-display);letter-spacing:-.03em;font-variant-numeric:tabular-nums;margin-right:8px}
+.ts-emb__v small,.ts-emb__c small{display:block;font-size:12px;color:var(--tinta-suave)}
+.ts-emb__c b{font-weight:500;font-variant-numeric:tabular-nums}
+
+/* ---------- cumplimiento por nivel ---------- */
+.ts-cumple{margin-top:12px;padding:4px 16px 14px;max-width:820px}
+.ts-cumple .ts-h3{margin-top:12px;margin-bottom:2px}
+.ts-cumple > .ts-nota{margin:0 0 8px}
+.ts-cum__g{padding:10px 0;border-top:1px solid var(--piedra)}
+.ts-cum__g h3{margin:0 0 6px;font:500 15px var(--font-display)}
+.ts-cum{display:grid;grid-template-columns:110px minmax(0,1fr) 64px;align-items:center;gap:2px 10px;font-size:13px;color:var(--tinta-secundaria);margin-bottom:6px}
+.ts-cum .ad-barra{display:block;height:10px}
+.ts-cum small{grid-column:2 / 4;font-size:12px;color:var(--tinta-suave)}
+
+/* ---------- gráficos ---------- */
+.ts-grafico{padding:14px 16px;background:var(--papel);border:1px solid var(--piedra);border-radius:var(--radius-card)}
+.ts-grafico figcaption{margin:0}
+.ts-lienzo{position:relative;height:280px}
+.ts-lienzo--bajo{height:200px}
+.ts-tres{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:12px}
+.ts-tres .ts-h3{margin-top:0}
+
+/* fuentes */
+.ts-fuente h3{display:flex;align-items:center;gap:8px;margin:0 0 8px;font:500 15px var(--font-display)}
+.ts-muestra{width:12px;height:12px;border-radius:2px}
+.ts-muestra--1{background:var(--sumi)} .ts-muestra--2{background:var(--tinta-secundaria)} .ts-muestra--3{background:var(--tinta-tenue)}
+.ts-fuente dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0}
+.ts-fuente dt{font-size:12px;color:var(--tinta-suave)}
+.ts-fuente dd{margin:0;font:400 19px/1.2 var(--font-display);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+
+/* ---------- tablas: scroll local, primera columna fija ---------- */
+.ts-tabla{overflow-x:auto;max-width:100%}
+.ts-tabla table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.4}
+.ts-tabla{border:0;border-radius:0}
+.ts-tabla th,.ts-tabla td{padding:8px 10px;white-space:nowrap;text-align:left;vertical-align:middle;border-bottom:1px solid var(--piedra)}
+.ts-tabla thead th{position:sticky;top:0;background:var(--papel);z-index:1}
+.ts-tabla tbody th{font-weight:400}
+.ts-tabla td{color:var(--tinta-secundaria);font-variant-numeric:tabular-nums}
+.ts-tabla .ts-r{text-align:right}
+.ts-tabla .ts-grp{border-left:1px solid var(--piedra)}
+.ts-fija{position:sticky;left:0;background:var(--papel);z-index:1}
+.ts-tabla thead .ts-fija{z-index:2;background:var(--papel)}
+.ts-tabla tbody tr:hover > *{background:var(--washi)}
+.ts-n1 > *{color:var(--sumi)!important;font-weight:500!important}
+.ts-n2 > th{padding-left:24px}
+.ts-n3 > th{padding-left:44px;color:var(--tinta-secundaria)}
+.ts-total > *{font-weight:500!important;color:var(--sumi)!important;border-top:1px solid var(--sumi);background:var(--washi)!important}
+.ts-vacio{white-space:normal!important}
+.ts-pie{margin:0;padding:10px 14px;font-size:13px;line-height:1.6;color:var(--tinta-suave);border-top:1px solid var(--piedra)}
+.ts-pie b{color:var(--tinta-secundaria)}
+.ts-herramientas{align-items:center;padding:10px 12px;border-bottom:1px solid var(--piedra)}
+.ts-buscar{margin-left:auto}
+
+/* botones dentro de tablas: abrir filas y ordenar columnas */
+.ts-abrir,.ts-orden{font:inherit;color:inherit;font-weight:inherit;background:none;border:0;padding:0 4px;margin:0 -4px;min-height:32px;border-radius:var(--radius-pill);cursor:pointer;text-align:left}
+.ts-abrir::before{content:"";display:inline-block;width:6px;height:6px;margin:0 10px 2px 2px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(-45deg);transition:transform .15s}
+.ts-abrir[aria-expanded="true"]::before{transform:rotate(45deg)}
+.ts-abrir:hover,.ts-orden:hover{text-decoration:underline;text-underline-offset:3px}
+.ts-orden{white-space:nowrap}
+/* tabla densa: 32 px con mouse (WCAG 2.5.8 pide 24); con puntero táctil, el objetivo del sistema (44 px) */
+@media (pointer:coarse){.ts-abrir,.ts-orden{min-height:var(--target-min)}}
+
+/* ---------- cómo se mide ---------- */
+.ts-def{display:grid;gap:0;margin:0;max-width:960px;background:var(--papel);border:1px solid var(--piedra);border-radius:var(--radius-card)}
+.ts-def > div{display:grid;grid-template-columns:140px minmax(0,1fr);gap:4px 16px;padding:12px 16px;border-top:1px solid var(--piedra)}
+.ts-def > div:first-child{border-top:0}
+.ts-def dt{font-weight:500}
+.ts-def dd{margin:0;color:var(--tinta-secundaria)}
+
+/* ---------- responsive ---------- */
+@media (max-width:1300px){.ts-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.ts-tres{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:1100px){.ts-emb__f{grid-template-columns:120px minmax(0,1fr) 150px}.ts-emb__c{grid-column:3}.ts-emb__f .ts-emb__c{grid-column:2 / 4;justify-self:end}}
+/* bajo 900 px el riel se acuesta arriba como franja de navegación con scroll propio */
+@media (max-width:900px){
+  body.ts{flex-direction:column;min-height:0}
+  .ts-riel{position:sticky;top:0;z-index:30;width:100%;height:auto;flex-direction:row;align-items:center;overflow-x:auto;overflow-y:hidden}
+  .ts-riel__top{display:flex;align-items:center;padding:4px 12px;border-bottom:0;border-right:1px solid var(--shell-rule);flex:none}
+  .ts-cuenta,.ts-riel__titulo,.ts-riel__pie{display:none}
+  .ts-riel nav{display:flex;gap:2px;padding:4px 8px;flex:none}
+  .ts-riel nav a{white-space:nowrap}
+  .ts-barra{position:static;padding:10px 16px}
+  .ts-contenido{padding:16px}
+  .ts-sec{scroll-margin-top:64px}
+}
+@media (max-width:640px){
+  .ts-kpis{grid-template-columns:minmax(0,1fr)}
+  .ts-campo{width:100%;display:grid;grid-template-columns:72px minmax(0,1fr)}
+  .ts-campo input,.ts-campo select{flex:1;max-width:none;min-width:0}
+  .ts-actualizado{margin-left:0}
+  .ts-buscar{margin-left:0}
+  .ts-emb__f{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .ts-emb__f .ad-barra{grid-column:1 / -1;grid-row:2}
+  .ts-emb__f .ts-emb__v{grid-row:3}
+  .ts-emb__f .ts-emb__c{grid-column:2;grid-row:3;justify-self:end;text-align:right}
+  .ts-emb__h{display:none}
+  .ts-emb__h + .ts-emb__f{border-top:0}
+  .ts-fuente dl{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ts-def > div{grid-template-columns:minmax(0,1fr)}
+  .ts-cum{grid-template-columns:90px minmax(0,1fr) 56px}
+}
+
+/* ---------- impresión: sin riel ni controles, todas las filas visibles ---------- */
+@media print{
+  body.ts{display:block;background:#fff}
+  .ts-riel,.ts-rapidos,.ts-vistas,.ts-herramientas,#b-meta,#b-limpiar,.ts-plantilla,.skip-link{display:none!important}
+  .ts-barra{position:static;border:0;padding:0 0 8px}
+  .ts-campo input,.ts-campo select{border:0;padding:0;min-height:0;appearance:none}
+  .ts-contenido{padding:0}
+  .ts-tabla{overflow:visible}
+  .ts-tabla thead th,.ts-fija{position:static}
+  .ts-sec,.ts-caja,.ad-kpi,tr{break-inside:avoid}
+  .ts-lienzo{height:220px}
+}

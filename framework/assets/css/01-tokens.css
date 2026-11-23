@@ -106,14 +106,14 @@ b,strong{font-weight:500}
 ::selection{background:var(--lima);color:var(--sumi)}
 input,textarea{caret-color:var(--fg)}
 html{scrollbar-color:rgba(247,246,242,.24) var(--ink)}
-.flow,.table-wrap,.q-res,.stepper{scrollbar-color:var(--line) transparent;scrollbar-width:thin}
-td,.kpis dd,.status strong,.board-head span,.ficha b,.meter-scale{font-variant-numeric:tabular-nums}
+.flow,.ad-tabla,.q-res,.stepper{scrollbar-color:var(--line) transparent;scrollbar-width:thin}
+td,.board-head span,.ficha b,.meter-scale{font-variant-numeric:tabular-nums}
 
 /* ---------- utilidades ---------- */
 /* foco visible v2: 2px sólido en el primer plano del suelo, separado 3px */
 :focus-visible{outline:2px solid var(--fg,var(--sobre-oscuro-100));outline-offset:3px}
 /* los contenedores que hacen scroll horizontal son focusables */
-.flow:focus-visible,.table-wrap:focus-visible{outline-offset:-3px}
+.flow:focus-visible,.ad-tabla:focus-visible{outline-offset:-3px}
 
 .skip-link{position:fixed;top:8px;left:8px;z-index:100;transform:translateY(-160%);background:var(--lima);color:var(--sumi);padding:10px 16px;border-radius:var(--radius-pill);font-weight:500}
 .skip-link:focus{transform:translateY(0)}
@@ -132,8 +132,8 @@ section[id],[id].divider,h3[id],h2[id],h4[id],h5[id]{scroll-margin-top:104px}
   --si:var(--green);--no:var(--red);
   --quote-bg:transparent;--quote-bd:var(--line-dark)
 }
-/* islas claras: .table-wrap es una isla clara dentro de una sección oscura */
-.section-light,.card-light,.table-wrap,.alert-card{
+/* islas claras: .ad-tabla es una isla clara dentro de una sección oscura */
+.section-light,.ad-card:not(.ad-card--dark),.ad-tabla,.alert-card{
   --fg:var(--sumi);--fg-muted:var(--tinta-secundaria);
   --chip-bg:var(--papel);--chip-bd:var(--piedra-borde);--chip-fg:var(--tinta-secundaria);
   --line:var(--line-light);--surface:var(--papel);--surface-2:var(--washi);
@@ -143,23 +143,23 @@ section[id],[id].divider,h3[id],h2[id],h4[id],h5[id]{scroll-margin-top:104px}
 }
 /* Islas con fondo oscuro propio que viven dentro de secciones claras:
    solo necesitan el primer plano de énfasis correcto. */
-.card,.pillar,.panel,.step,.roadmap-card,.hero-stats div,.hero-core,.orbit-chip,
+.ad-card,.pillar,.panel,.step,.roadmap-card,.hero-stats div,.hero-core,.orbit-chip,
 .calc-inputs,.calc-out,.builder-form,.builder-out,.tree,.tree-path span,
-.status,.kpis div,.meter,.output-line output,.field input,.field select,
-.tab.is-active,.repo-item.is-active,footer{--accent-ink:var(--sobre-oscuro-100)}
+.output-line output,.field input,.field select,
+.ad-chip.is-on,.repo-item.is-on,footer{--accent-ink:var(--sobre-oscuro-100)}
 /* la tarjeta clara recupera el primer plano de superficie clara */
-.card-light,.panel-light{--accent-ink:var(--sumi)}
+.ad-card:not(.ad-card--dark),.panel-light{--accent-ink:var(--sumi)}
 /* Las islas oscuras dentro de una sección clara también redeclaran el primer
    plano: sin esto un titular o un párrafo suyo toma la tinta de la sección. */
-.card:not(.card-light),.panel:not(.panel-light),.calc-inputs,.calc-out,.builder-form,.builder-out,
+.ad-card--dark,.panel:not(.panel-light),.calc-inputs,.calc-out,.builder-form,.builder-out,
 .tree,.roadmap-card{--fg:var(--sobre-oscuro-100);--fg-muted:var(--sobre-oscuro-200);--si:var(--green);--no:var(--red)}
 .section-dark{background:var(--ink);color:var(--fg-muted)}
 .section-light{background:var(--paper);color:var(--fg-muted)}
 .iface,.avoid,.split>div:nth-child(2){color:var(--sobre-oscuro-100)}
 /* Mismo principio para el resto de islas oscuras.
-   .card-light lo revierte desde 03-componentes.css, que carga después. */
-.card,.panel,.calc-inputs,.calc-out,.builder-form,.builder-out,
-.tree,.status,.meter,.kpis div,.roadmap-card{color:var(--sobre-oscuro-100)}
+   .ad-card:not(.ad-card--dark) lo revierte desde 03-componentes.css, que carga después. */
+.ad-card,.panel,.calc-inputs,.calc-out,.builder-form,.builder-out,
+.tree,.roadmap-card{color:var(--sobre-oscuro-100)}
 /* Ubicación de la sección: familia del índice y puntos que cubre. Es la
    miga de pan del documento: eyebrow v2, sin mayúsculas ni tracking. */
 .eyebrow{margin:0 0 18px;display:flex;flex-wrap:wrap;align-items:center;gap:9px;color:var(--fg-muted);font-family:var(--font-display);font-size:var(--fs-ui);font-weight:500;letter-spacing:-.005em;font-variant-numeric:tabular-nums}

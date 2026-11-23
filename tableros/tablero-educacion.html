@@ -46,11 +46,10 @@ body{font-family:var(--font-body);font-size:15px;line-height:1.6;background:var(
 select,input[type=date]{font:inherit;font-size:13px;min-height:var(--target-min);padding:0 10px;border:1px solid var(--piedra-borde);border-radius:var(--radius-input);background:var(--papel);color:var(--fg)}
 select{cursor:pointer;max-width:220px}
 select:focus-visible,input:focus-visible{border-color:var(--fg)}
-.qbtn{font:inherit;font-size:13px;font-weight:400;min-height:var(--target-min);padding:0 16px;border:1px solid var(--piedra-borde);background:transparent;border-radius:var(--radius-pill);cursor:pointer;color:var(--fg)}
-.qbtn:hover{border-color:var(--fg)}
-.qbtn.on{background:var(--sumi);color:var(--papel);border-color:var(--sumi)}
-/* el rango rápido es el filtro principal: su opción activa va en lima */
-#quick .qbtn[data-q].on{background:var(--lima);color:var(--sumi);border-color:var(--lima)}
+.topbar .ad-chip,.sec-tools .ad-chip{font-size:13px;padding:0 16px}
+.ad-chip:hover{border-color:var(--sumi)}
+/* lo seleccionado va en lima (relleno con texto sumi) */
+.ad-chip[aria-pressed="true"]{background:var(--lima);border-color:var(--lima);color:var(--sumi)}
 .btn-reset{font:inherit;font-size:13px;font-weight:500;min-height:var(--target-min);padding:0 18px;background:var(--sumi);color:var(--papel);border:1px solid var(--sumi);border-radius:var(--radius-pill);cursor:pointer}
 .last-upd{margin-left:auto;font-size:13px;color:var(--gray-400)}
 
@@ -61,18 +60,14 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
 .sec-tools{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
 .box{background:var(--papel);border-radius:var(--radius-card);border:1px solid var(--gray-200)}
 
-/* KPIs */
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
-.kpi-card{padding:16px}
-.kpi-label{font-size:13px;color:var(--gray-600);font-weight:400;margin-bottom:4px}
-.kpi-value{font-family:var(--font-display);font-size:32px;font-weight:300;letter-spacing:-.04em;line-height:1.1;font-variant-numeric:tabular-nums}
-.kpi-sub{font-size:13px;line-height:1.5;color:var(--gray-400);margin-top:4px}
+/* KPIs: .ad-kpis; la barra de avance es .ad-barra */
+.ad-kpis{margin-bottom:28px;grid-template-columns:repeat(4,minmax(0,1fr))}
+.ad-kpi__n{font-size:clamp(24px,2.2vw,32px)}
+@media(max-width:1300px){.ad-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.ad-kpis{grid-template-columns:1fr}}
 .kpi-bwrap{margin-top:10px}
 .kpi-brow{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--gray-600);margin-bottom:4px}
 .kpi-brow span:last-child{white-space:nowrap}
-.kpi-bar{height:4px;background:var(--gray-200);overflow:hidden}
-.kpi-bfill{height:100%}
-.bg-pos{background:var(--c-pos)} .bg-mid{background:var(--c-mid)} .bg-neg{background:var(--c-neg)}
 .t-pos{color:var(--c-pos);font-weight:500} .t-mid{color:var(--c-mid);font-weight:500} .t-neg{color:var(--c-neg);font-weight:500} .t-mute{color:var(--gray-400)}
 
 /* COMPARATIVO */
@@ -89,9 +84,7 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
 .cum-cli .name{font-family:var(--font-display);font-weight:500;font-size:15px}
 .cum-line{display:grid;grid-template-columns:118px minmax(0,1fr) 64px;gap:10px;align-items:center;font-size:13px;color:var(--gray-600)}
 .cum-line .val{text-align:right;font-variant-numeric:tabular-nums}
-.cum-track{position:relative;height:10px;background:var(--sunken)}
-.cum-track i{display:block;height:100%}
-.cum-track b{position:absolute;top:-3px;bottom:-3px;left:66.667%;width:2px;background:var(--fg)}
+.cum-line .ad-barra{height:10px}
 .cum-line .det{grid-column:2 / 4;font-size:12px;color:var(--gray-400);margin-top:-4px}
 /* mes a mes: mes → cliente → nivel */
 .mm-chip{cursor:pointer;user-select:none;white-space:nowrap}
@@ -104,7 +97,7 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
 .chart-card{padding:16px;margin-bottom:20px}
 .chart-wrap{height:280px;position:relative}
 .three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
-.nivel-card{padding:16px}
+.nivel-card{padding:16px;gap:0}
 /* la etiqueta repite el color de la serie en los gráficos: pauta sumi, orgánico tinta-secundaria, otras tinta-tenue */
 .nivel-tag{display:inline-block;justify-self:start;font-size:13px;font-weight:500;padding:2px 12px;border-radius:var(--radius-pill);margin-bottom:12px}
 .tag-pau{background:var(--sumi);color:var(--papel)} .tag-org{background:var(--tinta-secundaria);color:var(--papel)} .tag-otr{background:var(--tinta-tenue);color:var(--sumi)}
@@ -112,25 +105,24 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
 .nm-label{font-size:13px;color:var(--gray-400);font-weight:400}
 .nm-value{font-family:var(--font-display);font-size:20px;font-weight:400;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 
-/* TABLAS */
-.tcard{margin-bottom:28px;overflow:hidden}
-.tscroll{overflow-x:auto}
-.tscroll table{width:100%;min-width:0;border-collapse:collapse;font-size:13px;line-height:1.4}
-.tscroll thead tr{background:var(--gray-50);border-bottom:1px solid var(--gray-200)}
-.tscroll thead th{font-weight:500;padding:10px;text-align:left;white-space:nowrap;color:var(--fg-muted);border-bottom:0;position:sticky;top:0;background:var(--gray-50)}
-.tscroll thead th.r{text-align:right}
-.tscroll thead th.grp,.tscroll tbody td.grp{border-left:1px solid var(--gray-200)}
-.tscroll tbody tr{border-bottom:1px solid var(--gray-200)}
-.tscroll tbody td{padding:8px 10px;color:var(--gray-600);white-space:nowrap;text-align:left;vertical-align:middle;border-top:0}
-.tscroll tbody td.r{text-align:right;font-variant-numeric:tabular-nums}
-.tscroll tbody tr:hover td{background:var(--gray-50)}
-.tscroll .tr-total td{font-weight:500;color:var(--fg);background:var(--gray-50) !important;border-top:1px solid var(--fg) !important}
+/* TABLAS: .ad-tabla; aquí solo la densidad, las columnas de cifras y los niveles */
+.tcard{margin-bottom:28px}
+.ad-tabla table{min-width:0;font-size:13px;line-height:1.4}
+.ad-tabla thead th{padding:10px;position:sticky;top:0;background:var(--papel)}
+.ad-tabla th,.ad-tabla td{text-align:left}
+.ad-tabla th.r,.ad-tabla td.r{text-align:right}
+.ad-tabla td.r{font-variant-numeric:tabular-nums}
+.ad-tabla th.grp,.ad-tabla td.grp{border-left:1px solid var(--gray-200)}
+.ad-tabla tbody td{padding:8px 10px;color:var(--gray-600);white-space:nowrap;vertical-align:middle}
+.ad-tabla tbody tr:hover td{background:var(--gray-50)}
+.ad-tabla .tr-total td{font-weight:500;color:var(--fg);background:var(--gray-50) !important;border-top:1px solid var(--fg) !important}
 .lv1 td{font-weight:500;color:var(--fg)}
 .lv3 td:first-child{padding-left:30px;color:var(--gray-600)}
-.foot-note{font-size:13px;color:var(--gray-400);padding:10px 14px;border-top:1px solid var(--gray-200);line-height:1.6}
+.foot-note{font-size:13px;color:var(--gray-400);padding:10px 0 0;line-height:1.6}
 .foot-note b{color:var(--gray-600)}
 .empty{padding:18px;text-align:center;color:var(--gray-400);font-size:13px}
-@media(max-width:1700px){.tscroll thead th,.tscroll tbody td{font-size:12px;padding:7px 8px}}
+@media(max-width:1700px){.ad-tabla thead th,.ad-tabla tbody td{font-size:12px;padding:7px 8px}}
+@media(pointer:coarse){.ad-tabla tbody td{padding-block:12px}}
 
 /* FUENTE (pie del riel) */
 .src-list{display:grid;gap:3px;margin-top:6px}
@@ -145,9 +137,9 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
 #ld-msg{color:var(--sobre-oscuro-300);font-size:13px}
 @media(prefers-reduced-motion:reduce){.spinner{animation:none}}
 
-@media(max-width:1300px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.three-col{grid-template-columns:1fr}}
+@media(max-width:1300px){.three-col{grid-template-columns:1fr}}
 @media(max-width:900px){.content{padding:16px}.topbar{position:static}}
-@media(max-width:560px){.kpi-grid{grid-template-columns:1fr}.nm-grid{grid-template-columns:repeat(2,1fr)}
+@media(max-width:560px){.nm-grid{grid-template-columns:repeat(2,1fr)}
   .fg,#quick{flex-wrap:wrap}.f-sep{display:none}.last-upd{margin-left:0}select{max-width:100%}.topbar,.content{padding-inline:16px}
   .bar-head{flex-wrap:wrap}.sec-tools{margin-left:0}.cum-line{grid-template-columns:96px minmax(0,1fr) 56px}}
 .main,.content,.tb-row{min-width:0}
@@ -210,14 +202,14 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
 
   <div class="content">
     <div class="sec-title" id="sec-kpi">Resumen del rango<span class="sec-note" id="rango-note"></span></div>
-    <div class="kpi-grid" id="kpi-grid"></div>
+    <div class="ad-kpis" id="kpi-grid"></div>
     <div class="cmp-note" id="cmp-note"></div>
 
     <div id="blk-cliente">
       <div class="sec-title" id="sec-cliente">Por cliente<span class="sec-note">metas de pauta del periodo 2027-1, proporcionales al rango</span></div>
       <div class="cmp">
-        <div class="box tcard"><div class="tscroll"><table><thead id="cli-head"></thead><tbody id="cli-body"></tbody></table></div></div>
-        <div class="box bars-card">
+        <div class="tcard"><div class="ad-tabla"><table><thead id="cli-head"></thead><tbody id="cli-body"></tbody></table></div></div>
+        <div class="bars-card">
           <h3>Cumplimiento por cliente</h3>
           <p class="bars-note">Presupuesto y leads contra la meta mensual de cada cliente (la parte de los días del rango); matrículas contra la meta de pauta del periodo. La raya marca el 100 %.</p>
           <div class="bars grow" id="cli-bars"></div>
@@ -227,16 +219,16 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
 
     <div class="sec-title" id="sec-mes">Mes a mes<span class="sec-note" id="mes-note">cada etapa del CRM cuenta en su propia fecha</span></div>
     <div class="box chart-card"><div class="chart-wrap"><canvas id="chart-mes"></canvas></div></div>
-    <div class="box tcard"><div class="tscroll"><table><thead id="mes-head"></thead><tbody id="mes-body"></tbody></table></div><div class="foot-note" id="mes-foot"></div></div>
+    <div class="tcard"><div class="ad-tabla"><table><thead id="mes-head"></thead><tbody id="mes-body"></tbody></table></div><div class="foot-note" id="mes-foot"></div></div>
 
     <div class="sec-title" id="sec-medio">Por nivel y medio<span class="sec-note">el medio del CRM sale de cada cliente; EIA no lo trae</span>
-      <span class="sec-tools"><button class="qbtn on" data-mv="niv" onclick="setMedioVista('niv')">Nivel · medio</button><button class="qbtn" data-mv="medio" onclick="setMedioVista('medio')">Solo medio</button><button class="qbtn" data-mv="cli" onclick="setMedioVista('cli')">Cliente · nivel</button></span></div>
-    <div class="box tcard"><div class="tscroll"><table><thead id="medio-head"></thead><tbody id="medio-body"></tbody></table></div></div>
+      <span class="sec-tools"><button class="ad-chip" aria-pressed="true" data-mv="niv" onclick="setMedioVista('niv')">Nivel · medio</button><button class="ad-chip" aria-pressed="false" data-mv="medio" onclick="setMedioVista('medio')">Solo medio</button><button class="ad-chip" aria-pressed="false" data-mv="cli" onclick="setMedioVista('cli')">Cliente · nivel</button></span></div>
+    <div class="tcard"><div class="ad-tabla"><table><thead id="medio-head"></thead><tbody id="medio-body"></tbody></table></div></div>
 
     <div class="sec-title" id="sec-fuentes">Pauta vs orgánico y otras fuentes<span class="sec-note">leads y matrículas del CRM de todas las fuentes · conversión = matrículas / leads del rango · aplican fechas, cliente y nivel</span></div>
     <div class="three-col" id="fuente-cards"></div>
     <div class="box chart-card"><div class="chart-wrap"><canvas id="chart-fu"></canvas></div></div>
-    <div class="box tcard"><div class="tscroll"><table><thead id="fu-head"></thead><tbody id="fu-body"></tbody></table></div>
+    <div class="tcard"><div class="ad-tabla"><table><thead id="fu-head"></thead><tbody id="fu-body"></tbody></table></div>
       <div class="foot-note">
         <b>Fuente</b>: hoja Consolidado Educación (pestañas EMBUDO, FUENTES y METAS), que arma un Apps Script cada hora con la misma lógica de cada tablero por cliente.
         <b>Inversión y leads plataforma</b>: solo conversión; branding y eventos quedan fuera. <b>Matrículas</b>: en Compensar son pagos; en todos, sin cancelados.
@@ -340,8 +332,8 @@ function fill(id, opts, sel, labelFn){ const el = document.getElementById(id), f
   if(sel && !opts.includes(sel)) el.value = '' }
 function prepare(){
   const q = [['mes','Este mes'],['mesAnt','Mes pasado'],['3m','Últimos 3 meses'],['anio','Este año']];
-  document.getElementById('quick').innerHTML = q.map(([k,l]) => `<button class="qbtn" data-q="${k}" onclick="setQuick('${k}')">${l}</button>`).join('')
-    + `<span class="f-sep"></span><button class="qbtn" data-mt onclick="toggleMetaTotal()" title="Meta completa del periodo ${META_PER}; las fechas no cambian">Meta ${META_PER}</button>`;
+  document.getElementById('quick').innerHTML = q.map(([k,l]) => `<button class="ad-chip" aria-pressed="false" data-q="${k}" onclick="setQuick('${k}')">${l}</button>`).join('')
+    + `<span class="f-sep"></span><button class="ad-chip" aria-pressed="false" data-mt onclick="toggleMetaTotal()" title="Meta completa del periodo ${META_PER}; las fechas no cambian">Meta ${META_PER}</button>`;
   if(!QUICK && document.getElementById('f-desde').value && document.getElementById('f-hasta').value) render();
   else setQuick(QUICK || 'mes');
 }
@@ -631,7 +623,7 @@ function renderSemanas(f){
   const acM = (k, i) => { let a = 0; for(let j = 0; j <= i; j++) if(k !== 'inv' || !sinInvSem(j)) a += metaSem(k, j); return a };
 
   // ── tarjetas: proyección de la etapa que se está viendo, avance a la fecha y semana en curso
-  const tarjeta = (l, v, sub) => `<div class="box kpi-card"><div class="kpi-label">${l}</div><div class="kpi-value">${v}</div><div class="kpi-sub">${sub}</div></div>`;
+  const tarjeta = (l, v, sub) => `<div class="ad-kpi"><div class="ad-kpi__l">${l}</div><div class="ad-kpi__n">${v}</div><div class="ad-kpi__m">${sub}</div></div>`;
   const k0 = SEM_E, f0 = fmtK(k0), pr = proyK(k0), mt = metaTotK(k0), aK = n ? acE(k0, n - 1) : 0, mK = n ? acM(k0, n - 1) : 0;
   const cK = c && k0 !== 'inv' ? acum(cmp, k0, n) : null, parK = k0 === 'lc' ? parL : k0 === 'mat' ? parM : !!(c && dd.crm && w0c < dd.crm);
   const cons = k0 === 'inv';
@@ -765,8 +757,8 @@ function renderSemanas(f){
 let ROWS = [];
 function render(){
   const f = F(); if(!f.desde || !f.hasta) return;
-  document.querySelectorAll('.qbtn[data-q]').forEach(b => b.classList.toggle('on', b.dataset.q === QUICK));
-  document.querySelectorAll('.qbtn[data-mt]').forEach(b => b.classList.toggle('on', META_TOTAL));
+  document.querySelectorAll('.ad-chip[data-q]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.q === QUICK)));
+  document.querySelectorAll('.ad-chip[data-mt]').forEach(b => b.setAttribute('aria-pressed', String(META_TOTAL)));
   ROWS = RAW.filter(r => pasa(r, f));
   const T = M(metasEn(f).reduce(addMeta, ROWS.reduce(add, Z())));
   document.getElementById('rango-note').textContent = `${fDate(f.desde)}-${fDate(f.hasta)} ${f.hasta.slice(0,4)} · ${days(f.desde, f.hasta)} días`;
@@ -782,11 +774,11 @@ function render(){
 }
 
 function bar(p, lbl){ if(p === null) return '';
-  return `<div class="kpi-bwrap"><div class="kpi-brow"><span>${lbl}</span><span class="${cls(p)}">${fP(p)}</span></div><div class="kpi-bar"><div class="kpi-bfill ${bgc(p)}" style="width:${Math.min(p*100,100)}%"></div></div></div>` }
+  return `<div class="kpi-bwrap"><div class="kpi-brow"><span>${lbl}</span><span class="${cls(p)}">${fP(p)}</span></div><div class="ad-barra" role="img" aria-label="${fP(p)}" style="--v:${Math.min(p*100,100)}%"><span></span></div></div>` }
 function renderKPIs(T, C){
   // C = totales del comparativo (null sin comparar); cada tarjeta suma una línea "vs …"
   const vs = (key, tipo) => C ? varHTML(T[key], C[key], tipo, key) : '';
-  const k = (l, v, sub, extra, key, tipo) => `<div class="box kpi-card"><div class="kpi-label">${l}</div><div class="kpi-value">${v}</div>${sub ? `<div class="kpi-sub">${sub}</div>` : ''}${key ? vs(key, tipo) : ''}${extra || ''}</div>`;
+  const k = (l, v, sub, extra, key, tipo) => `<div class="ad-kpi${key === 'mat' ? ' ad-kpi--on' : ''}"><div class="ad-kpi__l">${l}</div><div class="ad-kpi__n">${v}</div>${sub ? `<div class="ad-kpi__m">${sub}</div>` : ''}${key ? vs(key, tipo) : ''}${extra || ''}</div>`;
   const sinI = sinEtapa(ROWS, 'ins'), sinA = sinEtapa(ROWS, 'adm'), nota = l => l.length ? ` (sin ${l.join(', ')})` : '';
   const cplMeta = div(T.ppto, T.lm);
   document.getElementById('kpi-grid').innerHTML = [
@@ -806,12 +798,13 @@ const COLS = [['inv','Inversión','cop'],['lp','Leads plat.','n'],['lc','Leads C
   ['ins','Inscritos','n',1],['pLI','Lead → insc.','pct'],['adm','Admitidos','n'],['pIA','Insc. → adm.','pct'],['mat','Matrículas','n'],['pAM','Adm. → mat.','pct'],
   ['cpm','Costo / mat.','cop',1],['conv','Lead → mat.','pct']];
 const COLS_META = [['mm','Meta mat.','n',1],['cumM','Cumpl. mat.','cum'],['ppto','Presupuesto','cop'],['cumI','Ejecución','cum']];
+const est = p => p >= 1 ? 'ad-estado--ok' : p >= .5 ? 'ad-estado--parcial' : 'ad-estado--alerta';
 function cell(e, [k, , t, grp]){ const v = e[k], g = grp ? ' grp' : '';
   if(t === 'cop') return `<td class="r${g}">${fCOP(v)}</td>`;
   if(t === 'n') return `<td class="r${g}">${fN(v)}</td>`;
   if(t === 'pct') return `<td class="r${g}">${fP(v)}</td>`;
   if(t === 'dif') return `<td class="r${g} ${difCls(v)}">${v === null ? '—' : (v > 0 ? '+' : '') + fP(v)}</td>`;
-  if(t === 'cum') return `<td class="r${g} ${cls(v)}">${fP(v)}</td>`;
+  if(t === 'cum') return `<td class="r${g}">${v === null ? '<span class="t-mute">—</span>' : `<span class="ad-estado ${est(v)}">${fP(v)}</span>`}</td>`;
   if(t === 'var') return `<td class="r${g} ${v === null ? 't-mute' : v >= 0 ? 't-pos' : 't-neg'}">${v === null ? '—' : (v > 0 ? '+' : '') + fP(v)}</td>` }
 const head = (first, cols) => '<tr><th>' + first + '</th>' + cols.map(c => `<th class="r${c[3] ? ' grp' : ''}">${c[1]}</th>`).join('') + '</tr>';
 const fila = (cl, lab, e, cols) => `<tr${cl ? ` class="${cl}"` : ''}><td>${lab}</td>` + cols.map(c => cell(M(e), c)).join('') + '</tr>';
@@ -835,8 +828,8 @@ function renderClientes(f){
     : `<tr><td colspan="${cols.length + 1}" class="empty">Sin datos en el rango</td></tr>`;
   // cumplimiento de cada cliente: presupuesto y leads contra la meta mensual; matrículas contra la meta del periodo
   const linea = (lbl, real, meta, fmt) => { const p = div(real, meta);
-    if(p === null) return `<div class="cum-line"><span>${lbl}</span><div class="cum-track"><b></b></div><span class="val t-mute">sin meta</span></div>`;
-    return `<div class="cum-line"><span>${lbl}</span><div class="cum-track"><i class="${bgc(p)}" style="width:${Math.min(p, 1.5) / 1.5 * 100}%"></i><b></b></div>` +
+    if(p === null) return `<div class="cum-line"><span>${lbl}</span><div class="ad-barra"><i style="--meta:66.667%"></i></div><span class="val t-mute">sin meta</span></div>`;
+    return `<div class="cum-line"><span>${lbl}</span><div class="ad-barra${p >= 1 ? ' ad-barra--on' : ''}" style="--v:${Math.min(p, 1.5) / 1.5 * 100}%"><span></span><i style="--meta:66.667%"></i></div>` +
       `<span class="val ${cls(p)}">${fP(p)}</span><span class="det">${fmt(real)} de ${fmt(meta)}</span></div>` };
   document.getElementById('cli-bars').innerHTML = cs.length ? cs.map(c => { const e = g[c], mm = metaMes(f, m => m.cli === c);
     return `<div class="cum-cli"><span class="name">${esc(c)}</span>` + linea('Presupuesto', e.inv, mm.pm, fCOP) + linea('Leads CRM', e.lc, mm.lmm, fN) +
@@ -893,7 +886,7 @@ function renderMes(f){
   CHART_MES = new Chart(document.getElementById('chart-mes'), { data, options: opts });
 }
 
-function setMedioVista(k){ MEDIO_VISTA = k; document.querySelectorAll('[data-mv]').forEach(b => b.classList.toggle('on', b.dataset.mv === k)); renderMedio(F()) }
+function setMedioVista(k){ MEDIO_VISTA = k; document.querySelectorAll('[data-mv]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mv === k))); renderMedio(F()) }
 function renderMedio(f){
   const ord = L => (a, b) => (L.indexOf(a) + 1 || 99) - (L.indexOf(b) + 1 || 99) || a.localeCompare(b);
   const con = g => k => g[k].inv || g[k].lp || g[k].lc || g[k].ins || g[k].adm || g[k].mat;
@@ -925,7 +918,7 @@ function renderFuentes(f){
     [T[r.fu], MES[m][r.fu]].forEach(x => { x.lc += r.lc; x.mat += r.mat }) });
   const tl = FUENTES.reduce((a, k) => a + T[k].lc, 0), tm = FUENTES.reduce((a, k) => a + T[k].mat, 0);
   const it = (l, v) => `<div><div class="nm-label">${l}</div><div class="nm-value">${v}</div></div>`;
-  document.getElementById('fuente-cards').innerHTML = FUENTES.map(k => `<div class="box nivel-card"><span class="nivel-tag ${FU_TAG[k]}">${k}</span><div class="nm-grid">
+  document.getElementById('fuente-cards').innerHTML = FUENTES.map(k => `<div class="ad-card nivel-card${k === 'Pauta' ? ' is-on' : ''}"><span class="nivel-tag ${FU_TAG[k]}">${k}</span><div class="nm-grid">
     ${it('Leads CRM', fN(T[k].lc))}${it('% de los leads', fP(div(T[k].lc, tl)))}${it('Conversión', fP(div(T[k].mat, T[k].lc)))}
     ${it('Matrículas', fN(T[k].mat))}${it('% de las matrículas', fP(div(T[k].mat, tm)))}</div></div>`).join('');
   const ks = Object.keys(MES).sort();

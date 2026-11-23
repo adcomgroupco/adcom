@@ -15,6 +15,7 @@ adcom/
 ├── acta-entrega-vacaciones.html  acta temporal de continuidad durante vacaciones
 ├── informes/                     diagnósticos de sector (educación superior)
 ├── tableros/                     tablero de educación (lee la hoja Consolidado Educación) e inversión de la agencia
+├── banco-formatos/               plantillas HTML, hojas de trabajo e instructivo de replicación
 ├── playbook-creativo/            biblioteca visual de formatos y posibilidades de pauta
 ├── framework/                    framework del área digital · v0.3
 │   ├── index.html                el documento completo, con herramientas interactivas
@@ -27,7 +28,7 @@ adcom/
 ```
 
 Los `.html` de la raíz con nombre de informe o tablero (`tablero-educacion.html`,
-`diagnostico-educacion.html`, `inversion-agencia.html`) son redirecciones a su ruta nueva.
+`diagnostico-educacion.html`) son redirecciones a su ruta nueva.
 
 ## Sistema de diseño
 
@@ -39,7 +40,13 @@ Lo mínimo que cumple toda página:
 
 - Carga Inter Tight e Inter y enlaza `adcom-v2.css` (después del CSS viejo, si todavía lo usa).
 - Fondo `washi`, texto `sumi`, líneas de 1 px en `piedra`. Nada de sombras ni degradados.
-- La lima solo como relleno con texto `sumi`, nunca como texto ni línea. Una por pantalla.
+- La lima marca lo primero que hay que ver en cada bloque: la palabra clave del titular (`.ad-hl`), lo
+  seleccionado o actual (`.is-on`, `aria-current`), la cifra clave (`.ad-kpi--on`), lo cumplido
+  (`.ad-estado--ok`) y la acción principal. Una marca por bloque, varias por página. Siempre relleno con
+  texto `sumi`; nunca texto, borde ni línea; en gráficos, con borde `sumi`.
+- La información se ordena con los componentes `ad-*` de `adcom-v2.css` (sección 5b): tarjetas, filas,
+  cifras, estados, tablas, lecturas, pasos, barras, marcadores. No se escribe CSS suelto por página. Si falta
+  una pieza, se crea en `adcom-v2.css` y se documenta en `banco-formatos/componentes.html`.
 - Titulares en peso 500, cifras grandes en 300, etiquetas sin mayúsculas.
 - Lo que se toca es redondo (píldora); lo que se lee es recto (4 px tarjetas, 6 px paneles).
 - Foco visible de 2 px, objetivos táctiles de 44 px o más, contraste de texto de 4,5:1 o más.
@@ -62,6 +69,10 @@ Sus fichas editoriales viven en `assets/data.js`; las referencias, en `assets/re
 3. Súmalo a la tabla de estructura de este README.
 
 ## Convenciones
+
+El Banco de formatos publica `banco-formatos/INSTRUCTIVO.md` como guía web y descarga local.
+Después de actualizar el Markdown, ejecuta `node banco-formatos/actualizar-instructivo.mjs`
+con el paquete `marked` disponible y versiona el `instructivo-web.js` generado.
 
 - Los archivos de contenido usan `kebab-case`. Los documentos estándar de GitHub conservan su
   nombre convencional (`README.md`).

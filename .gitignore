@@ -2,6 +2,7 @@
 *.json
 *.csv
 *.xlsx
+!/banco-formatos/*.xlsx
 *.zip
 
 # Sistema y editores

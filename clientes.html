@@ -16,7 +16,6 @@
     *,*::before,*::after{box-sizing:border-box}
     body{margin:0;background:var(--washi);color:var(--sumi)}
     a{color:inherit}
-    button,input,select{font:inherit}
     .wrap{max-width:var(--container-max);margin:0 auto;padding:0 var(--space-6)}
 
     /* header y pie: los del portal */
@@ -38,60 +37,50 @@
     /* selector de vista: dos chips del sistema */
     .view-toggle{display:inline-flex;gap:var(--space-2);flex:none}
 
-    /* filtros: una franja entre líneas, sin caja */
+    /* filtros: una franja entre líneas, sin caja; campos y botón del sistema */
     .filters{display:grid;grid-template-columns:minmax(220px,1.4fr) repeat(3,minmax(150px,1fr)) auto;gap:var(--space-4);align-items:end;padding:var(--space-6) 0;border-top:1px solid var(--piedra);border-bottom:1px solid var(--piedra)}
-    .field{display:flex;flex-direction:column;gap:6px;min-width:0}
-    .field label{font-size:13px;color:var(--tinta-suave)}
-    .field input,.field select{width:100%;min-height:var(--target-min);font-size:15px;padding:10px 14px;border:1px solid var(--piedra-borde);border-radius:var(--radius-input);background:var(--papel);color:var(--sumi)}
-    .field input:focus,.field select:focus{border-color:var(--sumi)}
-    .field input::placeholder{color:var(--tinta-suave)}
-    .reset-btn{min-height:var(--target-min);padding:10px 22px;border:1px solid var(--sumi);border-radius:var(--radius-pill);background:transparent;color:var(--sumi);font-size:14px;font-weight:500;cursor:pointer;transition:background-color var(--duration-hover),color var(--duration-hover)}
-    .reset-btn:hover{background:var(--sumi);color:var(--papel)}
+    .filters .ad-field{min-width:0}
+    .filters .ad-input{width:100%;min-height:var(--target-min);font-size:15px;padding:10px 14px}
+    .filters .ad-input::placeholder{color:var(--tinta-suave)}
+    .ad-btn--outline:hover{background:var(--sumi);color:var(--papel)}
 
+    /* chips: el activo va en lima (relleno con texto sumi) */
     .category-strip{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:var(--space-6) 0}
     .ad-chip{transition:border-color var(--duration-hover)}
     .ad-chip:hover{border-color:var(--sumi)}
+    .ad-chip[aria-pressed="true"]{background:var(--lima);border-color:var(--lima);color:var(--sumi)}
 
-    /* tarjetas: rejilla de celdas separadas por líneas piedra, como .ad-logos */
+    /* tarjetas: .ad-card en rejilla; lo específico es el bloque de datos */
     .content-layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:var(--space-8);align-items:start;padding-bottom:var(--space-16)}
-    .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));border-top:1px solid var(--piedra);border-left:1px solid var(--piedra)}
-    .report-card{display:flex;flex-direction:column;gap:var(--space-4);padding:var(--space-6);border-right:1px solid var(--piedra);border-bottom:1px solid var(--piedra);min-width:0}
-    .report-card.is-selected{background:var(--papel)}
-    .card-k{font-size:13px;color:var(--tinta-suave)}
-    .report-card h3{margin:0;font-size:22px;line-height:1.2;letter-spacing:-.02em}
-    .report-card p{margin:0;font-size:15px;line-height:1.5;color:var(--tinta-secundaria)}
+    .cards{--col:250px;--gap:var(--space-4)}
+    .cards .ad-card{gap:var(--space-4);min-width:0}
+    .cards .ad-card__t,.detail .ad-card__t{margin-block-start:0;padding-block-start:0;font-size:22px}
     .meta-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4);margin:auto 0 0;padding-top:var(--space-4);border-top:1px solid var(--piedra)}
     .meta-grid dt{font-size:13px;color:var(--tinta-suave)}
     .meta-grid dd{margin:2px 0 0;font-size:14px;font-weight:500}
+    .ad-card.is-on .meta-grid dt{color:var(--sumi)}
+    .ad-card.is-on .meta-grid{border-top-color:var(--sumi)}
 
-    /* acciones: lo que se toca es redondo */
+    /* acciones: botones del sistema en tamaño compacto */
     .card-actions,.detail-actions,.table-links{display:flex;flex-wrap:wrap;gap:var(--space-2)}
-    .accion{display:inline-flex;align-items:center;justify-content:center;min-height:var(--target-min);padding:10px 16px;border:1px solid var(--piedra-borde);border-radius:var(--radius-pill);background:transparent;color:var(--sumi);font-size:14px;font-weight:500;line-height:1.2;text-decoration:none;cursor:pointer;transition:border-color var(--duration-hover),background-color var(--duration-hover)}
-    .accion:hover{border-color:var(--sumi)}
-    .accion.primary{background:var(--sumi);border-color:var(--sumi);color:var(--papel)}
-    .accion.primary:hover{background:var(--tinta-secundaria);border-color:var(--tinta-secundaria)}
+    .card-actions .ad-btn,.detail-actions .ad-btn,.table-links .ad-btn{min-height:var(--target-min);padding:10px 16px;font-size:14px}
     .sin-enlace{display:inline-flex;align-items:center;min-height:var(--target-min);font-size:14px;color:var(--tinta-suave)}
 
-    /* panel de detalle: panel recto (6px), en crema */
-    .detail{position:sticky;top:calc(var(--nav-height) + var(--space-6));border:1px solid var(--piedra);border-radius:var(--radius-panel);background:var(--crema)}
-    .detail-head{padding:var(--space-6) var(--space-6) var(--space-4);border-bottom:1px solid var(--piedra-borde)}
-    .detail-head span{font-size:13px;color:var(--tinta-suave)}
-    .detail-head h3{margin:var(--space-2) 0 0;font-size:26px;line-height:1.15;letter-spacing:-.02em}
-    .detail-body{display:grid;gap:var(--space-6);padding:var(--space-6)}
-    .detail-body p{margin:0;font-size:15px;line-height:1.5;color:var(--tinta-secundaria)}
+    /* panel de detalle: tarjeta del sistema, fija al desplazar */
+    .detail{position:sticky;top:calc(var(--nav-height) + var(--space-6));gap:var(--space-6)}
+    .detail .ad-card__t{font-size:26px}
     .detail-list{margin:0}
-    .detail-row{display:grid;grid-template-columns:100px minmax(0,1fr);gap:var(--space-4);padding:10px 0;border-bottom:1px solid var(--piedra-borde);font-size:14px}
+    .detail-row{display:grid;grid-template-columns:100px minmax(0,1fr);gap:var(--space-4);padding:10px 0;border-bottom:1px solid var(--piedra);font-size:14px}
     .detail-row dt{font-size:13px;color:var(--tinta-suave)}
     .detail-row dd{margin:0;font-weight:500}
 
-    /* vista de tabla */
-    .table-view{display:none;overflow-x:auto;margin-bottom:var(--space-16)}
+    /* vista de tabla: .ad-tabla; solo el ancho mínimo para que desplace en móvil */
+    .table-view{display:none;margin-bottom:var(--space-16)}
     .table-view.active{display:block}
-    table{width:100%;min-width:980px;border-collapse:collapse}
-    th{padding:12px 14px;text-align:left;font-size:13px;font-weight:500;color:var(--tinta-suave);border-bottom:1px solid var(--sumi)}
-    td{padding:10px 14px;border-bottom:1px solid var(--piedra);font-size:14px;vertical-align:middle}
-    td strong{font-weight:500}
-    th:first-child,td:first-child{padding-left:0}
+    .table-view .ad-tabla table{min-width:980px}
+    .table-view td{vertical-align:middle}
+    .table-view td strong{font-weight:500}
+    @media (pointer:fine){.table-view .ad-tabla th,.table-view .ad-tabla td{padding-block:8px}}
 
     .empty{padding:var(--space-8);border:1px dashed var(--piedra-borde);border-radius:var(--radius-card);color:var(--tinta-secundaria);text-align:center}
 
@@ -107,7 +96,6 @@
       .ad-nav__links{display:none}
       .hero{padding:var(--space-8) 0 var(--space-8)}
       .filters{grid-template-columns:1fr}
-      .report-card{padding:var(--space-6) var(--space-4)}
     }
   </style>
 </head>
@@ -144,41 +132,42 @@
   </section>
 
   <section class="filters" aria-label="Filtros">
-    <div class="field field--search">
+    <div class="ad-field field--search">
       <label for="searchInput">Buscar</label>
-      <input id="searchInput" type="search" placeholder="Cliente, informe, canal o resumen">
+      <input class="ad-input" id="searchInput" type="search" placeholder="Cliente, informe, canal o resumen">
     </div>
-    <div class="field">
+    <div class="ad-field">
       <label for="clientFilter">Cliente</label>
-      <select id="clientFilter"></select>
+      <select class="ad-input" id="clientFilter"></select>
     </div>
-    <div class="field">
+    <div class="ad-field">
       <label for="channelFilter">Fuente</label>
-      <select id="channelFilter"></select>
+      <select class="ad-input" id="channelFilter"></select>
     </div>
-    <div class="field">
+    <div class="ad-field">
       <label for="priorityFilter">Cobertura</label>
-      <select id="priorityFilter">
+      <select class="ad-input" id="priorityFilter">
         <option value="all">Todas</option>
         <option value="Alta">3 fuentes</option>
         <option value="Media">2 fuentes</option>
         <option value="Base">1 fuente</option>
       </select>
     </div>
-    <button class="reset-btn" type="button" id="resetBtn">Limpiar</button>
+    <button class="ad-btn ad-btn--outline" type="button" id="resetBtn">Limpiar</button>
   </section>
 
   <nav class="category-strip" id="categoryStrip" aria-label="Categorías"></nav>
 
   <section class="content-layout" id="cardsView" aria-label="Informes">
     <div id="informes">
-      <div class="cards" id="cardsContainer"></div>
+      <div class="ad-grid cards" id="cardsContainer"></div>
       <div class="empty" id="emptyState" hidden>No hay informes para los filtros actuales.</div>
     </div>
-    <aside class="detail" id="detailPanel" aria-live="polite"></aside>
+    <aside class="ad-card detail" id="detailPanel" aria-live="polite"></aside>
   </section>
 
   <section class="table-view" id="tableView" aria-label="Informes en tabla">
+    <div class="ad-tabla">
     <table>
       <thead>
         <tr>
@@ -193,6 +182,7 @@
       </thead>
       <tbody id="tableBody"></tbody>
     </table>
+    </div>
   </section>
 </main>
 
@@ -389,19 +379,19 @@
       emptyState.hidden = filtered.length > 0;
       filtered.forEach((report) => {
         const card = document.createElement("article");
-        card.className = `report-card${reportId(report) === selectedId ? " is-selected" : ""}`;
+        card.className = `ad-card${reportId(report) === selectedId ? " is-on" : ""}`;
         card.innerHTML = `
-          <span class="card-k">${escapeHtml(report.client)} · ${escapeHtml(report.category)}</span>
-          <h3>${escapeHtml(report.title)}</h3>
-          <p>${escapeHtml(report.summary)}</p>
+          <span class="ad-card__n">${escapeHtml(report.client)} · ${escapeHtml(report.category)}</span>
+          <h3 class="ad-card__t">${escapeHtml(report.title)}</h3>
+          <p class="ad-card__d">${escapeHtml(report.summary)}</p>
           <dl class="meta-grid">
             <div><dt>Fuentes</dt><dd>${escapeHtml(report.channel)}</dd></div>
             <div><dt>Cobertura</dt><dd>${coverageLabel(report.priority)}</dd></div>
-            <div><dt>Estado</dt><dd>${escapeHtml(report.status)}</dd></div>
+            <div><dt>Estado</dt><dd>${statusBadge(report.status)}</dd></div>
             <div><dt>Accesos</dt><dd>${(report.links || []).length}</dd></div>
           </dl>
           <div class="card-actions">
-            <button class="accion" type="button" data-select="${escapeHtml(reportId(report))}">Detalle</button>
+            <button class="ad-btn ad-btn--outline" type="button" data-select="${escapeHtml(reportId(report))}">Detalle</button>
             ${renderLinkButtons(report.links, true)}
           </div>
         `;
@@ -423,7 +413,7 @@
           <td>${escapeHtml(report.title)}</td>
           <td>${escapeHtml(report.category)}</td>
           <td>${escapeHtml(report.channel)}</td>
-          <td>${escapeHtml(report.status)}</td>
+          <td>${statusBadge(report.status)}</td>
           <td>${coverageLabel(report.priority)}</td>
           <td><div class="table-links">${renderLinkButtons(report.links, false)}</div></td>
         `;
@@ -434,27 +424,26 @@
     function renderDetail(report) {
       if (!report) {
         detailPanel.innerHTML = `
-          <div class="detail-head"><span>Detalle</span><h3>Sin selección</h3></div>
-          <div class="detail-body"><p>No hay informes visibles.</p></div>
+          <span class="ad-card__n">Detalle</span>
+          <h3 class="ad-card__t">Sin selección</h3>
+          <div class="ad-lectura"><p>No hay informes visibles.</p></div>
         `;
         return
       }
       detailPanel.innerHTML = `
-        <div class="detail-head">
-          <span>${escapeHtml(report.client)} · ${escapeHtml(report.category)}</span>
-          <h3>${escapeHtml(report.title)}</h3>
-        </div>
-        <div class="detail-body">
-          <p>${escapeHtml(report.summary)}</p>
+        <span class="ad-card__n">${escapeHtml(report.client)} · ${escapeHtml(report.category)}</span>
+        <h3 class="ad-card__t">${escapeHtml(report.title)}</h3>
+        <div class="ad-lectura"><p>${escapeHtml(report.summary)}</p></div>
+        <div>
           <dl class="detail-list">
             <div class="detail-row"><dt>Fuentes</dt><dd>${escapeHtml(report.channel)}</dd></div>
-            <div class="detail-row"><dt>Estado</dt><dd>${escapeHtml(report.status)}</dd></div>
+            <div class="detail-row"><dt>Estado</dt><dd>${statusBadge(report.status, true)}</dd></div>
             <div class="detail-row"><dt>Accesos</dt><dd>${(report.links || []).length}</dd></div>
             <div class="detail-row"><dt>Cobertura</dt><dd>${coverageLabel(report.priority)}</dd></div>
           </dl>
           <div class="detail-actions">
             ${renderLinkButtons(report.links, true)}
-            <a class="accion" href="https://docs.google.com/spreadsheets/d/1oavWtOKhH9AWnYPnRkPnH6-RoGV62YLcFY2Rxd_2CC0/edit?gid=0#gid=0" target="_blank" rel="noopener noreferrer">Ver matriz</a>
+            <a class="ad-btn ad-btn--outline" href="https://docs.google.com/spreadsheets/d/1oavWtOKhH9AWnYPnRkPnH6-RoGV62YLcFY2Rxd_2CC0/edit?gid=0#gid=0" target="_blank" rel="noopener noreferrer">Ver matriz</a>
           </div>
         </div>
       `
@@ -550,9 +539,15 @@
     function renderLinkButtons(links = [], firstPrimary = false) {
       if (!links.length) return `<span class="sin-enlace">Sin enlace</span>`;
       return links.map((link, index) => {
-        const primary = firstPrimary && index === 0 ? " class=\"accion primary\"" : " class=\"accion\"";
+        const primary = firstPrimary && index === 0 ? " class=\"ad-btn ad-btn--dark\"" : " class=\"ad-btn ad-btn--outline\"";
         return `<a${primary} href="${escapeAttribute(link.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>`
       }).join("")
+    }
+
+    function statusBadge(status, key = false) {
+      const ok = status === "Disponible";
+      const cls = ok ? (key ? "ad-estado ad-estado--ok" : "ad-estado") : "ad-estado ad-estado--pendiente";
+      return `<span class="${cls}">${escapeHtml(status)}</span>`
     }
 
     function coverageLabel(priority) {

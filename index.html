@@ -23,16 +23,6 @@
     .hero h1{margin:var(--space-4) 0 0}
     .hero .ad-t-lead{margin:var(--space-6) 0 0;max-width:40ch;color:var(--tinta-secundaria)}
 
-    .docs{border-top:1px solid var(--piedra);margin:0;padding:0;list-style:none}
-    .doc a{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:var(--space-4) var(--space-8);align-items:center;padding:var(--space-8) 0;border-bottom:1px solid var(--piedra);color:var(--sumi);text-decoration:none}
-    .doc .ad-n{background:var(--washi)}
-    .doc__k{display:block;font-size:13px;color:var(--tinta-suave)}
-    .doc__t{display:block;margin-top:4px;font-family:var(--font-display);font-size:clamp(22px,2.6vw,32px);font-weight:500;line-height:1.15;letter-spacing:-.02em;text-wrap:balance}
-    .doc__go{font-size:15px;color:var(--tinta-secundaria);white-space:nowrap}
-    .doc a:hover .doc__go{color:var(--sumi)}
-    .doc a:hover .doc__t{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px}
-    .doc a:focus-visible{outline-offset:-2px}
-
     .colofon{padding:var(--space-24) 0 var(--space-16)}
     .colofon dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--space-6) var(--space-8);margin:0}
     .colofon dt{font-size:13px;color:var(--tinta-suave)}
@@ -42,8 +32,6 @@
     @media (max-width:640px){
       .ad-nav__links{display:none}
       .hero{padding:var(--space-16) 0 var(--space-12)}
-      .doc a{grid-template-columns:auto minmax(0,1fr);padding:var(--space-6) 0}
-      .doc__go{grid-column:2}
     }
   </style>
 </head>
@@ -55,6 +43,7 @@
     <a class="marca" href="index.html">Adcom<span>área digital</span></a>
     <div class="ad-nav__links">
       <a href="framework/index.html">Framework</a>
+      <a href="banco-formatos/index.html">Banco de formatos</a>
       <a href="playbook-creativo/index.html">Playbook</a>
       <a href="clientes.html">Clientes</a>
       <a href="tableros/tablero-educacion.html">Tableros</a>
@@ -69,45 +58,50 @@
       <span class="ad-ln">Cómo operamos.</span>
       <span class="ad-ln">Cómo lo <span class="ad-hl">medimos</span>.</span>
     </h1>
-    <p class="ad-t-lead">El framework de operación, el playbook creativo, los tableros por cliente y los diagnósticos de sector, en un solo lugar.</p>
+    <p class="ad-t-lead">El framework de operación, las plantillas de trabajo, el playbook creativo y los tableros del área digital.</p>
   </section>
 
   <section class="wrap" id="documentos" aria-label="Documentos">
-    <ol class="docs">
-      <li class="doc"><a href="framework/index.html">
+    <ol class="ad-filas">
+      <li><a class="ad-fila" href="framework/index.html">
         <span class="ad-n ad-n--md" aria-hidden="true">1</span>
-        <span><span class="doc__k">Framework · v0.3</span><span class="doc__t">Framework del área digital</span></span>
-        <span class="doc__go">Abrir ›</span>
+        <span><span class="ad-fila__k">Framework · v0.3</span><span class="ad-fila__t">Framework del área digital</span></span>
+        <span class="ad-fila__go">Abrir ›</span>
       </a></li>
-      <li class="doc"><a href="playbook-creativo/index.html">
+      <li><a class="ad-fila" href="playbook-creativo/index.html">
         <span class="ad-n ad-n--md" aria-hidden="true">2</span>
-        <span><span class="doc__k">Biblioteca creativa</span><span class="doc__t">Playbook creativo de medios digitales</span></span>
-        <span class="doc__go">Abrir ›</span>
+        <span><span class="ad-fila__k">Biblioteca creativa</span><span class="ad-fila__t">Playbook creativo de medios digitales</span></span>
+        <span class="ad-fila__go">Abrir ›</span>
       </a></li>
-      <li class="doc"><a href="clientes.html">
+      <li><a class="ad-fila" href="banco-formatos/index.html">
         <span class="ad-n ad-n--md" aria-hidden="true">3</span>
-        <span><span class="doc__k">Hub</span><span class="doc__t">Informes y tableros por cliente</span></span>
-        <span class="doc__go">Abrir ›</span>
+        <span><span class="ad-fila__k">Plantillas reutilizables</span><span class="ad-fila__t">Banco de formatos</span></span>
+        <span class="ad-fila__go">Abrir ›</span>
       </a></li>
-      <li class="doc"><a href="informes/diagnostico-educacion.html">
+      <li><a class="ad-fila" href="clientes.html">
         <span class="ad-n ad-n--md" aria-hidden="true">4</span>
-        <span><span class="doc__k">Diagnóstico · Educación</span><span class="doc__t">Educación superior y leads de valor</span></span>
-        <span class="doc__go">Abrir ›</span>
+        <span><span class="ad-fila__k">Hub</span><span class="ad-fila__t">Informes y tableros por cliente</span></span>
+        <span class="ad-fila__go">Abrir ›</span>
       </a></li>
-      <li class="doc"><a href="tableros/tablero-educacion.html">
+      <li><a class="ad-fila" href="informes/diagnostico-educacion.html">
         <span class="ad-n ad-n--md" aria-hidden="true">5</span>
-        <span><span class="doc__k">Tablero · Educación</span><span class="doc__t">Tablero de pauta de educación</span></span>
-        <span class="doc__go">Abrir ›</span>
+        <span><span class="ad-fila__k">Diagnóstico · Educación</span><span class="ad-fila__t">Educación superior y leads de valor</span></span>
+        <span class="ad-fila__go">Abrir ›</span>
       </a></li>
-      <li class="doc"><a href="tableros/inversion-agencia.html">
+      <li><a class="ad-fila" href="tableros/tablero-educacion.html">
         <span class="ad-n ad-n--md" aria-hidden="true">6</span>
-        <span><span class="doc__k">Tablero · Agencia</span><span class="doc__t">Inversión de la agencia</span></span>
-        <span class="doc__go">Abrir ›</span>
+        <span><span class="ad-fila__k">Tablero · Educación</span><span class="ad-fila__t">Tablero de pauta de educación</span></span>
+        <span class="ad-fila__go">Abrir ›</span>
       </a></li>
-      <li class="doc"><a href="acta-entrega-vacaciones.html">
+      <li><a class="ad-fila" href="tableros/inversion-agencia.html">
         <span class="ad-n ad-n--md" aria-hidden="true">7</span>
-        <span><span class="doc__k">Documento temporal</span><span class="doc__t">Acta de entrega de vacaciones</span></span>
-        <span class="doc__go">Abrir ›</span>
+        <span><span class="ad-fila__k">Tablero · Agencia</span><span class="ad-fila__t">Inversión de la agencia</span></span>
+        <span class="ad-fila__go">Abrir ›</span>
+      </a></li>
+      <li><a class="ad-fila" href="acta-entrega-vacaciones.html">
+        <span class="ad-n ad-n--md" aria-hidden="true">8</span>
+        <span><span class="ad-fila__k">Documento temporal</span><span class="ad-fila__t">Acta de entrega de vacaciones</span></span>
+        <span class="ad-fila__go">Abrir ›</span>
       </a></li>
     </ol>
   </section>

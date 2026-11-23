@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#F7F6F2">
+  <title>Flow de medios | Adcom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
+  <link rel="stylesheet" href="../assets/css/adcom-v2.css">
+  <link rel="stylesheet" href="formatos.css">
+  <link rel="stylesheet" href="css/flow-medios.css">
+</head>
+<body>
+<!--
+  Plantilla: FLOW DE MEDIOS Y FORECAST (presentación HTML).
+  Framework: operacion-tactica.html 26—29 y 94.5 (el flow vive en hoja de cálculo por
+  cliente y periodo; esta página lo presenta) y estrategia.html 21 (tres escenarios).
+  Nombre del entregable (punto 71): [CLIENTE]_FLOW_[Tema y periodo]_[Fecha]_[Versión].
+  Los datos viven en js/flow-medios.js (bloque «Reemplazar con los datos del cliente»)
+  y deben cuadrar con flow-medios.xlsx. No escribas cifras a mano en este HTML.
+-->
+<a class="skip-link" href="#contenido">Ir al contenido</a>
+<header class="ad-nav formato-nav">
+  <nav class="ad-nav__in" aria-label="Principal">
+    <a class="formato-nav__marca" href="../index.html">Adcom</a>
+    <div class="ad-nav__links">
+      <a href="#calendario">Calendario</a>
+      <a href="#programas">Forecast</a>
+      <a href="#escenarios">Escenarios</a>
+      <a href="index.html">Banco de formatos</a>
+    </div>
+  </nav>
+</header>
+<main class="formato-shell formato-contenido" id="contenido" tabindex="-1">
+
+  <!-- 1. Portada: cliente, tema, periodo y estado. La ficha dice qué cuenta como resultado. -->
+  <header class="formato-portada">
+    <p class="formato-meta">Plantilla con datos ficticios · <span id="flow-cliente">Cliente</span> · Flow de medios</p>
+    <h1 class="ad-t-statement"><span class="ad-ln">Flow de medios</span><span class="ad-ln"><span class="ad-hl" id="flow-nombre">Periodo.</span></span></h1>
+    <p class="ad-t-lead" id="flow-lectura">La lectura se calcula con los datos del plan.</p>
+    <dl class="formato-ficha">
+      <div><dt>Periodo</dt><dd id="flow-periodo">Sin dato</dd></div>
+      <div><dt>Moneda</dt><dd id="flow-moneda">Sin dato</dd></div>
+      <div><dt>Resultado de medios</dt><dd id="flow-resultado">Sin dato</dd></div>
+      <div><dt>Resultado de negocio</dt><dd id="flow-negocio">Sin dato</dd></div>
+      <div><dt>Documento</dt><dd id="flow-documento">Sin dato</dd></div>
+      <div><dt>Estado</dt><dd id="flow-estado">Sin dato</dd></div>
+    </dl>
+    <noscript><p class="formato-nota">Esta plantilla calcula las cifras con JavaScript. Ábrela en un navegador con scripts activos.</p></noscript>
+  </header>
+
+  <!-- 2. Resumen: cinco KPI proyectados. Se recalculan con el escenario elegido.
+       Solo una cifra lleva lima (ad-kpi--on: la inversión). No sumes unidades distintas. -->
+  <section class="formato-seccion" aria-labelledby="resumen">
+    <div class="flow-cabecera">
+      <div class="ad-sec-cab"><h2 id="resumen">Qué compra esta inversión</h2><p>Cinco cifras que se recalculan con el escenario elegido.</p></div>
+      <div class="flow-escenarios-control" role="group" aria-label="Escenario de lectura">
+        <button type="button" class="ad-chip" data-escenario="base" aria-pressed="true">Base</button>
+        <button type="button" class="ad-chip" data-escenario="favorable" aria-pressed="false">Favorable</button>
+        <button type="button" class="ad-chip" data-escenario="restrictivo" aria-pressed="false">Restrictivo</button>
+      </div>
+    </div>
+    <dl class="ad-kpis" id="flow-kpi" aria-live="polite"></dl>
+    <p class="formato-nota flow-nota" id="flow-escenario-nota"></p>
+  </section>
+
+  <!-- 3. Rol por medio: cada línea tiene un trabajo, un KPI y un costo supuesto con fuente.
+       Resultado = inversión ÷ costo (CPM rinde por mil). La reserva va aparte. -->
+  <section class="formato-seccion" aria-labelledby="medios">
+    <div class="ad-sec-cab"><h2 id="medios">Cada medio tiene un trabajo</h2></div>
+    <div class="ad-tabla" role="region" aria-labelledby="medios-caption" tabindex="0">
+      <table>
+        <caption id="medios-caption">Inversión del periodo por línea, rol, costo supuesto y resultado proyectado en el escenario elegido.</caption>
+        <thead><tr><th scope="col">Medio y táctica</th><th scope="col">Etapa</th><th scope="col">Rol</th><th scope="col">Costo supuesto</th><th scope="col" class="valor">Inversión</th><th scope="col" class="valor">Participación</th><th scope="col" class="valor">Resultado proyectado</th></tr></thead>
+        <tbody id="flow-medios-filas"></tbody>
+        <tfoot id="flow-medios-pie"></tfoot>
+      </table>
+    </div>
+  </section>
+
+  <!-- 4. Calendario tipo Gantt: medio × mes, con las semanas al aire y los momentos del
+       periodo. El monto de cada celda es la inversión mensual de la línea. -->
+  <section class="formato-seccion" aria-labelledby="calendario" id="calendario-seccion">
+    <div class="ad-sec-cab"><h2 id="calendario">Calendario de pauta</h2></div>
+    <p>Cada fila es una línea del flow. La tira muestra las semanas con pauta; la cifra, la inversión del mes.</p>
+    <div class="ad-tabla flow-gantt-marco" role="region" aria-labelledby="flow-gantt-caption" tabindex="0">
+      <table class="flow-gantt" id="flow-gantt"></table>
+    </div>
+  </section>
+
+  <!-- 5. Inversión por mes, apilada por etapa. Base cero; series por luminosidad.
+       La tabla debajo es la versión accesible del gráfico. -->
+  <section class="formato-seccion" aria-labelledby="ritmo">
+    <div class="ad-sec-cab"><h2 id="ritmo">Cuándo pesa la inversión</h2></div>
+    <figure class="ad-figura flow-figura">
+      <svg id="flow-grafico" role="img" aria-labelledby="flow-grafico-titulo"><title id="flow-grafico-titulo">Inversión mensual apilada por etapa del embudo</title></svg>
+      <figcaption><ul class="ad-leyenda" id="flow-leyenda"></ul></figcaption>
+    </figure>
+    <div class="ad-lectura" id="flow-grafico-lectura"></div>
+    <details class="ad-datos flow-detalle">
+      <summary>Ver la tabla del gráfico</summary>
+      <div class="ad-tabla flow-tabla-datos" role="region" aria-label="Inversión mensual por etapa" tabindex="0"><table id="flow-grafico-tabla"></table></div>
+    </details>
+  </section>
+
+  <!-- 6. Forecast por programa (variante educación). En otros sectores: producto, línea o
+       vertical. Meta y tasa salen del cliente (CRM / Admisiones), no de la plataforma. -->
+  <section class="formato-seccion" aria-labelledby="programas" id="programas-seccion">
+    <div class="ad-sec-cab"><h2 id="programas">Forecast por programa</h2></div>
+    <div class="formato-filtros">
+      <label>Nivel
+        <select id="flow-nivel"><option value="">Todos</option><option>Pregrado</option><option>Posgrado</option></select>
+      </label>
+    </div>
+    <p class="formato-nota flow-aviso" id="flow-programas-aviso" role="status" hidden></p>
+    <div class="ad-tabla" role="region" aria-labelledby="flow-programas-caption" tabindex="0">
+      <table>
+        <caption id="flow-programas-caption"></caption>
+        <thead><tr><th scope="col">Programa</th><th scope="col">Nivel</th><th scope="col" class="valor">Inversión</th><th scope="col" class="valor">Leads</th><th scope="col" class="valor">CPL</th><th scope="col" class="valor">Tasa a matrícula</th><th scope="col" class="valor">Matrículas</th><th scope="col" class="valor">Meta</th><th scope="col" class="valor">Cumplimiento</th></tr></thead>
+        <tbody id="flow-programas-filas"></tbody>
+        <tfoot id="flow-programas-pie"></tfoot>
+      </table>
+    </div>
+  </section>
+
+  <!-- 7. Escenarios (estrategia.html 21): condición, señal y respuesta escritas antes de
+       activar. No es «optimista y pesimista»: es una condición con su respuesta. -->
+  <section class="formato-seccion" aria-labelledby="escenarios" id="escenarios-seccion">
+    <div class="ad-sec-cab"><h2 id="escenarios">Tres escenarios, una respuesta para cada uno</h2></div>
+    <ol class="ad-grid flow-escenarios" id="flow-escenarios-tarjetas" style="--col:260px"></ol>
+    <div class="ad-tabla" role="region" aria-label="Comparación de escenarios" tabindex="0">
+      <table id="flow-escenarios-tabla"></table>
+    </div>
+    <p class="ad-lectura flow-nota">Más inversión no rinde en proporción: el peso adicional compra audiencias más caras. Por eso la reserva se proyecta con costo marginal y no con regla de tres.</p>
+  </section>
+
+  <!-- 8. Supuestos y fuentes: cada costo y tasa con su procedencia y estado.
+       Estados: Histórico, Estimado, En verificación, Sin dato. -->
+  <section class="formato-seccion" aria-labelledby="supuestos">
+    <div class="ad-sec-cab"><h2 id="supuestos">Supuestos y fuentes</h2></div>
+    <div class="ad-tabla" role="region" aria-labelledby="supuestos-caption" tabindex="0">
+      <table>
+        <caption id="supuestos-caption">Lo que usamos para proyectar y de dónde sale.</caption>
+        <thead><tr><th scope="col">Supuesto</th><th scope="col" class="valor">Valor</th><th scope="col">Fuente</th><th scope="col">Estado</th></tr></thead>
+        <tbody id="flow-supuestos"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 9. Reglas de ajuste y próximos pasos: responsable, fecha y criterio de verificación. -->
+  <section class="formato-seccion" aria-labelledby="reglas">
+    <div class="ad-sec-cab"><h2 id="reglas">Primero aprender, luego mover</h2></div>
+    <ol class="ad-pasos flow-reglas" id="flow-reglas"></ol>
+    <div class="ad-tabla" role="region" aria-labelledby="pasos-caption" tabindex="0">
+      <table>
+        <caption id="pasos-caption">Próximos pasos antes de activar</caption>
+        <thead><tr><th scope="col">Acción</th><th scope="col">Responsable</th><th scope="col">Fecha</th><th scope="col">Criterio</th></tr></thead>
+        <tbody id="flow-pasos"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<footer class="ad-foot">
+  <div class="ad-foot__in"><span>Adcom · Área digital</span><span>Fuente de cifras: flow-medios.xlsx del mismo periodo</span></div>
+</footer>
+<script src="js/flow-medios.js"></script>
+</body>
+</html>
