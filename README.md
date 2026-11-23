@@ -28,7 +28,7 @@ adcom/
 ```
 
 Los `.html` de la raíz con nombre de informe o tablero (`tablero-educacion.html`,
-`diagnostico-educacion.html`, `inversion-agencia.html`) son redirecciones a su ruta nueva.
+`diagnostico-educacion.html`) son redirecciones a su ruta nueva.
 
 ## Sistema de diseño
 
