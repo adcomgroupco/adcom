@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#F7F6F2">
+  <title>Componentes | Banco de formatos | Adcom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
+  <link rel="stylesheet" href="../assets/css/adcom-v2.css">
+  <link rel="stylesheet" href="formatos.css">
+  <style>
+    /* Solo la presentación de la galería. Los componentes viven en adcom-v2.css, sección 5b. */
+    .cp-bloque{padding-block:var(--space-16);border-top:1px solid var(--piedra)}
+    .cp-demo{padding:var(--space-8);background:var(--washi);border:1px dashed var(--piedra-borde);border-radius:var(--radius-panel)}
+    .cp-demo--oscuro{background:var(--negro-escena)}
+    .cp-uso{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--space-6);margin-block-start:var(--space-4);font-size:15px;color:var(--tinta-secundaria)}
+    .cp-uso b{display:block;margin-block-end:4px;font-weight:500;color:var(--sumi)}
+    .cp-uso p{margin:0}
+    .cp-cod{margin:var(--space-4) 0 0;padding:var(--space-4);background:var(--crema);border:1px solid var(--piedra);border-radius:var(--radius-card);overflow-x:auto;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--tinta-secundaria);white-space:pre}
+    .cp-reglas{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:var(--space-6);margin:0;padding:0;list-style:none}
+    .cp-reglas li{padding-block-start:var(--space-4);border-top:1px solid var(--sumi)}
+    .cp-reglas h3{margin:0 0 var(--space-2);font-size:19px}
+    .cp-reglas p{margin:0;font-size:15px;color:var(--tinta-secundaria)}
+    .cp-indice{display:flex;flex-wrap:wrap;gap:var(--space-2)}
+    @media (max-width:760px){.cp-uso{grid-template-columns:minmax(0,1fr)}}
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Ir al contenido</a>
+<header class="ad-nav formato-nav">
+  <nav class="ad-nav__in" aria-label="Principal">
+    <a class="formato-nav__marca" href="../index.html">Adcom</a>
+    <div class="ad-nav__links"><a href="index.html">Banco de formatos</a></div>
+  </nav>
+</header>
+
+<main class="formato-shell" id="contenido" tabindex="-1">
+  <header class="formato-portada">
+    <p class="ad-eyebrow">Sistema de diseño v2 · Banco de formatos</p>
+    <h1 class="ad-t-statement"><span class="ad-ln">Componentes para</span><span class="ad-ln">ordenar la <span class="ad-hl">información</span>.</span></h1>
+    <p class="ad-t-lead">Cada tipo de contenido tiene su pieza. Se usan estas; si falta una, se crea en <code>adcom-v2.css</code> (sección 5b) y se suma aquí. Nunca se escribe CSS suelto por página.</p>
+  </header>
+
+  <!-- ============ LA REGLA DE LA LIMA ============ -->
+  <section class="cp-bloque" aria-labelledby="t-lima">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">Regla general</p>
+      <h2 id="t-lima">La lima marca lo primero que hay que ver.</h2>
+      <p>Una marca por bloque, varias por página. Siempre es relleno con texto <b>sumi</b>; nunca texto, borde ni línea.</p>
+    </div>
+    <ul class="cp-reglas" role="list">
+      <li><h3>Palabra clave del titular</h3><p>Resaltador <code>.ad-hl</code> sobre la idea que sostiene la página.</p></li>
+      <li><h3>Lo seleccionado o actual</h3><p><code>.is-on</code>, <code>aria-current</code> o <code>aria-pressed</code>: la tarjeta, fila, chip o pestaña activa.</p></li>
+      <li><h3>La cifra clave</h3><p><code>.ad-kpi--on</code> o <code>.ad-fill</code>: el número que responde la pregunta del bloque.</p></li>
+      <li><h3>Lo cumplido</h3><p><code>.ad-estado--ok</code> y el último paso de un recorrido (<code>.ad-n--on</code>).</p></li>
+      <li><h3>La acción principal</h3><p><code>.ad-btn--accent</code>: «Hablemos», «Descargar», «Ver plantilla» principal.</p></li>
+      <li><h3>En un gráfico</h3><p>Solo el punto o la barra destacada, con borde sumi: la lima sobre papel da 1,1:1 y sola no se lee.</p></li>
+    </ul>
+  </section>
+
+  <!-- ============ CABECERA DE SECCIÓN ============ -->
+  <section class="cp-bloque" aria-labelledby="t-cab">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">Estructura</p>
+      <h2 id="t-cab">Cabecera de sección</h2>
+      <p>Eyebrow, titular que afirma algo y entradilla. Abre cada sección de un documento largo.</p>
+    </div>
+    <div class="cp-demo">
+      <div class="ad-sec-cab" style="margin:0">
+        <p class="ad-eyebrow">Resultados</p>
+        <h2>El costo por registro se movió en <span class="ad-hl">tres tramos</span>.</h2>
+        <p>Ventana de 28 días contra los 28 anteriores, con la misma definición de resultado.</p>
+      </div>
+    </div>
+    <div class="cp-uso"><p><b>Cuándo</b>Al abrir cada sección. El h2 afirma, no rotula («Resultados» no sirve).</p><p><b>Clases</b><code>.ad-sec-cab</code> · <code>.ad-eyebrow</code> · <code>.ad-hl</code></p></div>
+  </section>
+
+  <!-- ============ TARJETA ============ -->
+  <section class="cp-bloque" aria-labelledby="t-card">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">Contenido</p>
+      <h2 id="t-card">Tarjeta</h2>
+      <p>Para elegir entre opciones o presentar pilares, programas o frentes. La seleccionada se rellena de lima.</p>
+    </div>
+    <div class="cp-demo cp-demo--oscuro">
+      <div class="ad-grid" style="--col:220px">
+        <button class="ad-card is-on" style="--card-h:200px" type="button" aria-pressed="true"><span class="ad-card__n">4.1</span><span class="ad-card__t">Excelencia operativa</span><span class="ad-card__d">Hacer bien el trabajo, siempre.</span></button>
+        <button class="ad-card ad-card--dark" style="--card-h:200px" type="button" aria-pressed="false"><span class="ad-card__n">4.2</span><span class="ad-card__t">Inteligencia estratégica</span><span class="ad-card__d">Conectar con el negocio.</span></button>
+        <button class="ad-card ad-card--dark" style="--card-h:200px" type="button" aria-pressed="false"><span class="ad-card__n">4.3</span><span class="ad-card__t">Experimentación</span><span class="ad-card__d">Aprender de forma sistemática.</span></button>
+      </div>
+    </div>
+    <div class="cp-demo" style="margin-block-start:var(--space-4)">
+      <div class="ad-grid" style="--col:220px">
+        <a class="ad-card is-on" style="--card-h:170px" href="#t-card"><span class="ad-card__n">Pregrado</span><span class="ad-card__t">Administración</span><span class="ad-card__d">Prioridad 1 · meta 120</span></a>
+        <a class="ad-card" style="--card-h:170px" href="#t-card"><span class="ad-card__n">Pregrado</span><span class="ad-card__t">Ingeniería</span><span class="ad-card__d">Prioridad 2 · meta 80</span></a>
+        <a class="ad-card" style="--card-h:170px" href="#t-card"><span class="ad-card__n">Posgrado</span><span class="ad-card__t">Maestría en datos</span><span class="ad-card__d">Prioridad 2 · meta 40</span></a>
+      </div>
+    </div>
+    <div class="cp-uso"><p><b>Cuándo</b>Opciones, pilares, programas, frentes. Con <code>button</code> si selecciona; con <code>a</code> si navega.</p><p><b>Lima</b><code>.is-on</code> / <code>aria-pressed="true"</code> / <code>aria-current="true"</code>. Sobre fondo oscuro, las demás usan <code>.ad-card--dark</code>.</p></div>
+    <pre class="cp-cod">&lt;button class="ad-card is-on" type="button" aria-pressed="true"&gt;
+  &lt;span class="ad-card__n"&gt;4.1&lt;/span&gt;
+  &lt;span class="ad-card__t"&gt;Excelencia operativa&lt;/span&gt;
+  &lt;span class="ad-card__d"&gt;Hacer bien el trabajo, siempre.&lt;/span&gt;
+&lt;/button&gt;</pre>
+  </section>
+
+  <!-- ============ FILAS ============ -->
+  <section class="cp-bloque" aria-labelledby="t-filas">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">Contenido</p>
+      <h2 id="t-filas">Lista de filas</h2>
+      <p>Para índices, documentos y accesos. Líneas finas, título grande, flecha al final.</p>
+    </div>
+    <div class="cp-demo">
+      <ol class="ad-filas">
+        <li><a class="ad-fila is-on" href="#t-filas"><span class="ad-n ad-n--md" aria-hidden="true">1</span><span><span class="ad-fila__k">Planear</span><span class="ad-fila__t">Estrategia para universidades</span></span><span class="ad-fila__go">Abrir ›</span></a></li>
+        <li><a class="ad-fila" href="#t-filas"><span class="ad-n ad-n--md" aria-hidden="true">2</span><span><span class="ad-fila__k">Ejecutar</span><span class="ad-fila__t">Seguimiento de inversión</span></span><span class="ad-fila__go">Abrir ›</span></a></li>
+        <li><a class="ad-fila" href="#t-filas"><span class="ad-n ad-n--md" aria-hidden="true">3</span><span><span class="ad-fila__k">Reportar</span><span class="ad-fila__t">Informe de cierre de periodo</span></span><span class="ad-fila__go">Abrir ›</span></a></li>
+      </ol>
+    </div>
+    <div class="cp-uso"><p><b>Cuándo</b>Listas de más de cuatro destinos o documentos, con una etiqueta de tipo encima del título.</p><p><b>Lima</b>El título de la fila actual (<code>.is-on</code>), no toda la fila.</p></div>
+  </section>
+
+  <!-- ============ KPI ============ -->
+  <section class="cp-bloque" aria-labelledby="t-kpi">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">Datos</p>
+      <h2 id="t-kpi">Cifras clave</h2>
+      <p>Un indicador por celda, con etiqueta, cifra y contexto. La que responde la pregunta del bloque lleva lima.</p>
+    </div>
+    <div class="cp-demo">
+      <div class="ad-kpis">
+        <div class="ad-kpi"><span class="ad-kpi__l">Inversión</span><span class="ad-kpi__n">$86,4&nbsp;M</span><span class="ad-kpi__m">+20&nbsp;% vs periodo anterior</span></div>
+        <div class="ad-kpi"><span class="ad-kpi__l">Leads CRM</span><span class="ad-kpi__n">3.840</span><span class="ad-kpi__m">−4&nbsp;% · Fuente CRM</span></div>
+        <div class="ad-kpi ad-kpi--on"><span class="ad-kpi__l">Costo por lead</span><span class="ad-kpi__n">$22.500</span><span class="ad-kpi__m">antes $18.000 · +25&nbsp;%</span></div>
+        <div class="ad-kpi"><span class="ad-kpi__l">Matrículas</span><span class="ad-kpi__n">125</span><span class="ad-kpi__m">Meta 86 · Parcial</span></div>
+      </div>
+    </div>
+    <div class="cp-uso"><p><b>Cuándo</b>Al abrir un informe o tablero. De 4 a 8 cifras; más de eso es una tabla.</p><p><b>Lima</b><code>.ad-kpi--on</code> en la cifra que responde la pregunta. Una por bloque.</p></div>
+  </section>
+
+  <!-- ============ ESTADO ============ -->
+  <section class="cp-bloque" aria-labelledby="t-estado">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">Datos</p>
+      <h2 id="t-estado">Estado</h2>
+      <p>Siempre texto y forma, nunca solo color. «Sin dato» no es cero. Lo cumplido va en lima.</p>
+    </div>
+    <div class="cp-demo">
+      <div class="cp-indice">
+        <span class="ad-estado ad-estado--ok">Verificado</span>
+        <span class="ad-estado ad-estado--parcial">Parcial</span>
+        <span class="ad-estado ad-estado--pendiente">Pendiente</span>
+        <span class="ad-estado ad-estado--sin">Sin dato</span>
+        <span class="ad-estado ad-estado--na">No aplica</span>
+        <span class="ad-estado ad-estado--alerta">Vencida</span>
+      </div>
+    </div>
+    <div class="cp-uso"><p><b>Cuándo</b>En tablas, tarjetas y encabezados: estado de una pieza, de una fuente, de una verificación.</p><p><b>Lima</b>Solo <code>.ad-estado--ok</code>. <code>--alerta</code> usa el rojo provisional del sistema, con texto.</p></div>
+  </section>
+
+  <!-- ============ LECTURA Y CITA ============ -->
+  <section class="cp-bloque" aria-labelledby="t-lectura">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">Datos</p>
+      <h2 id="t-lectura">Lectura y hallazgo</h2>
+      <p>Cada gráfico o tabla se acompaña de una frase que lo traduce. El hallazgo principal va como cita.</p>
+    </div>
+    <div class="cp-demo ad-stack">
+      <div class="ad-lectura"><span class="ad-lectura__k">Qué quiere decir</span><p>El volumen se mantuvo, pero cada lead costó <span class="ad-hl">$4.500 más</span>: el aumento viene de Meta, no de Google.</p></div>
+      <blockquote class="ad-cita"><p>La demanda está; lo que cambió fue el costo de alcanzarla.</p><cite>Hallazgo principal · periodo 2026-2</cite></blockquote>
+    </div>
+    <div class="cp-uso"><p><b>Cuándo</b><code>.ad-lectura</code> debajo de cada gráfico o tabla; <code>.ad-cita</code> una vez por documento para el hallazgo central.</p><p><b>Lima</b>Resalta con <code>.ad-hl</code> la frase que importa, no la caja.</p></div>
+  </section>
+
+  <!-- ============ PASOS ============ -->
+  <section class="cp-bloque" aria-labelledby="t-pasos">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">Recorridos</p>
+      <h2 id="t-pasos">Pasos numerados</h2>
+      <p>Para recorridos, métodos y próximos pasos. El último, o el actual, va en lima.</p>
+    </div>
+    <div class="cp-demo">
+      <ol class="ad-pasos">
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">1</span><h3>Aviso</h3><p>El aspirante ve el anuncio.</p></li>
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">2</span><h3>Formulario</h3><p>Deja sus datos en la página.</p></li>
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">3</span><h3>Contacto</h3><p>Admisiones lo llama en 24 h.</p></li>
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">4</span><h3>Matrícula</h3><p>Paga y queda inscrito.</p></li>
+      </ol>
+    </div>
+    <div class="cp-uso"><p><b>Cuándo</b>Embudos, recorridos del aspirante, fases de un calendario, próximos pasos.</p><p><b>Lima</b>Último paso por defecto; <code>.is-on</code> para marcar el paso actual.</p></div>
+  </section>
+
+  <!-- ============ BARRAS ============ -->
+  <section class="cp-bloque" aria-labelledby="t-barra">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">Datos</p>
+      <h2 id="t-barra">Barra de avance</h2>
+      <p>Cumplimiento o ejecución contra una meta. Base cero; la marca vertical es la meta.</p>
+    </div>
+    <div class="cp-demo ad-stack">
+      <div class="ad-figura">
+        <figcaption>Ejecución de presupuesto · 94&nbsp;% al corte</figcaption>
+        <div class="ad-barra" style="--v:94%;--meta:100%" role="img" aria-label="94 % de ejecución, meta 100 %"><span></span><i></i></div>
+      </div>
+      <div class="ad-figura">
+        <figcaption>Matriculados · 146&nbsp;% de la meta prorrateada</figcaption>
+        <div class="ad-barra ad-barra--on" style="--v:100%;--meta:68%" role="img" aria-label="146 % de la meta"><span></span><i></i></div>
+      </div>
+      <ul class="ad-leyenda"><li><i style="--c:var(--sumi)"></i>Ejecutado</li><li><i style="--c:var(--lima)"></i>Sobre la meta</li></ul>
+    </div>
+    <div class="cp-uso"><p><b>Cuándo</b>Ejecución de presupuesto, cumplimiento de meta, ritmo.</p><p><b>Lima</b><code>.ad-barra--on</code> con borde sumi, para la barra que se sale de lo esperado o la que importa.</p></div>
+  </section>
+
+  <!-- ============ TABLA ============ -->
+  <section class="cp-bloque" aria-labelledby="t-tabla">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">Datos</p>
+      <h2 id="t-tabla">Tabla</h2>
+      <p>Encabezado tenue sobre línea sumi, filas con línea fina, cifras a la derecha y total al pie.</p>
+    </div>
+    <div class="ad-tabla">
+      <table>
+        <caption>Resultados por medio · 20 oct a 16 nov · pesos colombianos</caption>
+        <thead><tr><th scope="col">Medio</th><th scope="col" class="valor">Inversión</th><th scope="col" class="valor">Leads CRM</th><th scope="col" class="valor">Costo por lead</th><th scope="col">Estado</th></tr></thead>
+        <tbody>
+          <tr class="is-on"><th scope="row">Meta Ads</th><td class="valor">$41.200.000</td><td class="valor">1.640</td><td class="valor">$25.122</td><td><span class="ad-estado ad-estado--alerta">Sobre el costo meta</span></td></tr>
+          <tr><th scope="row">Google Ads</th><td class="valor">$30.100.000</td><td class="valor">1.420</td><td class="valor">$21.197</td><td><span class="ad-estado ad-estado--ok">En meta</span></td></tr>
+          <tr><th scope="row">TikTok</th><td class="valor">$8.300.000</td><td class="valor">360</td><td class="valor">$23.056</td><td><span class="ad-estado ad-estado--parcial">Parcial</span></td></tr>
+          <tr><th scope="row">Programática</th><td class="valor">$6.800.000</td><td class="valor">420</td><td class="valor">$16.190</td><td><span class="ad-estado ad-estado--sin">Sin dato</span></td></tr>
+        </tbody>
+        <tfoot><tr><th scope="row">Total</th><td class="valor">$86.400.000</td><td class="valor">3.840</td><td class="valor">$22.500</td><td></td></tr></tfoot>
+      </table>
+    </div>
+    <div class="cp-uso"><p><b>Cuándo</b>Detalle por medio, programa, campaña o pieza. Con <code>caption</code> que da periodo, unidad y moneda.</p><p><b>Lima</b><code>tr.is-on</code> en la fila que explica el hallazgo. Una por tabla.</p></div>
+  </section>
+
+  <!-- ============ MARCADOR ============ -->
+  <section class="cp-bloque" aria-labelledby="t-marcador">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">Piezas</p>
+      <h2 id="t-marcador">Marcador de pieza</h2>
+      <p>La proporción real de la pieza, hasta tener el archivo aprobado. Después se reemplaza por la imagen con su texto alternativo.</p>
+    </div>
+    <div class="cp-demo">
+      <div class="ad-grid" style="--col:120px;align-items:end">
+        <div class="ad-marcador ad-marcador--1x1">1:1</div>
+        <div class="ad-marcador ad-marcador--4x5">4:5</div>
+        <div class="ad-marcador ad-marcador--9x16">9:16</div>
+        <div class="ad-marcador ad-marcador--16x9">16:9</div>
+      </div>
+    </div>
+    <div class="cp-uso"><p><b>Cuándo</b>Galerías de implementación, cuadro de materiales, creativos destacados.</p><p><b>Clases</b><code>.ad-marcador--1x1 | 4x5 | 9x16 | 16x9</code></p></div>
+  </section>
+
+  <!-- ============ FICHA, AVISO, FILTROS, BARRA APILADA ============ -->
+  <section class="cp-bloque" aria-labelledby="t-apoyo">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">Apoyo</p>
+      <h2 id="t-apoyo">Ficha, aviso, filtros y barra apilada</h2>
+      <p>Las piezas pequeñas que se repiten en portadas y tableros. Mismo criterio: componente, no CSS suelto.</p>
+    </div>
+    <div class="cp-demo ad-stack" style="--gap:var(--space-6)">
+      <dl class="ad-ficha">
+        <div><dt>Institución</dt><dd>Universidad Andina</dd></div>
+        <div><dt>Periodo</dt><dd>Admisiones 2027-1</dd></div>
+        <div><dt>Fuente que manda</dt><dd>CRM de admisiones</dd></div>
+        <div><dt>Versión</dt><dd>V01 · 10 ago 2026</dd></div>
+      </dl>
+      <div class="ad-aviso"><span class="ad-aviso__k">Plantilla</span>Datos ficticios. Se reemplazan en <code>js/&lt;formato&gt;.js</code>, parte 1.</div>
+      <form class="ad-filtros" onsubmit="return false">
+        <label>Nivel<select><option>Todos</option><option>Pregrado</option><option>Posgrado</option></select></label>
+        <label>Medio<select><option>Todos</option><option>Meta</option><option>Google</option></select></label>
+        <button class="ad-btn ad-btn--dark" type="button">Limpiar filtros</button>
+      </form>
+      <figure class="ad-figura">
+        <figcaption>Estado de los anuncios al corte · 24 anuncios</figcaption>
+        <ul class="ad-barra-apilada" role="img" aria-label="18 con entrega, 4 activos sin entrega, 2 en revisión">
+          <li class="is-on" style="--v:18"></li><li style="--v:4;--c:var(--tinta-secundaria)"></li><li style="--v:2;--c:var(--tinta-tenue)"></li>
+        </ul>
+        <ul class="ad-leyenda"><li><i style="--c:var(--lima)"></i>Con entrega · 18</li><li><i style="--c:var(--tinta-secundaria)"></i>Activo sin entrega · 4</li><li><i style="--c:var(--tinta-tenue)"></i>En revisión · 2</li></ul>
+      </figure>
+    </div>
+    <div class="cp-uso"><p><b>Cuándo</b><code>.ad-ficha</code> en la portada; <code>.ad-aviso</code> para plantilla o borrador; <code>.ad-filtros</code> en tableros; <code>.ad-barra-apilada</code> para partes de un total.</p><p><b>Lima</b>Solo el tramo que importa (<code>.is-on</code>), con borde sumi de la barra. Variantes: <code>.ad-sec-cab--compacta</code>, <code>.ad-tabla--densa</code>.</p></div>
+  </section>
+
+  <!-- ============ SUPERFICIE OSCURA ============ -->
+  <section class="cp-bloque" aria-labelledby="t-oscuro">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">Variante</p>
+      <h2 id="t-oscuro">Sobre superficie oscura</h2>
+      <p>Poniendo <code>.ad-oscuro</code> en el contenedor, lectura, cifras y barras se adaptan. La lima sigue siendo relleno con texto sumi.</p>
+    </div>
+    <div class="cp-demo cp-demo--oscuro ad-oscuro ad-stack" style="--gap:var(--space-6)">
+      <div class="ad-kpis">
+        <div class="ad-kpi"><span class="ad-kpi__l">Pacing</span><span class="ad-kpi__n">94,5&nbsp;%</span><span class="ad-kpi__m">Observación</span></div>
+        <div class="ad-kpi ad-kpi--on"><span class="ad-kpi__l">Proyección de cierre</span><span class="ad-kpi__n">$54,9&nbsp;M</span><span class="ad-kpi__m">gasto ÷ proporción transcurrida</span></div>
+      </div>
+      <div class="ad-barra ad-barra--on" style="--v:72%;--meta:50%" role="img" aria-label="72 % de ejecución, ritmo esperado 50 %"><span></span><i></i></div>
+      <div class="ad-lectura"><span class="ad-lectura__k">Qué quiere decir</span><p>El gasto va por encima del ritmo esperado: conviene bajar el diario requerido.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ DATOS ============ -->
+  <section class="cp-bloque" aria-labelledby="t-datos">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">Datos</p>
+      <h2 id="t-datos">Ver los datos</h2>
+      <p>Bajo un gráfico, la tabla que lo sostiene, plegada.</p>
+    </div>
+    <details class="ad-datos"><summary>Ver los datos del gráfico</summary>
+      <div class="ad-tabla" style="margin-block-start:var(--space-2)"><table><thead><tr><th scope="col">Semana</th><th scope="col" class="valor">Costo por lead</th></tr></thead><tbody><tr><th scope="row">Del 20 al 26 oct</th><td class="valor">$19.800</td></tr><tr><th scope="row">Del 27 oct al 2 nov</th><td class="valor">$21.600</td></tr></tbody></table></div>
+    </details>
+  </section>
+
+  <!-- ============ CÓMO AGREGAR UNO ============ -->
+  <section class="cp-bloque" aria-labelledby="t-nuevo">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">Cuando falta una pieza</p>
+      <h2 id="t-nuevo">Cómo agregar un componente</h2>
+    </div>
+    <ol class="ad-pasos">
+      <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">1</span><h3>Busca</h3><p>Revisa esta galería y la sección 5b de <code>adcom-v2.css</code>. Casi siempre hay una que sirve.</p></li>
+      <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">2</span><h3>Crea</h3><p>Clase con prefijo <code>ad-</code>, solo con tokens del sistema. Nada de valores sueltos.</p></li>
+      <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">3</span><h3>Documenta</h3><p>Agrégala aquí con su demo, cuándo se usa y dónde va la lima.</p></li>
+      <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">4</span><h3>Verifica</h3><p>Contraste 4,5:1, foco visible, 44 px y móvil de 390 px.</p></li>
+    </ol>
+  </section>
+</main>
+<footer class="ad-foot">
+  <div class="ad-foot__in"><span>Adcom · Área digital</span></div>
+</footer>
+</body>
+</html>

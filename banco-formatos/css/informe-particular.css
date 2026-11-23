@@ -1,0 +1,124 @@
+/* Informe particular · estilos propios de la plantilla.
+   Solo lo específico de esta página: portada, índice, gráfico de línea,
+   barras anterior/actual, calendario de acciones, anexo. Tarjetas, cifras,
+   estados, tablas, lecturas y «ver los datos» vienen de los componentes ad-*
+   de adcom-v2.css. Prefijo ip- para no chocar con otras plantillas. */
+
+.ip-aviso {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin: 0 0 var(--space-4);
+  font-size: 14px;
+  color: var(--tinta-secundaria);
+}
+.ip-portada h1 .ad-ln + .ad-ln { color: var(--tinta-secundaria); }
+
+.ip-ficha {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+  gap: var(--space-4) var(--space-6);
+}
+.ip-ficha div { max-width: none; }
+
+.ip-indice { padding-block: 0 var(--space-8); }
+.ip-indice h2 { margin: 0 0 var(--space-2); font: 500 15px/1.4 var(--font-body); color: var(--tinta-secundaria); }
+.ip-indice ol { display: flex; flex-wrap: wrap; gap: 0 var(--space-6); margin: 0; padding: 0; list-style: none; }
+.ip-indice a { display: inline-flex; align-items: center; gap: var(--space-2); min-height: var(--target-min); color: var(--sumi); font-size: 15px; text-decoration: none; }
+.ip-indice a:hover span:last-child { text-decoration: underline; text-underline-offset: 4px; }
+
+.formato-seccion { scroll-margin-block-start: calc(var(--nav-height) + var(--space-4)); }
+.formato-seccion .ad-sec-cab { margin-block-end: var(--space-6); }
+.formato-seccion .ad-sec-cab h2 { margin: 0; }
+.ip-cuerpo { --gap: var(--space-6); }
+.ip-ir { color: var(--tinta-secundaria); }
+
+.ip-ideas .ad-card__t { margin-block-start: 0; padding-block-start: 0; }
+.ip-ideas .ad-card__d { margin: 0; }
+.ip-ideas .ip-cierre { margin-block-start: auto; padding-block-start: var(--space-4); border-block-start: 1px solid var(--sumi); color: var(--sumi); font-weight: 500; }
+.ad-kpi__m strong { font-weight: 500; color: var(--sumi); }
+
+.ip-lienzo { position: relative; padding: var(--space-4); background: var(--papel); border: 1px solid var(--piedra); border-radius: var(--radius-panel); }
+.ip-lienzo svg { display: block; width: 100%; height: auto; overflow: visible; }
+.ip-lienzo svg text { font-family: var(--font-body); font-size: 12px; fill: var(--tinta-secundaria); }
+.ip-lienzo svg .ip-eje { stroke: var(--piedra); stroke-width: 1; }
+.ip-lienzo svg .ip-base { stroke: var(--tinta-tenue); stroke-width: 1; }
+.ip-lienzo svg .ip-meta { stroke: var(--tinta-secundaria); stroke-width: 1.5; stroke-dasharray: 2 4; }
+.ip-lienzo svg .ip-hito { stroke: var(--piedra-borde); stroke-width: 1; }
+.ip-lienzo svg .ip-hito-txt { fill: var(--sumi); font-weight: 500; }
+.ip-lienzo svg .ip-serie-1 { fill: none; stroke: var(--sumi); stroke-width: 2.5; }
+.ip-lienzo svg .ip-serie-2 { fill: none; stroke: var(--tinta-secundaria); stroke-width: 2; stroke-dasharray: 7 4; }
+.ip-lienzo svg .ip-punto { fill: var(--lima); stroke: var(--sumi); stroke-width: 2; }
+.ad-leyenda svg { flex: none; }
+.ad-figura h3 { margin: 0; }
+.ad-figura figcaption { max-width: 75ch; }
+.ad-datos .ad-tabla { max-height: 420px; overflow: auto; margin-block-start: var(--space-2); }
+
+.ip-barras { display: grid; gap: var(--space-6); margin: 0; }
+.ip-barras > div { display: grid; gap: 6px; }
+.ip-barras dt { font-size: 14px; color: var(--sumi); }
+.ip-barras dt small { color: var(--tinta-secundaria); font-size: 13px; }
+.ip-barras dd { margin: 0; display: grid; gap: 8px; }
+.ip-fila { display: grid; grid-template-columns: minmax(0, 1fr) 9ch; align-items: center; gap: var(--space-2); font-size: 13px; font-variant-numeric: tabular-nums; }
+.ip-fila b { text-align: end; font-weight: 500; }
+.ip-fila--ant b { font-weight: 400; color: var(--tinta-secundaria); }
+
+.ip-orden { display: inline-flex; align-items: center; gap: 4px; min-height: var(--target-min); margin: -12px -8px; padding: 0 8px; border: 0; border-radius: var(--radius-pill); background: transparent; color: inherit; font: inherit; cursor: pointer; }
+.ip-orden:hover { background: var(--piedra); }
+.ip-orden [aria-hidden] { color: var(--tinta-suave); font-size: 12px; }
+.ad-tabla .valor .ip-orden { justify-content: flex-end; }
+.ad-tabla tbody th { font-weight: 500; }
+.ad-tabla .ip-lectura-col { min-width: 26ch; color: var(--tinta-secundaria); font-size: 14px; }
+.ad-tabla .ip-sub { display: block; font-size: 13px; font-weight: 400; color: var(--tinta-secundaria); }
+.ad-tabla td.ip-sin { color: var(--tinta-suave); }
+.ip-filtros { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+.ip-filtros[hidden] { display: none; }
+.ip-filtros .ad-input { min-height: var(--target-min); padding-block: 6px; border-radius: var(--radius-pill); }
+
+.ip-piezas .ad-card { gap: var(--space-2); align-content: start; }
+.ip-piezas .ad-marcador { height: 260px; width: auto; margin-inline: auto; }
+.ip-piezas .ad-card__n { margin: 0; font-family: var(--font-body); font-size: 13px; }
+.ip-piezas .ip-pieza-t { margin: 0; font: 500 18px/1.25 var(--font-display); }
+.ip-piezas dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-2); margin: 0; }
+.ip-piezas dt { font-size: 12px; color: var(--tinta-secundaria); }
+.ip-piezas .is-on dt { color: var(--sumi); }
+.ip-piezas dd { margin: 0; font: 400 17px/1.3 var(--font-display); font-variant-numeric: tabular-nums; }
+
+.ip-tres { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-8); }
+.ip-tres h3 { padding-block-start: var(--space-4); border-block-start: 1px solid var(--sumi); }
+.ip-tres ul { margin: 0; padding-inline-start: 1.1em; }
+.ip-tres li + li { margin-block-start: var(--space-2); }
+
+.ad-lectura p + p { margin-block-start: var(--space-2); }
+
+.ip-semanas { display: grid; grid-auto-flow: column; grid-auto-columns: 22px; gap: 3px; }
+.ip-semanas span { height: 14px; background: var(--crema); border: 1px solid var(--piedra); }
+.ip-semanas span.on { background: var(--sumi); border-color: var(--sumi); }
+
+.ip-anexo dl { display: grid; gap: 0; margin: 0; max-width: 90ch; }
+.ip-anexo dl > div { display: grid; grid-template-columns: minmax(140px, 14rem) minmax(0, 1fr); gap: var(--space-2) var(--space-6); padding-block: var(--space-4); border-block-end: 1px solid var(--piedra); }
+.ip-anexo dt { font-weight: 500; }
+.ip-anexo dd { margin: 0; color: var(--tinta-secundaria); }
+.ip-anexo code { padding: 1px 4px; border-radius: var(--radius-input); background: var(--crema); color: var(--sumi); font-size: 14px; overflow-wrap: anywhere; }
+.ip-cuadre { margin-block-start: var(--space-6) !important; font-size: 14px; color: var(--tinta-secundaria); }
+
+.ip-colofon { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: var(--space-4) var(--space-6); margin: 0; font-size: 14px; }
+.ip-colofon dt { color: var(--tinta-secundaria); }
+.ip-colofon dd { margin: 0; }
+
+.ip-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.formato-seccion h3.ip-subtitulo { margin-block: var(--space-6) 0; }
+
+@media (max-width: 900px) { .ip-tres { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 640px) {
+  .ip-anexo dl > div { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .ip-lienzo { padding: var(--space-2); }
+}
+@media print {
+  .ip-indice, .ad-datos summary { display: none; }
+  .ip-orden { min-height: 0; margin: 0; padding: 0; }
+  .ip-orden [aria-hidden] { display: none; }
+  .ad-card, .ad-figura, .ad-lectura, .ip-tres > div { break-inside: avoid; }
+  .ad-datos .ad-tabla { max-height: none; overflow: visible; }
+  .ad-barra > span, .ip-semanas span.on { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

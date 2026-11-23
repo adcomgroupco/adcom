@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#F7F6F2">
+  <title>Informe de cierre de periodo | Adcom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
+  <link rel="stylesheet" href="../assets/css/adcom-v2.css">
+  <link rel="stylesheet" href="formatos.css">
+  <link rel="stylesheet" href="css/informe-cierre.css">
+  <script src="js/informe-cierre.js" defer></script>
+</head>
+<!--
+  PLANTILLA · INFORME DE CIERRE DE PERIODO (semestre de pauta, universidades)
+  Framework: operacion-tactica.html, puntos 42 (cierre mensual: consolida, decide
+  y proyecta) y 43 (cierre de periodo: responde qué nos propusimos, qué hicimos,
+  qué ocurrió, qué funcionó y qué no, qué aprendimos, qué queda activo y
+  pendiente, y qué recomendamos). El informe es una salida del cierre, no el cierre.
+
+  Cómo usarla:
+  1. Todo lo numérico está en js/informe-cierre.js, bloque DATOS. Se reemplaza ahí;
+     totales, CPL, costo por matrícula, variaciones y embudo se calculan solos.
+  2. El texto (titulares, lecturas, conclusiones, aprendizajes, decisiones y estado
+     de cierre) vive en este HTML: se reescribe con los números ya calculados.
+     Cada titular es una conclusión con dato, no el nombre de la sección.
+  3. Antes de publicar: corte y fuentes visibles, estados (Sin dato, Parcial,
+     No aplica, Preliminar) donde correspondan, y ningún ID de cuenta, URL de
+     CRM o tablero interno, ni dato personal de leads.
+  Nombre del archivo (punto 71): [CLIENTE]_INFORME_[Tema y periodo]_[Fecha]_[Versión].
+-->
+<body>
+<a class="skip-link" href="#contenido">Ir al contenido</a>
+<header class="ad-nav formato-nav">
+  <nav class="ad-nav__in" aria-label="Principal">
+    <a class="formato-nav__marca" href="../index.html">Adcom</a>
+    <div class="ad-nav__links"><a href="index.html">Banco de formatos</a><a href="#indice">Índice del informe</a></div>
+  </nav>
+</header>
+<main class="formato-shell formato-contenido" id="contenido" tabindex="-1">
+
+  <!-- PORTADA · cliente, periodo, ventana real de entrega, medios y la frase que resume el cierre.
+       El lead dice el resultado con datos; no adjetivos. -->
+  <header class="formato-portada">
+    <p class="formato-meta">Plantilla con datos ficticios · Universidad Andina · Informe de cierre</p>
+    <h1 class="ad-t-statement"><span class="ad-ln">Pauta digital 2026-2.</span><span class="ad-ln"><span class="ad-hl">Cierre</span> de periodo.</span></h1>
+    <p class="ad-t-lead">Crecimos 18,6&nbsp;% en leads CRM con un CPL 2,9&nbsp;% menor, pero las matrículas de pauta bajaron 3,5&nbsp;%: el embudo se estrechó entre admitido y matriculado.</p>
+    <dl class="formato-ficha cierre-ficha">
+      <div><dt>Corte</dt><dd>1 feb – 31 jul 2026 · matrícula al 15 ago 2026</dd></div>
+      <div><dt>Comparación</dt><dd>2025-2 (1 feb – 31 jul 2025), mismo criterio de atribución</dd></div>
+      <div><dt>Medios</dt><dd>Meta · Google Ads · TikTok · LinkedIn · programática</dd></div>
+      <div><dt>Fuentes</dt><dd>API de cada plataforma · CRM de admisiones · informe de matrícula de la universidad</dd></div>
+      <div><dt>Resultado que cuenta</dt><dd>Lead en CRM (registro de plataforma que cruza con el CRM) y matrícula en estado pagado</dd></div>
+      <div><dt>Archivo</dt><dd>ANDINA_INFORME_Cierre pauta 2026-2_2026-08-20_V1</dd></div>
+    </dl>
+    <div class="cierre-acciones">
+      <button type="button" class="ad-btn ad-btn--accent" id="cierre-imprimir" hidden>Imprimir o guardar PDF</button>
+    </div>
+  </header>
+
+  <!-- ÍNDICE · las secciones responden las preguntas del punto 43. Si una sección
+       no aplica al cliente, se quita aquí y en el cuerpo; no se deja vacía. -->
+  <section class="formato-seccion cierre-indice-sec" aria-labelledby="indice">
+    <h2 class="ad-t-h2-compact" id="indice">Qué responde este cierre</h2>
+    <ol class="ad-filas cierre-indice">
+      <li><a class="ad-fila" href="#resumen"><span class="ad-n ad-n--md" aria-hidden="true">01</span><span><span class="ad-fila__k">Qué ocurrió, en una vista</span><span class="ad-fila__t">Resumen general</span></span><span class="ad-fila__go" aria-hidden="true">›</span></a></li>
+      <li><a class="ad-fila" href="#metas"><span class="ad-n ad-n--md" aria-hidden="true">02</span><span><span class="ad-fila__k">Qué nos propusimos y cuánto se cumplió</span><span class="ad-fila__t">Resultados contra meta</span></span><span class="ad-fila__go" aria-hidden="true">›</span></a></li>
+      <li><a class="ad-fila" href="#inversion"><span class="ad-n ad-n--md" aria-hidden="true">03</span><span><span class="ad-fila__k">Qué hicimos y dónde fue la inversión</span><span class="ad-fila__t">Inversión por medio</span></span><span class="ad-fila__go" aria-hidden="true">›</span></a></li>
+      <li><a class="ad-fila" href="#embudo"><span class="ad-n ad-n--md" aria-hidden="true">04</span><span><span class="ad-fila__k">Plataforma, CRM, inscritos, admitidos, matriculados</span><span class="ad-fila__t">Embudo a matrícula</span></span><span class="ad-fila__go" aria-hidden="true">›</span></a></li>
+      <li><a class="ad-fila" href="#historico"><span class="ad-n ad-n--md" aria-hidden="true">05</span><span><span class="ad-fila__k">Contra el semestre equivalente y la serie</span><span class="ad-fila__t">Comparación histórica</span></span><span class="ad-fila__go" aria-hidden="true">›</span></a></li>
+      <li><a class="ad-fila" href="#programas"><span class="ad-n ad-n--md" aria-hidden="true">06</span><span><span class="ad-fila__k">Dónde sí se convierte en matrícula</span><span class="ad-fila__t">Nivel y programa</span></span><span class="ad-fila__go" aria-hidden="true">›</span></a></li>
+      <li><a class="ad-fila" href="#campanas"><span class="ad-n ad-n--md" aria-hidden="true">07</span><span><span class="ad-fila__k">Campañas de conversión, branding y eventos</span><span class="ad-fila__t">Medio y campaña</span></span><span class="ad-fila__go" aria-hidden="true">›</span></a></li>
+      <li><a class="ad-fila" href="#creativos"><span class="ad-n ad-n--md" aria-hidden="true">08</span><span><span class="ad-fila__k">Piezas, anuncios de búsqueda y palabras clave</span><span class="ad-fila__t">Creativos destacados</span></span><span class="ad-fila__go" aria-hidden="true">›</span></a></li>
+      <li><a class="ad-fila" href="#contacto"><span class="ad-n ad-n--md" aria-hidden="true">09</span><span><span class="ad-fila__k">Módulo opcional</span><span class="ad-fila__t">Contactabilidad</span></span><span class="ad-fila__go" aria-hidden="true">›</span></a></li>
+      <li><a class="ad-fila" href="#aprendizajes"><span class="ad-n ad-n--md" aria-hidden="true">10</span><span><span class="ad-fila__k">Qué funcionó y qué no</span><span class="ad-fila__t">Aprendizajes</span></span><span class="ad-fila__go" aria-hidden="true">›</span></a></li>
+      <li><a class="ad-fila" href="#recomendaciones"><span class="ad-n ad-n--md" aria-hidden="true">11</span><span><span class="ad-fila__k">Qué recomendamos y con qué criterio</span><span class="ad-fila__t">Recomendaciones 2027-1</span></span><span class="ad-fila__go" aria-hidden="true">›</span></a></li>
+      <li><a class="ad-fila" href="#estado-cierre"><span class="ad-n ad-n--md" aria-hidden="true">12</span><span><span class="ad-fila__k">Qué queda activo y qué queda pendiente</span><span class="ad-fila__t">Estado al cierre</span></span><span class="ad-fila__go" aria-hidden="true">›</span></a></li>
+      <li><a class="ad-fila" href="#metodologia"><span class="ad-n ad-n--md" aria-hidden="true">13</span><span><span class="ad-fila__k">Definiciones, fuentes y estados</span><span class="ad-fila__t">Notas de método</span></span><span class="ad-fila__go" aria-hidden="true">›</span></a></li>
+    </ol>
+  </section>
+
+  <!-- 01 · RESUMEN GENERAL · siete KPI calculados en JS (inversión, leads plataforma,
+       leads CRM, CPL CRM, matrículas de pauta, costo por matrícula, conversión), cada
+       uno contra el semestre equivalente. Después, distribución por frente y la
+       conclusión ejecutiva en cuatro frases con dato. -->
+  <section class="formato-seccion" aria-labelledby="resumen">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow cierre-eyebrow"><span class="ad-n" aria-hidden="true">01</span>Resumen general</p>
+      <h2 class="ad-t-h2-compact" id="resumen">Más leads a menor costo; la matrícula no acompañó</h2>
+    </div>
+    <div class="ad-kpis" id="cierre-kpi" aria-live="polite"></div>
+    <noscript><p>Activa JavaScript para ver las cifras calculadas de la plantilla.</p></noscript>
+
+    <h3 class="cierre-sub">Distribución por frente</h3>
+    <dl class="cierre-barras" id="cierre-frentes"></dl>
+
+    <h3 class="cierre-sub">Conclusión ejecutiva</h3>
+    <!-- Cuatro frases: escala, eficiencia, resultado de negocio y la causa principal. -->
+    <ol class="ad-pasos cierre-conclusion">
+      <li class="ad-paso"><span class="ad-n" aria-hidden="true">1</span><p>Pregrado sostuvo la escala: 66,1&nbsp;% de la inversión de conversión y 82,4&nbsp;% de las matrículas de pauta.</p></li>
+      <li class="ad-paso"><span class="ad-n" aria-hidden="true">2</span><p>El CPL CRM cerró en $27.921, 2,9&nbsp;% por debajo de 2025-2 y dentro del tope de $28.000.</p></li>
+      <li class="ad-paso"><span class="ad-n" aria-hidden="true">3</span><p>La matrícula institucional llegó al 90,0&nbsp;% de la meta (468 de 520); la pauta aportó 136 matrículas atribuidas, 29,1&nbsp;% del total.</p></li>
+      <li class="ad-paso"><span class="ad-n" aria-hidden="true">4</span><p>La conversión de admitido a matriculado cayó de 47,6&nbsp;% a 42,8&nbsp;%. Ahí está la brecha del semestre, no en la generación de leads.</p></li>
+    </ol>
+  </section>
+
+  <!-- 02 · RESULTADOS CONTRA META · las metas salen de la estrategia aprobada.
+       La meta de matrícula es institucional: se compara con matrícula total (todas
+       las fuentes); la matrícula de pauta se muestra aparte como contribución. -->
+  <section class="formato-seccion" aria-labelledby="metas">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow cierre-eyebrow"><span class="ad-n" aria-hidden="true">02</span>Resultados contra meta</p>
+      <h2 class="ad-t-h2-compact" id="metas">Cumplimos presupuesto y costo; quedamos 52 matrículas debajo de la meta</h2>
+    </div>
+    <dl class="cierre-barras" id="cierre-metas"></dl>
+    <p class="formato-nota cierre-clave">La marca vertical es el 100 % de la meta; la pista llega a 120 %.</p>
+    <div class="ad-lectura">
+      <span class="ad-lectura__k">Lectura</span>
+      <p>La ejecución de presupuesto (98,5&nbsp;%) y el CPL CRM (99,7&nbsp;% del tope) <span class="ad-hl">quedaron dentro de lo planeado</span>. Los leads CRM llegaron al 93,9&nbsp;% de la meta porque TikTok entregó registros que no cruzaron con el CRM. La matrícula institucional (90,0&nbsp;%) depende también de fuentes que no son pauta.</p>
+    </div>
+  </section>
+
+  <!-- 03 · INVERSIÓN POR MEDIO · ritmo mensual apilado por medio (base cero) y tabla
+       por medio cruzada contra CRM y matrícula. % validez = leads CRM / leads
+       plataforma: es la pérdida entre lo que reporta la plataforma y lo que llega. -->
+  <section class="formato-seccion" aria-labelledby="inversion">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow cierre-eyebrow"><span class="ad-n" aria-hidden="true">03</span>Inversión por medio</p>
+      <h2 class="ad-t-h2-compact" id="inversion">Google aportó 52&nbsp;% de las matrículas con 38,5&nbsp;% de la inversión</h2>
+    </div>
+
+    <figure class="ad-figura cierre-grafico cierre-bloque">
+      <h3 class="cierre-pregunta">¿Cuándo concentramos la inversión? Pico en <span id="cierre-ritmo-pico">—</span></h3>
+      <div class="cierre-columnas" id="cierre-ritmo" role="img" aria-label="Inversión de conversión por mes y por medio, en millones de pesos. El detalle está en la tabla siguiente."></div>
+      <div class="cierre-ejes" id="cierre-ritmo-ejes" aria-hidden="true"></div>
+      <ul class="ad-leyenda" id="cierre-ritmo-leyenda"></ul>
+      <figcaption>Millones de COP, inversión de conversión (sin branding). * Julio incluye campañas que siguen madurando en matrícula.</figcaption>
+    </figure>
+
+    <div class="ad-tabla cierre-tabla cierre-bloque" role="region" aria-labelledby="ritmo-caption" tabindex="0">
+      <table>
+        <caption id="ritmo-caption">Inversión mensual por medio, COP</caption>
+        <thead><tr id="cierre-ritmo-cabeza"></tr></thead>
+        <tbody id="cierre-ritmo-tabla"></tbody>
+      </table>
+    </div>
+
+    <div class="ad-tabla cierre-tabla cierre-bloque" role="region" aria-labelledby="medios-caption" tabindex="0">
+      <table>
+        <caption id="medios-caption">Desempeño por medio contra CRM y matrícula · inversión de conversión, COP</caption>
+        <thead><tr>
+          <th scope="col">Medio</th><th scope="col" class="valor">Inversión</th><th scope="col" class="valor">% inversión</th>
+          <th scope="col" class="valor">Impresiones</th><th scope="col" class="valor">CTR</th><th scope="col" class="valor">Leads plat.</th>
+          <th scope="col" class="valor">Leads CRM</th><th scope="col" class="valor">% validez</th><th scope="col" class="valor">CPL CRM</th>
+          <th scope="col" class="valor">Matr. pauta</th><th scope="col" class="valor">% conv.</th><th scope="col" class="valor">Costo por matr.</th>
+        </tr></thead>
+        <tbody id="cierre-medios"></tbody>
+        <tfoot id="cierre-medios-total"></tfoot>
+      </table>
+    </div>
+    <div class="ad-lectura">
+      <span class="ad-lectura__k">Lectura</span>
+      <p>Meta construyó volumen: 48,0&nbsp;% de la inversión y el CPL CRM más bajo ($20.448). <span class="ad-hl">Google capturó intención</span>: 71 de las 136 matrículas a $2.060.563 cada una. TikTok perdió casi la mitad de sus registros en el tránsito al CRM (51,8&nbsp;% de validez) y cerró con 4 matrículas.</p>
+    </div>
+  </section>
+
+  <!-- 04 · EMBUDO · plataforma → CRM → inscritos → admitidos → matriculados, con la
+       tasa de cada paso y el mismo embudo del semestre equivalente. La etapa con
+       la mayor caída frente al equivalente se marca sola (fondo crema). Si la
+       matrícula sigue abierta, la etapa lleva «Parcial». -->
+  <section class="formato-seccion" aria-labelledby="embudo">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow cierre-eyebrow"><span class="ad-n" aria-hidden="true">04</span>Embudo a matrícula</p>
+      <h2 class="ad-t-h2-compact" id="embudo">Entraron más leads al CRM; se perdieron más entre admitido y matriculado</h2>
+    </div>
+    <ol class="ad-pasos cierre-embudo cierre-bloque" id="cierre-embudo"></ol>
+
+    <div class="ad-tabla cierre-tabla cierre-bloque" role="region" aria-labelledby="embudo-caption" tabindex="0">
+      <table>
+        <caption id="embudo-caption">Embudo de pauta, 2025-2 contra 2026-2 · tasa = etapa / etapa anterior</caption>
+        <thead><tr><th scope="col">Etapa</th><th scope="col" class="valor">2025-2</th><th scope="col" class="valor">Tasa 2025-2</th><th scope="col" class="valor">2026-2</th><th scope="col" class="valor">Tasa 2026-2</th><th scope="col" class="valor">Variación</th></tr></thead>
+        <tbody id="cierre-embudo-tabla"></tbody>
+      </table>
+    </div>
+    <div class="ad-lectura">
+      <span class="ad-lectura__k">Lectura</span>
+      <p>El cruce plataforma → CRM mejoró de 76,8&nbsp;% a 82,8&nbsp;% tras pasar los formularios de Meta a preguntas de calificación. <span class="ad-hl">Desde inscrito, cada paso cayó</span>: admitido → matriculado pasó de 47,6&nbsp;% a 42,8&nbsp;%. La matrícula sigue abierta hasta el 30 de agosto; el dato de esta etapa es parcial.</p>
+    </div>
+  </section>
+
+  <!-- 05 · COMPARACIÓN HISTÓRICA · semestre equivalente (2025-2) y serie desde el
+       inicio de la cuenta. El periodo actual va en lima con borde sumi; el resto en
+       sumi. Dos gráficos separados en lugar de doble eje. -->
+  <section class="formato-seccion" aria-labelledby="historico">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow cierre-eyebrow"><span class="ad-n" aria-hidden="true">05</span>Comparación histórica</p>
+      <h2 class="ad-t-h2-compact" id="historico">La inversión creció seis semestres seguidos; la conversión cayó de 1,33&nbsp;% a 1,00&nbsp;%</h2>
+    </div>
+    <div class="cierre-dos cierre-bloque">
+      <figure class="ad-figura cierre-grafico">
+        <h3 class="cierre-pregunta">¿Cuánto invertimos en conversión por periodo?</h3>
+        <div class="cierre-columnas" id="cierre-hist-inversion" role="img" aria-label="Inversión de conversión por periodo, en millones de pesos. El detalle está en la tabla."></div>
+        <div class="cierre-ejes" id="cierre-hist-inversion-ejes" aria-hidden="true"></div>
+        <figcaption>Millones de COP</figcaption>
+      </figure>
+      <figure class="ad-figura cierre-grafico">
+        <h3 class="cierre-pregunta">¿Qué parte de los leads CRM se matriculó?</h3>
+        <div class="cierre-columnas" id="cierre-hist-conversion" role="img" aria-label="Conversión de lead CRM a matrícula de pauta por periodo. El detalle está en la tabla."></div>
+        <div class="cierre-ejes" id="cierre-hist-conversion-ejes" aria-hidden="true"></div>
+        <figcaption>Matrículas de pauta / leads CRM</figcaption>
+      </figure>
+    </div>
+    <ul class="ad-leyenda"><li><i style="--c:var(--lima)" aria-hidden="true"></i>Este cierre</li><li><i style="--c:var(--sumi)" aria-hidden="true"></i>Periodos anteriores</li></ul>
+
+    <div class="ad-tabla cierre-tabla cierre-bloque" role="region" aria-labelledby="hist-caption" tabindex="0">
+      <table>
+        <caption id="hist-caption">Serie histórica de la cuenta · inversión de conversión, COP</caption>
+        <thead><tr><th scope="col">Periodo</th><th scope="col" class="valor">Inversión</th><th scope="col" class="valor">Var. inversión</th><th scope="col" class="valor">Leads CRM</th><th scope="col" class="valor">CPL CRM</th><th scope="col" class="valor">Matr. pauta</th><th scope="col" class="valor">% conv.</th></tr></thead>
+        <tbody id="cierre-hist-tabla"></tbody>
+      </table>
+    </div>
+    <div class="ad-lectura">
+      <span class="ad-lectura__k">Lectura</span>
+      <p>Frente a 2025-2 invertimos 15,2&nbsp;% más en conversión y obtuvimos 18,6&nbsp;% más leads CRM, pero <span class="ad-hl">la conversión a matrícula bajó de 1,23&nbsp;% a 1,00&nbsp;%</span>. La tendencia viene desde 2025-1: el volumen ya no es el límite.</p>
+    </div>
+  </section>
+
+  <!-- 06 · NIVEL Y PROGRAMA · inversión y leads por homologación de campaña; leads
+       CRM y matrícula por programa de interés en CRM. Tabla con filtro por nivel y
+       orden por columna. «Campaña general» no tiene meta propia: No aplica.
+       Los extremos excluyen programas con menos de 300 leads CRM o con estado. -->
+  <section class="formato-seccion" aria-labelledby="programas">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow cierre-eyebrow"><span class="ad-n" aria-hidden="true">06</span>Nivel y programa</p>
+      <h2 class="ad-t-h2-compact" id="programas">Medicina convierte el doble que el MBA con un costo por matrícula casi cuatro veces menor</h2>
+    </div>
+
+    <div class="ad-tabla cierre-tabla cierre-bloque" role="region" aria-labelledby="niveles-caption" tabindex="0">
+      <table>
+        <caption id="niveles-caption">Por nivel · inversión de conversión, COP · meta y matrícula total son institucionales</caption>
+        <thead><tr><th scope="col">Nivel</th><th scope="col" class="valor">Inversión</th><th scope="col" class="valor">% inversión</th><th scope="col" class="valor">Leads plat.</th><th scope="col" class="valor">Leads CRM</th><th scope="col" class="valor">CPL CRM</th><th scope="col" class="valor">Matr. pauta</th><th scope="col" class="valor">% matr. pauta</th><th scope="col" class="valor">Matr. total / meta</th><th scope="col" class="valor">% ejecución</th></tr></thead>
+        <tbody id="cierre-niveles"></tbody>
+      </table>
+    </div>
+
+    <h3 class="cierre-sub">Todos los programas</h3>
+    <div class="cierre-chips" id="cierre-programas-chips" role="group" aria-label="Filtrar programas por nivel"></div>
+    <p class="formato-nota" id="cierre-programas-estado" role="status"></p>
+    <div class="ad-tabla cierre-tabla" role="region" aria-labelledby="programas-caption" tabindex="0">
+      <table>
+        <caption id="programas-caption">Programas · clic en el encabezado para ordenar · COP</caption>
+        <thead><tr id="cierre-programas-cabeza"></tr></thead>
+        <tbody id="cierre-programas"></tbody>
+      </table>
+    </div>
+
+    <div class="cierre-extremos">
+      <div class="ad-card is-on"><h3>Mejor conversión</h3><ol id="cierre-mejores"></ol></div>
+      <div class="ad-card"><h3>Menor conversión</h3><ol id="cierre-menores"></ol></div>
+    </div>
+    <div class="ad-lectura">
+      <span class="ad-lectura__k">Lectura</span>
+      <p>Medicina, Psicología e Ingeniería de Sistemas convierten por encima del promedio (1,00&nbsp;%). En posgrado, el MBA tiene <span class="ad-hl">el costo por matrícula más alto ($7.380.000)</span> y la menor conversión del portafolio. Maestría en Educación queda parcial: su cohorte inicia en septiembre.</p>
+    </div>
+  </section>
+
+  <!-- 07 · MEDIO Y CAMPAÑA · campañas de mayor inversión con su cruce a CRM y la
+       parte de la inversión que cubren. Branding y eventos van aparte: se leen por
+       impresiones, CPM, alcance y registros al evento, nunca por CPL ni matrícula. -->
+  <section class="formato-seccion" aria-labelledby="campanas">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow cierre-eyebrow"><span class="ad-n" aria-hidden="true">07</span>Medio y campaña</p>
+      <h2 class="ad-t-h2-compact" id="campanas">Las búsquedas de marca y de Medicina explican 35 de las 136 matrículas</h2>
+    </div>
+    <p class="formato-nota" id="cierre-campanas-cobertura"></p>
+    <div class="ad-tabla cierre-tabla" role="region" aria-labelledby="campanas-caption" tabindex="0">
+      <table>
+        <caption id="campanas-caption">Campañas de conversión · resultados nativos de plataforma y cruce con CRM, COP</caption>
+        <thead><tr><th scope="col">Campaña</th><th scope="col">Medio</th><th scope="col">Objetivo</th><th scope="col" class="valor">Inversión</th><th scope="col" class="valor">Resultados plat.</th><th scope="col" class="valor">Costo por resultado</th><th scope="col" class="valor">Leads CRM</th><th scope="col" class="valor">CPL CRM</th><th scope="col" class="valor">Matr. pauta</th></tr></thead>
+        <tbody id="cierre-campanas"></tbody>
+      </table>
+    </div>
+
+    <h3 class="cierre-sub">Branding y eventos</h3>
+    <p>La inversión que no busca leads: 5,9&nbsp;% del total del periodo. Se mide por alcance y participación.</p>
+    <div class="ad-tabla cierre-tabla cierre-bloque" role="region" aria-labelledby="branding-caption" tabindex="0">
+      <table>
+        <caption id="branding-caption">Branding y eventos, COP · CPM = inversión por mil impresiones</caption>
+        <thead><tr><th scope="col">Línea</th><th scope="col">Medio</th><th scope="col" class="valor">Inversión</th><th scope="col" class="valor">Impresiones</th><th scope="col" class="valor">CPM</th><th scope="col" class="valor">Alcance</th><th scope="col" class="valor">Registros al evento</th></tr></thead>
+        <tbody id="cierre-branding"></tbody>
+        <tfoot><tr id="cierre-branding-total"></tr></tfoot>
+      </table>
+    </div>
+  </section>
+
+  <!-- 08 · CREATIVOS DESTACADOS · una pieza por fila de DATOS.piezas. Si no hay
+       miniatura, queda el marcador neutro; con miniatura, usar un fotograma fiel
+       (en video, no el frame borroso de intro). Métricas nativas de plataforma:
+       nombrar la acción que cuenta como resultado. Después: anuncios de búsqueda
+       como se vieron, palabras clave y tres hallazgos de comunicación. -->
+  <section class="formato-seccion" aria-labelledby="creativos">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow cierre-eyebrow"><span class="ad-n" aria-hidden="true">08</span>Creativos destacados</p>
+      <h2 class="ad-t-h2-compact" id="creativos">El testimonio en video fue la pieza de menor costo por resultado</h2>
+    </div>
+    <p>Seleccionadas por resultados entre las piezas con entrega real del periodo. Resultado en Meta: registro completo en sitio; en TikTok: formulario enviado.</p>
+    <ul class="cierre-piezas cierre-bloque" id="cierre-piezas"></ul>
+
+    <h3 class="cierre-sub">Así se vio la propuesta en búsqueda</h3>
+    <ul class="cierre-anuncios" id="cierre-anuncios"></ul>
+
+    <div class="ad-tabla cierre-tabla cierre-bloque" role="region" aria-labelledby="palabras-caption" tabindex="0">
+      <table>
+        <caption id="palabras-caption">Palabras clave con más conversiones · Google Ads, COP</caption>
+        <thead><tr><th scope="col">Palabra clave</th><th scope="col">Concordancia</th><th scope="col" class="valor">Conversiones</th><th scope="col" class="valor">Inversión</th><th scope="col" class="valor">CPA</th><th scope="col" class="valor">CTR</th></tr></thead>
+        <tbody id="cierre-palabras"></tbody>
+      </table>
+    </div>
+
+    <h3 class="cierre-sub">Lo que funcionó en el mensaje</h3>
+    <ul class="ad-grid cierre-hallazgos" style="--col:240px">
+      <li class="ad-card is-on"><h4>Beneficio concreto antes que vocación</h4><p class="ad-card__d">Las piezas que nombran un hecho del programa (prácticas, horario, duración) tuvieron un costo por resultado 22&nbsp;% menor que las aspiracionales.</p></li>
+      <li class="ad-card"><h4>Una persona real, en contexto</h4><p class="ad-card__d">Tres de las cuatro piezas destacadas muestran a un estudiante en un espacio del campus; ninguna usa banco de imágenes.</p></li>
+      <li class="ad-card"><h4>El video vertical sostiene el clic</h4><p class="ad-card__d">El testimonio de Medicina mantuvo un CTR de 2,4&nbsp;% con una frecuencia de 2,6 durante tres meses.</p></li>
+    </ul>
+  </section>
+
+  <!-- 09 · CONTACTABILIDAD · MÓDULO OPCIONAL. Incluir solo si hubo gestión de
+       contacto sobre los leads de pauta (agente de voz, centro de contacto). Si no
+       hubo, borrar la sección y su entrada en el índice; con DATOS.contacto = null
+       se muestra «No aplica». El cruce con matrícula suele llegar tarde: Sin dato. -->
+  <section class="formato-seccion" aria-labelledby="contacto">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow cierre-eyebrow"><span class="ad-n" aria-hidden="true">09</span>Contactabilidad · opcional</p>
+      <h2 class="ad-t-h2-compact" id="contacto">Contactamos a 46&nbsp;% de la base; uno de cada seis mostró interés</h2>
+    </div>
+    <div class="ad-kpis" id="cierre-contacto"></div>
+    <div class="ad-lectura">
+      <span class="ad-lectura__k">Lectura</span>
+      <p>Las llamadas <span class="ad-hl">entre 10 a. m. y 3 p. m.</span> concentraron la mayor parte de las conversaciones. El cruce de estos contactos con matrícula queda pendiente con Admisiones.</p>
+    </div>
+  </section>
+
+  <!-- 10 · APRENDIZAJES · cada fila: qué aprendimos, con qué evidencia y qué haremos.
+       Marcar si es confirmado (medido) o hipótesis (a probar). Sin adjetivos. -->
+  <section class="formato-seccion" aria-labelledby="aprendizajes">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow cierre-eyebrow"><span class="ad-n" aria-hidden="true">10</span>Aprendizajes</p>
+      <h2 class="ad-t-h2-compact" id="aprendizajes">Lo que deja el semestre</h2>
+    </div>
+    <div class="ad-tabla cierre-tabla" role="region" aria-labelledby="aprendizajes-caption" tabindex="0">
+      <table>
+        <caption id="aprendizajes-caption">Matriz de aprendizajes 2026-2</caption>
+        <thead><tr><th scope="col">Aprendizaje</th><th scope="col">Evidencia</th><th scope="col">Acción siguiente</th><th scope="col">Tipo</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Las preguntas de calificación en el formulario mejoran el cruce con CRM.</th><td class="texto">Validez plataforma → CRM de 76,8&nbsp;% a 82,8&nbsp;% desde que Meta usa formulario con nivel de formación.</td><td class="texto">Llevar las mismas preguntas a TikTok.</td><td>Confirmado</td></tr>
+          <tr><th scope="row">Google es el medio de cierre; Meta, el de volumen.</th><td class="texto">Google: 2,10&nbsp;% de conversión a matrícula. Meta: 0,65&nbsp;%, con el CPL CRM más bajo.</td><td class="texto">Proteger presupuesto de búsqueda en el pico de admisiones.</td><td>Confirmado</td></tr>
+          <tr><th scope="row">TikTok trae registros que no llegan como leads útiles.</th><td class="texto">51,8&nbsp;% de validez y 4 matrículas con $38,6&nbsp;M.</td><td class="texto">Pasar TikTok a alcance y probar formulario calificado con 10&nbsp;% del presupuesto.</td><td>Hipótesis</td></tr>
+          <tr><th scope="row">El cuello de botella está después de la admisión.</th><td class="texto">Admitido → matriculado cayó 4,8 puntos frente a 2025-2.</td><td class="texto">Secuencia de seguimiento a admitidos con Admisiones.</td><td>Confirmado</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 11 · RECOMENDACIONES PARA EL SIGUIENTE PERIODO · tres a cinco decisiones, en
+       orden de impacto. Cada una con el dato que la justifica, responsable, fecha y
+       criterio de éxito verificable. Verbos de decisión: escalar, reenfocar,
+       replantear, cerrar, probar. La primera puede ir con la insignia en lima. -->
+  <section class="formato-seccion" aria-labelledby="recomendaciones">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow cierre-eyebrow"><span class="ad-n" aria-hidden="true">11</span>Recomendaciones 2027-1</p>
+      <h2 class="ad-t-h2-compact" id="recomendaciones">Cuatro decisiones para el siguiente periodo</h2>
+    </div>
+    <ol class="cierre-decisiones">
+      <li>
+        <span class="ad-n ad-n--lg ad-n--on" aria-hidden="true">1</span>
+        <div><h3>Cerrar la brecha entre admitido y matriculado</h3><p>Es la etapa que más cayó (42,8&nbsp;% contra 47,6&nbsp;%). Proponemos una secuencia de mensajes y llamadas a admitidos con fecha límite de pago.</p></div>
+        <dl><div><dt>Responsable</dt><dd>Admisiones con Adcom</dd></div><div><dt>Fecha</dt><dd>Desde la primera admisión de 2027-1</dd></div><div><dt>Criterio</dt><dd>Admitido → matriculado ≥ 47&nbsp;%</dd></div></dl>
+      </li>
+      <li>
+        <span class="ad-n ad-n--lg" aria-hidden="true">2</span>
+        <div><h3>Escalar Google en el pico de admisiones</h3><p>Aportó 52&nbsp;% de las matrículas con 38,5&nbsp;% de la inversión. Subir su participación a 45&nbsp;% entre mayo y junio.</p></div>
+        <dl><div><dt>Responsable</dt><dd>Paid Media</dd></div><div><dt>Fecha</dt><dd>Plan de medios 2027-1</dd></div><div><dt>Criterio</dt><dd>Costo por matrícula de Google ≤ $2,2&nbsp;M</dd></div></dl>
+      </li>
+      <li>
+        <span class="ad-n ad-n--lg" aria-hidden="true">3</span>
+        <div><h3>Reenfocar TikTok a alcance</h3><p>Con 51,8&nbsp;% de validez y 4 matrículas, no sostiene campañas de captación por programa. Mantener una prueba de formulario calificado.</p></div>
+        <dl><div><dt>Responsable</dt><dd>Paid Media</dd></div><div><dt>Fecha</dt><dd>Primera semana de 2027-1</dd></div><div><dt>Criterio</dt><dd>Validez de la prueba ≥ 75&nbsp;%</dd></div></dl>
+      </li>
+      <li>
+        <span class="ad-n ad-n--lg" aria-hidden="true">4</span>
+        <div><h3>Replantear la oferta del MBA</h3><p>Costo por matrícula de $7.380.000, el más alto del portafolio. Probar mensaje por horario y financiación antes de sostener la inversión.</p></div>
+        <dl><div><dt>Responsable</dt><dd>Estrategia y mercadeo de posgrados</dd></div><div><dt>Fecha</dt><dd>Antes del lanzamiento de 2027-1</dd></div><div><dt>Criterio</dt><dd>Conversión del MBA ≥ 0,9&nbsp;%</dd></div></dl>
+      </li>
+    </ol>
+  </section>
+
+  <!-- 12 · ESTADO AL CIERRE (punto 43.1) · los trece estados que se entregan por
+       escrito para que otra persona retome sin empezar de cero. Estado: Entregado,
+       Pendiente (con responsable y fecha) o No aplica. Accesos siempre va. Nunca
+       credenciales ni enlaces internos aquí: solo dónde quedan. -->
+  <section class="formato-seccion" aria-labelledby="estado-cierre">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow cierre-eyebrow"><span class="ad-n" aria-hidden="true">12</span>Estado al cierre</p>
+      <h2 class="ad-t-h2-compact" id="estado-cierre">Qué queda activo y qué queda pendiente</h2>
+    </div>
+    <div class="ad-tabla cierre-tabla" role="region" aria-labelledby="estado-caption" tabindex="0">
+      <table>
+        <caption id="estado-caption">Inventario de cierre de periodo · al 20 de agosto de 2026</caption>
+        <thead><tr><th scope="col">Elemento</th><th scope="col">Estado</th><th scope="col">Detalle</th><th scope="col">Dónde queda</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Resultados acumulados</th><td><span class="ad-estado ad-estado--ok">Entregado</span></td><td class="texto">Secciones 01 a 07 de este informe.</td><td>Este informe</td></tr>
+          <tr><th scope="row">Evolución histórica</th><td><span class="ad-estado ad-estado--ok">Entregado</span></td><td class="texto">Serie 2024-1 a 2026-2.</td><td>Sección 05</td></tr>
+          <tr><th scope="row">Pruebas</th><td><span class="ad-estado ad-estado--ok">Entregado</span></td><td class="texto">Formulario calificado en Meta (concluida); prueba de formulario en TikTok (por iniciar).</td><td>Bitácora del cliente</td></tr>
+          <tr><th scope="row">Aprendizajes</th><td><span class="ad-estado ad-estado--ok">Entregado</span></td><td class="texto">Cuatro, con evidencia y acción.</td><td>Sección 10</td></tr>
+          <tr><th scope="row">Estado de campañas</th><td><span class="ad-estado ad-estado--parcial">Parcial</span></td><td class="texto">Búsqueda de marca y remarketing activos; captación por programa en pausa desde el 31 jul.</td><td>Plataformas</td></tr>
+          <tr><th scope="row">Estado presupuestal</th><td><span class="ad-estado ad-estado--ok">Entregado</span></td><td class="texto">$404,0&nbsp;M ejecutados de $410,0&nbsp;M; saldo de $6,0&nbsp;M sin reasignar.</td><td>Seguimiento de inversión</td></tr>
+          <tr><th scope="row">Estado técnico</th><td><span class="ad-estado ad-estado--ok">Entregado</span></td><td class="texto">Píxel, etiqueta de conversión y API de conversiones operativos al corte.</td><td>Reporte de implementación</td></tr>
+          <tr><th scope="row">Tracking</th><td><span class="ad-estado ad-estado--pendiente">Pendiente</span></td><td class="texto">Campaña y fuente no viajan al CRM en TikTok. Responsable: Analítica, 15 sep 2026.</td><td>Bitácora del cliente</td></tr>
+          <tr><th scope="row">Accesos</th><td><span class="ad-estado ad-estado--ok">Entregado</span></td><td class="texto">Inventario de cuentas publicitarias, propiedades de analítica, CRM y hojas compartidas, con su dueño.</td><td>Carpeta 00 · Inicio del cliente</td></tr>
+          <tr><th scope="row">Documentos</th><td><span class="ad-estado ad-estado--ok">Entregado</span></td><td class="texto">Estrategia, flow, implementaciones e informes del periodo.</td><td>Repositorio del cliente</td></tr>
+          <tr><th scope="row">Pendientes</th><td><span class="ad-estado ad-estado--pendiente">Pendiente</span></td><td class="texto">Cruce de contactabilidad con matrícula; cierre de matrícula de Maestría en Educación.</td><td>Bitácora del cliente</td></tr>
+          <tr><th scope="row">Riesgos</th><td><span class="ad-estado ad-estado--pendiente">Pendiente</span></td><td class="texto">El CPC de búsqueda sube en el pico de admisiones; la meta de 2027-1 aún no está aprobada.</td><td>Estrategia 2027-1</td></tr>
+          <tr><th scope="row">Recomendaciones</th><td><span class="ad-estado ad-estado--ok">Entregado</span></td><td class="texto">Cuatro decisiones con responsable y criterio.</td><td>Sección 11</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 13 · NOTAS DE MÉTODO · definiciones que cambian la lectura de las cifras,
+       fuentes con su corte y la leyenda de estados. Ajustar al criterio del cliente. -->
+  <section class="formato-seccion" aria-labelledby="metodologia">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow cierre-eyebrow"><span class="ad-n" aria-hidden="true">13</span>Notas de método</p>
+      <h2 class="ad-t-h2-compact" id="metodologia">Cómo leer las cifras</h2>
+    </div>
+    <dl class="cierre-definiciones">
+      <div><dt>Inversión de conversión</dt><dd>Inversión en campañas que buscan leads. Excluye branding y eventos; sobre ella se calculan CPL y costo por matrícula.</dd></div>
+      <div><dt>Lead plataforma y lead CRM</dt><dd>El primero es el resultado que reporta cada plataforma. El segundo, el registro que cruza con el CRM por correo o teléfono en el mismo periodo.</dd></div>
+      <div><dt>Matrícula de pauta</dt><dd>Matrícula en estado pagado cuyo lead llegó por un medio pagado. La meta institucional se compara con la matrícula total.</dd></div>
+      <div><dt>Asignación por programa</dt><dd>Inversión y leads de plataforma por homologación de campaña; leads CRM y matrícula por programa de interés en el CRM.</dd></div>
+      <div><dt>Semestre equivalente</dt><dd>2025-2 con la misma ventana de fechas y el mismo criterio de atribución. Si cambió el criterio, se dice aquí.</dd></div>
+      <div><dt>Fuentes y corte</dt><dd>Plataformas por API al 31 jul 2026; CRM y matrícula al 15 ago 2026. Montos en COP con impuestos de plataforma incluidos.</dd></div>
+    </dl>
+    <h3 class="cierre-sub">Estados</h3>
+    <ul class="cierre-estados">
+      <li><span class="ad-estado ad-estado--parcial">Parcial</span>la cifra sigue madurando después del corte</li>
+      <li><span class="ad-estado ad-estado--parcial">Preliminar</span>cohorte abierta, no comparable todavía</li>
+      <li><span class="ad-estado ad-estado--sin">Sin dato</span>no se pudo leer; no equivale a cero</li>
+      <li><span class="ad-estado ad-estado--na">No aplica</span>la métrica no corresponde a esa fila</li>
+    </ul>
+  </section>
+</main>
+<footer class="ad-foot">
+  <div class="ad-foot__in"><span>Adcom · Área digital</span><span>Universidad Andina · Informe de cierre 2026-2 · Uso del cliente</span></div>
+</footer>
+</body>
+</html>

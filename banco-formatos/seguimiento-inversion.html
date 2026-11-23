@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#F7F6F2">
+  <title>Seguimiento de inversión | Adcom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
+  <link rel="stylesheet" href="../assets/css/adcom-v2.css">
+  <link rel="stylesheet" href="formatos.css">
+  <link rel="stylesheet" href="css/flow-medios.css">
+  <link rel="stylesheet" href="css/seguimiento-inversion.css">
+</head>
+<body>
+<!--
+  Plantilla: SEGUIMIENTO DE INVERSIÓN (pacing). Presenta el cuadro de control
+  presupuestal de operacion-tactica.html 26—29 (campos del punto 27, semáforo de 30—33).
+  Responde: cuánto deberíamos llevar, cuánto llevamos, cuál es la desviación, qué ritmo
+  necesitamos y cómo proyectamos cerrar. Dos niveles (29.4): producto para decidir,
+  campaña para ejecutar. Datos en js/seguimiento-inversion.js; deben cuadrar con
+  seguimiento-inversion.xlsx y con el bloque «Inversión del mes» de Media Bridge.
+-->
+<a class="skip-link" href="#contenido">Ir al contenido</a>
+<header class="ad-nav formato-nav">
+  <nav class="ad-nav__in" aria-label="Principal">
+    <a class="formato-nav__marca" href="../index.html">Adcom</a>
+    <div class="ad-nav__links">
+      <a href="#control">Por campaña</a>
+      <a href="#revisar">Para revisar</a>
+      <a href="index.html">Banco de formatos</a>
+    </div>
+  </nav>
+</header>
+<main class="formato-shell formato-contenido" id="contenido" tabindex="-1">
+
+  <!-- 1. Portada: corte, plan de referencia y fuente del gasto, siempre visibles. -->
+  <header class="formato-portada">
+    <p class="formato-meta">Plantilla con datos ficticios · <span id="seg-cliente">Cliente</span> · Seguimiento de inversión</p>
+    <h1 class="ad-t-statement"><span class="ad-ln">Seguimiento de <span class="ad-hl">inversión</span></span><span class="ad-ln" id="seg-periodo">Periodo.</span></h1>
+    <p class="ad-t-lead" id="seg-lectura">La lectura se calcula con los datos del corte.</p>
+    <dl class="formato-ficha">
+      <div><dt>Corte</dt><dd id="seg-corte">Sin dato</dd></div>
+      <div><dt>Plan de referencia</dt><dd id="seg-plan">Sin dato</dd></div>
+      <div><dt>Fuente del gasto</dt><dd id="seg-fuente">Sin dato</dd></div>
+      <div><dt>Actualizado</dt><dd id="seg-actualizado">Sin dato</dd></div>
+      <div><dt>Moneda</dt><dd id="seg-moneda">Sin dato</dd></div>
+    </dl>
+    <noscript><p class="formato-nota">Esta plantilla calcula las cifras con JavaScript. Ábrela en un navegador con scripts activos.</p></noscript>
+  </header>
+
+  <!-- 2. Resumen del corte. El gasto fuera de plan no entra al pacing: se informa aparte.
+       Una sola cifra con relleno lima: la proyección de cierre. -->
+  <section class="formato-seccion" aria-labelledby="resumen">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">1 · Resumen</p>
+      <h2 id="resumen">Cómo va el mes</h2>
+    </div>
+    <div class="ad-kpis" id="seg-kpi"></div>
+    <p class="formato-nota flow-nota" id="seg-kpi-nota"></p>
+  </section>
+
+  <!-- 3. Curva acumulada: real (sumi), esperado (discontinua), proyección (punteada) y
+       asignado (línea de referencia). Pregunta: ¿vamos adelante o atrás del plan? -->
+  <section class="formato-seccion" aria-labelledby="ritmo">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">2 · Ritmo</p>
+      <h2 id="ritmo">Gasto acumulado frente al ritmo esperado</h2>
+    </div>
+    <figure class="ad-figura seg-figura">
+      <svg id="seg-curva" role="img" aria-labelledby="seg-curva-titulo"><title id="seg-curva-titulo">Gasto acumulado diario, gasto esperado, proyección de cierre y presupuesto asignado</title></svg>
+      <figcaption>
+        <ul class="ad-leyenda">
+          <li><i class="seg-ley seg-ley--real"></i>Gasto real acumulado</li>
+          <li><i class="seg-ley seg-ley--esperado"></i>Esperado según el plan</li>
+          <li><i class="seg-ley seg-ley--proyeccion"></i>Proyección al ritmo actual</li>
+        </ul>
+        <p class="formato-nota" id="seg-curva-nota"></p>
+      </figcaption>
+    </figure>
+    <div class="ad-lectura seg-lectura">
+      <span class="ad-lectura__k">Qué quiere decir</span>
+      <p id="seg-curva-lectura"></p>
+    </div>
+  </section>
+
+  <!-- 4. Por medio: barra de ejecución con la marca del ritmo esperado a hoy. -->
+  <!-- La barra de cada medio es .ad-barra: el relleno es lo ejecutado y la raya es el ritmo esperado a hoy. -->
+  <section class="formato-seccion" aria-labelledby="medios">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">3 · Medios</p>
+      <h2 id="medios">Por medio</h2>
+    </div>
+    <div class="ad-tabla" role="region" aria-labelledby="medios-caption" tabindex="0">
+      <table>
+        <caption id="medios-caption">La raya vertical de cada barra es lo que deberíamos llevar a hoy.</caption>
+        <thead><tr><th scope="col">Medio</th><th scope="col" class="valor">Asignado</th><th scope="col" class="valor">Gasto</th><th scope="col">Ejecución</th><th scope="col" class="valor">Pacing</th><th scope="col" class="valor">Proyección</th><th scope="col">Estado</th></tr></thead>
+        <tbody id="seg-medios"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 5. Control por producto y campaña (campos del punto 27). Una fila por asignación.
+       «No aplica» cuando el campo no corresponde (sin plan, periodo cerrado). -->
+  <section class="formato-seccion" aria-labelledby="control" id="control-seccion">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">4 · Control</p>
+      <h2 id="control">Por producto y campaña</h2>
+    </div>
+    <div class="formato-filtros">
+      <label>Medio <select id="seg-f-plataforma"><option value="">Todos</option></select></label>
+      <label>Producto <select id="seg-f-producto"><option value="">Todos</option></select></label>
+      <label>Estado
+        <select id="seg-f-estado">
+          <option value="">Todos</option>
+          <option value="revisar">Para revisar</option>
+          <option value="normal">Normal</option>
+          <option value="observacion">Observación</option>
+          <option value="accion">Acción</option>
+          <option value="critico">Crítico</option>
+          <option value="fuera">Fuera de plan</option>
+        </select>
+      </label>
+    </div>
+    <div class="ad-tabla" role="region" aria-labelledby="control-caption" tabindex="0">
+      <table class="seg-control">
+        <caption id="control-caption">Montos en pesos al corte. Desvío = gasto − esperado. Pacing = gasto ÷ esperado.</caption>
+        <thead><tr><th scope="col">Producto y campaña</th><th scope="col">Medio</th><th scope="col" class="valor">Asignado</th><th scope="col" class="valor">Gasto</th><th scope="col" class="valor">Esperado</th><th scope="col" class="valor">Desvío</th><th scope="col" class="valor">Pacing</th><th scope="col" class="valor">Saldo</th><th scope="col" class="valor">Diario actual</th><th scope="col" class="valor">Diario requerido</th><th scope="col" class="valor">Proyección</th><th scope="col">Estado</th><th scope="col">Acción</th></tr></thead>
+        <tbody id="seg-control"></tbody>
+        <tfoot id="seg-control-pie"></tfoot>
+      </table>
+    </div>
+  </section>
+
+  <!-- 6. Meses: cerrados contra su presupuesto y el mes en curso al corte. -->
+  <section class="formato-seccion" aria-labelledby="historico">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">5 · Histórico</p>
+      <h2 id="historico">Mes a mes</h2>
+    </div>
+    <div class="ad-tabla" role="region" aria-labelledby="historico-caption" tabindex="0">
+      <table>
+        <caption id="historico-caption">Presupuesto y gasto por mes. El mes en curso incluye el gasto fuera de plan.</caption>
+        <thead><tr><th scope="col">Mes</th><th scope="col" class="valor">Presupuesto</th><th scope="col" class="valor">Gasto</th><th scope="col">Ejecución</th><th scope="col" class="valor">Diferencia</th></tr></thead>
+        <tbody id="seg-historico"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 7. Puntos para revisar: prioridad, evidencia con cifras, responsable, fecha y
+       criterio. Lo que se decide aquí se registra en la bitácora del cliente. -->
+  <section class="formato-seccion" aria-labelledby="revisar" id="revisar-seccion">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">6 · Revisión</p>
+      <h2 id="revisar">Puntos para revisar</h2>
+    </div>
+    <ol class="ad-stack seg-puntos" id="seg-puntos"></ol>
+  </section>
+
+  <!-- 8. Definiciones y limitaciones: mismas fórmulas que el libro y que Media Bridge. -->
+  <section class="formato-seccion" aria-labelledby="definiciones">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">7 · Definiciones</p>
+      <h2 id="definiciones">Definiciones y limitaciones</h2>
+    </div>
+    <dl class="seg-definiciones">
+      <div><dt>Esperado al corte</dt><dd>Asignado × días transcurridos ÷ días del periodo, ambos inclusivos. Con curva aprobada, asignado × proporción declarada al corte.</dd></div>
+      <div><dt>Pacing y desvío</dt><dd>Pacing = gasto ÷ esperado. Desvío = gasto − esperado. En los totales se divide el gasto agregado por el esperado agregado.</dd></div>
+      <div><dt>Diario requerido</dt><dd>Saldo positivo ÷ días restantes. Diario actual = gasto ÷ días transcurridos.</dd></div>
+      <div><dt>Proyección de cierre</dt><dd>Gasto × días del periodo ÷ días transcurridos; con curva, gasto ÷ proporción prevista. Al cierre es el gasto observado.</dd></div>
+      <div><dt>Semáforo</dt><dd id="seg-umbrales"></dd></div>
+      <div><dt>Estados del dato</dt><dd>«Parcial»: la fuente llega con rezago. «Sin dato»: la fuente no respondió. «Fuera de plan»: gasto sin asignación en el flow. «No aplica»: el cálculo no corresponde.</dd></div>
+    </dl>
+  </section>
+</main>
+<footer class="ad-foot">
+  <div class="ad-foot__in"><span>Adcom · Área digital</span><span>Cuadro completo: seguimiento-inversion.xlsx</span></div>
+</footer>
+<script src="js/seguimiento-inversion.js"></script>
+</body>
+</html>

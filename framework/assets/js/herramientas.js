@@ -71,7 +71,7 @@
     $("#c-forecast").textContent = money(forecast);
     $("#c-forecast-var").textContent = (forecastVar>=0?"+":"−") + money(Math.abs(forecastVar));
 
-    var state, color;
+    var state, color; /* severidad: PROVISIONAL, el texto y la forma del .ad-estado acompañan al color */
     var dev = Math.abs(pacing - 100);
     if (expected <= 0){ state = "Escribe presupuesto y días"; color = "var(--muted-dark)"; }
     else if (dev <= 5){ state = "Normal"; color = "var(--green)"; }
@@ -85,7 +85,7 @@
     label.style.color = "var(--sumi)";
     // v2: la lima no va como borde; el estado lo dicen la etiqueta y el medidor
     var meter = $("#c-meter");
-    meter.style.transform = "scaleX(" + (Math.min(pacing/2, 100)/100) + ")";
+    meter.style.setProperty("--v", Math.min(pacing/2, 100) + "%");
     meter.style.background = color;
   }
   $$("#calc input, #calc select").forEach(function(el){

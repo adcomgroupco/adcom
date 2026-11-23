@@ -103,7 +103,7 @@
     try { return ['https:', 'http:'].includes(new URL(url).protocol); } catch { return false; }
   }
   function link(label, url) {
-    const a = el('a', '', label + ' ↗');
+    const a = el('a', 'ad-chip', label + ' ↗');
     a.href = url;
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
@@ -111,7 +111,7 @@
   }
   function renderMedia() {
     const host = $('#media-grid');
-    const all = el('button', 'media-index-item media-index-all');
+    const all = el('button', 'media-index-item media-index-all ad-chip');
     all.type = 'button';
     all.dataset.medium = '';
     all.textContent = 'Todos';
@@ -119,7 +119,7 @@
     all.addEventListener('click', () => selectMedium(''));
     host.append(all);
     media.forEach(item => {
-      const button = el('button', 'media-index-item');
+      const button = el('button', 'media-index-item ad-chip');
       button.type = 'button';
       button.dataset.medium = item.id;
       button.setAttribute('aria-label', `Ver formatos de ${item.id}`);
@@ -144,8 +144,8 @@
     pager.hidden = pageCount < 2;
     pager.replaceChildren();
     if (pageCount < 2) return;
-    const previous = el('button', '', '← Anterior');
-    const next = el('button', '', 'Siguiente →');
+    const previous = el('button', 'ad-chip', '← Anterior');
+    const next = el('button', 'ad-chip', 'Siguiente →');
     previous.type = next.type = 'button';
     previous.addEventListener('click', () => changePage(currentPage - 1));
     next.addEventListener('click', () => changePage(currentPage + 1));
@@ -190,7 +190,7 @@
     let playing = !matchMedia('(prefers-reduced-motion: reduce)').matches;
     let visible = false;
     let timer = null;
-    const toggle = el('button', 'context-cycle-toggle');
+    const toggle = el('button', 'context-cycle-toggle ad-chip');
     toggle.type = 'button';
     function update() {
       toggle.textContent = playing ? 'Pausar secuencia' : 'Reproducir secuencia';
@@ -348,7 +348,7 @@
       section.append(heading);
       const cards = el('div', 'format-grid');
       matches.forEach(item => {
-        const card = el('article', 'format-card');
+        const card = el('article', 'format-card ad-card');
         if (isPortrait(item.id)) card.classList.add('is-mobile');
         const visual = el('div', 'format-card-visual');
         if (['pro-dco','dooh-data','pro-realtime'].includes(item.id)) { card.classList.add('has-data-preview'); visual.append(renderDataCard(item)); }
@@ -356,13 +356,13 @@
         if (item.id === 'goo-pmax') visual.append(el('p', 'channel-caption', 'Search · YouTube · Discover · Gmail · Maps · Display'));
         card.append(visual);
         const body = el('div', 'format-card-body');
-        body.append(el('p', 'format-card-meta', `${item.medio} / ${item.familia}`), el('h3', '', item.nombre), el('p', '', item.promesa));
+        body.append(el('p', 'format-card-meta ad-card__n', `${item.medio} / ${item.familia}`), el('h3', '', item.nombre), el('p', 'ad-card__d', item.promesa));
         const button = el('button');
         button.type = 'button';
         button.setAttribute('aria-label', `Abrir ficha de ${item.nombre} en ${item.medio}`);
-        button.className = 'format-explore-button';
+        button.className = 'format-explore-button ad-chip';
         button.append(el('span', '', 'Explorar ficha'), el('span', '', '↗'));
-        button.addEventListener('click', () => openDetail(item));
+        button.addEventListener('click', () => { grid.querySelectorAll('.format-card.is-on').forEach(c => c.classList.remove('is-on')); card.classList.add('is-on'); openDetail(item); });
         body.append(button);
         card.append(body);
         cards.append(card);
@@ -389,10 +389,12 @@
     dialog.dataset.format = item.id;
     const ref = references.get(item.ref);
     $('#detail-breadcrumb').textContent = `${item.medio} / ${item.familia}`;
-    $('#detail-type').textContent = `${item.oportunidad} · ${item.activacion}`;
+    const typeHost = $('#detail-type');
+    const activation = {Habitual:'ok', Especializada:'parcial'}[item.activacion] || 'pendiente';
+    typeHost.replaceChildren(el('span', 'ad-tag ad-tag--line', item.oportunidad), el('span', `ad-estado ad-estado--${activation}`, item.activacion));
     $('#detail-title').textContent = item.nombre;
     $('#detail-promise').textContent = item.promesa;
-    $('#detail-observation').textContent = `Qué mirar: ${window.CMP_OBSERVATIONS[item.id] || item.promesa}`;
+    $('#detail-observation').textContent = window.CMP_OBSERVATIONS[item.id] || item.promesa;
     $('#detail-image-button').hidden = ['pro-dco','dooh-data'].includes(item.id);
     const spec = specs[item.id];
     $('#detail-size').textContent = spec?.size || 'Definir con el proveedor';
@@ -400,7 +402,13 @@
     $('#detail-spec-note').textContent = `${spec?.detail || 'Solicita especificaciones del inventario.'} Son medidas iniciales; confirma las especificaciones de la ubicación contratada.`;
     $('#detail-action').textContent = item.accion;
     fillList('#detail-routes', item.rutas);
-    fillList('#detail-tips', item.tips);
+    $('#detail-tips').replaceChildren(...item.tips.map((tip, index) => {
+      const step = el('li', 'ad-paso');
+      const n = el('span', 'ad-n', String(index + 1));
+      n.setAttribute('aria-hidden', 'true');
+      step.append(n, el('p', '', tip));
+      return step;
+    }));
     $('#detail-status').textContent = item.activacion === 'Habitual'
       ? 'Habitual: confirma especificaciones y disponibilidad actuales.'
       : item.activacion === 'Especializada'
@@ -449,7 +457,7 @@
     return sources[item.id] || null;
   }
   function makeButton(label, pressed, handler) {
-    const button = el('button', '', label);
+    const button = el('button', 'ad-chip', label);
     button.type = 'button';
     button.setAttribute('aria-pressed', String(pressed));
     button.addEventListener('click', handler);
@@ -658,6 +666,7 @@
     });
   }
   dialog.addEventListener('close', () => {
+    grid.querySelectorAll('.format-card.is-on').forEach(c => c.classList.remove('is-on'));
     detailCycleCleanup?.cleanup();
     detailCycleCleanup = null;
     if (location.hash.slice(1) === dialog.dataset.format) history.replaceState(null, '', returnHash);

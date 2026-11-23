@@ -12,6 +12,9 @@ Se organiza en tres guías, con entrada directa desde la portada y el menú:
   y pruebas, playbooks y repositorio.
 - **Automatización e IA** (automatizacion.html): Media Bridge, niveles de autonomía, aprobación, auditoría y riesgos.
 
+Desde la portada se accede al [Banco de formatos](../banco-formatos/index.html) y a su
+[instructivo de replicación](../banco-formatos/INSTRUCTIVO.md).
+
 La táctica define acciones, ajustes y pruebas; la operación define responsables, plazos,
 validación y registro. La numeración original se conserva como referencia, aunque la lectura
 se ordena por propósito. Los capítulos mantienen sus anclas y no se duplican.

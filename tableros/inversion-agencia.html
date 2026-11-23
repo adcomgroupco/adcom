@@ -396,78 +396,15 @@
       margin-top: 2px
     }
 
-    /* selectores en píldora (chips de filtro) */
-    .seg {
-      display: inline-flex;
-      flex-wrap: wrap;
-      gap: 6px
-    }
+    /* selectores: .ad-chip; lo seleccionado va en lima (relleno con texto sumi) */
+    .seg { display: inline-flex; flex-wrap: wrap; gap: 6px }
+    .seg .ad-chip { min-width: var(--target-min); padding: 0 14px; font-size: var(--fs-min) }
+    .ad-chip:hover { border-color: var(--sumi) }
+    .ad-chip[aria-pressed="true"] { background: var(--lima); border-color: var(--lima); color: var(--sumi) }
 
-    .seg button {
-      border: 1px solid var(--piedra-borde);
-      background: transparent;
-      min-height: var(--target-min);
-      min-width: var(--target-min);
-      padding: 0 14px;
-      border-radius: var(--radius-pill);
-      font-size: var(--fs-min);
-      font-weight: 400;
-      color: var(--fg)
-    }
-
-    .seg button:hover {
-      border-color: var(--fg)
-    }
-
-    .seg button.on {
-      background: var(--sumi);
-      border-color: var(--sumi);
-      color: var(--papel)
-    }
-
-    /* el mes es el filtro principal: su opción activa va en lima */
-    #segmes button.on {
-      background: var(--lima);
-      border-color: var(--lima);
-      color: var(--sumi)
-    }
-
-    .kpis {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin-bottom: 18px
-    }
-
-    .kpi {
-      background: var(--raised);
-      border: 1px solid var(--rule);
-      border-radius: var(--radius);
-      padding: 16px
-    }
-
-    .kpi small {
-      display: block;
-      color: var(--fg-secondary);
-      font-size: var(--fs-min);
-      font-weight: 400
-    }
-
-    .kpi b {
-      display: block;
-      font-family: var(--font-display);
-      font-size: 2rem;
-      letter-spacing: -.04em;
-      line-height: 1.1;
-      margin-top: 6px;
-      font-weight: 300
-    }
-
-    .kpi .d {
-      font-size: var(--fs-min);
-      color: var(--fg-muted);
-      margin-top: 2px
-    }
+    /* cifras: .ad-kpis */
+    .ad-kpis { margin-bottom: 18px }
+    .ad-kpi__n { font-size: 2rem }
 
     .box {
       background: var(--raised);
@@ -536,132 +473,22 @@
       background: var(--ground)
     }
 
-    .track {
-      height: 10px;
-      background: var(--sunken);
-      position: relative
-    }
+    .bars .ad-barra { display: block }
 
-    .track i {
-      display: block;
-      height: 100%;
-      background: var(--fg)
-    }
-
-    .track .mk {
-      position: absolute;
-      top: -3px;
-      width: 2px;
-      height: 16px;
-      background: var(--accent-fg)
-    }
-
-    /* Tablas: abiertas y suaves */
-    .tw {
-      overflow-x: auto;
-      background: var(--raised);
-      border: 1px solid var(--rule);
-      border-radius: var(--radius)
-    }
-
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      font-size: .8125rem;
-      line-height: 1.4
-    }
-
-    th {
-      font-size: var(--fs-min);
-      font-weight: 500;
-      color: var(--fg-muted);
-      text-align: right;
-      padding: 10px;
-      background: var(--ground);
-      border-bottom: 1px solid var(--rule);
-      white-space: nowrap
-    }
-
-    th:first-child,
-    td:first-child {
-      text-align: left;
-      position: sticky;
-      left: 0;
-      background: var(--raised);
-      z-index: 1;
-      min-width: 150px
-    }
-
-    th:first-child {
-      background: var(--ground);
-      z-index: 2
-    }
-
-    td {
-      padding: 8px 10px;
-      text-align: right;
-      border-bottom: 1px solid var(--rule);
-      white-space: nowrap
-    }
-
-    td:first-child {
-      font-weight: 500
-    }
-
-    tbody tr.cl {
-      cursor: pointer
-    }
-
-    tbody tr.cl:hover td {
-      background: var(--ground)
-    }
-
-    tbody tr.cl:hover td:first-child {
-      background: var(--ground)
-    }
-
-    tfoot td {
-      font-weight: 500;
-      background: var(--sunken);
-      border-bottom: 0
-    }
-
-    tfoot td:first-child {
-      background: var(--sunken)
-    }
-
-    td.z {
-      color: var(--fg-muted)
-    }
-
-    td.tot {
-      font-weight: 500
-    }
-
-    .chip {
-      display: inline-block;
-      border-radius: var(--radius-pill);
-      padding: 1px 10px;
-      font-size: var(--fs-min);
-      font-weight: 500;
-      background: var(--sunken);
-      color: var(--fg-secondary)
-    }
-
-    .chip.pos {
-      background: var(--pos-soft);
-      color: var(--pos)
-    }
-
-    .chip.neg {
-      background: var(--neg-soft);
-      color: var(--neg)
-    }
-
-    .chip.warn {
-      background: var(--warn-soft);
-      color: var(--warn)
-    }
+    /* Tablas: .ad-tabla; aquí solo densidad, primera columna fija y cifras a la derecha */
+    .ad-tabla table { font-size: .8125rem; line-height: 1.4 }
+    .ad-tabla th { font-size: var(--fs-min); text-align: right; padding: 10px; white-space: nowrap }
+    .ad-tabla th:first-child, .ad-tabla td:first-child { text-align: left; position: sticky; left: 0; background: var(--papel); z-index: 1; min-width: 150px }
+    .ad-tabla th:first-child { z-index: 2 }
+    .ad-tabla td { padding: 8px 10px; text-align: right; white-space: nowrap }
+    .ad-tabla td:first-child { font-weight: 500 }
+    .ad-tabla tbody tr.cl { cursor: pointer }
+    .ad-tabla tbody tr.cl:hover td, .ad-tabla tbody tr.cl:hover td:first-child { background: var(--crema) }
+    .ad-tabla tfoot td { font-weight: 500; background: var(--crema) }
+    .ad-tabla tfoot td:first-child { background: var(--crema) }
+    .ad-tabla td.z { color: var(--fg-muted) }
+    .ad-tabla td.tot { font-weight: 500 }
+    @media (pointer: coarse) { .ad-tabla td { padding-block: 12px } }
 
     .ej {
       display: flex;
@@ -670,9 +497,7 @@
       justify-content: flex-end
     }
 
-    .ej .track {
-      width: 70px
-    }
+    .ej .ad-barra { width: 70px; flex: none }
 
     .note {
       color: var(--fg-muted);
@@ -858,10 +683,6 @@
         padding: 16px 16px 40px
       }
 
-      .kpis {
-        grid-template-columns: repeat(2, minmax(0, 1fr))
-      }
-
       .grid2 {
         grid-template-columns: 1fr
       }
@@ -1019,9 +840,9 @@
     function ejec(inv, p, m) {
       if (p == null || !p) return '<span class="z">—</span>';
       const e = inv / p, r = ritmo(m);
-      let k = 'pos';
-      if (e > 1.0) k = 'neg'; else if (r != null ? e < r - .15 : e < .85) k = 'warn';
-      return `<div class="ej"><div class="track"><i style="width:${Math.min(100, e * 100)}%"></i>${r != null ? `<span class="mk" style="left:${r * 100}%" title="Ritmo esperado ${Math.round(r * 100)} %"></span>` : ''}</div><span class="chip ${k} num">${nf.format(Math.round(e * 100))} %</span></div>`;
+      let k = 'ad-estado';
+      if (e > 1.0) k = 'ad-estado ad-estado--alerta'; else if (r != null ? e < r - .15 : e < .85) k = 'ad-estado ad-estado--parcial';
+      return `<div class="ej"><div class="ad-barra"${r != null ? ` style="--meta:${r * 100}%" title="Ritmo esperado ${Math.round(r * 100)} %"` : ''}><span style="width:${Math.min(100, e * 100)}%"></span>${r != null ? '<i></i>' : ''}</div><span class="${k} num">${nf.format(Math.round(e * 100))} %</span></div>`;
     }
 
     /* ---------- vistas ---------- */
@@ -1030,11 +851,11 @@
       const activos = S.clientes.filter(c => gasto(c, m) > 0).length;
       const r = ritmo(m), base = r != null ? ant * r : ant;   // mes en curso: se compara a igual avance
       const delta = base ? (inv / base - 1) * 100 : null;
-      return `<div class="kpis">
-    <div class="kpi"><small>Inversión ${mname(m)}</small><b class="num">${money(inv)}</b><div class="d">${activos} clientes con gasto</div></div>
-    <div class="kpi"><small>Presupuesto ${mname(m)}</small><b class="num">${p ? money(p) : '—'}</b><div class="d">${p ? 'clientes con presupuesto cargado' : 'sin cargar en PRESUPUESTO'}</div></div>
-    <div class="kpi"><small>Ejecución</small><b class="num">${p ? nf.format(Math.round(inv / p * 100)) + ' %' : '—'}</b><div class="d">${ritmo(m) != null ? 'ritmo esperado ' + Math.round(ritmo(m) * 100) + ' %' : 'mes cerrado'}</div></div>
-    <div class="kpi"><small>Contra mes anterior</small><b class="num">${delta == null ? '—' : (delta >= 0 ? '+' : '') + nm.format(delta) + ' %'}</b><div class="d">${i > 0 ? (r != null ? 'a igual avance · ' : '') + mname(S.meses[i - 1]) + ': ' + money(ant) : ''}</div></div>
+      return `<div class="ad-kpis">
+    <div class="ad-kpi"><small class="ad-kpi__l">Inversión ${mname(m)}</small><b class="ad-kpi__n num">${money(inv)}</b><div class="ad-kpi__m">${activos} clientes con gasto</div></div>
+    <div class="ad-kpi"><small class="ad-kpi__l">Presupuesto ${mname(m)}</small><b class="ad-kpi__n num">${p ? money(p) : '—'}</b><div class="ad-kpi__m">${p ? 'clientes con presupuesto cargado' : 'sin cargar en PRESUPUESTO'}</div></div>
+    <div class="ad-kpi ad-kpi--on"><small class="ad-kpi__l">Ejecución</small><b class="ad-kpi__n num">${p ? nf.format(Math.round(inv / p * 100)) + ' %' : '—'}</b><div class="ad-kpi__m">${ritmo(m) != null ? 'ritmo esperado ' + Math.round(ritmo(m) * 100) + ' %' : 'mes cerrado'}</div></div>
+    <div class="ad-kpi"><small class="ad-kpi__l">Contra mes anterior</small><b class="ad-kpi__n num">${delta == null ? '—' : (delta >= 0 ? '+' : '') + nm.format(delta) + ' %'}</b><div class="ad-kpi__m">${i > 0 ? (r != null ? 'a igual avance · ' : '') + mname(S.meses[i - 1]) + ': ' + money(ant) : ''}</div></div>
   </div>`;
     }
 
@@ -1060,7 +881,7 @@
     function vResumen() {
       const m = S.mes, top = S.clientes.filter(c => gasto(c, m) > 0).sort((a, b) => gasto(b, m) - gasto(a, m)).slice(0, 10);
       const mx = Math.max(1, ...top.map(c => gasto(c, m)));
-      const barras = top.length ? top.map(c => `<button class="r" data-c="${esc(c)}" type="button"><span>${esc(clName(c))}</span><span class="track"><i style="width:${gasto(c, m) / mx * 100}%"></i></span><span class="num" style="text-align:right">${money(gasto(c, m))}</span></button>`).join('') : '<div class="empty">Sin gasto en este mes.</div>';
+      const barras = top.length ? top.map((c, ix) => `<button class="r" data-c="${esc(c)}" type="button"><span>${esc(clName(c))}</span><span class="ad-barra${ix === 0 ? ' ad-barra--on' : ''}" style="--v:${gasto(c, m) / mx * 100}%"><span></span></span><span class="num" style="text-align:right">${money(gasto(c, m))}</span></button>`).join('') : '<div class="empty">Sin gasto en este mes.</div>';
       return `${selMes()}${kpis(m)}
   <div class="grid2">
     <div class="box"><h3>Inversión por mes y medio · ${S.anio} <span>(millones COP)</span></h3>${chartMensual()}</div>
@@ -1069,11 +890,11 @@
     }
 
     function selMes() {
-      return `<div class="head"><div><h2>${mname(S.mes)} ${S.anio}</h2><p class="sub">Mes elegido para KPIs, tabla y detalle.</p></div><div class="seg" id="segmes">${S.meses.map(m => `<button type="button" data-m="${m}" class="${m === S.mes ? 'on' : ''}">${mname(m)}</button>`).join('')}</div></div>`;
+      return `<div class="head"><div><h2>${mname(S.mes)} ${S.anio}</h2><p class="sub">Mes elegido para KPIs, tabla y detalle.</p></div><div class="seg" id="segmes">${S.meses.map(m => `<button type="button" data-m="${m}" class="ad-chip" aria-pressed="${m === S.mes}">${mname(m)}</button>`).join('')}</div></div>`;
     }
 
     function unidadSeg() {
-      return `<div class="seg" id="segun"><button type="button" data-u="M" class="${S.unidad === 'M' ? 'on' : ''}">Millones</button><button type="button" data-u="P" class="${S.unidad === 'P' ? 'on' : ''}">Pesos</button></div>`;
+      return `<div class="seg" id="segun"><button type="button" data-u="M" class="ad-chip" aria-pressed="${S.unidad === 'M'}">Millones</button><button type="button" data-u="P" class="ad-chip" aria-pressed="${S.unidad === 'P'}">Pesos</button></div>`;
     }
 
     function vClientes() {
@@ -1082,7 +903,7 @@
       const filas = cl.map(c => `<tr class="cl" data-c="${esc(c)}"><td>${esc(clName(c))}</td>${S.meses.map(m => { const v = gasto(c, m); return `<td class="num ${v ? '' : 'z'}" title="${v ? pesos(v) : ''}">${money(v)}</td>`; }).join('')}<td class="num tot" title="${pesos(S.cli[c].tot)}">${money(S.cli[c].tot)}</td></tr>`).join('');
       const pie = `<tr><td>Total</td>${S.meses.map(m => `<td class="num" title="${pesos(cl.reduce((a, c) => a + gasto(c, m), 0))}">${money(cl.reduce((a, c) => a + gasto(c, m), 0))}</td>`).join('')}<td class="num">${money(cl.reduce((a, c) => a + S.cli[c].tot, 0))}</td></tr>`;
       return `<div class="head"><div><h2>Inversión por cliente y mes</h2><p class="sub">Meta + Google + TikTok + LinkedIn + X + Programática, en pesos colombianos. Toca un cliente para ver su detalle.</p></div>${unidadSeg()}</div>
-  <div class="tw"><table><thead><tr><th>Cliente</th>${S.meses.map(m => `<th>${mname(m)}</th>`).join('')}<th>Total ${S.anio}</th></tr></thead><tbody>${filas}</tbody><tfoot>${pie}</tfoot></table></div>
+  <div class="ad-tabla"><table><thead><tr><th>Cliente</th>${S.meses.map(m => `<th>${mname(m)}</th>`).join('')}<th>Total ${S.anio}</th></tr></thead><tbody>${filas}</tbody><tfoot>${pie}</tfoot></table></div>
   <p class="note">Genius Bet pauta en USD en Meta; su gasto se suma tal como llega de la fuente.</p>`;
     }
 
@@ -1098,8 +919,8 @@
       const pie = `<tr><td>Total</td>${med.map(me => `<td class="num">${money(sum(c => medioGasto(c, m, me)))}</td>`).join('')}<td class="num">${money(tInv)}</td><td class="num">${tP ? money(tP) : '—'}</td><td>${tP ? ejec(tInv, tP, m) : ''}</td><td class="num">${tP ? (tP - tInv < 0 ? '−' : '') + money(Math.abs(tP - tInv)) : '—'}</td></tr>`;
       const sinP = cl.filter(c => pp(c, m) == null && gasto(c, m) > 0).length;
       return `${selMes()}${kpis(m)}<div class="head"><div><h3 class="sub" style="font-weight:500;color:var(--fg)">Cliente × medio vs presupuesto</h3></div>${unidadSeg()}</div>
-  <div class="tw"><table><thead><tr><th>Cliente</th>${med.map(me => `<th>${medioName(me)}</th>`).join('')}<th>Inversión</th><th>Presupuesto</th><th>Ejecución</th><th>Diferencia</th></tr></thead><tbody>${filas || ''}</tbody><tfoot>${pie}</tfoot></table></div>
-  <p class="note">${sinP ? (sinP === 1 ? '1 cliente con gasto no tiene' : sinP + ' clientes con gasto no tienen') + ' presupuesto cargado en la pestaña PRESUPUESTO. ' : ''}La raya vertical de la barra es el ritmo esperado a hoy; rojo = presupuesto excedido, ámbar = por debajo del ritmo.</p>`;
+  <div class="ad-tabla"><table><thead><tr><th>Cliente</th>${med.map(me => `<th>${medioName(me)}</th>`).join('')}<th>Inversión</th><th>Presupuesto</th><th>Ejecución</th><th>Diferencia</th></tr></thead><tbody>${filas || ''}</tbody><tfoot>${pie}</tfoot></table></div>
+  <p class="note">${sinP ? (sinP === 1 ? '1 cliente con gasto no tiene' : sinP + ' clientes con gasto no tienen') + ' presupuesto cargado en la pestaña PRESUPUESTO. ' : ''}La raya vertical de la barra es el ritmo esperado a hoy; punto lleno rojo = presupuesto excedido, medio círculo = por debajo del ritmo.</p>`;
     }
 
     function vDatos() {
@@ -1109,15 +930,15 @@
       const filas = S.clientes.filter(c => c !== 'Other').map(c => {
         const con = S.meses.filter(m => gasto(c, m) > 0), ult = con[con.length - 1];
         const ok = gasto(c, S.mes) > 0;
-        return `<tr class="cl" data-c="${esc(c)}"><td>${esc(c)}</td><td><div class="cov" aria-label="Meses con gasto">${S.meses.map(m => `<i class="${gasto(c, m) > 0 ? 'on' : ''} ${m === S.mes ? 'sel' : ''}" title="${mname(m)}"></i>`).join('')}</div></td><td class="num">${con.length}</td><td>${ult ? mname(ult) : '—'}</td><td><span class="chip ${ok ? 'pos' : 'warn'}">${ok ? 'con gasto' : 'sin gasto en ' + mname(S.mes)}</span></td></tr>`;
+        return `<tr class="cl" data-c="${esc(c)}"><td>${esc(c)}</td><td><div class="cov" aria-label="Meses con gasto">${S.meses.map(m => `<i class="${gasto(c, m) > 0 ? 'on' : ''} ${m === S.mes ? 'sel' : ''}" title="${mname(m)}"></i>`).join('')}</div></td><td class="num">${con.length}</td><td>${ult ? mname(ult) : '—'}</td><td><span class="ad-estado ${ok ? '' : 'ad-estado--pendiente'}">${ok ? 'con gasto' : 'sin gasto en ' + mname(S.mes)}</span></td></tr>`;
       }).join('');
       const sinPp = S.clientes.filter(c => c !== 'Other' && S.meses.every(m => pp(c, m) == null)).length;
       return `<div class="head"><div><h2>Fuente de datos</h2><p class="sub">Qué clientes llegan hoy a RESUMEN GENERAL y qué meses tienen gasto.</p></div></div>
   ${atraso != null && atraso > 2 ? `<div class="banner neg">El último día con datos es ${d.ultimoDia}: la fuente lleva ${atraso} días sin actualizar. Revisa los reportes de Power My Analytics.</div>` : ''}
   ${sinCls > 0 ? `<div class="banner">Hay ${money(sinCls, 'P')} en «Otros (sin clasificar)»: cuentas o campañas que el script de homologación no reconoce. Revisa las reglas de homologación.</div>` : ''}
   ${(d.avisos && (d.avisos.sinFecha || d.avisos.gastoTexto)) ? `<div class="banner">Filas ignoradas: ${d.avisos.sinFecha} sin fecha legible y ${d.avisos.gastoTexto} con gasto en texto.</div>` : ''}
-  <div class="kpis"><div class="kpi"><small>Último día con datos</small><b class="num" style="font-size:1.2rem">${d.ultimoDia || '—'}</b></div><div class="kpi"><small>Clientes en la fuente</small><b class="num">${S.clientes.filter(c => c !== 'Other').length}</b></div><div class="kpi"><small>Clientes sin presupuesto</small><b class="num">${sinPp}</b><div class="d">en todo ${S.anio}</div></div><div class="kpi"><small>Consulta</small><b class="num" style="font-size:1.2rem">${(d.actualizado || '').replace('T', ' ').slice(0, 16)}</b></div></div>
-  <div class="tw"><table><thead><tr><th>Cliente</th><th style="text-align:left">Meses con gasto</th><th>Meses</th><th>Último mes</th><th>Estado</th></tr></thead><tbody>${filas}</tbody></table></div>
+  <div class="ad-kpis"><div class="ad-kpi"><small class="ad-kpi__l">Último día con datos</small><b class="ad-kpi__n num" style="font-size:1.2rem">${d.ultimoDia || '—'}</b></div><div class="ad-kpi"><small class="ad-kpi__l">Clientes en la fuente</small><b class="ad-kpi__n num">${S.clientes.filter(c => c !== 'Other').length}</b></div><div class="ad-kpi"><small class="ad-kpi__l">Clientes sin presupuesto</small><b class="ad-kpi__n num">${sinPp}</b><div class="ad-kpi__m">en todo ${S.anio}</div></div><div class="ad-kpi"><small class="ad-kpi__l">Consulta</small><b class="ad-kpi__n num" style="font-size:1.2rem">${(d.actualizado || '').replace('T', ' ').slice(0, 16)}</b></div></div>
+  <div class="ad-tabla"><table><thead><tr><th>Cliente</th><th style="text-align:left">Meses con gasto</th><th>Meses</th><th>Último mes</th><th>Estado</th></tr></thead><tbody>${filas}</tbody></table></div>
   <p class="note">Un cliente aparece aquí solo si tiene gasto en alguna de las pestañas de la fuente. Si falta uno, hay que agregar su cuenta al reporte de Power My Analytics y una regla en el script de homologación.</p>`;
     }
 
@@ -1133,9 +954,9 @@
       });
       const filas = S.meses.filter(x => gasto(c, x) > 0 || pp(c, x) != null).map(x => `<tr><td>${mname(x)}</td><td class="num">${money(gasto(c, x), 'P')}</td><td class="num">${pp(c, x) != null ? money(pp(c, x), 'P') : '—'}</td><td>${ejec(gasto(c, x), pp(c, x), x)}</td></tr>`).join('');
       $('#drawer').innerHTML = `<div class="dh"><h3>${esc(clName(c))}</h3><button class="x" id="dx" type="button" aria-label="Cerrar">&times;</button></div>
-  <div class="db"><div class="dk"><div><small>${mname(m)}</small><b class="num">${money(inv)}</b></div><div><small>Presupuesto ${mname(m)}</small><b class="num">${p != null ? money(p) : '—'}</b></div><div><small>Total ${S.anio}</small><b class="num">${money(o.tot)}</b></div></div>
+  <div class="db"><div class="dk"><div><small>${mname(m)}</small><b class="ad-kpi__n num">${money(inv)}</b></div><div><small>Presupuesto ${mname(m)}</small><b class="ad-kpi__n num">${p != null ? money(p) : '—'}</b></div><div><small>Total ${S.anio}</small><b class="ad-kpi__n num">${money(o.tot)}</b></div></div>
   <div class="box"><h3>Por mes y medio</h3><svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Inversión mensual del cliente">${g}</svg><div class="leg">${S.medios.filter(me => S.meses.some(x => medioGasto(c, x, me) > 0)).map(me => `<span><i style="background:${MEDIO_COL[me] || 'var(--ramp-3)'}"></i>${medioName(me)}</span>`).join('')}</div></div>
-  <div class="tw"><table><thead><tr><th>Mes</th><th>Inversión</th><th>Presupuesto</th><th>Ejecución</th></tr></thead><tbody>${filas}</tbody></table></div>
+  <div class="ad-tabla"><table><thead><tr><th>Mes</th><th>Inversión</th><th>Presupuesto</th><th>Ejecución</th></tr></thead><tbody>${filas}</tbody></table></div>
   <p class="note">Presupuesto del año: ${pAnio ? pesos(pAnio) : 'sin cargar'}.</p></div>`;
       $('#drawer').classList.add('on'); $('#scrim').classList.add('on');
       $('#dx').onclick = cerrar; $('#dx').focus();

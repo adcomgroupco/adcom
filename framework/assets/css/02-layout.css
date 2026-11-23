@@ -223,9 +223,8 @@
 .route-diagram figcaption{margin-bottom:12px;color:var(--fg);font-size:var(--fs-body);font-weight:500}
 .route-diagram :is(ol,ul){display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin:0;padding:0;list-style:none}
 .route-diagram li{position:relative;min-width:0}
-.route-diagram a,.entry-routes>a{display:grid;align-content:start;gap:6px;height:100%;padding:14px 16px;border:1px solid var(--line);border-block-start:1px solid var(--fg);background:var(--surface);color:var(--fg);overflow-wrap:anywhere}
-.route-diagram a:hover,.entry-routes>a:hover{background:var(--surface-2);text-decoration:underline;text-underline-offset:4px}
-.route-diagram span,.entry-routes span{color:var(--fg-muted);font-size:var(--fs-ui);line-height:var(--lh-ui)}
+.route-diagram a.ad-card,.entry-routes>a.ad-card{height:100%;gap:6px;padding:14px 16px;overflow-wrap:anywhere}
+.route-diagram a:hover strong,.entry-routes>a:hover strong{text-decoration:underline;text-underline-offset:4px}
 .route-sequence li:not(:last-child)::after{content:"›" / "";position:absolute;inset-inline-end:-15px;top:12px;color:var(--fg-muted);font-weight:500}
 .route-decision ul,.entry-routes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .route-decision a{border-block-start:1px solid var(--line);border-inline-start:1px solid var(--fg)}
