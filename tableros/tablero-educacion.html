@@ -13,6 +13,7 @@
 <script defer src="../assets/js/adcom.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
 <style>
 /* Sistema v2: tokens y puente vienen de adcom-v2.css; aquí solo lo propio del tablero. */
 :root{
@@ -166,6 +167,7 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
     <span class="app-sidebar-nav-title">Secciones</span>
     <a href="#sec-kpi" class="active"><b></b>Resumen</a>
     <a href="#sec-cliente" id="nav-cliente"><b></b>Por cliente</a>
+    <a href="#sec-sem"><b></b>Semana a semana</a>
     <a href="#sec-mes"><b></b>Mes a mes</a>
     <a href="#sec-medio"><b></b>Nivel y medio</a>
     <a href="#sec-fuentes"><b></b>Pauta vs otras fuentes</a>
@@ -192,6 +194,8 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
       <div class="fg"><span class="fl">Cliente</span><select id="f-cli" onchange="onSel()"><option value="">Todos</option></select></div>
       <div class="fg"><span class="fl">Nivel</span><select id="f-niv" onchange="onSel()"><option value="">Todos (sin B2B)</option></select></div>
       <div class="fg"><span class="fl">Medio</span><select id="f-medio" onchange="onSel()"><option value="">Todos</option></select></div>
+      <div class="f-sep"></div>
+      <div class="fg"><span class="fl">Comparar con</span><div id="cmp-btns" class="fg"></div></div>
       <button class="btn-reset" onclick="resetFilters()">Limpiar filtros</button>
     </div>
   </div>
@@ -199,6 +203,7 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
   <div class="content">
     <div class="sec-title" id="sec-kpi">Resumen del rango<span class="sec-note" id="rango-note"></span></div>
     <div class="ad-kpis" id="kpi-grid"></div>
+    <div class="cmp-note" id="cmp-note"></div>
 
     <div id="blk-cliente">
       <div class="sec-title" id="sec-cliente">Por cliente<span class="sec-note">metas de pauta del periodo 2027-1, proporcionales al rango</span></div>
@@ -229,6 +234,7 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
         <b>Inversión y leads plataforma</b>: solo conversión; branding y eventos quedan fuera. <b>Matrículas</b>: en Compensar son pagos; en todos, sin cancelados.
         <b>Etapas</b>: UAN no mide inscritos; en EIA los inscritos son solicitudes; en Corpas los admitidos son "pendiente de pago". Cada % del embudo se calcula solo con los clientes que miden las dos etapas.
         <b>Metas</b>: solo las de pauta del periodo 2027-1; con el botón "Meta 2027-1" encendido se toma la meta completa, apagado la parte proporcional a los días del rango. Con un medio elegido no se muestran metas.
+        <b>Comparativos</b>: cada cliente se compara con su periodo anterior o con el mismo periodo del año anterior, a la misma semana de campaña (semana 1 = lunes de la semana en que arranca el periodo). Los periodos salen de la pestaña PERIODOS si existe; si no, del calendario del tablero (cortes de METAS_MENSUAL).
       </div>
     </div>
   </div>
@@ -236,7 +242,7 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
 
 <script>
 const SHEET_ID = '1XnjNw2N-DByviPLCeNgJB6LbcTV-pzrlNKgnrqRmNQ4';
-const SRC = { embudo: 'gid=0', fuentes: 'gid=1051276507', metas: 'gid=2062283911', mmes: 'sheet=METAS_MENSUAL', log: 'sheet=LOG' };
+const SRC = { embudo: 'gid=0', fuentes: 'gid=1051276507', metas: 'gid=2062283911', mmes: 'sheet=METAS_MENSUAL', log: 'sheet=LOG', per: 'sheet=PERIODOS' };
 const URL_DE = q => `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&headers=1&${q}&_=${Date.now()}`;
 const CLIENTES = ['Compensar', 'UAN', 'Católica', 'EIA', 'Corpas'];
 const NIVELES = ['Pregrado', 'Posgrado', 'Técnico laboral', 'Educación continuada', 'General', 'Soluciones empresariales'];
@@ -246,7 +252,8 @@ const MEDIO_LBL = { 'Meta': 'Meta (Facebook e Instagram)', 'Sin medio': 'Sin med
 const META_PER = '2027-1';
 const MESES = ['','ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 
-let MMES = [], OPEN_MM = {}, RAW = [], FUE = [], METAS = [], STG = {}, QUICK = 'mes', META_TOTAL = false, MEDIO_VISTA = 'niv', CHART_MES = null, CHART_FU = null;
+let CMP = 'anio', SEM_CLI = '', SEM_PER = '', CHART_SEM = null, CMPD = null, DESDE_DATO = {};
+let MMES = [], OPEN_MM = {}, RAW = [], FUE = [], METAS = [], STG = {}, QUICK = '3m', META_TOTAL = false, MEDIO_VISTA = 'niv', CHART_MES = null, CHART_FU = null;
 
 // ── Parsers y formato ─────────────────────────────────────────────────────────
 function num(v){ const s = String(v ?? '').replace(/[$\s%]/g,''); if(!s) return 0;
@@ -279,12 +286,12 @@ function fetchTab(q){ return new Promise((ok, ko) => Papa.parse(URL_DE(q), { dow
 function load(){
   document.getElementById('loading').style.display = 'flex';
   document.getElementById('ld-msg').textContent = 'Cargando datos...';
-  Promise.all([fetchTab(SRC.embudo), fetchTab(SRC.fuentes), fetchTab(SRC.metas), fetchTab(SRC.log).catch(() => []), fetchTab(SRC.mmes).catch(() => [])]).then(([e, fu, me, log, mm]) => {
-    build(e, fu, me, mm); renderLog(log); prepare();
+  Promise.all([fetchTab(SRC.embudo), fetchTab(SRC.fuentes), fetchTab(SRC.metas), fetchTab(SRC.log).catch(() => []), fetchTab(SRC.mmes).catch(() => []), fetchTab(SRC.per).catch(() => [])]).then(([e, fu, me, log, mm, per]) => {
+    build(e, fu, me, mm); try { leerPeriodos(per) } catch(err){ console.error('Periodos', err) } renderLog(log); prepare();
     const t = new Date().toLocaleString('es-CO', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
     document.getElementById('last-upd').textContent = 'Datos cargados: ' + t;
     document.getElementById('loading').style.display = 'none';
-  }).catch(() => { document.getElementById('ld-msg').textContent = 'No se pudo leer la hoja Consolidado Educación' });
+  }).catch(err => { console.error(err); document.getElementById('ld-msg').textContent = 'No se pudo leer la hoja Consolidado Educación' + (err && err.message ? ' (' + err.message + ')' : '') });
 }
 
 function build(e, fu, me, mm){
@@ -340,7 +347,7 @@ function setQuick(k){
 function toggleMetaTotal(){ META_TOTAL = !META_TOTAL; render() }
 function onDate(){ QUICK = ''; render() }
 function onSel(){ render() }
-function resetFilters(){ ['f-cli','f-niv','f-medio'].forEach(id => document.getElementById(id).value = ''); META_TOTAL = false; setQuick('mes') }
+function resetFilters(){ ['f-cli','f-niv','f-medio'].forEach(id => document.getElementById(id).value = ''); META_TOTAL = false; setQuick('3m') }
 function F(){ const g = id => document.getElementById(id).value;
   return { desde: g('f-desde'), hasta: g('f-hasta'), cli: g('f-cli'), niv: g('f-niv'), medio: g('f-medio') } }
 const pasaNiv = (niv, f) => f.niv ? niv === f.niv : niv !== B2B;
@@ -387,6 +394,365 @@ function agrupar(rows, keyFn){ const g = {}; rows.forEach(r => { const k = keyFn
 // clientes de la vista sin una etapa (para las notas)
 function sinEtapa(rows, k){ return [...new Set(rows.map(r => r.cli))].filter(c => STG[c] && !STG[c][k]) }
 
+// ── Comparativos y semana a semana ──────────────────────────────────────────
+// Calendario de periodos por cliente: [periodo estándar, inicio, fin, nota].
+// Cortes = meses de METAS_MENSUAL (Mike). "estimado" = sin fecha oficial; se ajusta cuando el cliente confirme.
+// Estándar de códigos: Católica -3 = -2 (segundo semestre); Compensar "B" va dentro de su periodo.
+// Si la hoja trae la pestaña PERIODOS (cliente · periodo · inicio · fin · nota), esta tabla se reemplaza por esa.
+let PERIODOS = {
+  'Católica':  [['2025-2','2025-02-01','2025-07-31','METAS (2025-3)'], ['2026-1','2025-09-01','2026-02-28',''], ['2026-2','2026-03-01','2026-08-31','2026-3 en el CRM'], ['2027-1','2026-09-01','2027-02-28','']],
+  'Compensar': [['2025-2','2025-03-01','2025-08-31','estimado'], ['2026-1','2025-09-01','2026-01-31',''], ['2026-2','2026-03-01','2026-07-31',''], ['2027-1','2026-09-01','2027-01-31','']],
+  'Corpas':    [['2025-2','2025-05-01','2025-08-31',''], ['2026-1','2025-09-01','2026-02-28',''], ['2026-2','2026-03-01','2026-07-31',''], ['2027-1','2026-09-01','2027-02-28','']],
+  'EIA':       [['2025-2','2025-02-01','2025-07-31','estimado'], ['2026-1','2025-08-01','2026-01-31','estimado'], ['2026-2','2026-02-01','2026-07-31',''], ['2027-1','2026-08-01','2027-01-31','']],
+  'UAN':       [['2025-2','2025-03-01','2025-07-31','estimado'], ['2026-1','2025-09-01','2026-01-31','estimado'], ['2026-2','2026-03-01','2026-07-31',''], ['2027-1','2026-09-01','2027-01-31','']],
+};
+const CMP_LBL = { ant: { boton: 'Periodo anterior', largo: 'periodo anterior', corto: 'vs ant.' },
+                  anio: { boton: 'Mismo periodo año anterior', largo: 'periodo comparado', corto: 'vs comparado' } };
+// código de periodo estándar (para cruzar METAS con el calendario)
+const perStd = (cli, p) => { let s = String(p || '').trim();
+  if(cli === 'Compensar') s = s.replace(/B$/i, '');
+  if(cli === 'Católica') s = s.replace(/-3$/, '-2');
+  return s };
+
+function leerPeriodos(per){
+  const nuevos = {};
+  (per || []).forEach(x => { const c = String(x.cliente||'').trim(), p = perStd(c, x.periodo), a = iso(x.inicio), b = iso(x.fin);
+    if(c && p && a && b) (nuevos[c] = nuevos[c] || []).push([p, a, b, String(x.nota||'').trim()]) });
+  Object.assign(PERIODOS, nuevos);
+  Object.keys(PERIODOS).forEach(c => { PERIODOS[c] = PERIODOS[c].map(x => Array.isArray(x) ? { per: x[0], ini: x[1], fin: x[2], nota: x[3] || '' } : x)
+    .sort((a, b) => a.ini < b.ini ? -1 : 1) });
+  // desde cuándo hay datos de CRM y de inversión por cliente (para avisar comparativos incompletos)
+  DESDE_DATO = {};
+  // cada métrica tiene su propio inicio: p. ej. Compensar trae matrículas de 2025 pero leads CRM solo desde 2026
+  RAW.forEach(r => { const d = DESDE_DATO[r.cli] = DESDE_DATO[r.cli] || { crm: '9999', lc: '9999', mat: '9999', inv: '9999', ult: '0000' };
+    if((r.lc || r.ins || r.adm || r.mat) && r.d < d.crm) d.crm = r.d; if(r.inv && r.d < d.inv) d.inv = r.d;
+    if(r.lc && r.d < d.lc) d.lc = r.d; if(r.mat && r.d < d.mat) d.mat = r.d;
+    if((r.inv || r.lc) && r.d > d.ult && r.d <= todayISO()) d.ult = r.d });
+}
+
+// lunes de la semana de una fecha AAAA-MM-DD
+const lunes = s => { const w = (new Date(s + 'T00:00:00Z').getUTCDay() + 6) % 7; return addDays(s, -w) };
+const difDias = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 864e5);
+// periodo en curso de un cliente a una fecha: el último que ya empezó
+function perActual(cli, d){ let p = null; (PERIODOS[cli] || []).forEach(x => { if(x.ini <= d) p = x }); return p }
+function perComp(cli, p, modo){
+  const L = PERIODOS[cli] || []; if(!p) return null;
+  if(modo === 'ant'){ const i = L.indexOf(p); return i > 0 ? L[i - 1] : null }
+  const k = (+p.per.slice(0, 4) - 1) + p.per.slice(4), x = L.find(y => y.per === k);
+  // si el CRM no tiene completo el mismo periodo del año anterior (leads o matrículas), se compara con el periodo inmediatamente anterior
+  const dd = DESDE_DATO[cli] || {}, completo = q => q && !(dd.lc && lunes(q.ini) < dd.lc) && !(dd.mat && lunes(q.ini) < dd.mat);
+  if(completo(x)) return x;
+  const i = L.indexOf(p), ant = i > 0 ? L[i - 1] : null;
+  return completo(ant) ? { ...ant, respaldo: true } : (x || ant) }
+// fin "extendido" de un periodo: hasta el día antes del siguiente (las matrículas llegan después del cierre de captación)
+function finExt(cli, p){ const L = PERIODOS[cli] || [], i = L.findIndex(x => x.per === p.per); return i >= 0 && L[i + 1] ? addDays(L[i + 1].ini, -1) : addDays(p.fin, 60) }
+// desfase en días entre el periodo en curso (a la fecha d) y el comparado, alineando por la semana 1 (lunes)
+function desfase(cli, d, modo){ const p = perActual(cli, d), c = perComp(cli, p, modo);
+  return p && c ? { p, c, dias: difDias(lunes(c.ini), lunes(p.ini)) } : null }
+const varPct = (a, b) => b ? a / b - 1 : null;
+// con bases muy pequeñas el % no dice nada (51 vs 3 = +1.600%): no se calcula variación por debajo de estos mínimos
+const MIN_CMP = { lc: 30, lp: 30, ins: 5, adm: 5, mat: 5 };
+const baseChica = (key, y) => MIN_CMP[key] !== undefined && y < MIN_CMP[key];
+
+// filas del comparativo: el mismo rango y filtros, corrido por cliente a la misma semana de campaña
+function filasComp(f){
+  if(!CMP) return null;
+  const off = {}, rows = [];
+  CLIENTES.forEach(c => { if(f.cli && c !== f.cli) return; const x = desfase(c, f.hasta, CMP);
+    // el comparado se corta en el último día con datos del cliente, para no comparar días que aún no se cargan
+    // si el cliente aún no tiene datos cargados en el rango, no se compara (evita comparar contra días vacíos)
+    const ult = (DESDE_DATO[c] || {}).ult;
+    if(x && ult && ult < f.desde){ off[c] = { ...x, sinDatos: true }; return }
+    const h = ult && ult < f.hasta ? ult : f.hasta;
+    if(x) off[c] = { ...x, desde: addDays(f.desde, -x.dias), hasta: addDays(h, -x.dias) } });
+  RAW.forEach(r => { const o = off[r.cli]; if(!o || o.sinDatos || r.d < o.desde || r.d > o.hasta || !pasaNiv(r.niv, f) || (f.medio && r.medio !== f.medio)) return; rows.push(r) });
+  return { rows, off };
+}
+
+// línea "vs …" de una tarjeta. tipo: mas (subir es bueno), menos (bajar es bueno), neutro
+function varHTML(v, vc, tipo, key){
+  const lbl = CMP_LBL[CMP].largo, cop = ['inv', 'cplC', 'cpm'].includes(key), fmt = cop ? fCOP : fN;
+  if(!vc || !isFinite(vc)) return `<div class="kpi-cmp">vs ${lbl}: sin dato</div>`;
+  if(baseChica(key, vc)) return `<div class="kpi-cmp">vs ${lbl}: ${fmt(vc)} · base muy pequeña para %</div>`;
+  const d = varPct(v || 0, vc), c = tipo === 'neutro' ? '' : (tipo === 'mas' ? d >= 0 : d <= 0) ? 't-pos' : 't-neg';
+  return `<div class="kpi-cmp"><b class="${c}">${d > 0 ? '▲ +' : d < 0 ? '▼ ' : ''}${fP(d)}</b> vs ${lbl} (${fmt(vc)})</div>`;
+}
+
+function setCmp(k){ CMP = k; render() }
+function renderCmpNote(f){
+  document.getElementById('cmp-btns').innerHTML = [['anio', CMP_LBL.anio.boton], ['', 'Sin comparar']]
+    .map(([k, l]) => `<button class="qbtn${CMP === k ? ' on' : ''}" onclick="setCmp('${k}')">${l}</button>`).join('');
+  const el = document.getElementById('cmp-note');
+  if(!CMPD){ el.innerHTML = ''; return }
+  const partes = CLIENTES.filter(c => !f.cli || c === f.cli).map(c => {
+    const o = CMPD.off[c];
+    if(!o) return `<b>${esc(c)}</b>: sin periodo para comparar`;
+    if(o.sinDatos) return `<b>${esc(c)}</b>: <span class="t-mid">sin datos cargados en el rango (último dato ${fDate(DESDE_DATO[c].ult)}), no entra al comparativo</span>`;
+    const d = DESDE_DATO[c] || {}, avisos = [];
+    if(d.lc && o.desde < d.lc) avisos.push('leads CRM desde ' + fDate(d.lc) + ' ' + d.lc.slice(0, 4));
+    if(d.mat && o.desde < d.mat && d.mat !== d.lc) avisos.push('matrículas desde ' + fDate(d.mat) + ' ' + d.mat.slice(0, 4));
+    if(d.inv && o.desde < d.inv) avisos.push('sin inversión antes de ' + fDate(d.inv) + ' ' + d.inv.slice(0, 4));
+    return `<b>${esc(c)}</b>: ${o.p.per} vs ${o.c.per}${o.c.respaldo ? ' <span class="t-mid">(periodo anterior: el CRM no tiene completo el del año anterior)</span>' : ''} (${fDate(o.desde)} ${o.desde.slice(0, 4)} – ${fDate(o.hasta)} ${o.hasta.slice(0, 4)})` +
+      (avisos.length ? ` <span class="t-mid">· datos incompletos: ${avisos.join(', ')}</span>` : '') });
+  el.innerHTML = (CMP === 'anio' ? 'Comparado con el mismo periodo del año anterior (o con el inmediatamente anterior cuando el CRM no tiene completo el del año anterior), a la misma semana de campaña. ' : `Comparado con el ${CMP_LBL[CMP].largo}, a la misma semana de campaña. `) + partes.join(' · ');
+}
+
+// ── Semana a semana ──────────────────────────────────────────────────────────
+// estado de las gráficas: etapa y vista (semanal / acumulado) de cada una; la proyección sigue a la última etapa elegida
+let SEM_E = 'lc', SEM_V = 'sem', SEM_T1 = false, SEM_T2 = false, CH_G1 = null, CH_G2 = null, CH_BASE = null;
+const ETQ = { inv: 'Consumo', lc: 'Leads', ins: 'Inscritos', adm: 'Admitidos', mat: 'Matrículas' };
+function setSemPer(v){ SEM_PER = v; renderSemanas(F()) }
+// los botones de etapa y de vista mueven las dos gráficas y las tarjetas a la vez
+function setG(tipo, v){ if(tipo === 'e') SEM_E = v; else SEM_V = v; renderSemanas(F()) }
+// cada gráfica tiene su botón "Ver tabla": la tabla completa se abre debajo de esa gráfica
+function toggleTabla(g){ if(g === 1) SEM_T1 = !SEM_T1; else SEM_T2 = !SEM_T2; renderSemanas(F()) }
+// ubica las tablas: dentro de cada gráfica (detalle de un cliente) o sueltas en la sección (resumen de todos los clientes)
+function ubicarTablas(detalle){ const t1 = document.getElementById('sem-t1'), t2 = document.getElementById('sem-cmp-box'), det = document.getElementById('sem-det');
+  if(detalle){ document.getElementById('g1-det').appendChild(t1); document.getElementById('g2-det').appendChild(t2) } else { det.appendChild(t1); det.appendChild(t2) }
+  t1.style.display = !detalle || SEM_T1 ? '' : 'none'; t2.style.display = detalle && SEM_T2 ? '' : 'none' }
+// semáforo de cumplimiento: < 50% rojo, 50–70% naranja, ≥ 70% verde; el consumo por encima de 100% va en rojo
+function sem(x, consumo){ return x === null || !isFinite(x) ? 't-mute' : (consumo && x > 1) || x < .5 ? 't-neg' : x < .7 ? 't-mid' : 't-pos' }
+function semColor(x, consumo){ const k = sem(x, consumo); return k === 't-neg' ? (css('--c-neg') || '#c2261c') : k === 't-mid' ? (css('--c-mid') || '#d97706') : k === 't-pos' ? (css('--c-pos') || '#16693a') : '#999' }
+function metaRango(cli, a, b, f){ const mt = META_TOTAL; META_TOTAL = false;
+  const m = metaMes({ desde: a, hasta: b, cli, niv: f.niv, medio: f.medio }); META_TOTAL = mt; return m }
+// cálculo semanal de un cliente y periodo (lo usan el detalle y el resumen por cliente)
+function calcSem(cli, f, perSel){
+  const L = PERIODOS[cli] || [], hoy = todayISO();
+  const p = L.find(x => x.per === perSel) || perActual(cli, hoy) || L[L.length - 1];
+  if(!p) return null;
+  const c = CMP ? perComp(cli, p, CMP) : null;
+  const w0 = lunes(p.ini), nTot = Math.ceil((difDias(w0, p.fin) + 1) / 7);
+  const nAct = hoy < w0 ? 0 : Math.min(nTot, Math.floor(difDias(w0, hoy) / 7) + 1);
+  const w0c = c ? lunes(c.ini) : null, nC = c ? Math.ceil((difDias(w0c, finExt(cli, c)) + 1) / 7) : 0;
+  // sumas por semana del periodo y del comparado
+  const act = Array.from({ length: nTot }, () => Z()), cmp = Array.from({ length: nC }, () => Z());
+  RAW.forEach(r => { if(r.cli !== cli || !pasaNiv(r.niv, f) || (f.medio && r.medio !== f.medio)) return;
+    const i = Math.floor(difDias(w0, r.d) / 7); if(i >= 0 && i < nTot) add(act[i], r);
+    if(c){ const j = Math.floor(difDias(w0c, r.d) / 7); if(j >= 0 && j < nC) add(cmp[j], r) } });
+  const acum = (arr, k, n) => arr.slice(0, n).reduce((a, e) => a + e[k], 0);
+  // el comparado es parcial por métrica si arranca antes del primer dato de esa métrica (se compara con lo que hay);
+  // solo se omite (inc) si a esta semana el comparado aún no tiene datos de esa métrica
+  const dd = DESDE_DATO[cli] || {}, parL = !!(c && dd.lc && w0c < dd.lc), parM = !!(c && dd.mat && w0c < dd.mat);
+  // metas de cada semana (METAS_MENSUAL repartida por días) y metas del periodo (METAS)
+  const metas = act.map((e, i) => { const a = addDays(w0, 7 * i); return metaRango(cli, a, addDays(a, 6), f) });
+  const mp = METAS.filter(m => m.cli === cli && perStd(cli, m.per) === p.per && pasaNiv(m.niv, f)).reduce((a, m) => ({ lm: a.lm + m.lm, mm: a.mm + m.mm, ppto: a.ppto + m.ppto }), { lm: 0, mm: 0, ppto: 0 });
+  // tarjetas: avance acumulado y proyección al cierre con la curva del comparado
+  const n = Math.max(nAct, 0), aL = acum(act, 'lc', n), aM = acum(act, 'mat', n), aI = acum(act, 'inv', n);
+  const cL = c ? acum(cmp, 'lc', n) : 0, cM = c ? acum(cmp, 'mat', n) : 0, tL = c ? acum(cmp, 'lc', nC) : 0, tM = c ? acum(cmp, 'mat', nC) : 0;
+  const incL = parL && !cL, incM = parM && !cM, cmpInc = incL && incM;
+  // presupuesto a la fecha: solo semanas con inversión cargada (si no, la ejecución sale artificialmente baja)
+  const pmAc = metas.slice(0, n).reduce((a, m, i) => a + (dd.inv && addDays(w0, 7 * i + 6) < dd.inv ? 0 : m.pm), 0);
+  const proy = (a, cAc, tot, inc) => (!c || inc || !tot || cAc / tot < .05) ? null : a / (cAc / tot);
+  const pL = proy(aL, cL, tL, incL), pM = proy(aM, cM, tM, incM);
+  // ── metas por etapa (provisionales hasta que existan metas semanales):
+  //    matrículas = meta del periodo (METAS); admitidos e inscritos = hacia atrás con la conversión total del comparado
+  //    (si allá 50% de admitidos se matriculó, la meta de admitidos es el doble de la de matrículas).
+  //    Cada meta se reparte por semana con el % que esa semana aportó al total del comparado (sin comparado: parejo).
+  const st = STG[cli] || {}, emb = [...(st.ins ? ['ins'] : []), ...(st.adm ? ['adm'] : []), 'mat'], ETK = ['lc', ...emb];
+  const totC = k => c ? acum(cmp, k, nC) : 0, mTot = { mat: mp.mm };
+  for(let j = emb.length - 2; j >= 0; j--){ const k = emb[j], sig = emb[j + 1], cv = div(totC(sig), totC(k)); mTot[k] = mTot[sig] && cv ? mTot[sig] / cv : 0 }
+  // el comparado trae semanas en 0 (p. ej. UAN 2026-2 al inicio): se suaviza la curva (promedio móvil de 3 semanas)
+  // y se mezcla 70/30 con un reparto parejo, para que ninguna semana del periodo quede sin meta
+  const reparto = k => { const v = act.map((_, i) => c && cmp[i] ? cmp[i][k] : 0), t = v.reduce((a, b) => a + b, 0);
+    if(!t) return act.map(() => 1 / nTot);
+    const sv = v.map((_, i) => { const w = v.slice(Math.max(0, i - 1), i + 2); return w.reduce((a, b) => a + b, 0) / w.length }), ts = sv.reduce((a, b) => a + b, 0);
+    return sv.map(x => .7 * x / ts + .3 / nTot) };
+  const metaE = {}; emb.forEach(k => { const r = reparto(k); metaE[k] = r.map(x => mTot[k] * x) });
+  const sinInvSem = i => !!(dd.inv && addDays(w0, 7 * i + 6) < dd.inv);
+  const metaSem = (k, i) => k === 'inv' ? metas[i].pm : k === 'lc' ? metas[i].lmm : (metaE[k] ? metaE[k][i] : 0);
+  const metaTotK = k => k === 'inv' ? (mp.ppto || metas.reduce((a, m) => a + m.pm, 0)) : k === 'lc' ? (mp.lm || metas.reduce((a, m) => a + m.lmm, 0)) : (mTot[k] || 0);
+  // proyección al cierre de cualquier etapa con la curva del comparado; el consumo, al ritmo de ejecución del presupuesto a la fecha
+  const proyK = k => { if(k === 'inv') return pmAc ? aI / pmAc * metaTotK('inv') : null;
+    const a = acum(act, k, n), cA = c ? acum(cmp, k, n) : 0, par = !!(c && dd.crm && w0c < dd.crm);
+    return proy(a, cA, totC(k), k === 'lc' ? incL : k === 'mat' ? incM : par && !cA) };
+  return { cli, L, hoy, p, c, w0, nTot, nAct, w0c, nC, act, cmp, acum, dd, parL, parM, incL, incM, cmpInc, metas, mp, n, aL, aM, aI, cL, cM, tL, tM, pmAc, pL, pM,
+    st, emb, ETK, totC, mTot, metaE, sinInvSem, metaSem, metaTotK, proyK };
+}
+
+function semVacio(msg){ ubicarTablas(false); document.getElementById('sem-cmp-box').style.display = 'none'; document.getElementById('sem-graf').style.display = 'none'; document.getElementById('sem-det').style.display = ''; document.getElementById('sem-cards').innerHTML = ''; document.getElementById('sem-head').innerHTML = '';
+  document.getElementById('sem-body').innerHTML = `<tr><td class="empty">${msg}</td></tr>`; document.getElementById('sem-foot').innerHTML = '';
+  [CH_G1, CH_G2, CH_BASE].forEach(ch => ch && ch.destroy()); CH_G1 = CH_G2 = CH_BASE = null }
+
+// Sin cliente elegido arriba: una fila por cliente con su semana actual (clic en la fila = filtra el tablero por ese cliente)
+function renderSemResumen(f){
+  ubicarTablas(false);
+  document.getElementById('sem-graf').style.display = 'none'; document.getElementById('sem-det').style.display = '';
+  [CH_G1, CH_G2, CH_BASE].forEach(ch => ch && ch.destroy()); CH_G1 = CH_G2 = CH_BASE = null;
+  document.getElementById('sem-cmp-box').style.display = 'none';
+  document.getElementById('sem-tit1').textContent = 'Semana en curso por cliente';
+  document.getElementById('sem-bar').style.display = 'none';
+  document.getElementById('sem-cards').innerHTML = '';
+  document.getElementById('sem-note').textContent = 'semana en curso de cada cliente en su periodo actual · elige un cliente en el filtro de arriba (o clic en su fila) para ver el detalle semana a semana';
+  const vs = CMP ? CMP_LBL[CMP].corto : '';
+  const cols = ['Cliente', 'Periodo', 'Semana', 'Inversión acum.', 'Ejec. ppto', 'Leads acum.', ...(CMP ? [vs] : []), 'Matr. acum.', ...(CMP ? [vs] : []), 'Proyección matr.', '% meta matr.'];
+  document.getElementById('sem-head').innerHTML = '<tr>' + cols.map((h, i) => `<th${i > 1 ? ' class="r"' : ''}>${h}</th>`).join('') + '</tr>';
+  const td = (v, k) => `<td class="r${k ? ' ' + k : ''}">${v}</td>`;
+  const vsc = (x, y, inc, par, k) => CMP ? (inc || !y || baseChica(k, y) ? td('—', 't-mute') : td((x >= y ? '+' : '') + fP(varPct(x, y)) + (par ? '*' : ''), x >= y ? 't-pos' : 't-neg')) : '';
+  let h = '';
+  CLIENTES.filter(c => PERIODOS[c] && PERIODOS[c].length).forEach(cli => {
+    const s = calcSem(cli, f, ''); if(!s) return;
+    const ej = div(s.aI, s.pmAc);
+    h += `<tr class="sem-fila" onclick="document.getElementById('f-cli').value='${esc(cli)}';onSel()" title="Ver ${esc(cli)} semana a semana"><td><b>${esc(cli)}</b></td><td>${s.p.per}${s.c ? ` <span class="t-mute">vs ${s.c.per}</span>` : ''}</td>` +
+      td(`S${s.n} de ${s.nTot}`) + td(fCOP(s.aI)) + td(fP(ej), sem(ej, true)) + td(fN(s.aL)) + vsc(s.aL, s.cL, s.incL, s.parL, 'lc') + td(fN(s.aM)) + vsc(s.aM, s.cM, s.incM, s.parM, 'mat') +
+      td(s.pM === null ? '—' : fN(s.pM)) + td(s.pM === null || !s.mp.mm ? '—' : fP(div(s.pM, s.mp.mm)), s.pM === null ? 't-mute' : sem(div(s.pM, s.mp.mm))) + '</tr>';
+  });
+  document.getElementById('sem-body').innerHTML = h || `<tr><td colspan="${cols.length}" class="empty">Sin calendario de periodos</td></tr>`;
+  document.getElementById('sem-foot').innerHTML = '<b>Cada cliente en su propio periodo y semana</b> (no se suman entre sí). Acumulados desde la semana 1 hasta la semana en curso; ' +
+    '<b>vs</b>: contra la misma semana del periodo comparado (<b>*</b> parcial: el CRM no tiene el inicio de ese periodo); <b>Proyección</b>: con la curva del comparado. Clic en una fila para ver su detalle.';
+}
+
+
+function renderSemanas(f){
+  if(!f.cli || !PERIODOS[f.cli]) return renderSemResumen(f);
+  document.getElementById('sem-bar').style.display = '';
+  const cli = f.cli, s0 = calcSem(cli, f, SEM_PER);
+  document.getElementById('sem-tools').innerHTML = `<select class="sem-sel" onchange="setSemPer(this.value)" aria-label="Periodo">${(PERIODOS[cli] || []).slice().reverse().map(x => `<option value="${x.per}"${s0 && x === s0.p ? ' selected' : ''}>Periodo ${x.per}</option>`).join('')}</select>`;
+  if(!s0) return semVacio('Sin calendario de periodos para este cliente');
+  const { hoy, p, c, w0, nTot, w0c, nC, act, cmp, acum, dd, parL, parM, metas, mp, n, aI, pmAc, st, emb, ETK, totC, mTot, sinInvSem, metaSem, metaTotK, proyK } = s0;
+  document.getElementById('sem-graf').style.display = '';
+  ubicarTablas(true);
+  document.getElementById('g1-tbtn').textContent = SEM_T1 ? 'Ocultar tabla' : 'Ver tabla'; document.getElementById('g1-tbtn').classList.toggle('on', SEM_T1);
+  document.getElementById('g2-tbtn').textContent = SEM_T2 ? 'Ocultar tabla' : 'Ver tabla'; document.getElementById('g2-tbtn').classList.toggle('on', SEM_T2);
+  if(!ETK.includes(SEM_E) && SEM_E !== 'inv') SEM_E = 'lc';
+  document.getElementById('sem-note').textContent = `${cli} · periodo ${p.per} (${fDate(p.ini)} ${p.ini.slice(0, 4)} – ${fDate(p.fin)} ${p.fin.slice(0, 4)}${p.nota ? ', ' + p.nota : ''}) · semana 1 desde el lunes ${fDate(w0)}` +
+    (c ? ` · comparado con ${c.per}` : '') + ' · aplican cliente, nivel y medio; no las fechas';
+  const actual = i => i === n - 1 && hoy <= p.fin;
+  const fmtK = k => k === 'inv' ? fCOP : fN;
+  // acumulado de una etapa hasta la semana i (el consumo solo cuenta semanas con inversión cargada)
+  const acE = (k, i) => { let a = 0; for(let j = 0; j <= i; j++) if(k !== 'inv' || !sinInvSem(j)) a += act[j][k]; return a };
+  const acM = (k, i) => { let a = 0; for(let j = 0; j <= i; j++) if(k !== 'inv' || !sinInvSem(j)) a += metaSem(k, j); return a };
+
+  // ── tarjetas: proyección de la etapa que se está viendo, avance a la fecha y semana en curso
+  const tarjeta = (l, v, sub) => `<div class="ad-kpi"><div class="ad-kpi__l">${l}</div><div class="ad-kpi__n">${v}</div><div class="ad-kpi__m">${sub}</div></div>`;
+  const k0 = SEM_E, f0 = fmtK(k0), pr = proyK(k0), mt = metaTotK(k0), aK = n ? acE(k0, n - 1) : 0, mK = n ? acM(k0, n - 1) : 0;
+  const cK = c && k0 !== 'inv' ? acum(cmp, k0, n) : null, parK = k0 === 'lc' ? parL : k0 === 'mat' ? parM : !!(c && dd.crm && w0c < dd.crm);
+  const cons = k0 === 'inv';
+  document.getElementById('sem-cards').innerHTML =
+    tarjeta(`${ETQ[k0]} al cierre (proyección)`, pr === null ? '—' : f0(pr),
+      pr === null ? (c ? `${c.per} sin datos suficientes para proyectar` : 'elige un comparativo para proyectar') :
+      (cons ? 'al ritmo de ejecución del presupuesto a la fecha' : `con la curva de ${c.per}${parK ? ' (parcial)' : ''}`) + (mt ? ` · <span class="${sem(div(pr, mt), cons)}">${fP(div(pr, mt))}</span> de la meta del periodo (${f0(mt)})` : '')) +
+    tarjeta(`${ETQ[k0]} a la semana ${n}`, f0(aK),
+      (mK ? `<span class="${sem(div(aK, mK), cons)}">${fP(div(aK, mK))}</span> de la meta a la fecha (${f0(mK)})` : 'sin meta') +
+      (cK !== null ? ` · ` + (baseChica(k0, cK) || !cK ? `${c.per}: ${fN(cK)}` : `<span class="${aK >= cK ? 't-pos' : 't-neg'}">${aK >= cK ? '+' : ''}${fP(varPct(aK, cK))}</span> vs ${c.per} (${fN(cK)})`) : '')) +
+    tarjeta('Semana en curso', `S${n} de ${nTot}`, n ? `${fDate(addDays(w0, 7 * (n - 1)))} – ${fDate(addDays(w0, 7 * n - 1))}` + (hoy > p.fin ? ' · periodo cerrado' : '') : 'el periodo aún no empieza');
+
+  // ── gráficas
+  const fg = css('--fg-muted') || '#888', gris = 'rgba(140,140,140,.35)', s1 = css('--serie-1') || '#2a78d6';
+  document.getElementById('sem-btns').innerHTML = ['inv', ...ETK].map(k => `<button class="qbtn${k === SEM_E ? ' on' : ''}" onclick="setG('e','${k}')">${ETQ[k]}</button>`).join('') +
+    '<span class="g-sep"></span>' + [['sem', 'Semanal'], ['acum', 'Acumulado']].map(([k, l]) => `<button class="qbtn${k === SEM_V ? ' on' : ''}" onclick="setG('v','${k}')">${l}</button>`).join('');
+  const W = nTot, ini = i => addDays(w0, 7 * i), iniC = i => addDays(w0c, 7 * i);
+  const lblX = (conC) => Array.from({ length: W }, (_, i) => conC ? ['S' + (i + 1), fDate(ini(i)), fDate(iniC(i))] : ['S' + (i + 1), fDate(ini(i))]);
+  const baseOpts = (fmt, tit) => ({ responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+    plugins: { legend: { labels: { boxWidth: 10, font: { family: 'Poppins', size: 12 }, color: fg } }, tooltip: { callbacks: { title: tit, label: x => x.dataset.label + ': ' + (x.raw === null ? '—' : fmt(x.raw)) } } },
+    scales: { x: { ticks: { color: fg, font: { size: 10 }, maxRotation: 0, autoSkip: true, autoSkipPadding: 4 }, grid: { display: false } },
+      y: { beginAtZero: true, ticks: { color: fg, font: { size: 11 }, callback: v => fmt(v) } } } });
+  const DL = window.ChartDataLabels ? [window.ChartDataLabels] : [];
+
+  // Gráfica 1 · ejecución vs meta (barras), con el % de cumplimiento encima en color de semáforo
+  const k1 = SEM_E, f1 = fmtK(k1), ac1 = SEM_V === 'acum', c1 = k1 === 'inv';
+  document.getElementById('g1-tit').textContent = `Ejecución de metas ${p.per}`;
+  const m1 = Array.from({ length: W }, (_, i) => ac1 ? acM(k1, i) : metaSem(k1, i));
+  const e1 = Array.from({ length: W }, (_, i) => i >= n || (c1 && sinInvSem(i)) ? null : ac1 ? acE(k1, i) : act[i][k1]);
+  const p1 = e1.map((v, i) => v === null ? null : div(v, m1[i]));
+  if(CH_G1) CH_G1.destroy();
+  // barras: meta y ejecución (con su valor); línea en el eje derecho: % de cumplimiento (puntos y etiqueta en color de semáforo)
+  const ink = css('--fg') || '#111';
+  const fCorto = k => v => k === 'inv' ? '$' + fN(Math.round(v / 1e6)) + ' M' : fN(v);
+  const lblBar = (fmt) => ({ display: x => x.dataset.data[x.dataIndex] !== null && x.dataset.data[x.dataIndex] > 0, anchor: 'end', align: 'end', offset: 1, color: fg, font: { family: 'Poppins', size: 9 }, formatter: v => fmt(v) });
+  const ejesDobles = (o, fmtY, tituloY2, cero) => { o.scales.y.title = { display: false }; o.scales.y2 = { position: 'right', beginAtZero: cero, grid: { display: false },
+    ticks: { color: fg, font: { size: 11 }, callback: v => fP(v) }, title: { display: true, text: tituloY2, color: fg, font: { size: 11 } }, grace: '15%' }; o.scales.y.grace = '10%'; o.layout = { padding: { top: 22 } }; return o };
+  CH_G1 = new Chart(document.getElementById('chart-g1'), { data: { labels: lblX(false), datasets: [
+      { type: 'line', label: 'Cumplimiento', data: p1, yAxisID: 'y2', borderColor: ink, borderWidth: 1.5, tension: .25, spanGaps: false, order: 0,
+        pointRadius: 3.5, pointBackgroundColor: p1.map(x => semColor(x, c1)), pointBorderColor: p1.map(x => semColor(x, c1)), backgroundColor: ink,
+        datalabels: { display: x => p1[x.dataIndex] !== null, align: 'top', offset: 4, color: x => semColor(p1[x.dataIndex], c1), font: { family: 'Poppins', size: 10, weight: '700' }, formatter: v => fP(v) } },
+      { type: 'bar', label: `Meta ${ETQ[k1].toLowerCase()}${ac1 ? ' acumulada' : ''}`, data: m1, backgroundColor: gris, order: 1, datalabels: lblBar(fCorto(k1)) },
+      { type: 'bar', label: `${ETQ[k1]}${ac1 ? ' acumulado' : ''} ${p.per}`, data: e1, backgroundColor: s1, order: 1, datalabels: lblBar(fCorto(k1)) } ] },
+    options: (o => { o.plugins.tooltip.callbacks.label = x => x.dataset.label + ': ' + (x.raw === null ? '—' : x.dataset.yAxisID === 'y2' ? fP(x.raw) : f1(x.raw)); return ejesDobles(o, f1, 'Cumplimiento', true) })(
+      baseOpts(f1, x => `Semana ${x[0].dataIndex + 1} · del ${fDate(ini(x[0].dataIndex))} al ${fDate(addDays(ini(x[0].dataIndex), 6))}`)), plugins: DL });
+  document.getElementById('g1-foot').innerHTML = `<b>Cumplimiento</b> (línea, eje derecho), color del punto: rojo &lt; 50%, naranja 50–70%, verde ≥ 70%${c1 ? '; el consumo por encima de 100% va en rojo' : ''}. La semana en curso se mide contra la meta de toda la semana. ` +
+    (k1 === 'inv' || k1 === 'lc' ? '<b>Meta</b>: METAS_MENSUAL repartida por días.' : `<b>Meta</b> (provisional): ${k1 === 'mat' ? 'meta de matrículas del periodo' : `meta de matrículas llevada a ${ETQ[k1].toLowerCase()} con la conversión de ${c ? c.per : 'el periodo comparado'}`} (${fN(mTot[k1] || 0)}), repartida por semana según cómo llegaron en ${c ? c.per : 'el comparado'}.`);
+
+  // Gráfica 2 · comparación de periodos (barras), con la variación encima
+  document.getElementById('g2-box').style.display = c ? '' : 'none';
+  if(CH_G2){ CH_G2.destroy(); CH_G2 = null }
+  if(c){
+    const k2 = SEM_E, ac2 = SEM_V === 'acum', f2 = fmtK(k2);
+    document.getElementById('g2-tit').textContent = `Comparación de periodos ${c.per} vs ${p.per}` + (c.respaldo ? ' (periodo anterior: el CRM no tiene completo el del año anterior)' : '');
+    const vc = Array.from({ length: W }, (_, i) => i < nC ? (ac2 ? acum(cmp, k2, i + 1) : cmp[i][k2]) : null);
+    const va = Array.from({ length: W }, (_, i) => i < n ? (ac2 ? acum(act, k2, i + 1) : act[i][k2]) : null);
+    // la línea siempre es la variación del ACUMULADO a esa semana (continua aunque una semana suelta tenga pocos datos);
+    // las barras sí muestran la semana o el acumulado según el botón
+    const vr = va.map((v, i) => { if(v === null) return null; const x = acum(act, k2, i + 1), y = acum(cmp, k2, Math.min(i + 1, nC)); return !y || baseChica(k2, y) ? null : varPct(x, y) });
+    // barras: comparado y actual (con su valor); línea en el eje derecho: variación % (verde si sube, rojo si baja)
+    const cv = x => vr[x] === null ? '#999' : vr[x] >= 0 ? (css('--c-pos') || '#16693a') : (css('--c-neg') || '#c2261c');
+    CH_G2 = new Chart(document.getElementById('chart-g2'), { data: { labels: lblX(true), datasets: [
+        { type: 'line', label: 'Variación acumulada', data: vr, yAxisID: 'y2', borderColor: ink, borderWidth: 1.5, tension: .25, spanGaps: false, order: 0,
+          pointRadius: 3.5, pointBackgroundColor: vr.map((_, i) => cv(i)), pointBorderColor: vr.map((_, i) => cv(i)), backgroundColor: ink,
+          datalabels: { display: x => vr[x.dataIndex] !== null, align: 'top', offset: 4, color: x => cv(x.dataIndex), font: { family: 'Poppins', size: 10, weight: '700' }, formatter: v => (v >= 0 ? '+' : '') + fP(v) } },
+        { type: 'bar', label: `${ETQ[k2]}${ac2 ? ' acumulado' : ''} ${c.per}`, data: vc, backgroundColor: gris, order: 1, datalabels: lblBar(fCorto(k2)) },
+        { type: 'bar', label: `${ETQ[k2]}${ac2 ? ' acumulado' : ''} ${p.per}`, data: va, backgroundColor: s1, order: 1, datalabels: lblBar(fCorto(k2)) } ] },
+      options: (o => { o.plugins.tooltip.callbacks.label = x => x.dataset.label + ': ' + (x.raw === null ? '—' : x.dataset.yAxisID === 'y2' ? (x.raw >= 0 ? '+' : '') + fP(x.raw) : f2(x.raw)); return ejesDobles(o, f2, 'Variación', false) })(
+        baseOpts(f2, x => { const i = x[0].dataIndex; return `Semana ${i + 1} · ${p.per}: del ${fDate(ini(i))} ${ini(i).slice(0, 4)} · ${c.per}: del ${fDate(iniC(i))} ${iniC(i).slice(0, 4)}` })), plugins: DL });
+    document.getElementById('g2-foot').innerHTML = `<b>Misma semana de campaña</b>: la S5 de ${p.per} contra la S5 de ${c.per}. <b>Variación acumulada</b> (línea, eje derecho): acumulado actual vs acumulado del comparado a la misma semana (en las dos vistas); sin % cuando ${c.per} tiene menos de 30 leads o 5 inscritos/admitidos/matrículas.` +
+      ((parL || parM) ? ` <span class="t-mid">Parcial: el CRM tiene ${c.per} desde ${fDate(parL ? dd.lc : dd.mat)}.</span>` : '');
+  }
+
+  // Estado de la base: se quitó hasta tener el estado de gestión de cada CRM en el consolidado (pestaña ESTADOS, pendiente)
+
+  // ── detalle semanal (tablas, ocultas tras "Ver detalle"); muestran todo, no dependen de los botones de las gráficas
+  const td = (v, k) => `<td class="r${k ? ' ' + k : ''}">${v}</td>`;
+  const tdP = (x, consumo) => x === null || !isFinite(x) ? td('—', 't-mute') : `<td class="r pb ${sem(x, consumo)}" style="--w:${Math.max(0, Math.min(100, x * 100)).toFixed(0)}%">${fP(x)}</td>`;
+  const ETP = ETK.map(k => [k, ETQ[k] + (k === 'lc' ? ' CRM' : '')]);
+  const cab = (grupos, fila2) => '<tr>' + grupos.map(([t, n, k]) => n ? `<th colspan="${n}" class="gcab${k ? ' ' + k : ''}">${t}</th>` : `<th rowspan="2">${t}</th>`).join('') + '</tr><tr>' + fila2.map(t => `<th class="r">${t}</th>`).join('') + '</tr>';
+  const semTd = (i, txt) => `<td class="sem-c"><b>S${i + 1}</b><span>${txt}</span></td>`;
+
+  // Tabla 1: ejecución de metas (presupuesto y cada etapa con meta · ejecución · % · acumulados · % acumulado) + CPL
+  const bloques = [['inv', 'Presupuesto'], ...ETP];
+  document.getElementById('sem-head').innerHTML = cab(
+    [[`Semana · ${p.per}`], ...bloques.map(([, t]) => [t, 6]), ['CPL CRM', 2]],
+    [...bloques.flatMap(([k]) => ['Meta', k === 'inv' ? 'Inversión' : 'Ejecución', '% cumpl.', 'Meta acum.', k === 'inv' ? 'Inversión acum.' : 'Ejec. acum.', '% acum.']), 'Real', 'Meta']);
+  let h = '';
+  for(let i = 0; i < n; i++){
+    const e = act[i], m = metas[i], a = addDays(w0, 7 * i), sinInv = sinInvSem(i);
+    const cpl = sinInv ? null : div(e.inv, e.lc), cplM = div(m.pm, m.lmm);
+    h += `<tr${actual(i) ? ' class="sem-actual"' : ''}>` + semTd(i, `${fDate(a)} – ${fDate(addDays(a, 6))}`) +
+      bloques.map(([k]) => { const fm = fmtK(k), ms = metaSem(k, i), sd = k === 'inv' && sinInv, ma = acM(k, i), ea = acE(k, i), cs = k === 'inv';
+        return td(fm(ms)) + (sd ? td('sin dato', 't-mute') : td(fm(e[k]))) + tdP(sd ? null : div(e[k], ms), cs) +
+          td(sd ? '—' : fm(ma), sd ? 't-mute' : '') + td(sd ? '—' : fm(ea), sd ? 't-mute' : '') + tdP(sd ? null : div(ea, ma), cs) }).join('') +
+      td(fCOP(cpl)) + td(fCOP(cplM)) + '</tr>';
+  }
+  document.getElementById('sem-tit1').textContent = `Ejecución de metas ${p.per}`;
+  document.getElementById('sem-body').innerHTML = h || `<tr><td colspan="40" class="empty">El periodo ${p.per} aún no empieza</td></tr>`;
+  document.getElementById('sem-foot').innerHTML = '<b>Semana</b>: lunes a domingo; la semana 1 es la que contiene el inicio del periodo. ' +
+    '<b>Metas de presupuesto y leads</b>: METAS_MENSUAL repartida por días. <b>Metas de matrículas</b>: la del periodo (METAS) repartida por semana según cómo llegaron en el periodo comparado; ' +
+    '<b>admitidos e inscritos</b>: la de matrículas llevada hacia atrás con las conversiones del periodo comparado y repartida igual (provisionales hasta que existan metas semanales). ' +
+    '<b>Inversión</b>: "sin dato" si la semana es anterior al primer dato de inversión cargado (no entra al acumulado). ' +
+    '<b>Color</b>: rojo &lt; 50%, naranja 50–70%, verde ≥ 70%; el presupuesto por encima de 100% va en rojo. La semana en curso se mide contra la meta de toda la semana.';
+
+  // Tabla 2: comparación de periodos
+  if(c){
+    document.getElementById('sem-cmp-tit').textContent = `Comparación de periodos ${c.per} vs ${p.per}` + (c.respaldo ? ' (periodo anterior: el CRM no tiene completo el del año anterior)' : '');
+    document.getElementById('sem-head2').innerHTML = cab(
+      [[`Semana · ${p.per} · ${c.per}`], ...ETP.map(([, t]) => [t, 6]), ['Conversión matrículas / leads', 4, 'gconv']],
+      [...ETP.flatMap(() => [c.per, p.per, 'Acum. ' + c.per, 'Acum. ' + p.per, 'Dif. acum.', '% crec.']), 'Semanal ' + c.per, 'Semanal ' + p.per, 'Acum. ' + c.per, 'Acum. ' + p.per]);
+    const crec = (x, y, k) => !y || baseChica(k, y) ? td('—', 't-mute') : td((x >= y ? '+' : '') + fP(varPct(x, y)), x >= y ? 't-pos' : 't-neg');
+    const dif = d => td((d > 0 ? '+' : '') + fN(d), d > 0 ? 't-pos' : d < 0 ? 't-neg' : 't-mute');
+    let h2 = '';
+    for(let i = 0; i < n; i++){
+      const e = act[i], ec = cmp[i] || Z(), a = addDays(w0, 7 * i), A = {}, C = {};
+      ETP.forEach(([k]) => { A[k] = acum(act, k, i + 1); C[k] = acum(cmp, k, i + 1) });
+      h2 += `<tr${actual(i) ? ' class="sem-actual"' : ''}>` + semTd(i, `${fDate(a)} · ${fDate(addDays(w0c, 7 * i))}`) +
+        ETP.map(([k]) => td(fN(ec[k])) + td(fN(e[k])) + td(fN(C[k])) + td(fN(A[k])) + dif(A[k] - C[k]) + crec(A[k], C[k], k)).join('') +
+        td(fP(div(ec.mat, ec.lc))) + td(fP(div(e.mat, e.lc))) + td(fP(div(C.mat, C.lc))) + td(fP(div(A.mat, A.lc))) + '</tr>';
+    }
+    document.getElementById('sem-body2').innerHTML = h2 || `<tr><td colspan="40" class="empty">El periodo ${p.per} aún no empieza</td></tr>`;
+    document.getElementById('sem-foot2').innerHTML = `<b>Misma semana de campaña</b>: la S${n} de ${p.per} se compara con la S${n} de ${c.per}. ` +
+      '<b>Acum.</b>: desde la semana 1. <b>Dif. acum.</b>: acumulado actual menos el del comparado. <b>% crec.</b>: variación del acumulado; sin % cuando el comparado tiene menos de 30 leads o 5 inscritos/admitidos/matrículas. ' +
+      '<b>Conversión</b>: matrículas ÷ leads CRM, de la semana y acumulada.' +
+      ((parL || parM) ? ` <span class="t-mid">Parcial: el CRM tiene ${c.per} desde ${fDate(parL ? dd.lc : dd.mat)}.</span>` : '');
+  }
+}
+
 // ── Render ───────────────────────────────────────────────────────────────────
 let ROWS = [];
 function render(){
@@ -396,29 +762,34 @@ function render(){
   ROWS = RAW.filter(r => pasa(r, f));
   const T = M(metasEn(f).reduce(addMeta, ROWS.reduce(add, Z())));
   document.getElementById('rango-note').textContent = `${fDate(f.desde)}-${fDate(f.hasta)} ${f.hasta.slice(0,4)} · ${days(f.desde, f.hasta)} días`;
-  renderKPIs(T);
+  try { CMPD = filasComp(f) } catch(err){ CMPD = null; console.error('Comparativo', err) }
+  renderKPIs(T, CMPD && M(CMPD.rows.reduce(add, Z())));
+  try { renderCmpNote(f) } catch(err){ console.error('Nota comparativo', err) }
   const todos = !f.cli;
   document.getElementById('blk-cliente').style.display = todos ? '' : 'none';
   document.getElementById('nav-cliente').style.display = todos ? '' : 'none';
   if(todos) renderClientes(f);
+  try { renderSemanas(f) } catch(err){ console.error('Semana a semana', err) }
   renderMes(f); renderMedio(f); renderFuentes(f);
 }
 
 function bar(p, lbl){ if(p === null) return '';
   return `<div class="kpi-bwrap"><div class="kpi-brow"><span>${lbl}</span><span class="${cls(p)}">${fP(p)}</span></div><div class="ad-barra" role="img" aria-label="${fP(p)}" style="--v:${Math.min(p*100,100)}%"><span></span></div></div>` }
-function renderKPIs(T){
-  const k = (l, v, sub, extra, on) => `<div class="ad-kpi${on ? ' ad-kpi--on' : ''}"><div class="ad-kpi__l">${l}</div><div class="ad-kpi__n">${v}</div>${sub ? `<div class="ad-kpi__m">${sub}</div>` : ''}${extra || ''}</div>`;
+function renderKPIs(T, C){
+  // C = totales del comparativo (null sin comparar); cada tarjeta suma una línea "vs …"
+  const vs = (key, tipo) => C ? varHTML(T[key], C[key], tipo, key) : '';
+  const k = (l, v, sub, extra, key, tipo) => `<div class="ad-kpi${key === 'mat' ? ' ad-kpi--on' : ''}"><div class="ad-kpi__l">${l}</div><div class="ad-kpi__n">${v}</div>${sub ? `<div class="ad-kpi__m">${sub}</div>` : ''}${key ? vs(key, tipo) : ''}${extra || ''}</div>`;
   const sinI = sinEtapa(ROWS, 'ins'), sinA = sinEtapa(ROWS, 'adm'), nota = l => l.length ? ` (sin ${l.join(', ')})` : '';
   const cplMeta = div(T.ppto, T.lm);
   document.getElementById('kpi-grid').innerHTML = [
-    k('Inversión', fCOP(T.inv), 'solo conversión, sin branding', bar(T.cumI, (META_TOTAL ? 'Ejecución vs presupuesto del periodo ' : 'Ejecución vs presupuesto del rango ') + fCOP(T.ppto))),
-    k('Leads plataforma', fN(T.lp), 'CPL plataforma ' + fCOP(T.cplP)),
-    k('Leads CRM', fN(T.lc), `<span class="${difCls(T.dif)}">${T.dif === null ? '' : (T.dif > 0 ? '+' : '') + fP(T.dif) + ' vs plataforma'}</span>`, bar(T.cumL, 'Meta ' + fN(T.lm))),
-    k('CPL CRM', fCOP(T.cplC), cplMeta ? 'CPL meta ' + fCOP(cplMeta) : ''),
-    k('Inscritos', fN(T.ins), fP(T.pLI) + ' de los leads CRM' + nota(sinI)),
-    k('Admitidos', fN(T.adm), fP(T.pIA) + ' de los inscritos' + nota(sinA)),
-    k('Matrículas', fN(T.mat), fP(T.conv) + ' de los leads CRM', bar(T.cumM, 'Meta ' + fN(T.mm)), true),
-    k('Costo por matrícula', fCOP(T.cpm), T.cpmMeta ? 'meta ' + fCOP(T.cpmMeta) : ''),
+    k('Inversión', fCOP(T.inv), 'solo conversión, sin branding', bar(T.cumI, (META_TOTAL ? 'Ejecución vs presupuesto del periodo ' : 'Ejecución vs presupuesto del rango ') + fCOP(T.ppto)), 'inv', 'neutro'),
+    k('Leads plataforma', fN(T.lp), 'CPL plataforma ' + fCOP(T.cplP), '', 'lp', 'mas'),
+    k('Leads CRM', fN(T.lc), `<span class="${difCls(T.dif)}">${T.dif === null ? '' : (T.dif > 0 ? '+' : '') + fP(T.dif) + ' vs plataforma'}</span>`, bar(T.cumL, 'Meta ' + fN(T.lm)), 'lc', 'mas'),
+    k('CPL CRM', fCOP(T.cplC), cplMeta ? 'CPL meta ' + fCOP(cplMeta) : '', '', 'cplC', 'menos'),
+    k('Inscritos', fN(T.ins), fP(T.pLI) + ' de los leads CRM' + nota(sinI), '', 'ins', 'mas'),
+    k('Admitidos', fN(T.adm), fP(T.pIA) + ' de los inscritos' + nota(sinA), '', 'adm', 'mas'),
+    k('Matrículas', fN(T.mat), fP(T.conv) + ' de los leads CRM', bar(T.cumM, 'Meta ' + fN(T.mm)), 'mat', 'mas'),
+    k('Costo por matrícula', fCOP(T.cpm), T.cpmMeta ? 'meta ' + fCOP(T.cpmMeta) : '', '', 'cpm', 'menos'),
   ].join('');
 }
 
@@ -433,7 +804,8 @@ function cell(e, [k, , t, grp]){ const v = e[k], g = grp ? ' grp' : '';
   if(t === 'n') return `<td class="r${g}">${fN(v)}</td>`;
   if(t === 'pct') return `<td class="r${g}">${fP(v)}</td>`;
   if(t === 'dif') return `<td class="r${g} ${difCls(v)}">${v === null ? '—' : (v > 0 ? '+' : '') + fP(v)}</td>`;
-  if(t === 'cum') return `<td class="r${g}">${v === null ? '<span class="t-mute">—</span>' : `<span class="ad-estado ${est(v)}">${fP(v)}</span>`}</td>` }
+  if(t === 'cum') return `<td class="r${g}">${v === null ? '<span class="t-mute">—</span>' : `<span class="ad-estado ${est(v)}">${fP(v)}</span>`}</td>`;
+  if(t === 'var') return `<td class="r${g} ${v === null ? 't-mute' : v >= 0 ? 't-pos' : 't-neg'}">${v === null ? '—' : (v > 0 ? '+' : '') + fP(v)}</td>` }
 const head = (first, cols) => '<tr><th>' + first + '</th>' + cols.map(c => `<th class="r${c[3] ? ' grp' : ''}">${c[1]}</th>`).join('') + '</tr>';
 const fila = (cl, lab, e, cols) => `<tr${cl ? ` class="${cl}"` : ''}><td>${lab}</td>` + cols.map(c => cell(M(e), c)).join('') + '</tr>';
 
@@ -442,10 +814,14 @@ function renderClientes(f){
   ms.forEach(m => addMeta(g[m.cli] = g[m.cli] || Z(), m));
   const T = Object.values(g).reduce((a, e) => { ['inv','lp','lc','ins','adm','mat','lcI','invI','insA','admI','matA','invA','ppto','lm','mm','pm','lmm'].forEach(k => a[k] += e[k]); return a }, Z());
   const cols = [['inv','Inversión','cop'],['pInv','% inversión','pct'],['lc','Leads CRM','n'],['dif','CRM vs plat.','dif'],['cplC','CPL CRM','cop'],
-    ['ins','Insc.','n',1],['adm','Adm.','n'],['mat','Matrículas','n'],['cpm','Costo / mat.','cop',1],['conv','Lead → mat.','pct'],...COLS_META];
+    ['ins','Insc.','n',1],['adm','Adm.','n'],['mat','Matrículas','n'],['cpm','Costo / mat.','cop',1],['conv','Lead → mat.','pct'],...COLS_META,
+    ...(CMPD ? [['vInv','Inv. ' + CMP_LBL[CMP].corto,'var',1],['vLc','Leads ' + CMP_LBL[CMP].corto,'var'],['vMat','Mat. ' + CMP_LBL[CMP].corto,'var']] : [])];
+  const gc = CMPD ? agrupar(CMPD.rows, r => r.cli) : {}, TC = CMPD ? CMPD.rows.reduce(add, Z()) : Z();
   const cs = Object.keys(g).sort((a, b) => g[b].inv - g[a].inv);
   document.getElementById('cli-head').innerHTML = head('Cliente', cols);
   const row = (lab, e, tot) => { const m = M(e); m.pInv = div(e.inv, T.inv);
+    if(CMPD){ const c = tot ? TC : gc[lab], ok = tot || CMPD.off[lab];
+      m.vInv = ok && c ? varPct(e.inv, c.inv) : null; m.vLc = ok && c && !baseChica('lc', c.lc) ? varPct(e.lc, c.lc) : null; m.vMat = ok && c && !baseChica('mat', c.mat) ? varPct(e.mat, c.mat) : null }
     const etapa = (k, v) => STG[lab] && !STG[lab][k] ? '<td class="r t-mute' + (k === 'ins' ? ' grp' : '') + '">no mide</td>' : null;
     return `<tr${tot ? ' class="tr-total"' : ''}><td>${esc(lab)}</td>` + cols.map(c => (!tot && (c[0] === 'ins' || c[0] === 'adm') && etapa(c[0])) || cell(m, c)).join('') + '</tr>' };
   document.getElementById('cli-body').innerHTML = cs.length ? cs.map(c => row(c, g[c])).join('') + row('Total', T, true)
