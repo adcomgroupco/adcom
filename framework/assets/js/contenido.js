@@ -7,15 +7,15 @@
 window.FD = window.FD || {};
 
 FD.PILARES = {
-  1:{tag:"PILAR 4.1", title:"Excelencia operativa", q:"¿Cómo hacemos bien el trabajo de forma consistente?",
+  1:{tag:"Pilar 4.1", title:"Excelencia operativa", q:"¿Cómo hacemos bien el trabajo de forma consistente?",
      items:["Planeación","Implementación","QA","Lanzamiento","Monitoreo","Presupuesto","Tracking","Cierres","Documentación"]},
-  2:{tag:"PILAR 4.2", title:"Inteligencia estratégica", q:"¿Cómo conectamos la ejecución digital con el problema real del negocio?",
+  2:{tag:"Pilar 4.2", title:"Inteligencia estratégica", q:"¿Cómo conectamos la ejecución digital con el problema real del negocio?",
      items:["Objetivos de negocio","Categoría","Audiencias","Oferta","Comportamiento","Contexto","Rol de los canales","Creatividad","CRM","Conversión comercial"]},
-  3:{tag:"PILAR 4.3", title:"Experimentación", q:"¿Cómo aprendemos de manera sistemática?",
+  3:{tag:"Pilar 4.3", title:"Experimentación", q:"¿Cómo aprendemos de manera sistemática?",
      items:["Hipótesis","Variables","Pruebas","Criterios de éxito","Periodos de observación","Resultados","Aprendizajes","Replicabilidad"]},
-  4:{tag:"PILAR 4.4", title:"Gestión contextual", q:"¿Qué está pasando fuera de la plataforma que puede afectar los resultados?",
+  4:{tag:"Pilar 4.4", title:"Gestión contextual", q:"¿Qué está pasando fuera de la plataforma que puede afectar los resultados?",
      items:["Estacionalidad","Eventos","Competencia","Regulación","Coyuntura","Precio","Oferta","Cambios de demanda","Tendencias","Disponibilidad","Capacidad comercial"]},
-  5:{tag:"PILAR 4.5", title:"Documentación y trazabilidad", q:"¿Cómo convertimos el conocimiento generado en capacidad futura?",
+  5:{tag:"Pilar 4.5", title:"Documentación y trazabilidad", q:"¿Cómo convertimos el conocimiento generado en capacidad futura?",
      items:["Repositorios","Decisiones","Informes","Pruebas","Alertas","Aprendizajes","Históricos","Procesos","Playbooks"]}
 };
 

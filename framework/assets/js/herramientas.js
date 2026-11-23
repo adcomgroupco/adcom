@@ -82,8 +82,8 @@
     var label = $("#c-status-label");
     label.textContent = state + (pacing > 100 ? " · sobreconsumo" : (pacing < 100 && expected > 0 ? " · subconsumo" : ""));
     label.style.background = color;
-    label.style.color = "var(--ink)";
-    $("#c-status").style.borderLeftColor = color;
+    label.style.color = "var(--sumi)";
+    // v2: la lima no va como borde; el estado lo dicen la etiqueta y el medidor
     var meter = $("#c-meter");
     meter.style.transform = "scaleX(" + (Math.min(pacing/2, 100)/100) + ")";
     meter.style.background = color;

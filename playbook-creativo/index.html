@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Biblioteca visual de formatos, posibilidades y recomendaciones creativas para medios digitales.">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#050505">
+  <meta name="theme-color" content="#F7F6F2">
   <title>Playbook creativo de medios digitales</title>
   <link rel="icon" type="image/png" sizes="64x64" href="assets/branding/adcom-favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
-  <link rel="stylesheet" href="../assets/css/adcom-tokens.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
+  <link rel="stylesheet" href="../assets/css/adcom-v2.css">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="redesign.css">
   <script defer src="assets/references.js"></script>
@@ -20,21 +21,21 @@
 </head>
 <body>
   <a class="skip-link" href="#explorar">Saltar a la exploración</a>
-  <header class="site-header" data-suelo="tinta">
-    <div class="wrap header-inner">
-    <a class="brand" href="../index.html" aria-label="Volver al portal Adcom"><img class="brand-logo" src="assets/branding/adcom-logo.png" alt="" width="40" height="40"><span class="brand-copy"><strong>PLAYBOOK CREATIVO DE MEDIOS DIGITALES</strong><small>ADCOM</small></span></a>
-    <nav aria-label="Navegación principal"><a href="#medios">Medios</a><a href="#explorar">Explorar formatos</a><a href="#metodo">Cómo usarlo</a></nav>
+  <header class="site-header ad-nav">
+    <div class="ad-nav__in">
+      <a class="marca" href="../index.html" aria-label="Adcom, volver al portal">Adcom<span>Playbook creativo</span></a>
+      <nav class="ad-nav__links" aria-label="Navegación principal"><a href="#medios">Medios</a><a href="#explorar">Explorar formatos</a><a href="#metodo">Cómo usarlo</a></nav>
     </div>
   </header>
   <main>
-    <section class="hero" data-suelo="tinta" aria-labelledby="hero-title">
+    <section class="hero" aria-labelledby="hero-title">
       <div class="wrap hero-inner">
       <div class="hero-copy">
         <p class="eyebrow">Biblioteca creativa de medios digitales</p>
         <h1 id="hero-title">Playbook creativo de medios digitales</h1>
         <p class="hero-sub">Una idea puede vivir en una búsqueda, una canción, un directo o una pantalla en la ciudad.</p>
         <p class="hero-purpose">Conoce qué permite cada formato, míralo en contexto y decide qué producir. Digital va más allá de las redes sociales.</p>
-        <a class="button button-light" href="#medios">Explorar medios <span aria-hidden="true">↗</span></a>
+        <a class="ad-btn ad-btn--accent" href="#medios">Explorar medios <span aria-hidden="true">↓</span></a>
       </div>
       </div>
     </section>
@@ -61,9 +62,9 @@
     <section class="wrap method-section" id="metodo" aria-labelledby="metodo-title">
       <div class="method-title"><p class="eyebrow">De inspiración a producción</p><h2 id="metodo-title">Una ficha, tres preguntas.</h2></div>
       <div class="method-grid">
-        <article><span>01</span><h3>¿Qué permite?</h3><p>Entiende la mecánica y abre rutas que van más allá de adaptar un tamaño.</p></article>
-        <article><span>02</span><h3>¿Qué hará la persona?</h3><p>Diseña la respuesta buscada y reconoce los controles nativos del medio.</p></article>
-        <article><span>03</span><h3>¿Qué hay que validar?</h3><p>Comprueba inventario, proveedor, datos, zonas visibles y especificaciones actuales.</p></article>
+        <article><span class="ad-n">1</span><h3>¿Qué permite?</h3><p>Entiende la mecánica y abre rutas que van más allá de adaptar un tamaño.</p></article>
+        <article><span class="ad-n">2</span><h3>¿Qué hará la persona?</h3><p>Diseña la respuesta buscada y reconoce los controles nativos del medio.</p></article>
+        <article><span class="ad-n">3</span><h3>¿Qué hay que validar?</h3><p>Comprueba inventario, proveedor, datos, zonas visibles y especificaciones actuales.</p></article>
       </div>
       <p class="method-note">Los ejemplos recrean interfaces y contextos para explicar cada mecánica. Las marcas y campañas son ficticias; cada ficha enlaza referencias y señala qué debe validarse.</p>
     </section>
@@ -86,7 +87,7 @@
       </div>
     </div>
   </dialog>
-  <dialog id="image-lightbox" class="image-lightbox" aria-labelledby="image-lightbox-title" closedby="any">
+  <dialog id="image-lightbox" class="image-lightbox" data-suelo="tinta" aria-labelledby="image-lightbox-title" closedby="any">
     <div class="image-lightbox-shell">
       <div class="image-lightbox-head"><strong id="image-lightbox-title"></strong><div class="image-lightbox-actions"><button id="toggle-safe-zone" type="button" aria-pressed="false" hidden>Ver zonas seguras</button><button id="close-image-lightbox" type="button" aria-label="Cerrar imagen ampliada">Cerrar ×</button></div></div>
       <div class="image-lightbox-stage"><img id="image-lightbox-image" alt=""><div id="image-safe-overlay" class="image-safe-overlay" hidden aria-hidden="true"><span class="safe-area-label">Área recomendada para mensaje clave</span></div></div>
