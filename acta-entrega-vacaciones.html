@@ -4,109 +4,134 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Acta de entrega de vacaciones del área Digital / Pauta">
+  <meta name="theme-color" content="#F7F6F2">
   <title>Acta de entrega de vacaciones | Digital / Pauta</title>
   <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
+  <link rel="stylesheet" href="assets/css/adcom-v2.css">
   <style>
+/* Documento operativo en v2: solo tokens del sistema, ningún valor suelto. */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--washi);color:var(--sumi)}
+a{color:inherit}
 
-:root {
-  --paper: #f4f4f1;
-  --surface: #fcfcfa;
-  --ink: #050505;
-  --secondary: #4a4a47;
-  --muted: #656560;
-  --rule: #d9d9d3;
-  --accent: #ffd400;
-  --focus: #7d6800;
-}
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--paper); color: var(--ink); font: 400 16px/1.65 "Poppins", "Segoe UI", sans-serif; }
-a { color: inherit; }
-a:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
-.skip-link { position: absolute; left: 20px; top: -60px; z-index: 20; padding: 8px 14px; background: var(--accent); color: var(--ink); border-radius: 8px; }
-.skip-link:focus { top: 10px; }
-.masthead { background: var(--ink); color: var(--paper); }
-.masthead-inner { max-width: 1280px; margin: auto; padding: 16px clamp(20px, 5vw, 64px); display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-.wordmark { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; letter-spacing: -.04em; font-size: 18px; }
-.wordmark::before { content: ""; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; }
-.masthead-label { color: #c4c4be; font-size: 12px; font-weight: 600; }
-.container { max-width: 1280px; margin: auto; padding: 0 clamp(20px, 5vw, 64px) 84px; }
-.page-header { position: relative; margin-top: 34px; padding: clamp(30px, 5vw, 64px); background: var(--ink); color: var(--paper); border-radius: 22px; overflow: hidden; }
-.page-header::before { content: ""; position: absolute; top: 0; left: 0; width: 118px; height: 7px; background: var(--accent); }
-.eyebrow { margin: 0 0 18px; color: var(--accent); font-size: 13px; font-weight: 700; }
-h1 { max-width: 13ch; margin: 0; font-size: clamp(2.8rem, 6vw, 5.2rem); line-height: 1.02; letter-spacing: -.055em; font-weight: 800; }
-.metadata { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; margin: 46px 0 0; padding: 22px 0 0; border-top: 1px solid #53534e; }
-.metadata div { min-width: 0; }
-.metadata dt { color: #aaa9a4; font-size: 11px; line-height: 1.35; }
-.metadata dd { margin: 5px 0 0; font-weight: 600; font-size: 13px; line-height: 1.4; }
-.toc { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 8px; overflow-x: auto; margin: 18px 0 62px; padding: 10px 12px; border: 1px solid var(--rule); border-radius: 12px; background: #fcfcfaf2; backdrop-filter: blur(8px); white-space: nowrap; }
-.toc strong { padding: 8px 14px; border-right: 1px solid var(--rule); font-size: 12px; }
-.toc a { padding: 8px 10px; border-radius: 7px; text-decoration: none; font-size: 12px; font-weight: 600; }
-.toc a:hover { background: var(--accent); }
-section { scroll-margin-top: 100px; margin-top: 72px; }
-section > h2 { margin: 0 0 24px; padding-top: 17px; border-top: 2px solid var(--ink); font-size: clamp(1.65rem, 3vw, 2.35rem); line-height: 1.2; letter-spacing: -.035em; }
-section > p { max-width: 75ch; }
-.client { display: grid; grid-template-columns: minmax(180px, .42fr) minmax(0, 1fr); column-gap: 36px; padding: 27px 30px 30px; margin: 16px 0; background: var(--surface); border: 1px solid var(--rule); border-radius: 16px; }
-.client h3 { grid-column: 1; align-self: start; margin: 0; font-size: 1.45rem; line-height: 1.2; letter-spacing: -.025em; }
-.client .owner { grid-column: 1; margin: 10px 0 0; color: var(--secondary); font-size: 12px; line-height: 1.5; }
-.client h4, .client ul, .client .table-wrap, .client > p:not(.owner) { grid-column: 2; }
-.client h4 { margin: 0 0 8px; font-size: 15px; line-height: 1.4; }
-.client h4:not(:first-of-type) { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
-.client ul { margin: 0; padding-left: 20px; }
-li { padding-left: 2px; }
-li + li { margin-top: 7px; }
-.client > p:not(.owner) { margin: 15px 0 0; }
-.table-wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 12px; background: var(--surface); }
-table { width: 100%; border-collapse: collapse; min-width: 620px; font-size: 13px; line-height: 1.5; }
-th, td { padding: 13px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--rule); }
-th { background: var(--ink); color: var(--paper); font-weight: 700; }
-tbody tr:nth-child(even) { background: #f1f1ed; }
-tbody tr:last-child td { border-bottom: 0; }
-#matriz table { min-width: 760px; }
-#matriz td:first-child, #recursos td:first-child { font-weight: 700; }
-#recursos a { color: #594b00; text-decoration-thickness: 1px; text-underline-offset: 3px; font-weight: 700; }
-.note { padding-left: 16px; border-left: 4px solid var(--accent); color: var(--secondary); font-size: 13px; }
-code { padding: 2px 5px; background: #e7e6e1; border-radius: 4px; overflow-wrap: anywhere; }
-footer { margin-top: 70px; padding: 26px 30px; background: var(--ink); color: var(--paper); border-radius: 14px; font-size: 14px; }
-footer p { max-width: 78ch; margin: 0; }
-@media (max-width: 850px) {
-  .metadata { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .client { grid-template-columns: 1fr; }
-  .client h3, .client .owner, .client h4, .client ul, .client .table-wrap, .client > p:not(.owner) { grid-column: 1; }
-  .client .owner { margin-bottom: 24px; }
-}
-@media (max-width: 580px) {
-  body { font-size: 15px; }
-  .masthead-label { display: none; }
-  .page-header { margin-top: 20px; padding: 34px 24px; border-radius: 14px; }
-  .metadata { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 32px; }
-  .toc { margin-bottom: 44px; }
-  section { margin-top: 52px; }
-  .client { padding: 22px 20px; }
-}
-@media print {
-  body { background: white; color: black; font-size: 11pt; }
-  .masthead, .toc, .skip-link { display: none; }
-  .container { max-width: none; padding: 0; }
-  .page-header { margin: 0; border-radius: 0; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-  section { margin-top: 30px; }
-  .client { break-inside: avoid; }
-  th { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-  a { overflow-wrap: anywhere; }
-}
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+/* header del portal; aquí no es fijo para que el índice sí lo sea */
+.ad-nav{position:relative}
+.marca{font-family:var(--font-display);font-size:20px;font-weight:600;letter-spacing:-.02em;color:var(--sumi);text-decoration:none;min-height:var(--target-min);display:inline-flex;align-items:center}
+.marca span{font-weight:400;color:var(--tinta-suave);margin-left:8px;font-size:14px;letter-spacing:0}
+.masthead-label{font-size:14px;color:var(--tinta-suave)}
 
+.container{max-width:var(--container-max);margin:0 auto;padding:0 var(--space-6) var(--space-16)}
+
+/* cabecera del acta */
+.page-header{padding:var(--space-16) 0 var(--space-8)}
+.page-header h1{margin:var(--space-4) 0 0}
+.metadata{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--space-6);margin:var(--space-12) 0 0;padding:var(--space-6) 0 0;border-top:1px solid var(--piedra)}
+.metadata div{min-width:0}
+.metadata dt{font-size:13px;line-height:1.4;color:var(--tinta-suave)}
+.metadata dd{margin:4px 0 0;font-size:15px;font-weight:500;line-height:1.4}
+
+/* índice: fijo arriba, separado por líneas */
+.toc{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:var(--space-2);overflow-x:auto;margin:0 0 var(--space-12);padding:var(--space-2) 0;border-top:1px solid var(--piedra);border-bottom:1px solid var(--piedra);background:var(--washi-vidrio);-webkit-backdrop-filter:blur(var(--blur-header));backdrop-filter:blur(var(--blur-header));white-space:nowrap;scrollbar-width:thin;scrollbar-color:var(--piedra-borde) transparent}
+.toc strong{padding:0 var(--space-4) 0 0;margin-right:var(--space-2);border-right:1px solid var(--piedra);font-size:13px;color:var(--tinta-suave)}
+.toc a{display:inline-flex;align-items:center;min-height:var(--target-min);padding:0 14px;border-radius:var(--radius-pill);text-decoration:none;font-size:14px;color:var(--tinta-secundaria);transition:background-color var(--duration-hover),color var(--duration-hover)}
+.toc a:hover{background:var(--crema);color:var(--sumi)}
+.toc a:focus-visible{outline-offset:-2px}
+
+/* secciones */
+section,.client{scroll-margin-top:72px}
+section{margin-top:var(--space-16)}
+section > h2{margin:0 0 var(--space-6);padding-top:var(--space-4);border-top:1px solid var(--sumi);font-size:clamp(28px,3vw,40px);line-height:1.15;letter-spacing:-.025em}
+section > p{max-width:75ch;color:var(--tinta-secundaria)}
+section > ul{max-width:75ch;padding-left:20px;color:var(--tinta-secundaria)}
+section strong{color:var(--sumi)}
+
+/* cliente: filas separadas por líneas, no cajas */
+.client{display:grid;grid-template-columns:minmax(180px,.42fr) minmax(0,1fr);column-gap:var(--space-8);padding:var(--space-8) 0;border-bottom:1px solid var(--piedra)}
+.client:first-of-type{padding-top:var(--space-2)}
+.client h3{grid-column:1;align-self:start;margin:0;font-size:26px;line-height:1.2;letter-spacing:-.02em}
+.client .owner{grid-column:1;margin:var(--space-2) 0 0;color:var(--tinta-suave);font-size:14px;line-height:1.5}
+.client .owner strong{font-weight:400;color:var(--tinta-suave)}
+.client h4,.client ul,.client .table-wrap,.client > p:not(.owner){grid-column:2}
+.client h4{margin:0 0 var(--space-2);font-family:var(--font-display);font-size:17px;font-weight:500;line-height:1.4}
+.client h4:not(:first-of-type){margin-top:var(--space-6);padding-top:var(--space-6);border-top:1px solid var(--piedra)}
+.client ul{margin:0;padding-left:20px;color:var(--tinta-secundaria)}
+.client strong{color:var(--sumi)}
+li{padding-left:2px}
+li + li{margin-top:6px}
+.client > p:not(.owner){margin:var(--space-4) 0 0;color:var(--tinta-secundaria)}
+
+/* tablas: cabecera con regla sumi, filas con líneas piedra */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:620px;font-size:14px;line-height:1.5}
+th,td{padding:12px 16px 12px 0;text-align:left;vertical-align:top;border-bottom:1px solid var(--piedra)}
+th{font-size:13px;font-weight:500;color:var(--tinta-suave);border-bottom-color:var(--sumi)}
+td{color:var(--tinta-secundaria)}
+#matriz table{min-width:760px}
+#matriz td:first-child,#recursos td:first-child{font-weight:500;color:var(--sumi)}
+#recursos td a{display:inline-flex;align-items:center;min-height:var(--target-min);margin:-12px 0}
+#recursos a{color:var(--sumi);font-weight:500;text-decoration-thickness:1px;text-underline-offset:3px}
+#recursos a:hover{color:var(--tinta-secundaria)}
+
+/* caja de nota: crema, recta */
+.note{margin-top:var(--space-6);padding:var(--space-4) var(--space-6);background:var(--crema);border-radius:var(--radius-card);color:var(--tinta-secundaria);font-size:14px}
+code{padding:1px 6px;background:var(--crema);border-radius:var(--radius-input);overflow-wrap:anywhere}
+
+.cierre{margin-top:var(--space-16);padding-top:var(--space-6);border-top:1px solid var(--sumi)}
+.cierre p{max-width:75ch;margin:0;font-family:var(--font-display);font-size:21px;line-height:1.5;color:var(--sumi)}
+
+@media (max-width:850px){
+  .metadata{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .client{grid-template-columns:1fr}
+  .client h3,.client .owner,.client h4,.client ul,.client .table-wrap,.client > p:not(.owner){grid-column:1}
+  .client .owner{margin-bottom:var(--space-6)}
+}
+@media (max-width:580px){
+  body{font-size:16px}
+  .masthead-label{display:none}
+  .page-header{padding:var(--space-8) 0 var(--space-6)}
+  .metadata{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:var(--space-8)}
+  .toc{margin-bottom:var(--space-8)}
+  section{margin-top:var(--space-12)}
+  .cierre p{font-size:18px}
+}
+@media print{
+  body{background:#fff;color:#000;font-size:10.5pt;line-height:1.5}
+  .ad-nav,.toc,.skip-link,.ad-foot{display:none}
+  .container{max-width:none;padding:0}
+  .page-header{padding:0 0 12pt}
+  .page-header h1{font-size:30pt}
+  .metadata{margin-top:16pt;padding-top:10pt}
+  section{margin-top:22pt}
+  section > h2{font-size:17pt;break-after:avoid}
+  .client{padding:14pt 0;break-inside:avoid}
+  .client h3{font-size:14pt}
+  .client h4{break-after:avoid}
+  tr{break-inside:avoid}
+  thead{display:table-header-group}
+  .note{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .cierre{margin-top:22pt}
+  .cierre p{font-size:12pt}
+  a{overflow-wrap:anywhere}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   </style>
 </head>
 <body>
 <a class="skip-link" href="#objetivo">Ir al contenido</a>
-<div class="masthead"><div class="masthead-inner"><span class="wordmark">Adcom</span><span class="masthead-label">Dirección Digital · Documento de continuidad</span></div></div>
+<header class="ad-nav">
+  <div class="ad-nav__in">
+    <a class="marca" href="index.html">Adcom<span>área digital</span></a>
+    <span class="masthead-label">Dirección Digital · Documento de continuidad</span>
+  </div>
+</header>
 <main class="container">
   <header class="page-header">
-    <p class="eyebrow">Dirección Digital · Continuidad operativa</p>
-    <h1>Acta de entrega de vacaciones</h1>
+    <p class="ad-eyebrow">Dirección Digital · Continuidad operativa</p>
+    <h1 class="ad-t-statement"><span class="ad-ln">Acta de entrega</span><span class="ad-ln">de vacaciones.</span></h1>
     <dl class="metadata">
       <div><dt>Área</dt><dd>Digital / Pauta</dd></div>
       <div><dt>Entrega</dt><dd>Dirección Digital</dd></div>
@@ -216,7 +241,13 @@ footer p { max-width: 78ch; margin: 0; }
     <li><strong>Betplay:</strong> retomar medición de FTD con el equipo tecnológico del cliente.</li>
     <li><strong>Transversal:</strong> revisar novedades, decisiones, implementaciones y ajustes presupuestales realizados.</li>
   </ul></section>
-  <footer><p>La mayoría de las actividades ya están gestionadas. Durante la ausencia corresponde mantener seguimiento y continuidad. Los desarrollos de mayor alcance sin urgencia podrán retomarse al regreso.</p></footer>
+  <footer class="cierre"><p>La mayoría de las actividades ya están gestionadas. Durante la ausencia corresponde mantener seguimiento y continuidad. Los desarrollos de mayor alcance sin urgencia podrán retomarse al regreso.</p></footer>
 </main>
+<footer class="ad-foot">
+  <div class="ad-foot__in">
+    <span>Adcom · Acta de entrega de vacaciones</span>
+    <span>Digital / Pauta</span>
+  </div>
+</footer>
 </body>
 </html>

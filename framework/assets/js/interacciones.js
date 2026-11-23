@@ -143,7 +143,7 @@
     function setStep(i, alinear){
       var s = STEPS[i]; if(!s) return;
       current = i;
-      $("#step-tag").textContent = "ETAPA " + s.n;
+      $("#step-tag").textContent = "Etapa " + s.n;
       $("#step-title").textContent = s.t;
       $("#step-desc").textContent = s.d;
       $("#step-label").textContent = s.label;
@@ -188,7 +188,7 @@
       var s = CYCLE[i]; if(!s) return;
       cycleIdx = i;
       var n = (i+1 < 10 ? "0" : "") + (i+1);
-      $("#cycle-step").textContent = "ESTACIÓN " + n;
+      $("#cycle-step").textContent = "Estación " + n;
       $("#cycle-name").textContent = s.t;
       $("#cycle-title").textContent = s.t;
       $("#cycle-desc").textContent = s.d;

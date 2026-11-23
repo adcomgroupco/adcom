@@ -65,19 +65,19 @@ body{
 .iface,
 .avoid,
 .split>div:nth-child(2){
-  --fg:#000;--fg-muted:#333;--line:#bbb;--surface:#fff;--surface-2:#fff;
-  --accent-ink:#000;--chip-bg:#fff;--chip-bd:#bbb;--chip-fg:#333;
-  --quote-bg:#fff;--quote-bd:#bbb
+  --fg:#000;--fg-muted:var(--tinta-secundaria);--line:var(--piedra-borde);--surface:#fff;--surface-2:#fff;
+  --accent-ink:#000;--chip-bg:#fff;--chip-bd:var(--piedra-borde);--chip-fg:var(--tinta-secundaria);
+  --quote-bg:#fff;--quote-bd:var(--piedra-borde)
 }
 
-/* el amarillo no existe en papel: se convierte en negro o en un borde */
+/* la lima no existe en papel: el énfasis va en negro o en un borde */
 .eyebrow,.eyebrow span:first-child,em,.tag-accent,.card-index,.panel-label{
-  color:#000 !important;background:none !important;border-color:#666 !important
+  color:#000 !important;background:none !important;border-color:var(--tinta-suave) !important
 }
-em{font-weight:800}
+em{font-weight:500}
 
 .card,.roadmap-card,.alert-card,.panel,.quote,.table-wrap,.flow{
-  border:1px solid #bbb !important
+  border:1px solid var(--piedra-borde) !important
 }
 
 /* ---------- lo plegado se abre ---------- */
@@ -124,11 +124,11 @@ table{font-size:8.5pt}
 .carrusel-tabs,.carrusel-nav{display:none !important}
 .carrusel-pista{display:grid !important;gap:8pt !important;overflow:visible !important;-webkit-mask-image:none !important;mask-image:none !important}
 .carrusel-pista>*{flex:none !important}
-.notas>.card,.columnas>.card,.linea>*{border:0 !important;border-top:1px solid #bbb !important}
+.notas>.card,.columnas>.card,.linea>*{border:0 !important;border-top:1px solid var(--piedra-borde) !important}
 .barra i{background:#000 !important}
 
 /* ---------- la URL de un enlace externo, junto al texto ---------- */
-a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;color:#555}
+a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;color:var(--tinta-suave)}
 
 .page-search,.chapter-nav{display:none}
 .page-intro h1{font-size:27pt}

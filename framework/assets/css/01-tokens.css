@@ -1,60 +1,67 @@
 /* ============================================================
    Framework Digital · 01-tokens.css
    Tokens, reset, utilidades y animaciones
+   ------------------------------------------------------------
+   Sistema de diseño v2 (washi · sumi · lima · Inter Tight).
+   ../../assets/css/adcom-v2.css carga ANTES que este archivo y trae los
+   tokens base (--washi, --sumi, --lima, --negro-escena, --sobre-oscuro-*,
+   --radius-*, --font-*, duraciones). Aquí los nombres propios del
+   framework se re-apuntan a esos tokens; no se define ningún color nuevo
+   salvo los de estado, marcados PROVISIONAL.
+
+   Choque de nombres con el puente de adcom-v2.css: allí --ink y --paper
+   son alias de primer plano y de suelo, y se redeclaran sobre
+   :root, [data-suelo], [data-roles], .section-dark y .section-light.
+   Aquí --ink es el fondo oscuro literal y --paper el claro. Por eso el
+   bloque de abajo repite esos mismos selectores: este archivo carga
+   después, a igual especificidad gana, y se rompe el ciclo
+   --fg:var(--ink) / --ink:var(--fg) que dejaba las secciones sin color.
    ============================================================ */
 
-:root{
-  --ink:#050505;
-  --ink-soft:#111111;
-  --ink-card:#151515;
-  --paper:#f4f4f1;
-  --paper-soft:#eceae4;
-  --white:#ffffff;
-  --yellow:#ffd400;
-  --yellow-soft:#ffe86a;
-  --green:#55c98a;
-  --orange:#ff8a3d;
-  --red:#ff4d4d;
-  --blue:#315cff;
-  /* variantes para superficie clara: mismo tono, luminosidad bajada
-     hasta el mínimo que pasa WCAG AA 4.5:1 sobre #eceae4, la superficie
-     clara más oscura del sistema. Derivadas, no elegidas a ojo. */
-  --yellow-ink:#7d6800;
-  --green-ink:#26784c;
-  --red-ink:#d60000;
-  --orange-ink:#b44700;
-  --blue-ink:#2a56ff;
-  --red-soft:#ff6b6b;
-  --line-dark:rgba(255,255,255,.16);
-  --line-light:rgba(5,5,5,.14);
-  --muted-dark:#a8a8a8;
-  --muted-light:#5d5d5d;
-  /* Los cuatro que el framework usa y no definia. Son los mismos
-     valores del sistema: el piso tipografico y el par de estado. */
-  --fs-min:.75rem;
-  --fs-body-min:.8rem;
-  --pos:#16693a;
-  --neg:#c2261c;
-  /* Sistema de forma: superficies 20px, controles compactos 12px,
-     acciones primarias en píldora. */
-  --radius:12px;
-  --radius-sm:12px;
-  --max:1360px;
-  --shadow:0 28px 80px rgba(0,0,0,.16);
-  /* ---------- escala tipográfica ----------
-     Nueve roles de tamaño, cuatro de tracking, cinco de interlineado.
-     Antes había 51 tamaños y 22 valores de tracking sin sistema: pares como
-     .66/.68/.70/.72rem cumplían el mismo papel con diferencias de 0.3px,
-     invisibles para el lector y caras de mantener.
+:root,[data-suelo],[data-roles],.section-dark,.section-light,.s-dark,.s-light{
+  --ink:var(--negro-escena);            /* fondo oscuro de página y secciones */
+  --paper:var(--washi);                 /* fondo claro de sección */
+  --ink-secondary:var(--tinta-secundaria);
+  --ink-muted:var(--tinta-suave);
+  --accent-deep:var(--sumi);
+  --inv-text:var(--sobre-oscuro-100)
+}
 
-     Cada rol declara tamaño + tracking + interlineado JUNTOS. Es deliberado:
-     un `letter-spacing` en `em` declarado arriba se hereda hacia hijos con
-     `font-size` menor y se deforma (el render llegaba a 0.61em efectivos).
-     Declarar los tres en el mismo sitio corta esa herencia. */
-  --fs-label:.75rem;                    /* microetiqueta en mayúsculas · 12px */
-  --fs-ui:.875rem;                      /* controles, nav, tablas, dato denso · 14px */
-  --fs-body:1rem;                       /* prosa · 16px */
-  --fs-lead:1.125rem;                   /* entradilla y cita · 18px */
+:root{
+  --ink-soft:var(--sumi);               /* hover sobre fondo oscuro */
+  --ink-card:var(--sumi);               /* tarjeta sobre fondo oscuro */
+  --paper-soft:var(--crema);
+  --white:var(--papel);                 /* superficie clara: tarjeta, tabla */
+  --yellow:var(--lima);                 /* SOLO relleno, siempre con texto sumi */
+  /* Estado y severidad: v2 no los define («sin definir»). Se conservan los
+     del puente de adcom-v2.css (pos/neg) y un naranja para el nivel
+     intermedio de severidad. PROVISIONAL todos. */
+  --green:#2fb574;                      /* PROVISIONAL · 7,3:1 sobre negro-escena */
+  --red:#ff6b6b;                        /* PROVISIONAL · 7,0:1 sobre negro-escena */
+  --red-soft:#ff6b6b;                   /* PROVISIONAL · alias de --red */
+  --orange:#ff8a3d;                     /* PROVISIONAL · severidad «acción»; con texto sumi 7,9:1 */
+  --green-ink:#16693a;                  /* PROVISIONAL · 6,2:1 sobre washi */
+  --red-ink:#c2261c;                    /* PROVISIONAL · 5,4:1 sobre washi */
+  --orange-ink:#a8460a;                 /* PROVISIONAL · 4,9:1 sobre washi */
+  --line-dark:rgba(247,246,242,.16);
+  --line-light:var(--piedra);
+  --muted-dark:var(--sobre-oscuro-300); /* etiquetas sobre oscuro · 8,1:1 */
+  --muted-light:var(--tinta-suave);     /* etiquetas sobre claro · 4,9:1 */
+  --fs-min:.75rem;                      /* solo texto dentro de diagramas SVG */
+  --fs-body-min:.8125rem;
+  --pos:#16693a;                        /* PROVISIONAL */
+  --neg:#c2261c;                        /* PROVISIONAL */
+  /* Forma v2: lo que se lee es recto (tarjeta 4px, panel 6px, campo 2px);
+     lo que se toca es redondo (--radius-pill). */
+  --radius:var(--radius-card);
+  --radius-sm:var(--radius-input);
+  --max:1360px;
+  /* ---------- escala tipográfica ----------
+     Cada rol declara tamaño + tracking + interlineado juntos. */
+  --fs-label:.8125rem;                  /* etiqueta · 13px */
+  --fs-ui:.875rem;                      /* controles, nav, tablas · 14px */
+  --fs-body:1.0625rem;                  /* prosa · 17px */
+  --fs-lead:1.25rem;                    /* entradilla y cita · 20px */
   --fs-h4:1.25rem;                      /* título de tarjeta o panel · 20px */
   --fs-h3:clamp(1.5rem,2.4vw,2rem);     /* subtítulo · 24—32px */
   --fs-h2:clamp(1.75rem,3vw,2.7rem);    /* título de sección · 28—43px */
@@ -62,51 +69,53 @@
   --fs-display:clamp(2.8rem,7vw,6.5rem);/* solo el h1 del hero · 45—104px */
   --fs-data:clamp(1.6rem,2.6vw,2.4rem); /* cifras y marcadores */
 
-  --tk-label:.12em;                     /* único tracking para mayúsculas */
+  --tk-label:0;                         /* v2: sin tracking positivo */
   --tk-body:0;
   --tk-h:-.03em;
-  --tk-display:-.04em;                  /* piso: nada baja de aquí */
+  --tk-display:-.035em;
+  --tk-data:-.04em;                     /* cifras grandes, peso 300 */
 
-  --lh-display:.94;
-  --lh-h:1.1;                           /* h2 y h3: titulares grandes, 1-2 líneas */
-  --lh-h4:1.25;                         /* h4 a 20px: en español envuelve a 2-3 líneas */
-  --lh-body:1.6;                        /* prosa suelta */
-  --lh-dense:1.45;                      /* prosa dentro de tarjeta */
-  --lh-ui:1.35;                         /* listas y controles */
-  --lh-flat:1;                          /* cifras de una línea */
+  --lh-display:1.02;
+  --lh-h:1.1;
+  --lh-h4:1.25;
+  --lh-body:1.6;
+  --lh-dense:1.5;
+  --lh-ui:1.4;
+  --lh-flat:1;
 
-  --measure:68ch;                       /* medida de lectura cómoda */
-  --lh-base:1.55;
+  --measure:68ch;
+  --lh-base:1.6;
 
-  /* color de acento por defecto: las secciones lo redeclaran según su fondo */
-  --accent-ink:var(--yellow);
-  font-family:"Poppins",ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  /* primer plano de énfasis: las secciones lo redeclaran según su fondo.
+     En v2 la lima nunca es texto ni borde, así que el «acento» de texto
+     es el primer plano de cada suelo. */
+  --accent-ink:var(--sobre-oscuro-100);
+  font-family:var(--font-body);
   color-scheme:dark
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--ink);color:var(--white);font-size:16px;line-height:var(--lh-base);-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--ink);color:var(--sobre-oscuro-100);font-family:var(--font-body);font-size:var(--fs-body);line-height:var(--lh-base);letter-spacing:0;-webkit-font-smoothing:antialiased}
 button,input,select{font:inherit}
 a{color:var(--fg-muted);text-decoration:none}
+h1,h2,h3,h4,h5{font-family:var(--font-display);font-weight:500}
 h1,h2,h3,h4,h5,p{text-wrap:pretty}
-/* Los titulares van en --fg y el texto corrido en --fg-muted: sin esta
-   regla heredaban el gris de la sección y título y párrafo pesaban igual. */
+/* Los titulares van en --fg y el texto corrido en --fg-muted. */
 h1,h2,h3,h4,h5{color:var(--fg);text-wrap:balance}
-::selection{background:var(--yellow);color:var(--ink)}
-input,textarea{caret-color:var(--accent-ink)}
-html{scrollbar-color:#3a3a37 var(--ink)}
+b,strong{font-weight:500}
+::selection{background:var(--lima);color:var(--sumi)}
+input,textarea{caret-color:var(--fg)}
+html{scrollbar-color:rgba(247,246,242,.24) var(--ink)}
 .flow,.table-wrap,.q-res,.stepper{scrollbar-color:var(--line) transparent;scrollbar-width:thin}
 td,.kpis dd,.status strong,.board-head span,.ficha b,.meter-scale{font-variant-numeric:tabular-nums}
 
 /* ---------- utilidades ---------- */
-/* foco visible para todo lo que se puede recorrer con teclado.
-   Usa --accent-ink porque se adapta al fondo de cada sección. */
-:focus-visible{outline:3px solid var(--accent-ink);outline-offset:3px;border-radius:var(--radius-sm)}
-/* los contenedores que hacen scroll horizontal son focusables: sin esto,
-   con teclado no hay forma de ver un diagrama ancho o una tabla ancha */
+/* foco visible v2: 2px sólido en el primer plano del suelo, separado 3px */
+:focus-visible{outline:2px solid var(--fg,var(--sobre-oscuro-100));outline-offset:3px}
+/* los contenedores que hacen scroll horizontal son focusables */
 .flow:focus-visible,.table-wrap:focus-visible{outline-offset:-3px}
 
-.skip-link{position:fixed;top:8px;left:8px;z-index:100;transform:translateY(-160%);background:var(--yellow);color:var(--ink);padding:10px 16px;border-radius:999px;font-weight:800}
+.skip-link{position:fixed;top:8px;left:8px;z-index:100;transform:translateY(-160%);background:var(--lima);color:var(--sumi);padding:10px 16px;border-radius:var(--radius-pill);font-weight:500}
 .skip-link:focus{transform:translateY(0)}
 .wrap{max-width:var(--max);margin:0 auto}
 /* visible solo para lectores de pantalla */
@@ -114,121 +123,108 @@ td,.kpis dd,.status strong,.board-head span,.ficha b,.meter-scale{font-variant-n
 /* que las anclas no queden debajo del header fijo */
 section[id],[id].divider,h3[id],h2[id],h4[id],h5[id]{scroll-margin-top:104px}
 .section-dark,.section-light{padding:clamp(68px,8vw,112px) clamp(20px,5vw,72px)}
-/* tokens de superficie: cualquier isla oscura dentro de una sección clara los redeclara */
+/* tokens de superficie oscura: secciones oscuras e islas oscuras */
 .section-dark,.iface,.avoid,.split>div:nth-child(2){
-  --fg:var(--white);--fg-muted:var(--muted-dark);
-  --chip-bg:#222;--chip-bd:transparent;--chip-fg:#dcdcdc;
-  --line:var(--line-dark);--surface:var(--ink-card);--surface-2:#1c1c1c;
-  --accent-ink:var(--yellow);
-  --si:var(--green);--no:var(--red-soft);
-  --quote-bg:linear-gradient(120deg,rgba(255,212,0,.1),transparent);--quote-bd:rgba(255,212,0,.42)
+  --fg:var(--sobre-oscuro-100);--fg-muted:var(--sobre-oscuro-200);
+  --chip-bg:rgba(247,246,242,.08);--chip-bd:transparent;--chip-fg:var(--sobre-oscuro-200);
+  --line:var(--line-dark);--surface:var(--sumi);--surface-2:rgba(247,246,242,.06);
+  --accent-ink:var(--sobre-oscuro-100);
+  --si:var(--green);--no:var(--red);
+  --quote-bg:transparent;--quote-bd:var(--line-dark)
 }
-/* .table-wrap va aqui: es una isla CLARA dentro de una seccion oscura.
-   El bloque de arriba preveia el caso contrario (isla oscura en seccion
-   clara) pero no este, asi que la tabla se pintaba clara y su texto
-   seguia cogiendo --muted-dark (#a8a8a8): 2.38:1. */
+/* islas claras: .table-wrap es una isla clara dentro de una sección oscura */
 .section-light,.card-light,.table-wrap,.alert-card{
-  --fg:var(--ink);--fg-muted:var(--muted-light);
-  --chip-bg:var(--white);--chip-bd:var(--line-light);--chip-fg:var(--muted-light);
-  --line:var(--line-light);--surface:var(--white);--surface-2:var(--paper);
-  --accent-ink:var(--yellow-ink);
+  --fg:var(--sumi);--fg-muted:var(--tinta-secundaria);
+  --chip-bg:var(--papel);--chip-bd:var(--piedra-borde);--chip-fg:var(--tinta-secundaria);
+  --line:var(--line-light);--surface:var(--papel);--surface-2:var(--washi);
+  --accent-ink:var(--sumi);
   --si:var(--green-ink);--no:var(--red-ink);
-  --quote-bg:var(--white);--quote-bd:rgba(5,5,5,.16)
+  --quote-bg:var(--papel);--quote-bd:var(--piedra)
 }
-/* Islas con fondo oscuro propio que viven dentro de secciones claras.
-   Solo necesitan el acento correcto: redeclarar todo el juego de tokens de
-   superficie aquí rompía las tarjetas claras (.card-light comparte .card). */
+/* Islas con fondo oscuro propio que viven dentro de secciones claras:
+   solo necesitan el primer plano de énfasis correcto. */
 .card,.pillar,.panel,.step,.roadmap-card,.hero-stats div,.hero-core,.orbit-chip,
 .calc-inputs,.calc-out,.builder-form,.builder-out,.tree,.tree-path span,
 .status,.kpis div,.meter,.output-line output,.field input,.field select,
-th,.tab.is-active,.repo-item.is-active,footer{--accent-ink:var(--yellow)}
-/* la tarjeta clara recupera el acento de superficie clara */
-.card-light,.panel-light{--accent-ink:var(--yellow-ink)}
+.tab.is-active,.repo-item.is-active,footer{--accent-ink:var(--sobre-oscuro-100)}
+/* la tarjeta clara recupera el primer plano de superficie clara */
+.card-light,.panel-light{--accent-ink:var(--sumi)}
 /* Las islas oscuras dentro de una sección clara también redeclaran el primer
    plano: sin esto un titular o un párrafo suyo toma la tinta de la sección. */
 .card:not(.card-light),.panel:not(.panel-light),.calc-inputs,.calc-out,.builder-form,.builder-out,
-.tree,.roadmap-card{--fg:var(--white);--fg-muted:var(--muted-dark);--si:var(--green);--no:var(--red-soft)}
+.tree,.roadmap-card{--fg:var(--sobre-oscuro-100);--fg-muted:var(--sobre-oscuro-200);--si:var(--green);--no:var(--red)}
 .section-dark{background:var(--ink);color:var(--fg-muted)}
 .section-light{background:var(--paper);color:var(--fg-muted)}
-.iface,.avoid,.split>div:nth-child(2){color:var(--white)}
-/* Mismo principio para el resto de islas oscuras: sin esto heredan la tinta
-   de la sección clara y quedan en negro sobre su propio fondo negro.
+.iface,.avoid,.split>div:nth-child(2){color:var(--sobre-oscuro-100)}
+/* Mismo principio para el resto de islas oscuras.
    .card-light lo revierte desde 03-componentes.css, que carga después. */
 .card,.panel,.calc-inputs,.calc-out,.builder-form,.builder-out,
-.tree,.status,.meter,.kpis div,.roadmap-card{color:var(--white)}
+.tree,.status,.meter,.kpis div,.roadmap-card{color:var(--sobre-oscuro-100)}
 /* Ubicación de la sección: familia del índice y puntos que cubre. Es la
-   miga de pan del documento, no un adorno sobre el título. */
-.eyebrow{margin:0 0 18px;display:flex;flex-wrap:wrap;align-items:center;gap:9px;color:var(--fg-muted);font-size:var(--fs-label);font-weight:800;letter-spacing:.04em;font-variant-numeric:tabular-nums}
+   miga de pan del documento: eyebrow v2, sin mayúsculas ni tracking. */
+.eyebrow{margin:0 0 18px;display:flex;flex-wrap:wrap;align-items:center;gap:9px;color:var(--fg-muted);font-family:var(--font-display);font-size:var(--fs-ui);font-weight:500;letter-spacing:-.005em;font-variant-numeric:tabular-nums}
 .eyebrow span{display:inline-flex;align-items:center}
-.eyebrow span+span::before{content:"/";margin-right:9px;color:var(--line)}
-.eyebrow .loc-fam{color:var(--accent-ink);font-weight:900}
+.eyebrow span+span::before{content:"/";margin-right:9px;color:var(--fg-muted)}
+.eyebrow .loc-fam{color:var(--fg);font-weight:500}
 .eyebrow-dark{color:var(--fg-muted)}
-em{font-style:normal;color:var(--accent-ink)}
-.section-light em{color:var(--ink);background:linear-gradient(transparent 62%,var(--yellow) 62%)}
-.iface em,.avoid em{background:none;color:var(--accent-ink)}
-/* ---------- tres niveles de titular ----------
-   1. Apertura de sección: título y frase a la izquierda; a la derecha, la
-      entradilla y el mapa de la sección. Es lo que lee un directivo.
-   2. Subsección (.divider): número del punto en pastilla, en la misma línea
-      del título, un paso de escala por debajo.
-   3. Tarjeta: etiqueta del punto y título de 20px. */
+/* énfasis: en v2 el énfasis es peso, no color. El resaltador lima queda
+   para el titular del hero y la búsqueda (ver 02-layout.css). */
+em{font-style:normal;color:var(--fg);font-weight:500}
+.section-light em{color:var(--fg)}
+.iface em,.avoid em{background:none;color:var(--fg)}
+/* ---------- tres niveles de titular ---------- */
 .section-heading{display:block;margin:0 auto clamp(38px,5vw,60px)}
 .section-heading>div{max-width:920px}
-.section-heading :is(h2,h3,h4){margin:0;font-size:clamp(2rem,3.8vw,3.5rem);line-height:1.04;letter-spacing:var(--tk-h);font-weight:800}
-.section-heading>p{margin:20px 0 0;max-width:var(--measure);color:var(--fg-muted);font-size:var(--fs-lead);letter-spacing:var(--tk-body);line-height:var(--lh-body)}
+.section-heading :is(h2,h3,h4){margin:0;font-size:clamp(2rem,3.8vw,3.5rem);line-height:1.05;letter-spacing:var(--tk-display);font-weight:500}
+.section-heading>p{margin:20px 0 0;max-width:var(--measure);color:var(--fg-muted);font-size:var(--fs-lead);letter-spacing:var(--tk-body);line-height:1.5}
 @media(min-width:1000px){
   .wrap>.section-heading{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);grid-template-rows:auto 1fr;column-gap:clamp(40px,5vw,96px);align-items:start}
   .wrap>.section-heading>div{grid-row:1/span 2;max-width:none}
-  .wrap>.section-heading>p{grid-column:2;margin:0;padding-top:34px;font-size:var(--fs-body)}
+  .wrap>.section-heading>p{grid-column:2;margin:0;padding-top:34px;font-size:var(--fs-body);line-height:var(--lh-body)}
   .wrap>.section-heading>.en-seccion{grid-column:2}
 }
 /* la frase de cada sección: acompaña al título, no lo reemplaza */
-.claim{margin:16px 0 0;max-width:40ch;color:var(--fg);font-size:var(--fs-h4);line-height:var(--lh-h4);letter-spacing:var(--tk-h);font-weight:700;text-wrap:balance}
-.sub-heading{margin:0 0 24px;font-size:clamp(1.5rem,2.4vw,2rem);line-height:var(--lh-h);letter-spacing:var(--tk-h);font-weight:800;max-width:var(--measure)}
-.lead{max-width:var(--measure);color:var(--fg-muted);font-size:var(--fs-lead);letter-spacing:var(--tk-body);line-height:var(--lh-body)}
+.claim{margin:16px 0 0;max-width:40ch;color:var(--fg);font-family:var(--font-display);font-size:var(--fs-h4);line-height:var(--lh-h4);letter-spacing:-.02em;font-weight:500;text-wrap:balance}
+.sub-heading{margin:0 0 24px;font-size:clamp(1.5rem,2.4vw,2rem);line-height:var(--lh-h);letter-spacing:var(--tk-h);font-weight:500;max-width:var(--measure)}
+.lead{max-width:var(--measure);color:var(--fg-muted);font-size:var(--fs-lead);letter-spacing:var(--tk-body);line-height:1.5}
 .divider{max-width:var(--max);margin:clamp(56px,6vw,88px) auto 0;padding-top:clamp(40px,4.5vw,64px);border-top:1px solid var(--line)}
 .divider>.section-heading{margin-bottom:clamp(28px,3.5vw,44px)}
 .divider>.section-heading>div{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;max-width:none}
-.divider>.section-heading :is(h2,h3,h4){flex:1 1 18rem;min-width:0;font-size:clamp(1.6rem,2.6vw,2.25rem);line-height:var(--lh-h)}
+.divider>.section-heading :is(h2,h3,h4){flex:1 1 18rem;min-width:0;font-size:clamp(1.6rem,2.6vw,2.25rem);line-height:var(--lh-h);letter-spacing:var(--tk-h)}
 .divider>.section-heading .claim{flex-basis:100%;max-width:none;margin-top:0}
-.divider>.section-heading>p{font-size:var(--fs-body)}
+.divider>.section-heading>p{font-size:var(--fs-body);line-height:var(--lh-body)}
 /* el número del punto: la misma pastilla en subsecciones y subtítulos */
-.divider .eyebrow,.sub-heading .num{display:inline-flex;align-items:center;margin:0;padding:5px 11px;border:1px solid var(--accent-ink);border-radius:999px;color:var(--accent-ink);font-size:var(--fs-label);font-weight:900;letter-spacing:0;line-height:1.3;white-space:nowrap;font-variant-numeric:tabular-nums}
+.divider .eyebrow,.sub-heading .num{display:inline-flex;align-items:center;margin:0;padding:4px 11px;border:1px solid var(--fg);border-radius:var(--radius-pill);color:var(--fg);font-family:var(--font-display);font-size:var(--fs-label);font-weight:500;letter-spacing:0;line-height:1.3;white-space:nowrap;font-variant-numeric:tabular-nums}
 .sub-heading .num{margin-right:12px;vertical-align:.3em}
 
 /* mapa de la sección: sus subsecciones, para saltar sin pasar por el índice */
 .en-seccion{margin-top:28px;padding-top:18px;border-top:1px solid var(--line)}
-.en-seccion>p{margin:0 0 10px;color:var(--fg-muted);font-size:var(--fs-label);font-weight:800;letter-spacing:.04em}
+.en-seccion>p{margin:0 0 10px;color:var(--fg-muted);font-size:var(--fs-label);font-weight:500;letter-spacing:0}
 .en-seccion ol{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:auto minmax(0,1fr);row-gap:2px}
 .en-seccion li,.en-seccion a{display:grid;grid-column:1/-1;grid-template-columns:subgrid}
-.en-seccion a{column-gap:14px;align-items:baseline;padding:7px 10px;margin-inline:-10px;border-radius:var(--radius-sm);color:var(--fg);font-size:var(--fs-ui);font-weight:600;line-height:var(--lh-ui);transition:background .16s ease,color .16s ease}
-.en-seccion a b{color:var(--accent-ink);font-size:var(--fs-label);font-weight:900;font-variant-numeric:tabular-nums}
+.en-seccion a{column-gap:14px;align-items:baseline;padding:7px 10px;margin-inline:-10px;border-radius:var(--radius-sm);color:var(--fg);font-size:var(--fs-ui);font-weight:500;line-height:var(--lh-ui);transition:background var(--duration-hover) ease,color var(--duration-hover) ease}
+.en-seccion a b{color:var(--fg-muted);font-size:var(--fs-label);font-weight:500;font-variant-numeric:tabular-nums}
 .en-seccion a:hover{background:var(--surface-2)}
 .en-seccion a:hover span{text-decoration:underline;text-underline-offset:3px}
-.tag{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:999px;border:1px solid var(--line);color:var(--fg-muted);font-size:var(--fs-label);font-weight:800}
-.tag-accent{border-color:var(--accent-ink);color:var(--accent-ink);background:transparent}
-.section-light .tag-accent{background:var(--yellow);color:var(--ink)}
-.iface .tag-accent,.avoid .tag-accent{background:transparent;color:var(--accent-ink)}
+.tag{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:var(--radius-pill);border:1px solid var(--line);color:var(--fg-muted);font-size:var(--fs-label);font-weight:500}
+/* etiqueta de énfasis: relleno lima con texto sumi (ad-tag) */
+.tag-accent,.section-light .tag-accent,.iface .tag-accent,.avoid .tag-accent{border-color:transparent;background:var(--lima);color:var(--sumi)}
+/* sobre oscuro y junto a un selector lima (pilar activo) va en contorno: una lima por pantalla */
+.section-dark .tag-accent,.panel .tag-accent,.iface .tag-accent,.avoid .tag-accent{border-color:var(--fg);background:transparent;color:var(--fg)}
 
-/* ---------- animaciones ---------- */
-[data-reveal]{opacity:0;transform:translateY(18px);transition:opacity .62s cubic-bezier(.22,1,.36,1),transform .62s cubic-bezier(.22,1,.36,1);transition-delay:var(--d,0ms)}
+/* ---------- animaciones: lentas, sin rebote ---------- */
+[data-reveal]{opacity:0;transform:translateY(8px);transition:opacity var(--duration-rise) var(--easing-rise),transform var(--duration-rise) var(--easing-rise);transition-delay:var(--d,0ms)}
 [data-reveal].is-visible{opacity:1;transform:none}
 @keyframes dash{to{stroke-dashoffset:0}}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  /* Reducir el movimiento no es eliminar la respuesta.
-     Antes esto apagaba TODA transición (.001ms), y con ella el hover, el foco
-     y el cambio de estado: la interfaz dejaba de confirmar que la acción tuvo
-     efecto, que es justo lo que un usuario sensible al movimiento sí necesita.
-
-     Ahora: los bucles se detienen y nada se desplaza, gira ni escala —al
-     limitar transition-property, transform pasa a aplicarse de golpe—, pero
-     el color y la opacidad siguen respondiendo en 120ms. */
+  /* Los bucles se detienen y nada se desplaza, gira ni escala; el color y
+     la opacidad siguen respondiendo en 120ms para confirmar la acción. */
   *,*::before,*::after{
     animation-duration:.001ms!important;
     animation-iteration-count:1!important;
     transition-duration:120ms!important;
-    transition-property:color,background-color,border-color,outline-color,opacity,box-shadow,fill,stroke!important
+    transition-property:color,background-color,border-color,outline-color,opacity,fill,stroke!important
   }
   [data-reveal]{opacity:1;transform:none}
 }

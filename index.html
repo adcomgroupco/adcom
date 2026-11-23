@@ -5,93 +5,127 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Índice del material interno del área digital de Adcom.">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#f4f4f1">
+  <meta name="theme-color" content="#F7F6F2">
   <title>Adcom | Documentos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
-  <link rel="stylesheet" href="assets/css/adcom.css">
-  <script defer src="assets/js/adcom.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
+  <link rel="stylesheet" href="assets/css/adcom-v2.css">
+  <style>
+    /* El portal es nativo de v2: solo tokens del sistema, ningún valor suelto. */
+    body{margin:0;background:var(--washi);color:var(--sumi)}
+    .wrap{max-width:var(--container-max);margin:0 auto;padding:0 var(--space-6)}
+    .marca{font-family:var(--font-display);font-size:20px;font-weight:600;letter-spacing:-.02em;color:var(--sumi);text-decoration:none;min-height:var(--target-min);display:inline-flex;align-items:center}
+    .marca span{font-weight:400;color:var(--tinta-suave);margin-left:8px;font-size:14px;letter-spacing:0}
+    .ad-nav__links a:hover{color:var(--sumi)}
+
+    .hero{padding:var(--space-32) 0 var(--space-24)}
+    .hero h1{margin:var(--space-4) 0 0}
+    .hero .ad-t-lead{margin:var(--space-6) 0 0;max-width:40ch;color:var(--tinta-secundaria)}
+
+    .docs{border-top:1px solid var(--piedra);margin:0;padding:0;list-style:none}
+    .doc a{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:var(--space-4) var(--space-8);align-items:center;padding:var(--space-8) 0;border-bottom:1px solid var(--piedra);color:var(--sumi);text-decoration:none}
+    .doc .ad-n{background:var(--washi)}
+    .doc__k{display:block;font-size:13px;color:var(--tinta-suave)}
+    .doc__t{display:block;margin-top:4px;font-family:var(--font-display);font-size:clamp(22px,2.6vw,32px);font-weight:500;line-height:1.15;letter-spacing:-.02em;text-wrap:balance}
+    .doc__go{font-size:15px;color:var(--tinta-secundaria);white-space:nowrap}
+    .doc a:hover .doc__go{color:var(--sumi)}
+    .doc a:hover .doc__t{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px}
+    .doc a:focus-visible{outline-offset:-2px}
+
+    .colofon{padding:var(--space-24) 0 var(--space-16)}
+    .colofon dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--space-6) var(--space-8);margin:0}
+    .colofon dt{font-size:13px;color:var(--tinta-suave)}
+    .colofon dd{margin:4px 0 0;font-size:15px;color:var(--tinta-secundaria)}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;background:var(--crema);padding:1px 6px;border-radius:var(--radius-input)}
+
+    @media (max-width:640px){
+      .ad-nav__links{display:none}
+      .hero{padding:var(--space-16) 0 var(--space-12)}
+      .doc a{grid-template-columns:auto minmax(0,1fr);padding:var(--space-6) 0}
+      .doc__go{grid-column:2}
+    }
+  </style>
 </head>
 <body>
-<a class="skip-link" href="#top">Ir a los documentos</a>
+<a class="skip-link" href="#documentos">Ir a los documentos</a>
 
-<header class="masthead">
-  <a class="wordmark" href="index.html"><i></i>Adcom <span>documentos</span></a>
-  <nav aria-label="Documentos">
-    <a href="framework/index.html">Framework del área digital</a>
-    <a href="playbook-creativo/index.html">Playbook creativo de medios digitales</a>
-    <a href="clientes.html">Hub de informes de clientes</a>
-    <a href="informes/diagnostico-educacion.html">Educación superior y leads de valor</a>
-    <a href="tableros/tablero-educacion.html">Tablero de educación</a>
+<header class="ad-nav">
+  <nav class="ad-nav__in" aria-label="Principal">
+    <a class="marca" href="index.html">Adcom<span>área digital</span></a>
+    <div class="ad-nav__links">
+      <a href="framework/index.html">Framework</a>
+      <a href="playbook-creativo/index.html">Playbook</a>
+      <a href="clientes.html">Clientes</a>
+      <a href="tableros/tablero-educacion.html">Tableros</a>
+    </div>
   </nav>
-  <span class="stamp">Colombia</span>
 </header>
 
-<main id="top">
+<main>
+  <section class="hero wrap">
+    <p class="ad-eyebrow">Documentos de la cuenta</p>
+    <h1 class="ad-t-display-hero">
+      <span class="ad-ln">Cómo operamos.</span>
+      <span class="ad-ln">Cómo lo <span class="ad-hl">medimos</span>.</span>
+    </h1>
+    <p class="ad-t-lead">El framework de operación, el playbook creativo, los tableros por cliente y los diagnósticos de sector, en un solo lugar.</p>
+  </section>
 
-<section class="opening wrap">
-  <h1>Documentos de la cuenta</h1>
-  <p class="lede">El framework de operación, el playbook creativo de medios, el hub de tableros por cliente y los diagnósticos de sector, en un solo lugar.</p>
+  <section class="wrap" id="documentos" aria-label="Documentos">
+    <ol class="docs">
+      <li class="doc"><a href="framework/index.html">
+        <span class="ad-n ad-n--md" aria-hidden="true">1</span>
+        <span><span class="doc__k">Framework · v0.3</span><span class="doc__t">Framework del área digital</span></span>
+        <span class="doc__go">Abrir ›</span>
+      </a></li>
+      <li class="doc"><a href="playbook-creativo/index.html">
+        <span class="ad-n ad-n--md" aria-hidden="true">2</span>
+        <span><span class="doc__k">Biblioteca creativa</span><span class="doc__t">Playbook creativo de medios digitales</span></span>
+        <span class="doc__go">Abrir ›</span>
+      </a></li>
+      <li class="doc"><a href="clientes.html">
+        <span class="ad-n ad-n--md" aria-hidden="true">3</span>
+        <span><span class="doc__k">Hub</span><span class="doc__t">Informes y tableros por cliente</span></span>
+        <span class="doc__go">Abrir ›</span>
+      </a></li>
+      <li class="doc"><a href="informes/diagnostico-educacion.html">
+        <span class="ad-n ad-n--md" aria-hidden="true">4</span>
+        <span><span class="doc__k">Diagnóstico · Educación</span><span class="doc__t">Educación superior y leads de valor</span></span>
+        <span class="doc__go">Abrir ›</span>
+      </a></li>
+      <li class="doc"><a href="tableros/tablero-educacion.html">
+        <span class="ad-n ad-n--md" aria-hidden="true">5</span>
+        <span><span class="doc__k">Tablero · Educación</span><span class="doc__t">Tablero de pauta de educación</span></span>
+        <span class="doc__go">Abrir ›</span>
+      </a></li>
+      <li class="doc"><a href="tableros/inversion-agencia.html">
+        <span class="ad-n ad-n--md" aria-hidden="true">6</span>
+        <span><span class="doc__k">Tablero · Agencia</span><span class="doc__t">Inversión de la agencia</span></span>
+        <span class="doc__go">Abrir ›</span>
+      </a></li>
+      <li class="doc"><a href="acta-entrega-vacaciones.html">
+        <span class="ad-n ad-n--md" aria-hidden="true">7</span>
+        <span><span class="doc__k">Documento temporal</span><span class="doc__t">Acta de entrega de vacaciones</span></span>
+        <span class="doc__go">Abrir ›</span>
+      </a></li>
+    </ol>
+  </section>
 
-</section>
-
-<section class="grupo wrap" id="documentos">
-  <div class="shelf">
-    <a class="card" href="framework/index.html">
-      <p class="kind">Framework</p>
-      <h2>Framework del área digital</h2>
-      <span class="go">Abrir <svg class="ico" aria-hidden="true"><use href="#i-abrir"></use></svg></span>
-    </a>
-
-    <a class="card" href="playbook-creativo/index.html">
-      <p class="kind">Biblioteca creativa</p>
-      <h2>Playbook creativo de medios digitales</h2>
-      <span class="go">Abrir <svg class="ico" aria-hidden="true"><use href="#i-abrir"></use></svg></span>
-    </a>
-
-    <a class="card" href="clientes.html">
-      <p class="kind">Hub</p>
-      <h2>Hub de informes de clientes</h2>
-      <span class="go">Abrir <svg class="ico" aria-hidden="true"><use href="#i-abrir"></use></svg></span>
-    </a>
-
-    <a class="card" href="informes/diagnostico-educacion.html">
-      <p class="kind">Diagnóstico</p>
-      <h2>Educación superior y leads de valor</h2>
-      <span class="go">Abrir <svg class="ico" aria-hidden="true"><use href="#i-abrir"></use></svg></span>
-    </a>
-
-    <a class="card" href="tableros/tablero-educacion.html">
-      <p class="kind">Tablero</p>
-      <h2>Tablero de educación</h2>
-      <span class="go">Abrir <svg class="ico" aria-hidden="true"><use href="#i-abrir"></use></svg></span>
-    </a>
-
-    <a class="card" href="acta-entrega-vacaciones.html">
-      <p class="kind">Documento temporal</p>
-      <h2>Acta de entrega de vacaciones</h2>
-      <span class="go">Abrir <svg class="ico" aria-hidden="true"><use href="#i-abrir"></use></svg></span>
-    </a>
-  </div>
-</section>
-
-<section class="colophon wrap">
-  <dl>
-    <dt>Cuenta</dt><dd>Adcom, área digital</dd>
-    <dt>Uso</dt>
-    <dd>Abrir <code>index.html</code> en el navegador, o servir la carpeta con
-    <code>python -m http.server</code></dd>
-    <dt>Alcance</dt>
-    <dd>Documentos internos de la cuenta</dd>
-  </dl>
-</section>
-
+  <section class="colofon wrap" aria-label="Sobre esta biblioteca">
+    <dl>
+      <div><dt>Cuenta</dt><dd>Adcom, área digital</dd></div>
+      <div><dt>Uso</dt><dd>Abrir <code>index.html</code> en el navegador, o servir la carpeta con <code>python -m http.server</code></dd></div>
+      <div><dt>Alcance</dt><dd>Documentos internos de la cuenta</dd></div>
+    </dl>
+  </section>
 </main>
 
-<footer class="footer">
-  <span>Adcom, biblioteca de documentos</span>
-  <span>Colombia</span>
+<footer class="ad-foot">
+  <div class="ad-foot__in">
+    <span>Adcom · Biblioteca de documentos</span>
+    <span>Colombia</span>
+  </div>
 </footer>
-
 </body>
 </html>

@@ -237,7 +237,7 @@
       const photo = {sun:'travel',rain:'rainy-car',neutral:'living-room'}[example.tone];
       street.src = example.tone === 'rain' ? 'assets/photos/dooh-rainy-street.png' : 'assets/photos/dooh-neutral-street.png';
       screen.dataset.tone = example.tone;
-      screen.style.backgroundImage = `linear-gradient(180deg,#0004,#0002 42%,#000b),url("assets/photos/${photo}.jpg")`;
+      screen.style.backgroundImage = `url("assets/photos/${photo}.jpg")`;
       screen.replaceChildren(
         el('span', 'dooh-ad-brand', 'MODO'),
         el('strong', '', example.headline),
@@ -309,7 +309,7 @@
         art.style.backgroundImage = '';
         art.replaceChildren(buildDcoTemplate(example.template ? undefined : example));
       } else {
-        art.style.backgroundImage = `linear-gradient(90deg, #000b, #0002), url("assets/photos/${example.photo}.jpg")`;
+        art.style.backgroundImage = `url("assets/photos/${example.photo}.jpg")`;
         art.replaceChildren(...example.art.map((word, position) => el(position === 1 ? 'strong' : 'span', '', word)));
       }
       animateChange(art);
@@ -564,7 +564,7 @@
       const labels = ['01 · El problema','02 · La solución','03 · El resultado']; let current = 0;
       const prev = el('button', '', '‹'); const next = el('button', '', '›');
       prev.type = next.type = 'button'; prev.setAttribute('aria-label','Tarjeta anterior'); next.setAttribute('aria-label','Tarjeta siguiente');
-      function update(){slide.textContent = labels[current]; slide.style.backgroundImage = `linear-gradient(180deg, #0002, #000a), url("assets/photos/${['sneakers','living-room','travel'][current]}.jpg")`; prev.disabled = current === 0; next.disabled = current === labels.length-1;}
+      function update(){slide.textContent = labels[current]; slide.style.backgroundImage = `url("assets/photos/${['sneakers','living-room','travel'][current]}.jpg")`; prev.disabled = current === 0; next.disabled = current === labels.length-1;}
       prev.addEventListener('click',()=>{current--;update();}); next.addEventListener('click',()=>{current++;update();});
       frame.append(prev,slide,next); carousel.append(frame,el('p','','Secuencia simulada: cada tarjeta cambia el argumento, no solo el color.')); host.append(carousel); update();
     } else if (item.id === 'pro-display') {
@@ -572,7 +572,7 @@
       const controls = el('div', 'demo-controls'); const stage = el('div', 'banner-stage');
       function setBusy(busy) {
         stage.classList.toggle('busy', busy);
-        stage.style.backgroundImage = `linear-gradient(180deg, #0009, #0005), url("assets/photos/${busy ? 'rainy-car' : 'headphones'}.jpg")`;
+        stage.style.backgroundImage = `url("assets/photos/${busy ? 'rainy-car' : 'headphones'}.jpg")`;
         stage.replaceChildren(el('small', '', busy ? 'LANZAMIENTO · GRAN OFERTA · DESCUBRE TODO' : 'NUEVA COLECCIÓN'),
           el('strong', '', busy ? 'Muchos mensajes compiten en un espacio muy pequeño' : 'Una idea. Un beneficio.'),
           el('em', '', busy ? 'Más detalles, más beneficios y más mensajes' : 'Explorar'));
@@ -611,7 +611,7 @@
         dataPreviewState.set(item.id, index);
         code.textContent = JSON.stringify(example.data, null, 2);
         ruleText.textContent = example.rule;
-        stage.style.backgroundImage = `linear-gradient(90deg, #000b, #0002), url("assets/photos/${example.photo}.jpg")`;
+        stage.style.backgroundImage = `url("assets/photos/${example.photo}.jpg")`;
         stage.replaceChildren(...example.art.map((word, position) => el(position === 1 ? 'strong' : 'span', '', word)));
         animateChange(stage);
         buttons.forEach((button, buttonIndex) => button.setAttribute('aria-pressed', String(index === buttonIndex)));

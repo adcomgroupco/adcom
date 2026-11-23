@@ -6,31 +6,34 @@
 /* ---------- diagramas de flujo ---------- */
 .flow{margin:0;padding:clamp(16px,2vw,26px);border-radius:var(--radius);border:1px solid var(--line);background:var(--surface);overflow-x:auto}
 .flow+.flow{margin-top:14px}
-.flow svg{display:block;width:100%;min-width:820px;height:auto;color:var(--fg-muted)}
+.flow svg{display:block;width:100%;min-width:820px;height:auto;color:var(--fg-muted);font-family:var(--font-display)}
 .flow figcaption{margin:14px 0 0;padding-top:13px;border-top:1px solid var(--line);color:var(--fg-muted);font-size:var(--fs-ui);max-width:var(--measure);letter-spacing:var(--tk-body);line-height:var(--lh-ui)}
 .flow figcaption b{color:var(--fg)}
 .fl-band{fill:none;stroke:currentColor;stroke-opacity:.13;stroke-width:1;stroke-dasharray:5 6}
 .fl-box{fill:var(--surface-2);stroke:currentColor;stroke-opacity:.45;stroke-width:1.4}
-.fl-box-key{fill:rgba(255,212,0,.13);stroke:var(--accent-ink);stroke-opacity:.9;stroke-width:1.6}
+/* caja clave: se distingue por trazo en el primer plano, no por color */
+.fl-box-key{fill:var(--surface);stroke:var(--fg);stroke-opacity:1;stroke-width:1.6}
 .fl-box-out{fill:none;stroke:currentColor;stroke-opacity:.45;stroke-width:1.4;stroke-dasharray:6 5}
-.fl-dec{fill:var(--surface-2);stroke:var(--accent-ink);stroke-opacity:.9;stroke-width:1.6}
-.fl-t{fill:currentColor;font-size:var(--fs-body-min);font-weight:600}
-.fl-t-b{fill:currentColor;font-size:12.5px;font-weight:800}
-.fl-t-sm{fill:currentColor;fill-opacity:.6;font-size:var(--fs-body-min);font-weight:600}
-.fl-t-key{fill:var(--accent-ink);font-size:var(--fs-min);font-weight:900;letter-spacing:var(--tk-label)}
-.fl-t-code{fill:var(--accent-ink);font-size:var(--fs-min);font-weight:800}
+.fl-dec{fill:var(--surface-2);stroke:var(--fg);stroke-opacity:.9;stroke-width:1.4}
+.fl-t{fill:currentColor;font-family:var(--font-display);font-size:var(--fs-body-min);font-weight:500}
+.fl-t-b{fill:currentColor;font-family:var(--font-display);font-size:12.5px;font-weight:500}
+.fl-t-sm{fill:currentColor;fill-opacity:.85;font-size:var(--fs-min);font-weight:500}
+.fl-t-key{fill:var(--fg-muted);font-family:var(--font-display);font-size:var(--fs-min);font-weight:500;letter-spacing:0}
+.fl-t-code{fill:var(--fg);font-size:var(--fs-min);font-weight:500}
 .fl-line{fill:none;stroke:currentColor;stroke-opacity:.55;stroke-width:1.5}
 .fl-line-yes{fill:none;stroke:var(--green-ink);stroke-width:1.6}
 .fl-line-no{fill:none;stroke:var(--red-ink);stroke-width:1.6}
-.fl-line-loop{fill:none;stroke:var(--accent-ink);stroke-width:1.6;stroke-dasharray:7 5}
-.fl-edge{fill:currentColor;fill-opacity:.62;font-size:var(--fs-min);font-weight:700;letter-spacing:.04em}
-.fl-edge-yes{fill:var(--green-ink);font-size:var(--fs-min);font-weight:900}
-.fl-edge-no{fill:var(--red-ink);font-size:var(--fs-min);font-weight:900}
+.fl-line-loop{fill:none;stroke:var(--fg);stroke-width:1.4;stroke-dasharray:7 5}
+.fl-edge{fill:currentColor;fill-opacity:.8;font-size:var(--fs-min);font-weight:500;letter-spacing:0}
+.fl-edge-yes{fill:var(--green-ink);font-size:var(--fs-min);font-weight:500}
+.fl-edge-no{fill:var(--red-ink);font-size:var(--fs-min);font-weight:500}
 .mk-a{fill:currentColor;fill-opacity:.5}
 .mk-y{fill:var(--green-ink)}
 .mk-n{fill:var(--red-ink)}
-.mk-l{fill:var(--accent-ink)}
+.mk-l{fill:var(--fg)}
 .section-dark .fl-line-yes{stroke:var(--green)}
 .section-dark .fl-edge-yes,.section-dark .mk-y{fill:var(--green)}
-.section-dark .fl-line-no{stroke:var(--red-soft)}
-.section-dark .fl-edge-no,.section-dark .mk-n{fill:var(--red-soft)}
+.section-dark .fl-line-no{stroke:var(--red)}
+.section-dark .fl-edge-no,.section-dark .mk-n{fill:var(--red)}
+/* v2: lo que se lee es recto; las cajas del diagrama a 4px */
+.flow svg rect:is(.fl-box,.fl-box-key,.fl-box-out,.fl-band){rx:4px;ry:4px}
