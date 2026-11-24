@@ -16,6 +16,7 @@ adcom/
 ├── informes/                     diagnósticos de sector (educación superior)
 ├── tableros/                     tablero de educación (lee la hoja Consolidado Educación) e inversión de la agencia
 ├── banco-formatos/               plantillas HTML, hojas de trabajo e instructivo de replicación
+├── guias/                        guía interactiva de cómo trabajamos con IA
 ├── playbook-creativo/            biblioteca visual de formatos y posibilidades de pauta
 ├── framework/                    framework del área digital · v0.3
 │   ├── index.html                el documento completo, con herramientas interactivas
