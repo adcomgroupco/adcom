@@ -111,7 +111,7 @@ window.FD = window.FD || {};
       var hayActiva = ts.some(function(t){ return t.getAttribute("aria-selected") === "true"; });
       ts.forEach(function(t, i){
         var activa = hayActiva ? t.getAttribute("aria-selected") === "true"
-                               : t.classList.contains("is-active") || i === 0;
+                               : t.classList.contains("is-on") || i === 0;
         t.tabIndex = activa ? 0 : -1;
       });
     }

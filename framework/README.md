@@ -12,6 +12,9 @@ Se organiza en tres guías, con entrada directa desde la portada y el menú:
   y pruebas, playbooks y repositorio.
 - **Automatización e IA** (automatizacion.html): Media Bridge, niveles de autonomía, aprobación, auditoría y riesgos.
 
+Desde la portada se accede al [Banco de formatos](../banco-formatos/index.html) y a su
+[instructivo de replicación](../banco-formatos/INSTRUCTIVO.md).
+
 La táctica define acciones, ajustes y pruebas; la operación define responsables, plazos,
 validación y registro. La numeración original se conserva como referencia, aunque la lectura
 se ordena por propósito. Los capítulos mantienen sus anclas y no se duplican.
@@ -319,7 +322,7 @@ con un editor de texto y ver el resultado al instante. Cualquier paso de compila
 **Por qué los scripts van al final del `<body>`.** Se ejecutan en orden y con el DOM ya construido:
 `base.js` → `contenido.js` → `interacciones.js` → `herramientas.js`. Si agregas un script, va después.
 
-**Lo único que necesita internet** es la tipografía Poppins de Google Fonts. Sin conexión la página
+**Lo único que necesita internet** son las tipografías Inter Tight e Inter de Google Fonts (sistema v2, que además carga ../assets/css/adcom-v2.css). Sin conexión la página
 funciona igual, con la tipografía de respaldo del sistema.
 
 **Los acentos de los diagramas usan `var(--accent-ink)`**, no el amarillo fijo: así el mismo diagrama

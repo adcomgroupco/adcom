@@ -1,0 +1,704 @@
+/* ============================================================================
+   Adcom · Sistema de diseño v2  (washi · sumi · lima · Inter Tight)
+   ----------------------------------------------------------------------------
+   Fuente de los valores: el artefacto «Adcom — Sistema de diseño»
+   (claude.ai/artifact/BUvNdj8g2bsS7PHVBPcTYP), extraído del canvas
+   «Adcom — Dirección visual web». Los valores se copian, no se inventan; lo que
+   ese sistema deja «Sin definir» va marcado aquí como PROVISIONAL.
+
+   Ámbito: por ahora SOLO el repo adcom. sistema/adcom.css (amarillo, Poppins)
+   sigue siendo lo que sync.ps1 copia a los repos de cliente. Si v2 se aprueba,
+   este archivo pasa a sistema/ y entra al sync.
+
+   Este archivo NO lo genera sync.ps1: editarlo aquí es editar la fuente.
+
+   Cómo se enlaza (en ese orden, DESPUÉS del CSS viejo si la página aún lo usa):
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
+     [assets/css/adcom.css o adcom-tokens.css, si la página todavía los usa]
+     <link rel="stylesheet" href="assets/css/adcom-v2.css">
+
+   Capas:
+     1. Tokens v2                       (nombres del sistema nuevo)
+     2. Puente                          (nombres viejos -> valores v2)
+     3. Base                            (tipografía, foco, selección, movimiento)
+     4. Normalización del vocabulario   (pesos y familias fijos en adcom.css)
+     5. Componentes ad-*                (bundle del sistema, tal cual)
+     6. Impresión
+   ========================================================================= */
+
+
+/* ============================== 1. TOKENS V2 ============================== */
+:root{
+  /* --- color: 90 % neutro, 10 % carácter --- */
+  --washi:#F7F6F2;              /* fondo de página */
+  --papel:#FFFFFF;              /* fondo alterno, tarjetas, campos */
+  --crema:#EFEDE7;              /* contacto, cajas de nota */
+  --piedra:#E4E2DC;             /* línea de 1 px; decorativa */
+  --piedra-borde:#D6D3CB;       /* borde de chip y campo · 1,4:1: aviso conocido */
+  --sumi:#141414;               /* titulares, datos, botón oscuro · 17:1 sobre washi */
+  --tinta-secundaria:#4A4A46;   /* párrafos · 8,2:1 */
+  --tinta-suave:#6B6B66;        /* etiquetas y metadatos · 4,9:1 */
+  --tinta-tenue:#8A8A84;        /* SOLO texto de 24 px o más · 3,2:1 */
+  --lima:#D8FF3D;               /* acento único: solo relleno, con texto sumi */
+  --indigo:#16233A;             /* reservado, sin uso todavía */
+  --noche:#0E0E27;              /* productos propios (LumnIA, Vincero) */
+  --negro-escena:#0E0E0F;       /* «Personas + IA», marcos de video */
+  --sobre-oscuro-100:#F7F6F2;
+  --sobre-oscuro-200:#C9C9C4;
+  --sobre-oscuro-300:#A8A8A2;
+  --noche-eyebrow:#A9B3C4;
+  --noche-texto:#C9D0DB;
+  --noche-panel:#14153A;
+  --noche-borde-tarjeta:#2E3D57;
+  --noche-borde:#2E3057;
+  --noche-linea:#3B3D66;
+  --noche-burbuja:#1E2050;
+  --noche-burbuja-2:#2A2D63;
+  --noche-muted:#8E96B8;
+  --noche-nota:#6F77A0;
+  --washi-vidrio:rgba(247,246,242,.86);
+
+  /* --- tipografía --- */
+  --font-display:"Inter Tight",system-ui,sans-serif;
+  --font-body:Inter,system-ui,sans-serif;
+
+  /* --- espacio --- */
+  --space-2:8px;
+  --space-4:16px;
+  --space-6:24px;
+  --space-8:32px;
+  --space-10:40px;
+  --space-12:48px;
+  --space-16:64px;
+  --space-24:96px;
+  --space-32:128px;
+  --space-40:160px;
+  --container-max:1200px;
+  --nav-height:64px;
+  --target-min:44px;
+  --target-cta:48px;
+
+  /* --- forma: lo que se toca es redondo, lo que se lee es recto --- */
+  --radius-input:2px;
+  --radius-card:4px;
+  --radius-panel:6px;
+  --radius-pill:999px;
+  --radius-circle:50%;
+
+  /* --- movimiento --- */
+  --duration-hover:400ms;
+  --duration-rise:700ms;
+  --duration-draw:2200ms;
+  --duration-runner:6500ms;
+  --duration-loop-short:4000ms;
+  --duration-loop-mid:9000ms;
+  --duration-orbit:14000ms;
+  --easing-draw:cubic-bezier(.2,.7,.2,1);
+  --easing-rise:ease-out;
+  --easing-loop:ease-in-out;
+  --easing-linear:linear;
+
+  --opacity-logo:.62;
+  --blur-header:16px;
+
+  /* --- riel de navegación lateral (mueble, no contenido): sigue oscuro --- */
+  --shell-bg:var(--negro-escena);
+  --shell-fg:var(--sobre-oscuro-100);
+  --shell-fg-muted:var(--sobre-oscuro-300);
+  --shell-rule:rgba(247,246,242,.14);
+  --shell-active:rgba(247,246,242,.10);
+}
+
+
+/* ================================ 2. PUENTE ================================
+   Las páginas de este repo se escribieron contra sistema/adcom.css y su capa
+   de tokens. Aquí cada nombre viejo apunta a su equivalente v2, así una regla
+   que ya existía resuelve al color y a la forma nuevos sin reescribirla.
+
+   Se repiten los MISMOS selectores que usa adcom-tokens.css para declarar los
+   suelos: si solo se redeclarara :root, `.section-light` o `[data-suelo]`
+   ganarían por especificidad y devolverían el amarillo.
+
+   Decisiones de mapeo:
+   - --accent es lima, y solo se pinta como RELLENO.
+   - --accent-fg era «el amarillo cuando es texto». En v2 la lima nunca es
+     texto, así que pasa a sumi: el énfasis de un dato lo da el peso o el
+     relleno (.ad-fill), no el color de la letra.
+   - --pos y --neg no existen en v2 («estados de error y éxito: sin definir»).
+     Se conservan los valores medidos del sistema anterior. PROVISIONAL.
+   - --serie-*: v2 no define paleta de gráfico. Tres series distinguibles por
+     LUMINOSIDAD, no por tono: sumi, tinta-tenue y lima. PROVISIONAL.
+     Ojo: una marca de gráfico pide 3:1 contra su fondo y la lima da 1,1:1
+     sobre papel. Sobre suelo claro la lima solo sirve como punto o barra
+     destacada CON borde sumi; las series de barras van en sumi,
+     tinta-secundaria y tinta-tenue, y se distinguen líneas por trazo.
+  - --shell-*: el riel de navegación lateral de los tableros sigue oscuro,
+     ahora en negro-escena con texto sobre-oscuro-*.
+   - Suelo tinta: v2 no tiene modo oscuro completo. Se resuelve con
+     negro-escena y los sobre-oscuro-*; las superficies elevadas y hundidas son
+     washi con alfa sobre ese fondo, no colores nuevos. PROVISIONAL.
+   ========================================================================= */
+:root,
+[data-suelo="papel"],[data-roles="papel"],.section-light,.s-light{
+  --accent:var(--lima);
+  --accent-hi:var(--lima);
+  --accent-ink:var(--sumi);           /* texto sobre lima · 16:1 */
+  --accent-fg:var(--sumi);
+
+  --ground:var(--washi);
+  --fg:var(--sumi);                   /* 17:1 */
+  --fg-secondary:var(--tinta-secundaria); /* 8,2:1 */
+  --fg-muted:var(--tinta-suave);      /* 4,9:1 sobre washi · 4,6:1 sobre crema */
+  --raised:var(--papel);
+  --sunken:var(--crema);
+  --rule:var(--piedra);
+  --rule-strong:var(--sumi);
+  --scroll-thumb:var(--piedra-borde);
+
+  --neg:#c2261c;                      /* PROVISIONAL · 5,4:1 sobre washi */
+  --pos:#16693a;                      /* PROVISIONAL · 6,2:1 sobre washi */
+  --warn:#8a5a00;                     /* PROVISIONAL · nivel intermedio (tableros) */
+
+  --inv-ground:var(--negro-escena);
+  --inv-fg:var(--sobre-oscuro-100);
+  --inv-secondary:var(--sobre-oscuro-200);
+  --inv-rule:rgba(247,246,242,.18);
+  --inv-rule-strong:rgba(247,246,242,.85);
+  --inv-accent:var(--lima);
+
+  --serie-1:var(--sumi);
+  --serie-2:var(--tinta-tenue);
+  --serie-3:var(--lima);
+  --serie-fg:var(--sumi);             /* sobre serie-2 y serie-3; sobre serie-1 va washi */
+
+  /* rampa secuencial: del suelo al primer plano, en neutros del sistema.
+     Pasos 1 a 3 llevan --fg (14,2 · 11,1 · 5,3:1); el 4 lleva --ground (8,2:1). */
+  --ramp-1:var(--piedra);
+  --ramp-2:var(--sobre-oscuro-200);
+  --ramp-3:var(--tinta-tenue);
+  --ramp-4:var(--tinta-secundaria);
+
+  --ink:var(--fg);
+  --paper:var(--ground);
+  --ink-secondary:var(--fg-secondary);
+  --ink-muted:var(--fg-muted);
+  --accent-deep:var(--accent-fg);
+  --inv-text:var(--inv-fg);
+
+  /* el énfasis del titular es el resaltador lima (.ad-hl), con texto sumi */
+  --em-fg:var(--sumi);
+  --em-bg:linear-gradient(transparent 10%,var(--lima) 10%,var(--lima) 90%,transparent 90%);
+  --em-pad:.08em;
+
+  color-scheme:light;
+}
+
+[data-suelo="tinta"],[data-roles="tinta"],.section-dark,.s-dark{
+  --ground:var(--negro-escena);
+  --fg:var(--sobre-oscuro-100);       /* 17,8:1 */
+  --fg-secondary:var(--sobre-oscuro-200); /* 11,6:1 */
+  --fg-muted:var(--sobre-oscuro-300); /* 8,1:1 */
+  --raised:rgba(247,246,242,.06);
+  --sunken:rgba(247,246,242,.10);
+  --rule:rgba(247,246,242,.18);
+  --rule-strong:rgba(247,246,242,.85);
+  --scroll-thumb:#3a3a37;
+
+  --accent-fg:var(--sobre-oscuro-100);
+  --neg:#ff6b6b;                      /* PROVISIONAL · 7,0:1 */
+  --pos:#2fb574;                      /* PROVISIONAL · 7,3:1 */
+
+  --inv-ground:var(--washi);
+  --inv-fg:var(--sumi);
+  --inv-secondary:var(--tinta-secundaria);
+  --inv-rule:rgba(20,20,20,.16);
+  --inv-rule-strong:rgba(20,20,20,.88);
+  --inv-accent:var(--lima);
+
+  --serie-1:var(--sobre-oscuro-100);
+  --serie-2:var(--tinta-tenue);
+  --serie-3:var(--lima);
+  --serie-fg:var(--sumi);
+
+  --ramp-1:rgba(247,246,242,.10);
+  --ramp-2:#3f3e3b;
+  --ramp-3:var(--tinta-suave);
+  --ramp-4:var(--sobre-oscuro-200);
+
+  --ink:var(--fg);
+  --paper:var(--ground);
+  --ink-secondary:var(--fg-secondary);
+  --ink-muted:var(--fg-muted);
+  --accent-deep:var(--accent-fg);
+  --inv-text:var(--inv-fg);
+
+  --em-fg:var(--sumi);
+  --em-bg:linear-gradient(transparent 10%,var(--lima) 10%,var(--lima) 90%,transparent 90%);
+  --em-pad:.08em;
+
+  color-scheme:dark;
+}
+
+/* forma, tipo, espacio y movimiento: idénticos en los dos suelos */
+:root{
+  --radius:var(--radius-card);        /* superficies y medios: recto */
+  --radius-sm:var(--radius-input);    /* controles compactos rectos (campos) */
+
+  --fuente:var(--font-body);
+  --fuente-display:var(--font-display);
+
+  --fs-min:.8125rem;                  /* 13 px · estilo label */
+  --fs-body-min:.875rem;              /* 14 px · estilo caption */
+  --fs-display:clamp(3rem,8vw,6.5rem);/* display-hero · 48 a 104 px */
+  --tk-display:-.035em;
+  --lh-display:1.02;
+
+  --s-1:4px;
+  --s-2:var(--space-2);
+  --s-3:var(--space-4);
+  --s-4:var(--space-6);
+  --s-5:clamp(32px,4vw,64px);
+  --s-6:clamp(64px,8vw,128px);
+  --s-7:clamp(96px,11vw,160px);       /* entre secciones: space-40 en escritorio */
+  --s-col:clamp(24px,4vw,64px);
+
+  --measure:68ch;
+  --gutter:var(--space-6);
+  --max:var(--container-max);
+  --step:var(--s-7);
+  --ease:var(--easing-draw);
+}
+
+
+/* ================================= 3. BASE ================================= */
+body{
+  font-family:var(--font-body);
+  font-size:17px;
+  line-height:1.6;
+  letter-spacing:0;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4,h5,h6{
+  font-family:var(--font-display);
+  font-weight:500;
+  text-wrap:balance;
+}
+p,li,dd{text-wrap:pretty}
+strong,b{font-weight:500}
+
+/* enlace base: especificidad cero, solo reemplaza el azul del navegador.
+   Cualquier regla propia de la página gana sobre esta. */
+:where(a){color:var(--fg,var(--sumi));text-decoration-thickness:1px;text-underline-offset:3px}
+:where(a:hover){color:var(--fg-secondary,var(--tinta-secundaria))}
+
+/* el riel lateral de adcom.css: foco en su primer plano (no lima) y objetivos de 44 px */
+.app-sidebar-nav a{min-height:var(--target-min)}
+.app-sidebar-nav a:focus-visible{outline:2px solid var(--shell-fg);outline-offset:-2px}
+
+/* cifras: tabulares en todo lo que se compara */
+td,th,dd,output,.ad-stat__n{font-variant-numeric:tabular-nums}
+
+::selection{background:var(--lima);color:var(--sumi)}
+
+/* foco: contorno sólido de 2 px en el primer plano del suelo, separado 3 px */
+:focus-visible{outline:2px solid var(--fg,var(--sumi));outline-offset:3px}
+
+/* salto al contenido: oculto hasta recibir foco con teclado */
+.skip-link{position:fixed;top:8px;left:8px;z-index:100;padding:10px 18px;background:var(--lima);color:var(--sumi);border-radius:var(--radius-pill);font-weight:500;text-decoration:none;transform:translateY(-200%)}
+.skip-link:focus,.skip-link:focus-visible{transform:none}
+
+.ad-ln{display:block;text-wrap:balance}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:120ms!important;
+    transition-property:color,background-color,border-color,outline-color,opacity,fill,stroke!important;
+  }
+  html{scroll-behavior:auto}
+}
+
+
+/* ==================== 4. NORMALIZACIÓN DEL VOCABULARIO ====================
+   sistema/adcom.css y adcom-tokens.css fijan pesos de 600 a 900 directamente
+   en sus clases. v2 titula en 500 y escribe las cifras grandes en 300. Se
+   repiten los selectores exactos para igualar especificidad: este archivo
+   carga después y gana sin !important. */
+.wordmark,.brand,.app-sidebar-brand,
+.s-head h2,.section-heading h2,
+.portada-kicker,.rotulo,.al-indice,.button,
+.masthead nav a[aria-current],.masthead .stamp,
+.opening-meta b,.categorias a,.categorias a b,
+.card .kind,.card dt,.card dd,.card .go,
+.app-sidebar-client-label,.app-sidebar-client-name,.app-sidebar-nav-title,
+.app-sidebar-nav a,.app-sidebar-nav a small,
+.app-topbar-crumb,.app-topbar-section,.app-topbar-meta,
+.opcion > span,.opcion > strong,.quote p,.quote cite,.media figcaption,
+.axis,.bar-head .name,.bar-head .val,.share-row span,.share-row b,
+.range-head .name,.range-pin em,.range-foot b,.chart-top h3,.chart-hint,.legend,
+thead th,tbody th,tbody td b,.tabla-abierta th,.tabla-abierta .es-total td,
+.work-kind,.work-stats b,.rule-col li::before,.call .verdict,.colophon dt,
+.document-card .card-meta,.document-meta,
+.document-card .card-meta time,.document-card .card-meta span,
+.document-tag,.document-card > a,.document-card-footer,
+.category-nav a,.category-nav a span,
+.header-context,.repo-link,.hub-back{
+  font-weight:500;
+}
+
+/* las cifras grandes: finas, en Inter Tight (cifra-xl / cifra-lg) */
+.portada-cifras dd,.tira-cifras dd,.hero-stats dd,.document-stats strong{
+  font-family:var(--font-display);
+  font-weight:300;
+  letter-spacing:-.04em;
+}
+.portada-cifras dd small b,.tira-cifras dd small b{font-weight:500}
+
+/* lo que se toca es redondo */
+.button,.document-tag{border-radius:var(--radius-pill)}
+
+
+/* ========================== 5. COMPONENTES AD-* ===========================
+   El bundle del sistema, sin cambios de valor. Prefijo ad- para no chocar con
+   el vocabulario existente. Los estilos tipográficos del sistema van como
+   .ad-t-<nombre> por la misma razón (.eyebrow, .lead y .h2 ya existen). */
+
+.ad-root{background:var(--washi);color:var(--sumi);font-family:var(--font-body);font-size:17px;line-height:1.6}
+.ad-root *{box-sizing:border-box}
+.ad-root h1,.ad-root h2,.ad-root h3{margin:0;text-wrap:balance;font-family:var(--font-display);font-weight:500}
+.ad-root p{margin:0;text-wrap:pretty}
+.ad-root a{color:var(--sumi)}
+.ad-root a:hover{color:var(--tinta-secundaria)}
+
+/* estilos tipográficos */
+.ad-t-display-hero{font-family:var(--font-display);font-size:clamp(48px,8vw,104px);line-height:1.02;font-weight:500;letter-spacing:-.035em}
+.ad-t-statement{font-family:var(--font-display);font-size:clamp(36px,5.5vw,72px);line-height:1.04;font-weight:500;letter-spacing:-.035em}
+.ad-t-h2{font-family:var(--font-display);font-size:clamp(36px,5vw,60px);line-height:1.05;font-weight:500;letter-spacing:-.03em}
+.ad-t-h2-compact{font-family:var(--font-display);font-size:clamp(30px,4vw,44px);line-height:1.1;font-weight:500;letter-spacing:-.025em}
+.ad-t-titulo-categoria{font-family:var(--font-display);font-size:44px;line-height:1;font-weight:500;letter-spacing:-.03em}
+.ad-t-h3-diagrama{font-family:var(--font-display);font-size:32px;line-height:1.15;font-weight:500;letter-spacing:-.02em}
+.ad-t-h3-capacidad{font-family:var(--font-display);font-size:26px;line-height:1.2;font-weight:500}
+.ad-t-eyebrow{font-family:var(--font-display);font-size:17px;line-height:1.6;font-weight:500;letter-spacing:-.005em;color:var(--fg-muted,var(--tinta-suave))}
+.ad-t-lead{font-family:var(--font-body);font-size:21px;line-height:1.5;font-weight:400}
+.ad-t-body{font-family:var(--font-body);font-size:17px;line-height:1.6;font-weight:400}
+.ad-t-body-sm{font-family:var(--font-body);font-size:15px;line-height:1.5;font-weight:400}
+.ad-t-caption{font-family:var(--font-body);font-size:14px;line-height:1.5;font-weight:400}
+.ad-t-label{font-family:var(--font-body);font-size:13px;line-height:1.5;font-weight:400}
+.ad-t-cifra-xl{font-family:var(--font-display);font-size:64px;line-height:1;font-weight:300;letter-spacing:-.04em}
+.ad-t-cifra-lg{font-family:var(--font-display);font-size:44px;line-height:1;font-weight:300;letter-spacing:-.04em}
+
+/* Eyebrow */
+.ad-eyebrow{font-family:var(--font-display);font-size:17px;font-weight:500;letter-spacing:-.005em;color:var(--tinta-suave)}
+.ad-eyebrow--dark{color:var(--sobre-oscuro-300)}
+
+/* Botones */
+.ad-btn{display:inline-flex;align-items:center;justify-content:center;min-height:var(--target-cta);padding:14px 28px;border:0;border-radius:var(--radius-pill);font:inherit;font-size:16px;font-weight:500;line-height:1.2;text-decoration:none;cursor:pointer}
+.ad-btn--accent{background:var(--lima);color:var(--sumi)}
+.ad-btn--accent:hover{color:var(--sumi)}
+.ad-btn--dark{min-height:var(--target-min);padding:10px 20px;background:var(--sumi);color:#fff;font-size:14px}
+.ad-btn--dark:hover{color:#fff}
+.ad-btn--outline{padding:13px 28px;border:1px solid var(--sumi);background:transparent;color:var(--sumi)}
+.ad-link{font-size:16px;text-decoration:none}
+.ad-link--dark{color:var(--washi);font-size:15px;border-bottom:1px solid var(--lima);padding-bottom:2px}
+.ad-btn:focus-visible,.ad-chip:focus-visible,.ad-link:focus-visible,.ad-input:focus-visible{outline:2px solid var(--sumi);outline-offset:3px}
+
+/* Chip de filtro */
+.ad-chip{font:inherit;font-size:14px;min-height:var(--target-min);padding:10px 20px;border-radius:var(--radius-pill);border:1px solid var(--piedra-borde);background:transparent;color:var(--sumi);cursor:pointer}
+.ad-chip[aria-pressed="true"]{background:var(--lima);border-color:var(--sumi);color:var(--sumi)}
+
+/* Etiqueta en píldora */
+.ad-tag{display:inline-block;font-size:17px;font-weight:500;padding:1px 10px;border-radius:var(--radius-pill);background:var(--lima);color:var(--sumi)}
+.ad-tag--line{font-size:13px;padding:0 8px;background:transparent;border:1px solid var(--sumi)}
+.ad-pill{display:inline-block;border:1px solid var(--piedra-borde);border-radius:var(--radius-pill);padding:10px 22px;font-size:15px;background:var(--papel)}
+
+/* Resaltador lima */
+.ad-hl{background:linear-gradient(transparent 10%,var(--lima) 10%,var(--lima) 90%,transparent 90%);color:var(--sumi);padding:0 6px;margin:0 -2px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+
+/* Insignia numerada */
+.ad-n{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border:1px solid var(--sumi);border-radius:var(--radius-circle);font-family:var(--font-display);font-size:13px;font-weight:500;line-height:1;flex:none;background:var(--papel);color:var(--sumi)}
+.ad-n--md{width:30px;height:30px;font-size:14px}
+.ad-n--lg{width:48px;height:48px;font-size:17px;background:var(--washi)}
+.ad-n--on{background:var(--lima);border-color:var(--lima);color:var(--sumi)}
+
+/* Cifra */
+.ad-stat{display:flex;flex-direction:column;gap:8px}
+.ad-stat__n{font-family:var(--font-display);font-size:64px;font-weight:300;letter-spacing:-.04em;line-height:1}
+.ad-stat--lg .ad-stat__n{font-size:44px}
+.ad-stat__n .ad-fill,.ad-fill{background:var(--lima);color:var(--sumi);padding:0 8px}
+.ad-stat__l{font-size:15px;color:var(--tinta-secundaria)}
+.ad-stat__m{font-size:13px;color:var(--tinta-suave)}
+
+/* Columna de capacidad */
+.ad-cap{display:flex;flex-direction:column;gap:12px;padding:32px 0}
+.ad-cap__n{font-family:var(--font-display);font-size:15px;color:var(--tinta-suave)}
+.ad-cap h3{font-size:26px}
+.ad-cap__r{font-size:14px;font-weight:500}
+.ad-cap__d{font-size:15px;color:var(--tinta-secundaria)}
+.ad-cap__m{margin-top:auto;padding-top:12px;border-top:1px solid var(--piedra);font-size:13px;color:var(--tinta-suave)}
+.ad-op{font-family:var(--font-display);font-weight:300;font-size:44px;line-height:1;color:var(--tinta-tenue);text-align:center}
+.ad-op--x{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:var(--radius-circle);background:var(--lima);font-weight:400;font-size:28px;color:var(--sumi)}
+
+/* Tarjeta de categoría */
+.ad-cat{position:relative;display:block;height:520px;border-radius:var(--radius-panel);overflow:hidden;background:var(--papel);border:1px solid var(--piedra);color:var(--sumi);text-decoration:none}
+.ad-cat--dark{background:var(--sumi);border-color:var(--sumi);color:#fff}
+.ad-cat__body{position:absolute;left:40px;right:40px;bottom:40px;display:flex;flex-direction:column;gap:12px}
+.ad-cat__k{font-size:14px;color:var(--tinta-secundaria)}
+.ad-cat--dark .ad-cat__k{color:var(--piedra)}
+.ad-cat__t{font-family:var(--font-display);font-size:44px;font-weight:500;line-height:1;letter-spacing:-.03em}
+.ad-cat__d{font-size:16px;color:var(--tinta-secundaria)}
+.ad-cat--dark .ad-cat__d{color:var(--piedra)}
+
+/* Tarjeta de producto sobre Noche */
+.ad-prod{border:1px solid var(--noche-borde-tarjeta);border-radius:var(--radius-card);padding:40px;display:flex;flex-direction:column;gap:16px;background:var(--noche);color:var(--washi)}
+.ad-prod p{color:var(--noche-texto)}
+.ad-prod__ui{height:240px;border:1px solid var(--noche-borde);border-radius:var(--radius-panel);background:var(--noche-panel);padding:18px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:16px;font-size:12px;color:var(--noche-texto);overflow:hidden}
+.ad-prod__note{font-size:11px;color:var(--noche-nota)}
+
+/* Rejilla de logos */
+.ad-logos{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));border-top:1px solid var(--piedra);border-left:1px solid var(--piedra)}
+.ad-logos__c{height:104px;display:flex;align-items:center;justify-content:center;border-right:1px solid var(--piedra);border-bottom:1px solid var(--piedra);padding:0 20px;font-family:var(--font-display);font-size:18px;color:var(--sumi);filter:grayscale(1);opacity:var(--opacity-logo);mix-blend-mode:multiply;transition:opacity var(--duration-hover),filter var(--duration-hover)}
+.ad-logos__c:hover{filter:none;opacity:1}
+
+/* Campo de formulario */
+.ad-field{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--tinta-secundaria)}
+.ad-input{font:inherit;font-size:16px;padding:14px 16px;border:1px solid var(--piedra-borde);border-radius:var(--radius-input);background:var(--papel);color:var(--sumi)}
+
+/* Header */
+.ad-nav{position:sticky;top:0;z-index:10;background:var(--washi-vidrio);-webkit-backdrop-filter:blur(var(--blur-header));backdrop-filter:blur(var(--blur-header));border-bottom:1px solid var(--piedra)}
+.ad-nav__in{max-width:var(--container-max);margin:0 auto;padding:0 var(--space-6);min-height:var(--nav-height);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-4)}
+.ad-nav__links{display:flex;flex-wrap:wrap;gap:28px;font-size:14px}
+.ad-nav__links a{text-decoration:none;color:var(--tinta-secundaria);min-height:var(--target-min);display:inline-flex;align-items:center}
+.ad-logo-slot{display:inline-flex;align-items:center;justify-content:center;min-height:var(--target-min);padding:0 12px;border:1px dashed var(--piedra-borde);border-radius:var(--radius-input);font-size:12px;color:var(--tinta-suave)}
+
+/* Pie */
+.ad-foot{border-top:1px solid var(--piedra)}
+.ad-foot__in{max-width:var(--container-max);margin:0 auto;padding:48px var(--space-6);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:var(--space-6);font-size:13px;color:var(--tinta-suave)}
+
+/* Diagramas */
+.ad-dg-line{stroke:var(--sumi);stroke-width:1;fill:none}
+.ad-dg-soft{stroke:var(--piedra);stroke-width:1;fill:none}
+.ad-dg-dot{fill:var(--sumi)}
+.ad-dg-lima{fill:var(--lima)}
+.ad-dg-paper{fill:var(--papel);stroke:var(--sumi);stroke-width:1}
+.ad-dg-text{font-family:var(--font-display);font-size:12px;fill:var(--sumi)}
+@keyframes adOrbit{to{transform:rotate(360deg)}}
+@keyframes adRise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes adDraw{from{stroke-dashoffset:680}to{stroke-dashoffset:0}}
+.ad-orbit{transform-origin:200px 200px;animation:adOrbit 16s var(--easing-linear) infinite}
+.ad-rise{animation:adRise var(--duration-rise) var(--easing-rise) both}
+.ad-draw{stroke-dasharray:680;animation:adDraw var(--duration-draw) var(--easing-draw) .4s both}
+@media (prefers-reduced-motion:reduce){.ad-orbit,.ad-rise,.ad-draw{animation:none}}
+
+
+/* ===================== 5b. COMPONENTES DE DIAGRAMACIÓN =====================
+   Cómo se ordena la información. Cada pieza resuelve un tipo de contenido; si
+   un bloque nuevo no cabe en ninguna, se crea aquí y se documenta en
+   banco-formatos/componentes.html. Nunca se escribe CSS suelto por página.
+
+   REGLA DE LA LIMA (reemplaza «una por pantalla»): la lima marca lo que el
+   lector debe ver primero en CADA bloque: la palabra clave del titular
+   (.ad-hl), lo seleccionado o actual (.is-on / aria-current / aria-pressed),
+   la cifra clave (.ad-fill), el estado cumplido (.ad-estado--ok), el último
+   paso (.ad-n--on) y la acción principal (.ad-btn--accent). Una marca por
+   bloque, varias por página. Siempre RELLENO con texto sumi; nunca texto,
+   borde ni línea; en gráficos sobre fondo claro, con borde sumi. */
+
+.ad-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(var(--col,260px),100%),1fr));gap:var(--gap,var(--space-6))}
+.ad-stack{display:flex;flex-direction:column;gap:var(--gap,var(--space-4))}
+
+/* Cabecera de sección: eyebrow + titular + entradilla */
+.ad-sec-cab{display:flex;flex-direction:column;gap:var(--space-2);margin-block-end:var(--space-10);max-width:68ch}
+.ad-sec-cab>*{margin:0}
+.ad-sec-cab h2{font-size:clamp(30px,4vw,44px);line-height:1.1;letter-spacing:-.025em}
+.ad-sec-cab p{color:var(--tinta-secundaria)}
+
+/* Tarjeta. Seleccionada o actual = lima. Oscura = sumi. */
+.ad-card{position:relative;display:flex;flex-direction:column;gap:var(--space-2);min-height:var(--card-h,auto);padding:var(--space-6);background:var(--papel);color:var(--sumi);border:1px solid var(--piedra);border-radius:var(--radius-card);text-decoration:none;font:inherit;text-align:left}
+.ad-card__n{font-family:var(--font-display);font-size:14px;color:var(--tinta-suave)}
+.ad-card__t{font-family:var(--font-display);font-size:22px;font-weight:500;line-height:1.2;letter-spacing:-.015em;margin-block-start:auto;padding-block-start:var(--space-10)}
+.ad-card__d{font-size:15px;color:var(--tinta-secundaria)}
+a.ad-card:hover,button.ad-card:hover{border-color:var(--sumi)}
+.ad-card--dark{background:#151515;color:var(--sobre-oscuro-100);border-color:rgba(247,246,242,.16)}
+.ad-card--dark .ad-card__n,.ad-card--dark .ad-card__d{color:var(--sobre-oscuro-300)}
+.ad-card.is-on,.ad-card[aria-current="true"],.ad-card[aria-pressed="true"]{background:var(--lima);border-color:var(--lima);color:var(--sumi)}
+.ad-card.is-on .ad-card__n,.ad-card.is-on .ad-card__d,.ad-card[aria-current="true"] .ad-card__n,.ad-card[aria-current="true"] .ad-card__d,.ad-card[aria-pressed="true"] .ad-card__n,.ad-card[aria-pressed="true"] .ad-card__d{color:var(--sumi)}
+
+/* Fila de lista (portal, índices, documentos): línea piedra, flecha a la derecha */
+.ad-filas{margin:0;padding:0;list-style:none;border-top:1px solid var(--piedra)}
+.ad-fila{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:var(--space-4) var(--space-8);padding:var(--space-6) 0;border-bottom:1px solid var(--piedra);color:var(--sumi);text-decoration:none}
+.ad-fila__k{display:block;font-size:13px;color:var(--tinta-suave)}
+.ad-fila__t{display:block;margin-top:4px;font-family:var(--font-display);font-size:clamp(20px,2.4vw,28px);font-weight:500;line-height:1.15;letter-spacing:-.02em}
+.ad-fila__go{font-size:15px;color:var(--tinta-secundaria);white-space:nowrap}
+a.ad-fila:hover .ad-fila__t{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px}
+.ad-fila.is-on .ad-fila__t,.ad-fila[aria-current="true"] .ad-fila__t{background:var(--lima);padding:0 8px;margin-inline:-8px;display:inline-block}
+
+/* Cifras: una tarjeta por indicador. .ad-kpi--on pone la cifra clave en lima. */
+.ad-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:0;background:var(--papel);border-top:1px solid var(--piedra);border-left:1px solid var(--piedra);border-radius:var(--radius-panel);overflow:hidden}
+.ad-kpi{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-6);background:var(--papel);border-right:1px solid var(--piedra);border-bottom:1px solid var(--piedra)}
+.ad-kpi__l{font-size:14px;color:var(--tinta-secundaria)}
+.ad-kpi__n{align-self:flex-start;font-family:var(--font-display);font-size:clamp(30px,4vw,44px);font-weight:300;letter-spacing:-.04em;line-height:1.05;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.ad-kpi--on .ad-kpi__n{background:var(--lima);color:var(--sumi);padding:0 10px;margin-inline:-10px}
+.ad-kpi__m{font-size:13px;color:var(--tinta-suave)}
+
+/* Estado: siempre con texto y forma, nunca solo color. Cumplido = lima. */
+.ad-estado{display:inline-flex;align-items:center;gap:6px;min-height:24px;padding:1px 10px;border:1px solid var(--piedra-borde);border-radius:var(--radius-pill);background:var(--papel);color:var(--sumi);font-size:13px;font-weight:500;line-height:1.3;white-space:nowrap}
+.ad-estado::before{content:"";width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor;flex:none}
+.ad-estado--ok{background:var(--lima);border-color:var(--lima)}
+.ad-estado--ok::before{background:currentColor}
+.ad-estado--parcial::before{background:linear-gradient(90deg,currentColor 50%,transparent 50%)}
+.ad-estado--pendiente{color:var(--tinta-secundaria)}
+.ad-estado--sin{color:var(--tinta-suave);border-style:dashed}
+.ad-estado--sin::before{border-style:dashed}
+.ad-estado--na{color:var(--tinta-suave);background:transparent}
+.ad-estado--na::before{border-radius:0;border-width:0 0 1.5px;height:0;width:8px}
+.ad-estado--alerta{color:var(--neg);border-color:var(--neg)}
+.ad-estado--alerta::before{background:currentColor}
+
+/* Lectura: la frase que traduce el dato. Resalta lo esencial con .ad-hl */
+.ad-lectura{padding:var(--space-4) var(--space-6);background:var(--crema);border:1px solid var(--piedra);border-radius:var(--radius-panel)}
+.ad-lectura__k{display:block;margin-block-end:var(--space-2);font-size:13px;color:var(--tinta-suave)}
+.ad-lectura p{font-size:16px;color:var(--tinta-secundaria)}
+
+/* Cita o hallazgo destacado */
+.ad-cita{margin:0;padding:var(--space-2) 0 var(--space-2) var(--space-6);border-left:2px solid var(--sumi)}
+.ad-cita p{font-family:var(--font-display);font-size:clamp(20px,2.4vw,26px);font-weight:500;line-height:1.25;letter-spacing:-.015em}
+.ad-cita cite{display:block;margin-block-start:var(--space-2);font-size:13px;font-style:normal;color:var(--tinta-suave)}
+
+/* Pasos numerados: recorridos, métodos, próximos pasos. El último, en lima. */
+.ad-pasos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(180px,100%),1fr));gap:var(--space-6);margin:0;padding:0;list-style:none;counter-reset:paso}
+.ad-paso{position:relative;display:flex;flex-direction:column;gap:var(--space-2);padding-block-start:var(--space-4);border-top:1px solid var(--piedra)}
+.ad-paso .ad-n{margin-block-start:calc(var(--space-4) * -1 - 14px);background:var(--washi)}
+.ad-paso h3{font-size:19px;line-height:1.2;margin-block-start:var(--space-2)}
+.ad-paso p{font-size:15px;color:var(--tinta-secundaria)}
+.ad-paso:last-child .ad-n,.ad-paso.is-on .ad-n{background:var(--lima);border-color:var(--lima)}
+
+/* Barra de avance o cumplimiento: relleno sumi, marca de meta, tramo destacado en lima con borde sumi */
+.ad-barra{position:relative;height:12px;background:var(--crema);border:1px solid var(--piedra);border-radius:0}
+.ad-barra>span{position:absolute;inset:0 auto 0 0;background:var(--sumi);width:var(--v,0%)}
+.ad-barra--on>span{background:var(--lima);box-shadow:none;outline:1px solid var(--sumi);outline-offset:-1px}
+.ad-barra>i{position:absolute;top:-4px;bottom:-4px;left:var(--meta,100%);width:2px;background:var(--sumi)}
+
+/* Tabla base: encabezado tinta-suave sobre línea sumi, filas con línea piedra, cifras a la derecha */
+.ad-tabla{width:100%;overflow-x:auto;border:1px solid var(--piedra);border-radius:var(--radius-panel);background:var(--papel)}
+.ad-tabla table{width:100%;border-collapse:collapse;font-size:15px;text-align:left}
+.ad-tabla caption{padding:var(--space-2) var(--space-4);text-align:left;font-size:14px;color:var(--tinta-secundaria)}
+.ad-tabla th,.ad-tabla td{padding:12px 16px;border-bottom:1px solid var(--piedra);vertical-align:top}
+.ad-tabla thead th{font-size:13px;font-weight:500;color:var(--tinta-suave);border-bottom:1px solid var(--sumi);white-space:nowrap}
+.ad-tabla tbody tr:last-child>*{border-bottom:0}
+.ad-tabla tfoot td,.ad-tabla tfoot th{font-weight:500;border-top:1px solid var(--sumi);border-bottom:0}
+.ad-tabla .valor{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ad-tabla tr.is-on>*{background:var(--lima)}
+
+/* Marcador de pieza con su proporción real, hasta tener el archivo aprobado */
+.ad-marcador{display:grid;place-items:center;aspect-ratio:var(--ar,1/1);background:var(--crema);border:1px solid var(--piedra);border-radius:var(--radius-card);color:var(--tinta-suave);font-size:13px;text-align:center}
+.ad-marcador--1x1{--ar:1/1}.ad-marcador--4x5{--ar:4/5}.ad-marcador--9x16{--ar:9/16}.ad-marcador--16x9{--ar:16/9}
+
+/* Figura de gráfico: título que pregunta, gráfico, leyenda y lectura */
+.ad-figura{display:flex;flex-direction:column;gap:var(--space-4);margin:0}
+.ad-figura figcaption{font-size:14px;color:var(--tinta-secundaria)}
+.ad-leyenda{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-6);margin:0;padding:0;list-style:none;font-size:13px;color:var(--tinta-secundaria)}
+.ad-leyenda li{display:inline-flex;align-items:center;gap:8px}
+.ad-leyenda i{width:12px;height:12px;background:var(--c,var(--sumi));border:1px solid var(--sumi);flex:none}
+
+/* Cabecera compacta: tableros y documentos densos (h2 de 22 px con nota al lado) */
+.ad-sec-cab--compacta{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:var(--space-2) var(--space-4);margin-block-end:var(--space-4);max-width:none}
+.ad-sec-cab--compacta h2{font-size:22px;line-height:1.2;letter-spacing:-.015em}
+.ad-sec-cab--compacta p{font-size:14px;color:var(--tinta-suave)}
+
+/* Tabla densa: 13 px, relleno corto, primera columna fija. Para tableros. */
+.ad-tabla--densa table{font-size:13px}
+.ad-tabla--densa th,.ad-tabla--densa td{padding:8px 10px}
+.ad-tabla--densa tbody th:first-child,.ad-tabla--densa thead th:first-child{position:sticky;left:0;background:var(--papel);z-index:1}
+.ad-tabla--densa tr.is-on>th:first-child{background:var(--lima)}
+.ad-tabla--densa .nivel-1>*{font-weight:500;background:var(--crema)}
+
+/* Ficha de datos de portada: pares rótulo / valor */
+.ad-ficha{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr));gap:var(--space-4) var(--space-8);margin:0;padding:var(--space-4) var(--space-6);background:var(--crema);border-radius:var(--radius-panel)}
+.ad-ficha dt{font-size:13px;color:var(--tinta-suave)}
+.ad-ficha dd{margin:2px 0 0;font-size:16px;color:var(--sumi)}
+
+/* Aviso de página: plantilla, borrador, dato parcial */
+.ad-aviso{padding:var(--space-4) var(--space-6);background:var(--crema);border:1px solid var(--piedra);border-radius:var(--radius-panel);font-size:15px;color:var(--tinta-secundaria)}
+.ad-aviso__k{display:block;margin-block-end:4px;font-size:13px;color:var(--tinta-suave)}
+
+/* Filtros: campos con rótulo; los selectores son píldoras de 44 px */
+.ad-filtros{display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:flex-end}
+.ad-filtros label{display:grid;gap:4px;font-size:14px;color:var(--tinta-secundaria)}
+.ad-filtros :is(select,input){min-height:var(--target-min);padding:6px var(--space-4);border:1px solid var(--piedra-borde);border-radius:var(--radius-pill);background:var(--papel);color:var(--sumi);font:inherit}
+
+/* Barra apilada: varios tramos que suman 100 %. Cada tramo lleva --v y --c;
+   el tramo destacado (.is-on) va en lima con borde sumi; los demás por luminosidad. */
+.ad-barra-apilada{display:flex;height:16px;margin:0;padding:0;list-style:none;border:1px solid var(--sumi);background:var(--crema)}
+.ad-barra-apilada>li{flex:var(--v,1) 1 0;background:var(--c,var(--sumi));border-right:1px solid var(--papel)}
+.ad-barra-apilada>li:last-child{border-right:0}
+.ad-barra-apilada>li.is-on{background:var(--lima)}
+
+/* Variantes sobre superficie oscura: se activan con .ad-oscuro en el contenedor */
+.ad-oscuro .ad-lectura{background:rgba(247,246,242,.06);border-color:rgba(247,246,242,.16)}
+.ad-oscuro .ad-lectura__k{color:var(--sobre-oscuro-300)}
+.ad-oscuro .ad-lectura p{color:var(--sobre-oscuro-200)}
+.ad-oscuro .ad-kpis{background:#151515;border-color:rgba(247,246,242,.16)}
+.ad-oscuro .ad-kpi{background:#151515;border-color:rgba(247,246,242,.16)}
+.ad-oscuro .ad-kpi__l{color:var(--sobre-oscuro-200)}
+.ad-oscuro .ad-kpi__n{color:var(--sobre-oscuro-100)}
+.ad-oscuro .ad-kpi__m{color:var(--sobre-oscuro-300)}
+.ad-oscuro .ad-kpi--on .ad-kpi__n{color:var(--sumi)}
+.ad-oscuro .ad-barra{background:rgba(247,246,242,.10);border-color:rgba(247,246,242,.24)}
+.ad-oscuro .ad-barra>span{background:var(--sobre-oscuro-100)}
+.ad-oscuro .ad-barra--on>span{background:var(--lima);outline-color:var(--sobre-oscuro-100)}
+.ad-oscuro .ad-barra>i{background:var(--sobre-oscuro-100)}
+
+/* Bloque «ver los datos» */
+.ad-datos{border-top:1px solid var(--piedra);padding-block-start:var(--space-2)}
+.ad-datos>summary{display:flex;align-items:center;min-height:var(--target-min);cursor:pointer;font-size:15px;color:var(--tinta-secundaria)}
+
+@media (max-width:640px){
+  .ad-fila{grid-template-columns:auto minmax(0,1fr);padding:var(--space-4) 0}
+  .ad-fila__go{grid-column:2}
+  .ad-card{padding:var(--space-4)}
+}
+
+/* =============================== 6. IMPRESIÓN ===============================
+   En papel todo va al suelo claro; la lima se queda solo como relleno. */
+@media print{
+  :root,[data-suelo],[data-roles],
+  .section-dark,.section-light,.s-dark,.s-light{
+    --ground:#fff;
+    --fg:#000;
+    --fg-secondary:#333;
+    --fg-muted:#555;
+    --raised:#fff;
+    --sunken:#ededed;
+    --rule:rgba(0,0,0,.22);
+    --rule-strong:#000;
+    --accent-fg:#000;
+    --neg:#a81f16;
+    --pos:#125c33;
+    --inv-ground:#fff;
+    --inv-fg:#000;
+    --inv-secondary:#333;
+    --inv-rule:rgba(0,0,0,.22);
+    --inv-rule-strong:#000;
+    --serie-1:#000;
+    --serie-2:#8a8a84;
+    --serie-3:#d8ff3d;
+    --serie-fg:#000;
+    --ramp-1:#ededed;
+    --ramp-2:#cfcfcf;
+    --ramp-3:#9a9a9a;
+    --ramp-4:#3c3c3c;
+    --ink:var(--fg);
+    --paper:var(--ground);
+    --ink-secondary:var(--fg-secondary);
+    --ink-muted:var(--fg-muted);
+    --accent-deep:var(--accent-fg);
+    --inv-text:var(--inv-fg);
+    --em-fg:#000;
+    color-scheme:light;
+  }
+  .ad-nav{position:static;backdrop-filter:none;background:none}
+  .skip-link{display:none}
+}

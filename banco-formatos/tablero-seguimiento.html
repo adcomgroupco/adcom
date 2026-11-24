@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#F7F6F2">
+  <!--
+    Plantilla · Tablero de seguimiento de pauta (educación)
+    Anatomía tomada de los tableros publicados por cliente y del consolidado de educación:
+    riel lateral oscuro · barra de filtros (fechas, rangos rápidos, meta del periodo, nivel,
+    facultad, programa, medio) · resumen con KPI y metas · medios · embudo CRM · por nivel ·
+    evolución mes a mes y semanal · diario · por medio · por programa · otras fuentes ·
+    branding y eventos · cómo se mide.
+    Framework, operación táctica: 05 y 58 (resultados e informes y dashboards), 27-29 (control
+    presupuestal y pacing), 32 (qué monitorea una campaña), 42 (cierre mensual: el tablero es
+    la fuente, no el cierre). Nombre del archivo publicado: CLIENTE_INFORME_Tablero de pauta
+    2027-1_AAAAMMDD_v1 (punto 71).
+    Para adaptarla: solo se edita la parte 1 (DATOS) de js/tablero-seguimiento.js, o la parte 2
+    para leer una hoja de Google. Este HTML no lleva cifras.
+  -->
+  <title>Tablero de pauta · Universidad Andina</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
+  <link rel="stylesheet" href="../assets/css/adcom-v2.css">
+  <link rel="stylesheet" href="formatos.css">
+  <link rel="stylesheet" href="css/tablero-seguimiento.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
+  <script src="js/tablero-seguimiento.js" defer></script>
+</head>
+<body class="ts">
+<a class="skip-link" href="#sec-resumen">Ir al resumen</a>
+
+<!-- RIEL: marca, cuenta y periodo, secciones y estado de las fuentes. Es mueble: va oscuro. -->
+<aside class="ts-riel" data-roles="tinta" aria-label="Navegación del tablero">
+  <div class="ts-riel__top">
+    <a class="ts-marca" href="../index.html"><i aria-hidden="true"></i>Adcom</a>
+    <div class="ts-cuenta">
+      <span>Cliente</span>
+      <strong data-cliente>Universidad Andina</strong>
+      <span id="riel-periodo">Periodo 2027-1</span>
+    </div>
+  </div>
+  <nav aria-label="Secciones">
+    <span class="ts-riel__titulo">Secciones</span>
+    <a href="#sec-resumen" aria-current="true"><b aria-hidden="true"></b>Resumen</a>
+    <a href="#sec-embudo"><b aria-hidden="true"></b>Embudo</a>
+    <a href="#sec-nivel"><b aria-hidden="true"></b>Por nivel</a>
+    <a href="#sec-evolucion"><b aria-hidden="true"></b>Mes a mes</a>
+    <a href="#sec-diario"><b aria-hidden="true"></b>Diario</a>
+    <a href="#sec-medio"><b aria-hidden="true"></b>Por medio</a>
+    <a href="#sec-programa"><b aria-hidden="true"></b>Por programa</a>
+    <a href="#sec-fuentes"><b aria-hidden="true"></b>Pauta y otras fuentes</a>
+    <a href="#sec-branding"><b aria-hidden="true"></b>Branding y eventos</a>
+    <a href="#sec-medicion"><b aria-hidden="true"></b>Cómo se mide</a>
+  </nav>
+  <!-- Estado de cada fuente (pestaña LOG): una fuente atrasada se dice aquí, no se esconde. -->
+  <div class="ts-riel__pie">
+    <p>Fuentes y corte</p>
+    <ul id="riel-fuentes" class="ts-riel__fuentes"></ul>
+    <button type="button" class="ad-chip ts-chip--riel" id="b-recargar">Volver a cargar</button>
+    <a href="index.html">Banco de formatos</a>
+  </div>
+</aside>
+
+<div class="ts-main">
+  <!-- FILTROS: fila 1 fechas y rangos rápidos (relativos a la fecha de corte); fila 2 dimensiones.
+       La opción activa del rango rápido va en lima (relleno con texto sumi), igual que la sección activa del riel. -->
+  <header class="ts-barra">
+    <div class="ts-barra__fila">
+      <h1 class="ts-titulo">Tablero de <span class="ad-hl">pauta</span> · <span data-cliente>Universidad Andina</span></h1>
+      <label class="ts-campo">Desde <input type="date" id="f-desde"></label>
+      <label class="ts-campo">Hasta <input type="date" id="f-hasta"></label>
+      <div class="ts-rapidos" id="rapidos" role="group" aria-label="Rangos rápidos"></div>
+      <button type="button" class="ad-chip" id="b-meta" aria-pressed="false" title="Toma la meta completa del periodo; las fechas no cambian">Meta del periodo</button>
+      <span class="ts-actualizado" id="actualizado"></span>
+    </div>
+    <div class="ts-barra__fila">
+      <label class="ts-campo">Nivel <select id="f-nivel"><option value="">Todos</option></select></label>
+      <label class="ts-campo">Facultad <select id="f-facultad"><option value="">Todas</option></select></label>
+      <label class="ts-campo">Programa <select id="f-programa"><option value="">Todos</option></select></label>
+      <label class="ts-campo">Medio <select id="f-medio"><option value="">Todos</option></select></label>
+      <button type="button" class="ad-btn ad-btn--dark ts-limpiar" id="b-limpiar">Limpiar filtros</button>
+    </div>
+  </header>
+
+  <main class="ts-contenido" id="contenido">
+    <div class="ad-lectura ts-plantilla"><span class="ad-lectura__k">Plantilla</span><p>Plantilla del banco de formatos con datos ficticios. Los datos se reemplazan en <code>js/tablero-seguimiento.js</code>, parte 1.</p></div>
+    <p class="ts-carga" id="carga" role="status">Cargando datos…</p>
+    <p class="ts-aviso" id="aviso-datos" role="alert" hidden></p>
+    <noscript><p class="ts-aviso">El tablero necesita JavaScript para calcular las cifras.</p></noscript>
+    <p class="ts-oculto" id="estado-filtros" role="status" aria-live="polite"></p>
+
+    <!-- 1. RESUMEN: ocho KPI fijos en este orden. Las barras comparan contra la meta del rango
+         (proporcional a los días) o del periodo completo con el botón de meta. Cifra clave en lima: matriculados (.ad-kpi--on). -->
+    <section class="ts-sec" id="sec-resumen" aria-labelledby="t-resumen">
+      <h2 class="ts-h2" id="t-resumen">Resumen del rango <span class="ts-nota" id="rango-nota"></span></h2>
+      <div class="ad-kpis ts-kpis" id="kpis"></div>
+      <!-- Una tarjeta por medio con inversión. Un medio sin conversión en plataforma muestra «Sin dato», no cero. -->
+      <h3 class="ts-h3">Por medio</h3>
+      <div class="ts-medios" id="medios"></div>
+    </section>
+
+    <!-- 2. EMBUDO CRM: volumen, tasa frente a la etapa anterior y costo por etapa contra su meta. -->
+    <section class="ts-sec" id="sec-embudo" aria-labelledby="t-embudo">
+      <h2 class="ts-h2" id="t-embudo">Embudo <span class="ts-nota">cada etapa cuenta en su propia fecha</span></h2>
+      <div class="ts-caja ts-embudo" id="embudo"></div>
+      <div class="ad-lectura ts-lectura"><span class="ad-lectura__k">Qué quiere decir</span><p id="embudo-lectura"></p></div>
+    </section>
+
+    <!-- 3. POR NIVEL: tabla con metas y barras de cumplimiento (la raya marca el 100 %). -->
+    <section class="ts-sec" id="sec-nivel" aria-labelledby="t-nivel">
+      <h2 class="ts-h2" id="t-nivel">Por nivel <span class="ts-nota">metas de pauta del periodo</span></h2>
+      <div class="ad-tabla ts-caja-tabla"><div class="ts-tabla" role="region" aria-labelledby="t-nivel" tabindex="0"><table><thead id="nivel-head"></thead><tbody id="nivel-body"></tbody></table></div></div>
+      <div class="ts-caja ts-cumple">
+        <h3 class="ts-h3">Cumplimiento por nivel</h3>
+        <p class="ts-nota">Inversión, leads CRM y matriculados frente a su meta. La barra llega hasta 150 % y la raya marca el 100 %.</p>
+        <div id="nivel-barras"></div>
+      </div>
+      <div class="ad-lectura ts-lectura"><span class="ad-lectura__k">Qué quiere decir</span><p id="nivel-lectura"></p></div>
+    </section>
+
+    <!-- 4. EVOLUCIÓN: mes a mes (con metas mensuales de la pestaña MENSUAL) o semana a semana.
+         Un clic en el mes lo abre por nivel. Un periodo incompleto se marca «Parcial». -->
+    <section class="ts-sec" id="sec-evolucion" aria-labelledby="t-evo">
+      <div class="ts-h2-fila">
+        <h2 class="ts-h2" id="t-evo">Evolución</h2>
+        <div class="ts-vistas" role="group" aria-label="Agrupar por">
+          <button type="button" class="ad-chip" data-vista-evo="mes" aria-pressed="true">Mes a mes</button>
+          <button type="button" class="ad-chip" data-vista-evo="sem" aria-pressed="false">Semana a semana</button>
+        </div>
+      </div>
+      <figure class="ad-figura ts-grafico">
+        <figcaption class="ts-nota">¿Crecen los leads y los matriculados al ritmo de la inversión? Barras: inversión (eje derecho). Línea continua: leads CRM. Línea discontinua: matriculados.</figcaption>
+        <div class="ts-lienzo"><canvas id="g-evo" role="img" aria-label="Inversión, leads CRM y matriculados por periodo"></canvas></div>
+      </figure>
+      <div class="ad-lectura ts-lectura"><span class="ad-lectura__k">Qué quiere decir</span><p id="evo-lectura"></p></div>
+      <div class="ad-tabla ts-caja-tabla"><div class="ts-tabla" role="region" aria-labelledby="t-evo" tabindex="0"><table><thead id="evo-head"></thead><tbody id="evo-body"></tbody></table></div>
+        <p class="ts-pie"><b>Ppto meta y meta leads</b>: curva mensual por nivel (pestaña MENSUAL), la parte de los días del rango. Solo aplican sin filtro de facultad, programa ni medio. Haz clic en un mes para abrirlo por nivel.</p>
+      </div>
+    </section>
+
+    <!-- 5. DIARIO: tres gráficos pequeños, como en los tableros por cliente. -->
+    <section class="ts-sec" id="sec-diario" aria-labelledby="t-diario">
+      <h2 class="ts-h2" id="t-diario">Tendencia diaria</h2>
+      <div class="ts-tres">
+        <figure class="ad-figura ts-grafico"><figcaption class="ts-h3">Inversión por día</figcaption><div class="ts-lienzo ts-lienzo--bajo"><canvas id="g-inv" role="img" aria-label="Inversión por día"></canvas></div></figure>
+        <figure class="ad-figura ts-grafico"><figcaption class="ts-h3">Leads por día</figcaption><div class="ts-lienzo ts-lienzo--bajo"><canvas id="g-leads" role="img" aria-label="Leads CRM y de plataforma por día"></canvas></div></figure>
+        <figure class="ad-figura ts-grafico"><figcaption class="ts-h3">CPL CRM por día</figcaption><div class="ts-lienzo ts-lienzo--bajo"><canvas id="g-cpl" role="img" aria-label="CPL CRM por día frente al CPL meta"></canvas></div></figure>
+      </div>
+      <div class="ad-lectura ts-lectura"><span class="ad-lectura__k">Qué quiere decir</span><p id="diario-lectura"></p></div>
+    </section>
+
+    <!-- 6. POR MEDIO: el medio del CRM sale de la campaña del aspirante (UTM o nombre). -->
+    <section class="ts-sec" id="sec-medio" aria-labelledby="t-medio">
+      <div class="ts-h2-fila">
+        <h2 class="ts-h2" id="t-medio">Por nivel y medio</h2>
+        <div class="ts-vistas" role="group" aria-label="Vista">
+          <button type="button" class="ad-chip" data-vista-medio="niv" aria-pressed="true">Nivel · medio</button>
+          <button type="button" class="ad-chip" data-vista-medio="medio" aria-pressed="false">Solo medio</button>
+        </div>
+      </div>
+      <div class="ad-tabla ts-caja-tabla"><div class="ts-tabla" role="region" aria-labelledby="t-medio" tabindex="0"><table><thead id="medio-head"></thead><tbody id="medio-body"></tbody></table></div>
+        <p class="ts-pie"><b>CRM vs plat.</b>: leads CRM sobre leads de plataforma, menos 1, solo con medios que reportan leads en plataforma. Programática no los reporta: «Sin dato».</p>
+      </div>
+    </section>
+
+    <!-- 7. POR PROGRAMA: árbol nivel → facultad → programa, con búsqueda, orden por columna y
+         leads CRM por medio. Es la tabla que más se consulta en las reuniones con el cliente. -->
+    <section class="ts-sec" id="sec-programa" aria-labelledby="t-programa">
+      <h2 class="ts-h2" id="t-programa">Nivel · facultad · programa</h2>
+      <div class="ts-caja">
+        <div class="ts-herramientas">
+          <button type="button" class="ad-chip" id="b-expandir">Expandir todo</button>
+          <button type="button" class="ad-chip" id="b-contraer">Contraer</button>
+          <label class="ts-campo ts-buscar">Buscar <input type="search" id="buscar" placeholder="Programa o facultad"></label>
+        </div>
+        <div class="ts-tabla" role="region" aria-labelledby="t-programa" tabindex="0"><table><thead id="prog-head"></thead><tbody id="prog-body"></tbody></table></div>
+        <p class="ts-pie"><b>CRM Meta, CRM Google Ads…</b>: leads CRM de cada medio. <b>Metas</b>: pestaña METAS por programa, proporcionales a los días del rango; con un medio elegido no aplican. Haz clic en un título de columna para ordenar.</p>
+      </div>
+    </section>
+
+    <!-- 8. PAUTA Y OTRAS FUENTES: leads y matriculados del CRM de todas las fuentes.
+         Solo aplican fechas y nivel: el orgánico no tiene programa ni medio de pauta. -->
+    <section class="ts-sec" id="sec-fuentes" aria-labelledby="t-fuentes">
+      <h2 class="ts-h2" id="t-fuentes">Pauta frente a orgánico y otras fuentes <span class="ts-nota">aplican fechas y nivel</span></h2>
+      <div class="ts-tres" id="fuentes-tarjetas"></div>
+      <figure class="ad-figura ts-grafico">
+        <figcaption class="ts-nota">¿Cuánto de los leads del CRM trae la pauta cada mes? Barras apiladas por fuente.</figcaption>
+        <div class="ts-lienzo"><canvas id="g-fuentes" role="img" aria-label="Leads CRM por fuente y mes"></canvas></div>
+      </figure>
+      <div class="ad-lectura ts-lectura"><span class="ad-lectura__k">Qué quiere decir</span><p id="fuentes-lectura"></p></div>
+      <div class="ad-tabla ts-caja-tabla"><div class="ts-tabla" role="region" aria-labelledby="t-fuentes" tabindex="0"><table><thead id="fuentes-head"></thead><tbody id="fuentes-body"></tbody></table></div></div>
+    </section>
+
+    <!-- 9. BRANDING Y EVENTOS: presupuesto aparte. No entra en KPI, embudo ni costos por lead. -->
+    <section class="ts-sec" id="sec-branding" aria-labelledby="t-branding">
+      <h2 class="ts-h2" id="t-branding">Branding y eventos <span class="ts-nota">no entra en los costos del embudo · datos mensuales</span></h2>
+      <div class="ad-tabla ts-caja-tabla"><div class="ts-tabla" role="region" aria-labelledby="t-branding" tabindex="0"><table><thead id="brand-head"></thead><tbody id="brand-body"></tbody></table></div>
+        <p class="ts-pie">Se muestran los meses que tocan el rango; aplica el filtro de medio. La ejecución de un mes abierto no se colorea. Programática no reporta alcance único: «Sin dato».</p>
+      </div>
+    </section>
+
+    <!-- 10. CÓMO SE MIDE: fuente, corte, definiciones y estados. Ajustarlo a cada cliente;
+         es lo que evita discutir las cifras en la reunión. -->
+    <section class="ts-sec ts-medicion" id="sec-medicion" aria-labelledby="t-medicion">
+      <h2 class="ts-h2" id="t-medicion">Cómo se mide</h2>
+      <dl class="ts-def">
+        <div><dt>Resultado</dt><dd id="resultado"></dd></div>
+        <div><dt>Fuente</dt><dd>Inversión y leads de plataforma: Meta, Google Ads, TikTok, LinkedIn y programática, consolidados en la hoja del cliente. Leads CRM y etapas: CRM de admisiones con fuente de pauta. Metas: pestañas METAS (periodo por programa) y MENSUAL (curva por nivel).</dd></div>
+        <div><dt>Inversión</dt><dd>Solo campañas de conversión, en COP antes de impuestos. Branding y eventos van en su sección.</dd></div>
+        <div><dt>Etapas</dt><dd>Cada etapa del CRM cuenta en su propia fecha (creación, inscripción, admisión, matrícula): las tasas comparan volúmenes del rango, no siguen al mismo aspirante. Los matriculados cancelados no cuentan. Educación continua no tiene inscritos ni admitidos.</dd></div>
+        <div><dt>Metas</dt><dd>Proporcionales a los días del rango dentro del periodo; con el botón de meta, la meta completa. Con filtro de medio no se muestran metas.</dd></div>
+        <div><dt>Semáforo</dt><dd><span class="ts-pos">80 % o más</span> · <span class="ts-warn">50 % a 79 %</span> · <span class="ts-neg">menos de 50 %</span>. En CRM vs plataforma, la diferencia: hasta 10 %, hasta 25 % y más.</dd></div>
+        <div><dt>Estados</dt><dd><b>—</b> el cálculo no tiene base (división por cero). <b>Sin dato</b>: la fuente no reporta la cifra. <b>No aplica</b>: el nivel o el filtro no tiene esa etapa o esa meta. <b>Parcial</b>: el periodo no está completo en el rango o la fuente está atrasada.</dd></div>
+      </dl>
+    </section>
+  </main>
+</div>
+</body>
+</html>

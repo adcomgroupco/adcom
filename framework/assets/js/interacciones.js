@@ -97,7 +97,7 @@
       fillChips($("#pillar-items"), d.items);
       $$(".pillar").forEach(function(b){
         var on = b.getAttribute("data-pillar") === String(n);
-        b.classList.toggle("is-active", on);
+        b.classList.toggle("is-on", on);
         b.setAttribute("aria-selected", on ? "true":"false");
       });
       var panel = $("#pillar-panel");
@@ -114,10 +114,10 @@
     grupos.forEach(function(k, idx){
       var d = FD.VARIABLES[k];
       var art = document.createElement("div");
-      art.className = "card card-light";
+      art.className = "ad-card";
       /* controlables, influenciables, externas: el margen de acción baja de 3 a 1 */
       art.style.setProperty("--nivel", grupos.length - idx);
-      art.innerHTML = '<span class="card-index">' + d.tag + '</span><h5>' + d.title +
+      art.innerHTML = '<span class="ad-card__n">' + d.tag + '</span><h5>' + d.title +
                       '</h5><p style="margin:12px 0 16px">' + d.desc + '</p><ul class="chips"></ul>';
       varsGrid.appendChild(art);
       fillChips(art.querySelector("ul"), d.items);
@@ -130,12 +130,12 @@
     var stepper = $("#stepper");
     STEPS.forEach(function(s,i){
       var b = document.createElement("button");
-      b.className = "step" + (i===0 ? " is-active":"");
+      b.className = "ad-card ad-card--dark step" + (i===0 ? " is-on":"");
       b.type = "button";
       b.setAttribute("role","tab");
       b.setAttribute("aria-selected", i===0 ? "true":"false");
       b.setAttribute("data-step", i);
-      b.innerHTML = '<span>'+s.n+'</span><strong>'+s.t+'</strong>';
+      b.innerHTML = '<span class="ad-card__n">'+s.n+'</span><strong>'+s.t+'</strong>';
       b.addEventListener("click", function(){ setStep(i,true); });
       stepper.appendChild(b);
     });
@@ -143,14 +143,14 @@
     function setStep(i, alinear){
       var s = STEPS[i]; if(!s) return;
       current = i;
-      $("#step-tag").textContent = "ETAPA " + s.n;
+      $("#step-tag").textContent = "Etapa " + s.n;
       $("#step-title").textContent = s.t;
       $("#step-desc").textContent = s.d;
       $("#step-label").textContent = s.label;
       fillChips($("#step-items"), s.items);
       $$(".step").forEach(function(b,idx){
         var on = idx === i;
-        b.classList.toggle("is-active", on);
+        b.classList.toggle("is-on", on);
         b.setAttribute("aria-selected", on ? "true":"false");
       });
       $("#flow-rail").style.transform = "scaleX(" + ((i+1)/STEPS.length) + ")";
@@ -171,7 +171,7 @@
       var ang = (i/CYCLE.length)*Math.PI*2 - Math.PI/2;
       var b = document.createElement("button");
       b.type = "button";
-      b.className = "cycle-node" + (i===0?" is-active":"");
+      b.className = "cycle-node" + (i===0?" is-on":"");
       b.setAttribute("data-cycle", i);
       b.setAttribute("aria-label", "Estación " + (i+1) + ": " + s.t);
       b.style.left = (50 + 43*Math.cos(ang)) + "%";
@@ -188,12 +188,12 @@
       var s = CYCLE[i]; if(!s) return;
       cycleIdx = i;
       var n = (i+1 < 10 ? "0" : "") + (i+1);
-      $("#cycle-step").textContent = "ESTACIÓN " + n;
+      $("#cycle-step").textContent = "Estación " + n;
       $("#cycle-name").textContent = s.t;
       $("#cycle-title").textContent = s.t;
       $("#cycle-desc").textContent = s.d;
       $("#cycle-ask").textContent = s.a;
-      $$(".cycle-node").forEach(function(b,idx){ b.classList.toggle("is-active", idx===i); });
+      $$(".cycle-node").forEach(function(b,idx){ b.classList.toggle("is-on", idx===i); });
       $$("#cycle-dots i").forEach(function(d,idx){ d.className = idx===i ? "on":""; });
       var copy = $(".cycle-copy");
       copy.classList.remove("fade-in"); void copy.offsetWidth; copy.classList.add("fade-in");
@@ -207,7 +207,7 @@
   var msgParts = $$(".msg-part");
   if (msgParts.length){
     var setMsg = function(n){
-      msgParts.forEach(function(b){ b.classList.toggle("is-active", b.getAttribute("data-part")===String(n)); });
+      msgParts.forEach(function(b){ b.classList.toggle("is-on", b.getAttribute("data-part")===String(n)); });
       $$(".msg-body mark").forEach(function(m){ m.classList.toggle("is-on", m.getAttribute("data-mark")===String(n)); });
       $("#msg-note").textContent = MSG_NOTES[n] || "";
     };
@@ -238,7 +238,7 @@
     REPO.forEach(function(r,i){
       var b = document.createElement("button");
       b.type = "button";
-      b.className = "repo-item" + (i===0?" is-active":"");
+      b.className = "repo-item" + (i===0?" is-on":"");
       b.setAttribute("role","tab");
       b.setAttribute("aria-selected", i===0 ? "true":"false");
       b.setAttribute("data-repo", i);
@@ -256,7 +256,7 @@
       if (r.note){ note.hidden = false; note.textContent = r.note; } else { note.hidden = true; }
       $$("#repo-list .repo-item").forEach(function(b,idx){
         var on = idx === i;
-        b.classList.toggle("is-active", on);
+        b.classList.toggle("is-on", on);
         b.setAttribute("aria-selected", on ? "true" : "false");
       });
     }
@@ -298,7 +298,7 @@
      pestañas (con el data-tab de cada ficha), las flechas y el contador. Sin JS
      queda una fila que se desplaza de lado, con todo el contenido presente. */
   $$(".carrusel").forEach(function(c, ci){
-    var fichas = $$(":scope > .card", c);
+    var fichas = $$(":scope > .ad-card", c);
     if (fichas.length < 2) return;
     var pista = document.createElement("div");
     pista.className = "carrusel-pista";
@@ -314,7 +314,7 @@
       pista.appendChild(f);
       var b = document.createElement("button");
       b.type = "button";
-      b.className = "tab";
+      b.className = "ad-chip";
       b.setAttribute("aria-controls", f.id);
       b.textContent = f.getAttribute("data-tab") || (f.querySelector("h3,h4,h5") || f).textContent.trim();
       b.addEventListener("click", function(){ ir(i); });
@@ -335,7 +335,7 @@
       if (i === actual) return;
       actual = i;
       botones.forEach(function(b, k){
-        b.classList.toggle("is-active", k === i);
+        b.classList.toggle("is-on", k === i);
         if (k === i) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current");
       });
       cuenta.textContent = dos(i + 1) + " / " + dos(fichas.length);
@@ -374,7 +374,7 @@
       else if (e.key === "ArrowLeft"){ e.preventDefault(); ir(actual - 1); }
     });
     c._irA = function(el){
-      var k = fichas.indexOf(el.closest(".carrusel-pista > .card"));
+      var k = fichas.indexOf(el.closest(".carrusel-pista > .ad-card"));
       if (k >= 0) ir(k);
     };
     marcar(0); leer();
@@ -426,7 +426,7 @@
           titulo = titulo.slice(num.length).trim();
         } else {
           var e = d.querySelector(".eyebrow span");
-          var ix = !e && d.querySelector(".card-index");
+          var ix = !e && d.querySelector(".ad-card__n");
           if (e) num = e.textContent.trim();
           else if (ix) num = ix.textContent.split("·")[0].trim();
         }
@@ -590,7 +590,7 @@
       $("#sol-nota").textContent = x.nota;
       $$("#sol-list .repo-item").forEach(function(b, k){
         var on = k === i;
-        b.classList.toggle("is-active", on);
+        b.classList.toggle("is-on", on);
         b.setAttribute("aria-selected", on ? "true" : "false");
       });
       var panel = $("#sol-title").closest ? $("#sol-title").closest(".panel") : null;
@@ -600,7 +600,7 @@
     SOL.forEach(function(x, i){
       var b = document.createElement("button");
       b.type = "button";
-      b.className = "repo-item" + (i === 0 ? " is-active" : "");
+      b.className = "repo-item" + (i === 0 ? " is-on" : "");
       b.setAttribute("role", "tab");
       b.setAttribute("aria-selected", i === 0 ? "true" : "false");
       b.innerHTML = "<b>" + x.c + "</b>" + x.t;

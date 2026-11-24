@@ -46,13 +46,13 @@ body{
 .iface,
 .avoid,
 .split>div:nth-child(2),
-.card,
-.card-light,
+.ad-card,
+.ad-card:not(.ad-card--dark),
 .panel,
 .panel-light,
 .roadmap-card,
 .alert-card,
-.table-wrap,
+.ad-tabla,
 .flow,
 .quote{
   background:#fff !important;
@@ -65,19 +65,19 @@ body{
 .iface,
 .avoid,
 .split>div:nth-child(2){
-  --fg:#000;--fg-muted:#333;--line:#bbb;--surface:#fff;--surface-2:#fff;
-  --accent-ink:#000;--chip-bg:#fff;--chip-bd:#bbb;--chip-fg:#333;
-  --quote-bg:#fff;--quote-bd:#bbb
+  --fg:#000;--fg-muted:var(--tinta-secundaria);--line:var(--piedra-borde);--surface:#fff;--surface-2:#fff;
+  --accent-ink:#000;--chip-bg:#fff;--chip-bd:var(--piedra-borde);--chip-fg:var(--tinta-secundaria);
+  --quote-bg:#fff;--quote-bd:var(--piedra-borde)
 }
 
-/* el amarillo no existe en papel: se convierte en negro o en un borde */
-.eyebrow,.eyebrow span:first-child,em,.tag-accent,.card-index,.panel-label{
-  color:#000 !important;background:none !important;border-color:#666 !important
+/* la lima no existe en papel: el énfasis va en negro o en un borde */
+.eyebrow,.eyebrow span:first-child,em,.tag-accent,.ad-card__n,.panel-label{
+  color:#000 !important;background:none !important;border-color:var(--tinta-suave) !important
 }
-em{font-weight:800}
+em{font-weight:500}
 
-.card,.roadmap-card,.alert-card,.panel,.quote,.table-wrap,.flow{
-  border:1px solid #bbb !important
+.ad-card,.roadmap-card,.alert-card,.panel,.quote,.ad-tabla,.flow{
+  border:1px solid var(--piedra-borde) !important
 }
 
 /* ---------- lo plegado se abre ---------- */
@@ -86,7 +86,7 @@ details.mas>.mas-body{display:block !important}
 
 /* ---------- cortes de página ---------- */
 h2,h3,h4,h5{break-after:avoid;page-break-after:avoid}
-.section-heading,.card,.roadmap-card,.alert-card,.gate,.flow,.quote,tr{
+.section-heading,.ad-card,.roadmap-card,.alert-card,.gate,.flow,.quote,tr{
   break-inside:avoid;page-break-inside:avoid
 }
 section[id]{break-before:page;page-break-before:always}
@@ -100,7 +100,7 @@ section[id]{break-before:page;page-break-before:always}
 /* ---------- diagramas y tablas completos, sin scroll ---------- */
 .flow{overflow:visible !important}
 .flow svg{min-width:0 !important;width:100% !important}
-.table-wrap{overflow:visible !important}
+.ad-tabla{overflow:visible !important}
 table{font-size:8.5pt}
 
 /* ---------- el hero, en una sola columna ---------- */
@@ -124,13 +124,13 @@ table{font-size:8.5pt}
 .carrusel-tabs,.carrusel-nav{display:none !important}
 .carrusel-pista{display:grid !important;gap:8pt !important;overflow:visible !important;-webkit-mask-image:none !important;mask-image:none !important}
 .carrusel-pista>*{flex:none !important}
-.notas>.card,.columnas>.card,.linea>*{border:0 !important;border-top:1px solid #bbb !important}
+.notas>.ad-card,.columnas>.ad-card,.linea>*{border:0 !important;border-top:1px solid var(--piedra-borde) !important}
 .barra i{background:#000 !important}
 
 /* ---------- la URL de un enlace externo, junto al texto ---------- */
-a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;color:#555}
+a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;color:var(--tinta-suave)}
 
 .page-search,.chapter-nav{display:none}
 .page-intro h1{font-size:27pt}
 .route-diagram{break-inside:avoid}
-.route-diagram a,.entry-routes>a{background:#fff;color:#000}
+.route-diagram a.ad-card,.entry-routes>a.ad-card{background:#fff;color:#000}

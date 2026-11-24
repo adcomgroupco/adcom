@@ -1,0 +1,228 @@
+body {
+  margin: 0;
+  background: var(--washi);
+  color: var(--sumi);
+}
+
+.formato-shell {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: clamp(var(--space-4), 4vw, var(--space-8));
+  scroll-margin-block-start: calc(var(--nav-height) + var(--space-2));
+}
+
+.formato-nav .ad-nav__in { gap: var(--space-2) var(--space-6); }
+.formato-nav a { display: inline-flex; min-height: var(--target-min); align-items: center; }
+.formato-nav__marca {
+  font: 600 20px var(--font-display);
+  text-decoration: none;
+}
+
+.formato-portada {
+  padding-block: clamp(var(--space-12), 8vw, var(--space-24)) var(--space-12);
+}
+.formato-portada h1, .formato-portada p, .formato-seccion h2 { margin: 0; }
+.formato-portada .formato-meta { margin-block-end: var(--space-4); }
+.formato-portada .ad-t-lead { margin-block-start: var(--space-4); max-width: 52ch; }
+.formato-portada .ad-btn { margin-block-start: var(--space-6); }
+.formato-meta, .formato-nota { color: var(--tinta-secundaria); }
+.formato-nota { font-size: 14px; }
+
+.banco-portada {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, .72fr);
+  align-items: end;
+  gap: var(--space-10);
+  padding-block: clamp(var(--space-12), 8vw, var(--space-24)) var(--space-16);
+}
+.banco-portada .ad-t-lead { margin: var(--space-4) 0 0; max-width: 34ch; }
+.banco-guia {
+  padding: clamp(var(--space-4), 3vw, var(--space-8));
+  border: 1px solid var(--piedra);
+  border-radius: var(--radius-panel);
+  background: var(--crema);
+}
+.banco-guia p { margin: var(--space-2) 0 var(--space-4); color: var(--tinta-secundaria); }
+.banco-acciones { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.banco-acciones .ad-btn { box-sizing: border-box; padding: 10px var(--space-4); font-size: 15px; }
+.banco-acciones .ad-btn--outline { background: var(--papel); }
+.banco-grupos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-16);
+  margin-block-end: var(--space-24);
+}
+
+.guia-layout {
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr) minmax(0, 3fr);
+  gap: var(--space-10);
+  align-items: start;
+  margin-block-end: var(--space-16);
+}
+.guia-indice {
+  padding: var(--space-4);
+  border: 1px solid var(--piedra);
+  border-radius: var(--radius-card);
+  background: var(--papel);
+}
+.guia-indice h2 { margin: 0 0 var(--space-2); }
+.guia-indice a {
+  display: flex;
+  align-items: center;
+  min-height: var(--target-min);
+  font-size: 15px;
+  text-decoration: none;
+}
+.guia-indice a:hover { text-decoration: underline; }
+.guia-texto { max-width: 72ch; overflow-wrap: anywhere; }
+.guia-texto > :first-child { margin-block-start: 0; }
+.guia-texto h2 {
+  scroll-margin-block-start: calc(var(--nav-height) + var(--space-2));
+  margin: var(--space-8) 0 var(--space-4);
+  padding-block-start: var(--space-6);
+  border-block-start: 1px solid var(--piedra);
+  font: 500 clamp(28px, 4vw, 40px)/1.1 var(--font-display);
+  letter-spacing: -.025em;
+}
+.guia-texto h3 { font: 500 24px/1.2 var(--font-display); }
+.guia-texto li + li { margin-block-start: var(--space-2); }
+.guia-texto blockquote {
+  margin-inline: 0;
+  padding: var(--space-4) var(--space-6);
+  background: var(--crema);
+  border: 1px solid var(--piedra);
+  border-radius: var(--radius-panel);
+}
+.guia-texto blockquote p { margin: 0; }
+.guia-texto code { padding: 1px 4px; border-radius: var(--radius-input); background: var(--crema); }
+
+.formato-seccion {
+  border-block-start: 1px solid var(--piedra);
+  padding-block: var(--space-8) var(--space-10);
+}
+.formato-seccion h2 + * { margin-block-start: var(--space-6); }
+.formato-seccion > p { max-width: 70ch; }
+/* :where() deja la especificidad en la de .formato-seccion: una clase de subtítulo propia prevalece. */
+.formato-seccion :where(h3) { font: 500 23px/1.2 var(--font-display); margin-block: 0 var(--space-2); }
+/* al saltar a un ancla, el título no queda debajo del header fijo */
+:where(.formato-shell) :where(section[id], h2[id], h3[id], [id].formato-seccion) {
+  scroll-margin-block-start: calc(var(--nav-height) + var(--space-4));
+}
+.formato-seccion p:last-child { margin-block-end: 0; }
+
+.formato-ficha {
+  margin: var(--space-6) 0 0;
+  padding: var(--space-4);
+  background: var(--crema);
+  border-radius: var(--radius-panel);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-8);
+}
+.formato-ficha div { max-width: 45ch; }
+.formato-ficha dt, .formato-kpi dt { font-size: 14px; color: var(--tinta-secundaria); }
+.formato-ficha dd, .formato-kpi dd { margin: 0; }
+.formato-kpi {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+  gap: 1px;
+  background: var(--piedra);
+  border: 1px solid var(--piedra);
+  border-radius: var(--radius-panel);
+  overflow: hidden;
+  margin-block-end: 0;
+}
+.formato-kpi > div { background: var(--papel); padding: var(--space-4); }
+.formato-kpi dd {
+  font: 300 clamp(28px, 4vw, 42px)/1.14 var(--font-display);
+  font-variant-numeric: tabular-nums;
+  padding-block-start: var(--space-2);
+  overflow-wrap: anywhere;
+}
+.formato-kpi small { display: block; font-size: 13px; color: var(--tinta-secundaria); }
+
+.formato-comparacion dl { display: grid; max-width: 68ch; gap: var(--space-2); }
+.formato-comparacion dl > div {
+  display: grid;
+  grid-template-columns: minmax(100px, 9rem) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+}
+.formato-comparacion dt { font-size: 14px; color: var(--tinta-secundaria); }
+.formato-comparacion dd { display: grid; grid-template-columns: minmax(0, 1fr) 5ch; gap: var(--space-2); margin: 0; align-items: center; }
+.formato-comparacion strong { text-align: end; }
+.formato-barra { display: block; height: 12px; background: var(--crema); }
+.formato-barra > span { display: block; height: 100%; background: var(--sumi); }
+.formato-comparacion dl > div + div .formato-barra > span { background: var(--tinta-suave); }
+
+.formato-tabla {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--piedra);
+  border-radius: var(--radius-panel);
+  background: var(--papel);
+}
+.formato-tabla table { width: 100%; border-collapse: collapse; text-align: left; font-size: 15px; }
+.formato-tabla caption { text-align: left; padding: var(--space-2) var(--space-4); color: var(--tinta-secundaria); font-size: 14px; }
+.formato-tabla th, .formato-tabla td { padding: 12px 16px; border-block-end: 1px solid var(--piedra); vertical-align: top; }
+.formato-tabla thead th { background: var(--crema); white-space: nowrap; }
+.formato-tabla tbody tr:last-child > * { border-block-end: 0; }
+.formato-tabla th { font-weight: 500; }
+.formato-tabla .valor { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.formato-filtros { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-block: var(--space-4) var(--space-6); }
+.formato-filtros[hidden] { display: none; }
+.formato-filtros label { display: grid; gap: 4px; font-size: 14px; }
+.formato-filtros select {
+  min-height: var(--target-min);
+  padding: 6px var(--space-4);
+  border: 1px solid var(--piedra-borde);
+  border-radius: var(--radius-pill);
+  background: var(--papel);
+  color: var(--sumi);
+  font: inherit;
+}
+
+.formato-pieza {
+  display: grid;
+  grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: start;
+}
+.formato-pieza figure { margin: 0; }
+.formato-pieza img { display: block; width: 100%; height: auto; }
+.formato-pieza__muestra {
+  display: grid;
+  place-items: center;
+  min-height: 132px;
+  aspect-ratio: 4 / 5;
+  background: var(--crema);
+  border: 1px solid var(--piedra);
+  border-radius: var(--radius-card);
+  color: var(--tinta-secundaria);
+  font-size: 14px;
+}
+.formato-pieza figcaption { margin-block-start: var(--space-2); }
+.formato-contenido { margin-block-end: var(--space-12); }
+
+@media (max-width: 900px) {
+  .banco-portada, .banco-grupos { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .formato-pieza figure { max-width: 240px; }
+}
+
+@media print {
+  .formato-nav, .formato-filtros, .guia-indice, .banco-acciones, .ad-foot { display: none; }
+  .guia-layout { display: block; }
+  .formato-portada { padding-block: 0 var(--space-6); }
+  .formato-portada h1 { font-size: 30pt; }
+  .formato-seccion { padding-block: var(--space-4); }
+  .formato-seccion h2 { break-after: avoid; font-size: 22pt; }
+  .formato-tabla { overflow: visible; }
+  .formato-tabla thead th { white-space: normal; }
+  .formato-tabla th, .formato-tabla td { padding: 5px 7px; }
+  .formato-tabla tr, .formato-kpi, .formato-pieza { break-inside: avoid; }
+}

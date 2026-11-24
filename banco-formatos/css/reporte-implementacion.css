@@ -1,0 +1,89 @@
+/* Reporte de implementación · solo lo específico de esta página (prefijo ri-).
+   KPIs, estados, tablas, lecturas, pasos, tarjetas, marcadores, leyendas y
+   «ver los datos» vienen del sistema (ad-*, adcom-v2.css sección 5b).
+   Aquí quedan: la barra apilada de estado, los filtros y la galería. */
+
+.ri-regla { max-width: 70ch; margin-block-start: var(--space-4); }
+.formato-seccion .ri-subtitulo { margin-block: var(--space-10) 0; }
+.ri-sub { display: block; font-size: 14px; color: var(--tinta-suave); font-weight: 400; }
+.ri-nowrap { white-space: nowrap; }
+.ri-num { font-variant-numeric: tabular-nums; }
+.ri-fuente { margin-block-start: var(--space-8); }
+.ri-opcional { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.ri-lista { max-width: 70ch; padding-inline-start: 1.2em; }
+.ri-lista li + li { margin-block-start: var(--space-2); }
+.ri-lista + .ad-tabla { margin-block-start: var(--space-6); }
+
+/* ---------- Estado al corte: barra apilada con base cero.
+   El tramo clave (con entrega) va en lima con borde sumi; la leyenda
+   .ad-leyenda reusa las mismas clases en su muestra. */
+.ri-estado { max-width: 760px; }
+.ri-barra { display: flex; gap: 2px; height: 28px; margin-block-start: var(--space-4); }
+.ri-barra__seg { display: block; min-width: 6px; box-sizing: border-box; background: var(--c); border: 1px solid var(--sumi); }
+.ri-barra__seg--entrega { --c: var(--lima); }
+.ri-barra__seg--activo { --c: var(--sumi); }
+.ri-barra__seg--revision { --c: var(--tinta-tenue); }
+.ri-barra__seg--rechazado, .ri-barra__seg--pausado { --c: var(--papel); }
+.ri-barra__seg--rechazado { border: 2px solid var(--neg); }
+.ri-barra__seg--pausado { border-style: dashed; }
+.ri-leyenda { margin-block-start: var(--space-4); font-size: 15px; }
+.ri-pct { color: var(--tinta-suave); font-size: 14px; }
+
+/* ---------- Filtros de la galería (los botones son .ad-chip) */
+.ri-filtros { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-10); margin-block: 0 var(--space-2); }
+.ri-filtros[hidden] { display: none; }
+.ri-filtros__grupo { display: grid; gap: var(--space-2); }
+.ri-filtros__titulo { font-size: 14px; color: var(--tinta-secundaria); }
+.ri-chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+
+/* ---------- Galería por programa: cada pieza es una .ad-card */
+.ri-grupo { margin-block-start: var(--space-8); }
+.ri-grupo[hidden] { display: none; }
+.ri-grupo > h3 { margin: 0; }
+.ri-grupo > .formato-nota { margin: 4px 0 var(--space-4); }
+.ri-galeria { --col: 340px; --gap: var(--space-4); }
+.ri-pieza[hidden] { display: none; }
+.ri-pieza { min-width: 0; }
+.ri-pieza .ad-card__t { margin: 0; padding: 0; font-size: 20px; }
+.ri-marcos { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--space-2); }
+.ri-pieza .ad-marcador { height: 200px; max-width: 100%; box-sizing: border-box; align-content: center; justify-items: center; gap: 4px; padding: var(--space-2); line-height: 1.3; }
+.ri-ratio { color: var(--tinta-suave); font-size: 12px; }
+.ri-svg-linea { fill: none; stroke: var(--tinta-suave); stroke-width: 1.4; }
+.ri-svg-relleno { fill: var(--tinta-suave); }
+.ri-pieza__titulo { margin: 0; font-weight: 500; }
+.ri-pieza__datos { display: grid; gap: var(--space-2); margin: var(--space-2) 0 0; padding-block-start: var(--space-4); border-block-start: 1px solid var(--piedra); }
+.ri-pieza__datos > div { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: var(--space-2); }
+.ri-pieza__datos dt { font-size: 14px; color: var(--tinta-suave); }
+.ri-pieza__datos dd { margin: 0; font-size: 15px; min-width: 0; }
+.ri-cta { padding: 2px 12px; font-size: 14px; border-radius: var(--radius-input); } /* el botón de la pieza no se toca: recto */
+.ri-destinos-lista { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--space-2); }
+.ri-destinos-lista li { display: flex; flex-wrap: wrap; align-items: center; gap: 2px var(--space-2); }
+.ri-pieza__datos .ri-url { font-size: 13px; color: var(--tinta-secundaria); overflow-wrap: anywhere; }
+
+/* ---------- Compuertas (framework 25): .ad-pasos con la compuerta actual en lima.
+   .ad-paso pinta de lima el último paso; aquí la lima va solo en la actual
+   (.is-on) y las compuertas cerradas se rellenan de sumi. */
+.ri-pasos { grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr)); margin-block: var(--space-6); }
+.ri-pasos .ad-paso:last-child:not(.is-on) .ad-n { background: var(--washi); border-color: var(--sumi); }
+.ri-pasos .ri-compuerta--cerrada:not(.is-on) .ad-n { background: var(--sumi); border-color: var(--sumi); color: var(--washi); }
+.ri-pasos .ad-paso h3 { font-size: 17px; }
+.ri-compuerta__estado { color: var(--tinta-secundaria); }
+.ri-compuerta__nota { font-size: 13px; color: var(--tinta-suave); }
+
+@media (max-width: 560px) {
+  .ri-pasos { grid-template-columns: minmax(0, 1fr); }
+  .ri-pieza .ad-marcador { height: 168px; }
+  .ri-pieza__datos > div { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .ad-nav__links { gap: var(--space-4); }
+}
+
+@media print {
+  .ri-filtros, #ri-piezas-resumen { display: none; }
+  .ri-pieza[hidden], .ri-grupo[hidden] { display: flex; }
+  .ri-galeria { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ri-pieza, .ri-pasos, .ri-estado { break-inside: avoid; }
+  .ri-pieza .ad-marcador { height: 140px; }
+}
+
+/* Cinco cifras por fila: tamaño menor para que «$4.000.000» no parta línea */
+#ri-kpi .ad-kpi__n { font-size: clamp(26px, 2.4vw, 34px); overflow-wrap: normal; white-space: nowrap; }

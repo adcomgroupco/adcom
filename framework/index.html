@@ -5,11 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Consulta las secciones y herramientas del área digital.">
 <title>Índice | Framework Digital de Adcom</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23050505' stroke='%23ffd400' stroke-width='2'/%3E%3Ctext x='16' y='21.5' font-family='Poppins,Arial,sans-serif' font-size='13' font-weight='900' fill='%23ffd400' text-anchor='middle'%3EFD%3C/text%3E%3C/svg%3E">
-<meta name="theme-color" content="#050505">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%230E0E0F'/%3E%3Ctext x='16' y='21' font-family='Inter Tight,Arial,sans-serif' font-size='13' font-weight='500' fill='%23F7F6F2' text-anchor='middle'%3EFD%3C/text%3E%3Ccircle cx='25' cy='8' r='3' fill='%23D8FF3D'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#0E0E0F">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
+<!-- sistema v2: tokens y componentes ad-*; 01-tokens.css re-apunta los nombres del framework encima -->
+<link rel="stylesheet" href="../assets/css/adcom-v2.css">
 <link rel="stylesheet" href="assets/css/01-tokens.css">
 <link rel="stylesheet" href="assets/css/02-layout.css">
 <link rel="stylesheet" href="assets/css/03-componentes.css">
@@ -87,11 +89,11 @@
 <header class="area-intro page-intro section-dark">
   <div class="wrap">
     <p class="page-kicker">Área Digital de Adcom</p>
-    <h1 id="hero-title" tabindex="-1">Framework Digital</h1>
+    <h1 id="hero-title" tabindex="-1">Framework <span class="ad-hl">Digital</span></h1>
     <div class="entry-routes">
-      <a href="estrategia.html"><strong>Estrategia</strong><span>Define el problema, la dirección y cómo medir el éxito.</span></a>
-      <a href="operacion-tactica.html"><strong>Operación y táctica</strong><span>Organiza campañas, control, pruebas y aprendizaje.</span></a>
-      <a href="automatizacion.html"><strong>Automatización e IA</strong><span>Consulta qué puede hacer una herramienta y quién debe aprobar el cambio.</span></a>
+      <a class="ad-card ad-card--dark" href="estrategia.html"><strong>Estrategia</strong><span class="ad-card__d">Define el problema, la dirección y cómo medir el éxito.</span></a>
+      <a class="ad-card ad-card--dark" href="operacion-tactica.html"><strong>Operación y táctica</strong><span class="ad-card__d">Organiza campañas, control, pruebas y aprendizaje.</span></a>
+      <a class="ad-card ad-card--dark" href="automatizacion.html"><strong>Automatización e IA</strong><span class="ad-card__d">Consulta qué puede hacer una herramienta y quién debe aprobar el cambio.</span></a>
     </div>
     <div class="page-search">
     <form class="buscador" id="buscador" role="search">
@@ -118,12 +120,20 @@
   </div>
 </section>
 
+<section class="section-light framework-summary" id="banco-formatos" aria-labelledby="banco-formatos-title">
+  <div class="wrap">
+    <h2 id="banco-formatos-title">Banco de formatos</h2>
+    <p class="lead">Plantillas para estrategia, implementación, resultados, inversión y materiales.</p>
+    <a href="../banco-formatos/index.html">Abrir el banco de formatos</a>
+  </div>
+</section>
+
 <!-- ============ ÍNDICE ============ -->
 <section class="section-dark" id="indice" tabindex="-1" aria-labelledby="indice-title">
   <div class="wrap">
     <div class="section-heading" data-reveal>
       <div>
-        <p class="eyebrow"><span>ÍNDICE</span><span>CONSULTA DIRECTA</span></p>
+        <p class="eyebrow"><span>Índice</span><span>Consulta directa</span></p>
         <h2 id="indice-title">Índice del framework</h2>
         <p class="claim">Todo el framework, <em>punto por punto.</em></p>
       </div>

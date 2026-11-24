@@ -1,0 +1,90 @@
+/* Flow de medios y forecast · estilos propios de la plantilla (v2) */
+
+.flow-cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+.flow-cabecera + * { margin-block-start: var(--space-6); }
+.flow-escenarios-control { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.flow-nota { margin-block-start: var(--space-4); }
+.flow-aviso {
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--sumi);
+  border-radius: var(--radius-card);
+  background: var(--papel);
+  color: var(--sumi);
+}
+
+.flow-sub { display: block; font-size: 13px; font-weight: 400; color: var(--tinta-suave); }
+.flow-sub--inline { display: inline; }
+.flow-rol { min-width: 22ch; }
+
+/* Gantt: medio × mes con tira de semanas */
+.flow-gantt { font-size: 14px; }
+.flow-gantt th, .flow-gantt td { padding: 10px 12px; }
+.flow-gantt .gantt-medio {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  min-width: 170px;
+  background: var(--papel);
+}
+.flow-gantt thead .gantt-medio { background: var(--crema); z-index: 2; }
+.flow-gantt .gantt-mes { min-width: 112px; }
+.flow-gantt .gantt-mes .flow-sub { margin-inline-start: 6px; }
+.gantt-celda { min-width: 112px; }
+.gantt-monto { display: block; font-variant-numeric: tabular-nums; margin-block-end: 6px; }
+.gantt-celda--vacia .gantt-monto { color: var(--tinta-suave); }
+.gantt-tira { display: flex; gap: 2px; }
+.gantt-tira i { flex: 1; height: 14px; background: var(--crema); border: 1px solid var(--piedra); }
+.gantt-tira i.on { background: var(--sumi); border-color: var(--sumi); }
+.gantt-grupo th {
+  background: var(--washi);
+  font-weight: 500;
+  color: var(--tinta-secundaria);
+  font-size: 13px;
+}
+.gantt-hitos td { vertical-align: top; }
+.gantt-hitos th { position: sticky; left: 0; background: var(--papel); }
+.gantt-hito { display: flex; gap: 6px; align-items: baseline; font-size: 13px; color: var(--tinta-secundaria); }
+.gantt-hito + .gantt-hito { margin-block-start: 4px; }
+.gantt-hito b {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  background: var(--sumi);
+  transform: rotate(45deg);
+}
+.flow-gantt tfoot th, .flow-gantt tfoot td { background: var(--crema); font-weight: 500; }
+.flow-gantt tfoot th { position: sticky; left: 0; }
+
+/* Gráfico de barras propio */
+.flow-figura { margin: var(--space-6) 0 0; }
+.flow-figura svg { display: block; width: 100%; height: auto; max-width: 760px; }
+.eje-linea { stroke: var(--piedra); stroke-width: 1; }
+.eje-texto { font: 12px var(--font-body); fill: var(--tinta-suave); }
+.eje-valor { font: 500 12px var(--font-display); fill: var(--sumi); }
+.flow-detalle { margin-block-start: var(--space-4); }
+.flow-detalle .ad-tabla { margin-block-start: var(--space-2); }
+.ad-kpi dd { margin: 0; }
+.flow-escenarios-control .ad-chip[aria-pressed="true"] { background: var(--lima); border-color: var(--sumi); color: var(--sumi); }
+.flow-nota { max-width: 78ch; }
+.formato-seccion .ad-sec-cab > * { margin: 0; }
+.flow-escenarios { margin: 0 0 var(--space-6); padding: 0; list-style: none; }
+.flow-escenario__n { margin: 0; font: 500 20px/1.2 var(--font-display); }
+.flow-escenario dl { margin: 0; display: grid; gap: var(--space-2); }
+.flow-escenario dt { font-size: 13px; color: var(--tinta-suave); }
+.flow-escenario.is-on dt { color: var(--sumi); }
+.flow-escenario dd { margin: 0; font-size: 15px; }
+.flow-reglas { margin: 0 0 var(--space-6); }
+.flow-reglas .ad-paso { padding-block-start: var(--space-6); }
+
+@media print {
+  .flow-escenarios-control, .flow-detalle summary { display: none; }
+  .flow-detalle { display: block; }
+  .flow-gantt .gantt-medio, .gantt-hitos th, .flow-gantt tfoot th { position: static; }
+  .flow-escenario { break-inside: avoid; }
+}
