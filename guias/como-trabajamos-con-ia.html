@@ -8,10 +8,8 @@
   <meta name="robots" content="noindex, nofollow">
   <title>Cómo trabajamos con IA | Adcom</title>
   <script>document.documentElement.className='js'</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
-  <link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261123">
+  <link rel="stylesheet" href="../assets/ds/fonts.css">
+  <link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261126">
   <style>
 /* Guía interactiva en v2. Solo tokens de adcom-v2.css: ningún color ni espacio suelto.
    Lo propio de esta página es el comportamiento (recorrido, conexiones, versiones). */
@@ -19,9 +17,6 @@
 [hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--washi);color:var(--sumi)}
-.wrap{max-width:var(--container-max);margin:0 auto;padding:0 var(--space-6)}
-.marca{font-family:var(--font-display);font-size:20px;font-weight:600;letter-spacing:-.02em;color:var(--sumi);text-decoration:none;min-height:var(--target-min);display:inline-flex;align-items:center}
-.marca span{font-weight:400;color:var(--tinta-suave);margin-left:8px;font-size:14px;letter-spacing:0}
 .ad-nav__links a:hover{color:var(--sumi)}
 .ad-nav__links a[aria-current="true"]{color:var(--sumi);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px}
 
@@ -30,17 +25,17 @@ body{margin:0;background:var(--washi);color:var(--sumi)}
 .ico--lleno{fill:currentColor;stroke:none}
 .logo{width:24px;height:24px;flex:none;fill:currentColor}
 
-/* portada */
-.hero{padding:var(--space-24) 0 var(--space-12)}
-.hero h1{margin:var(--space-4) 0 0}
-.hero .ad-t-lead{margin:var(--space-6) 0 0;max-width:46ch;color:var(--tinta-secundaria)}
-.hero .ad-aviso{margin-top:var(--space-6)}
-.hero__acciones{display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:center;margin-top:var(--space-8)}
-.ideas{margin-top:var(--space-24)}
+/* portada: las tres ideas van en su propia sección; son paralelas, no un orden, así que ninguna se rellena */
+.ad-hero .ad-aviso{margin-top:var(--space-6)}
 .ideas .ad-paso h3{margin:var(--space-4) 0 0}
+.ideas .ad-paso .ad-n,.ideas .ad-paso:last-child .ad-n{background:var(--papel);border-color:var(--sumi)}
 
-/* bloques */
-.bloque{margin-top:var(--space-24);padding-top:var(--space-12);border-top:1px solid var(--piedra);scroll-margin-top:calc(var(--nav-height) + var(--space-4))}
+/* secciones: el ritmo lo da .ad-sec; aquí solo el margen de anclaje del índice */
+.bloque{scroll-margin-top:calc(var(--nav-height) + var(--space-4))}
+
+/* lo actual en lima es una sola cosa por bloque: el paso del recorrido, el nivel elegido, la versión elegida.
+   Los selectores (situación, conexión, herramienta) quedan en sumi */
+.situaciones .ad-chip[aria-pressed="true"],.cx-modos .ad-chip[aria-pressed="true"],.herr .ad-chip[aria-pressed="true"]{background:var(--sumi);border-color:var(--sumi);color:var(--washi)}
 .sub{font-family:var(--font-display);font-size:clamp(22px,2.6vw,28px);font-weight:500;line-height:1.15;letter-spacing:-.02em;margin:0}
 .sub-p{margin:var(--space-2) 0 0;max-width:68ch;color:var(--tinta-secundaria)}
 
@@ -153,7 +148,7 @@ html:not(.js) .ruta .ejemplo{display:block;margin:0 0 var(--space-6)}
 .cx-ia .logo{width:28px;height:28px;margin-bottom:var(--space-2)}
 .cx-ia strong,.cx-mcp strong{font-size:20px;letter-spacing:-.02em}
 .cx-ia span,.cx-mcp span{font-size:13px;font-weight:400}
-.cx-mcp{grid-column:3;background:var(--lima);color:var(--sumi);min-width:88px}
+.cx-mcp{grid-column:3;background:var(--papel);color:var(--sumi);border:2px solid var(--sumi);min-width:88px}
 .cx-tronco{grid-column:2;grid-row:1 / 4;align-self:center;width:var(--space-10);height:0;border-top:2px solid var(--sumi);transform-origin:left}
 .cx-hilo{grid-column:4;grid-row:var(--r);position:relative;height:0;min-width:var(--space-8)}
 .cx-hilo::before{content:"";position:absolute;left:0;right:0;top:-1px;border-top:2px solid var(--sumi);transform-origin:left}
@@ -185,6 +180,7 @@ html:not(.js) .ruta .ejemplo{display:block;margin:0 0 var(--space-6)}
 .impacto ol{margin:0}
 .impacto li{--c:var(--crema)}
 .impacto li.is-lleno{--c:var(--sumi)}
+.impacto li.is-on{background:var(--sumi)}
 .impacto__ejes{display:flex;justify-content:space-between;margin-top:var(--space-2);font-size:13px;color:var(--tinta-suave)}
 .nivel-pan{margin-top:var(--space-6)}
 .nivel-pan h3{margin:0 0 var(--space-4)}
@@ -235,8 +231,8 @@ button.version:hover{border-color:var(--sumi)}
 .prod__d{font-size:15px;color:var(--tinta-secundaria)}
 .prod .ad-estado{justify-self:end;min-height:0;padding:0;background:transparent;border-color:transparent;color:var(--tinta-suave);font-weight:400}
 .prod .ad-estado--sin{border-style:solid}
-.cierre{margin-top:var(--space-16)}
-.ad-foot{margin-top:var(--space-24)}
+.ad-cierre h2{max-width:24ch;font-size:clamp(32px,4.6vw,56px)}
+.ad-cierre .ad-btn{flex:none}
 
 @media (max-width:760px){
   .prod{grid-template-columns:minmax(0,1fr);gap:4px}
@@ -244,7 +240,6 @@ button.version:hover{border-color:var(--sumi)}
 }
 @media (max-width:640px){
   .ad-nav__links{display:none}
-  .hero{padding:var(--space-12) 0 var(--space-8)}
   .conexion{padding:var(--space-6) var(--space-4)}
   .cx-tool{min-width:88px;padding:12px 10px}
   .cx-tool .logo{display:none}
@@ -253,12 +248,13 @@ button.version:hover{border-color:var(--sumi)}
   .cx-tronco{width:var(--space-6)}
   .git__col{padding:var(--space-4)}
   .detalle{padding:var(--space-4)}
-  .bloque{margin-top:var(--space-16)}
 }
 @media print{
   .ad-nav,.controles,.cx-modos,.git__acciones,.skip-link{display:none}
 }
   </style>
+  <link rel="icon" type="image/png" href="../assets/favicon-adcom.png">
+  <link rel="apple-touch-icon" href="../assets/ds/logos/apple-touch-icon.png">
 </head>
 <body>
 <a class="skip-link" href="#recorrido">Ir al recorrido</a>
@@ -276,7 +272,7 @@ button.version:hover{border-color:var(--sumi)}
 
 <header class="ad-nav">
   <nav class="ad-nav__in" aria-label="Principal">
-    <a class="marca" href="../index.html">Adcom<span>área digital</span></a>
+    <a class="ad-marca" href="../index.html"><img src="../assets/ds/logos/adcom-mark.png" alt="Adcom" width="30" height="25"><i>Cómo trabajamos con IA</i></a>
     <div class="ad-nav__links" id="nav-secciones">
       <a href="#recorrido">Recorrido</a>
       <a href="#conexiones">Conexiones</a>
@@ -288,29 +284,36 @@ button.version:hover{border-color:var(--sumi)}
 </header>
 
 <main id="contenido">
-  <section class="hero wrap" aria-labelledby="titulo">
-    <p class="ad-eyebrow">Adcom · Cómo trabajamos con IA</p>
-    <h1 class="ad-t-display-hero" id="titulo"><span class="ad-ln">La IA trabaja.</span><span class="ad-ln">La <span class="ad-hl">persona</span> decide.</span></h1>
-    <p class="ad-t-lead">Así recorre una solicitud nuestro flujo, desde que alguien la pide hasta que el cliente abre su link. Escoge una situación y pulsa Reproducir.</p>
-    <div class="hero__acciones">
-      <a class="ad-btn ad-btn--accent" href="#recorrido">Ver el recorrido</a>
-      <a class="ad-link" href="#resultados">Qué sale de este flujo</a>
+  <section class="ad-hero" aria-labelledby="titulo">
+    <div class="ad-wrap">
+      <p class="ad-eyebrow">Cómo trabajamos con IA</p>
+      <h1 id="titulo"><span class="ad-ln">La IA trabaja.</span><span class="ad-ln">La <span class="ad-hl">persona</span> decide.</span></h1>
+      <p class="ad-lead">Así recorre una solicitud nuestro flujo, desde que alguien la pide hasta que el cliente abre su link. Escoge una situación y pulsa Reproducir.</p>
+      <div class="ad-hero__acciones">
+        <a class="ad-btn ad-btn--accent" href="#recorrido">Ver el recorrido</a>
+        <a class="ad-link" href="#resultados">Qué sale de este flujo</a>
+      </div>
+      <noscript><p class="ad-aviso"><span class="ad-aviso__k">Aviso</span>Esta guía es interactiva y funciona mejor con JavaScript activado. Sin él, verás el contenido de cada recorrido como una lista.</p></noscript>
     </div>
-    <noscript><p class="ad-aviso"><span class="ad-aviso__k">Aviso</span>Esta guía es interactiva y funciona mejor con JavaScript activado. Sin él, verás el contenido de cada recorrido como una lista.</p></noscript>
+  </section>
 
-    <ol class="ad-pasos ideas">
-      <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">1</span><h3>La IA lee y propone</h3><p>Consulta correos, hojas y plataformas, analiza y sugiere qué hacer.</p></li>
-      <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">2</span><h3>La persona decide</h3><p>Un cambio en una cuenta o un entregable para el cliente se aprueba antes de salir.</p></li>
-      <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">3</span><h3>Todo queda guardado</h3><p>Cada versión y cada cambio se registran, y se puede volver atrás.</p></li>
-    </ol>
+  <section class="ad-sec ad-sec--papel" aria-label="Tres ideas">
+    <div class="ad-wrap">
+      <ol class="ad-pasos ideas">
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">1</span><h3>La IA lee y propone</h3><p>Consulta correos, hojas y plataformas, analiza y sugiere qué hacer.</p></li>
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">2</span><h3>La persona decide</h3><p>Un cambio en una cuenta o un entregable para el cliente se aprueba antes de salir.</p></li>
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">3</span><h3>Todo queda guardado</h3><p>Cada versión y cada cambio se registran, y se puede volver atrás.</p></li>
+      </ol>
+    </div>
   </section>
 
   <!-- ============================ 1. RECORRIDO ============================ -->
-  <section class="bloque wrap" id="recorrido" aria-labelledby="t-recorrido">
-    <header class="ad-sec-cab">
+  <section class="ad-sec bloque" id="recorrido" aria-labelledby="t-recorrido">
+    <div class="ad-wrap">
+    <header class="ad-sec-cab ad-sec-cab--grande">
       <p class="ad-eyebrow">Recorrido</p>
-      <h2 id="t-recorrido">Sigue una solicitud de <span class="ad-hl">punta a punta</span></h2>
-      <p>Tres situaciones de ejemplo, con datos ficticios. En cada paso verás quién actúa (una persona, Gmail, Claude, las plataformas o GitHub) y cómo se ve ese momento.</p>
+      <h2 id="t-recorrido">Sigue una solicitud de punta a punta</h2>
+      <p class="ad-lead">Tres situaciones de ejemplo, con datos ficticios. En cada paso verás quién actúa (una persona, Gmail, Claude, las plataformas o GitHub) y cómo se ve ese momento.</p>
     </header>
 
     <div class="fila-chips situaciones" role="group" aria-label="Elige una situación">
@@ -451,14 +454,16 @@ button.version:hover{border-color:var(--sumi)}
         <li><i class="rayas"></i>Camino si no se aprueba</li>
       </ul>
     </div>
+    </div>
   </section>
 
   <!-- =========================== 2. CONEXIONES =========================== -->
-  <section class="bloque wrap" id="conexiones" aria-labelledby="t-conexiones">
-    <header class="ad-sec-cab">
+  <section class="ad-sec bloque ad-sec--crema" id="conexiones" aria-labelledby="t-conexiones">
+    <div class="ad-wrap">
+    <header class="ad-sec-cab ad-sec-cab--grande">
       <p class="ad-eyebrow">Conexiones</p>
       <h2 id="t-conexiones">Cómo la IA llega a nuestras <span class="ad-hl">herramientas</span></h2>
-      <p>Para leer una campaña o un correo, la IA necesita entrar a esas herramientas. Hay dos formas, y usamos las dos según la herramienta.</p>
+      <p class="ad-lead">Para leer una campaña o un correo, la IA necesita entrar a esas herramientas. Hay dos formas, y usamos las dos según la herramienta.</p>
     </header>
 
     <div class="fila-chips cx-modos" role="group" aria-label="Elige una forma de conexión">
@@ -539,14 +544,16 @@ button.version:hover{border-color:var(--sumi)}
         <p id="herr-t">Cada una cumple un papel distinto en el flujo.</p>
       </div>
     </div>
+    </div>
   </section>
 
   <!-- ============================= 3. CONTROL ============================= -->
-  <section class="bloque wrap" id="control" aria-labelledby="t-control">
-    <header class="ad-sec-cab">
+  <section class="ad-sec bloque ad-sec--papel" id="control" aria-labelledby="t-control">
+    <div class="ad-wrap">
+    <header class="ad-sec-cab ad-sec-cab--grande">
       <p class="ad-eyebrow">Control</p>
-      <h2 id="t-control">Más impacto, <span class="ad-hl">más control</span> humano</h2>
-      <p>Un recorrido tiene cinco momentos. Mientras más impacto tiene la acción, más pesa la decisión de una persona. Elige un momento para ver quién hace qué.</p>
+      <h2 id="t-control">Más impacto, más control humano</h2>
+      <p class="ad-lead">Un recorrido tiene cinco momentos. Mientras más impacto tiene la acción, más pesa la decisión de una persona. Elige un momento para ver quién hace qué.</p>
     </header>
 
     <div class="ad-grid niveles" role="group" aria-label="Momentos del recorrido">
@@ -602,14 +609,16 @@ button.version:hover{border-color:var(--sumi)}
         <div><dt>Qué queda de respaldo</dt><dd>Cada versión queda guardada y se puede volver a una anterior.</dd></div>
       </dl>
     </div>
+    </div>
   </section>
 
   <!-- ============================ 4. VERSIONES ============================ -->
-  <section class="bloque wrap" id="versiones" aria-labelledby="t-versiones">
-    <header class="ad-sec-cab">
+  <section class="ad-sec bloque" id="versiones" aria-labelledby="t-versiones">
+    <div class="ad-wrap">
+    <header class="ad-sec-cab ad-sec-cab--grande">
       <p class="ad-eyebrow">Versiones</p>
-      <h2 id="t-versiones">Todo queda <span class="ad-hl">guardado</span> y se puede volver atrás</h2>
-      <p>Los entregables viven en un repositorio: la carpeta de un proyecto con todo su historial. Pruébalo tú: guarda una versión, súbela y publícala.</p>
+      <h2 id="t-versiones">Todo queda guardado y se puede volver atrás</h2>
+      <p class="ad-lead">Los entregables viven en un repositorio: la carpeta de un proyecto con todo su historial. Pruébalo tú: guarda una versión, súbela y publícala.</p>
     </header>
 
     <div class="git" id="git">
@@ -672,14 +681,16 @@ button.version:hover{border-color:var(--sumi)}
         </table>
       </div>
     </details>
+    </div>
   </section>
 
   <!-- ============================ 5. RESULTADOS ============================ -->
-  <section class="bloque wrap" id="resultados" aria-labelledby="t-resultados">
-    <header class="ad-sec-cab">
+  <section class="ad-sec bloque ad-sec--papel" id="resultados" aria-labelledby="t-resultados">
+    <div class="ad-wrap">
+    <header class="ad-sec-cab ad-sec-cab--grande">
       <p class="ad-eyebrow">Resultados</p>
       <h2 id="t-resultados">Lo que sale de <span class="ad-hl">este flujo</span></h2>
-      <p>Algunos productos ya funcionan y otros son ideas por priorizar con cada área.</p>
+      <p class="ad-lead">Algunos productos ya funcionan y otros son ideas por priorizar con cada área.</p>
     </header>
 
     <h3 class="grupo-prod">Clientes y mercado</h3>
@@ -719,9 +730,16 @@ button.version:hover{border-color:var(--sumi)}
       <li class="prod"><span class="prod__n">Por definir con el área</span><span class="prod__d">Espacio para las ideas de Discover.</span><span class="ad-estado ad-estado--na">Por definir</span></li>
     </ul>
 
-    <div class="ad-lectura cierre">
-      <span class="ad-lectura__k">En una frase</span>
-      <p>La persona pide, la IA <span class="ad-hl">trabaja</span>, la persona decide, y todo queda guardado para poder volver atrás.</p>
+    </div>
+  </section>
+
+  <section class="ad-sec ad-sec--oscuro ad-cierre" aria-labelledby="t-cierre">
+    <div class="ad-wrap ad-cierre__in">
+      <div>
+        <p class="ad-eyebrow ad-eyebrow--dark">En una frase</p>
+        <h2 id="t-cierre">La persona pide, la IA trabaja, la persona decide, y todo queda guardado para poder volver atrás.</h2>
+      </div>
+      <a class="ad-btn ad-btn--accent" href="../index.html">Volver a los documentos</a>
     </div>
   </section>
 </main>

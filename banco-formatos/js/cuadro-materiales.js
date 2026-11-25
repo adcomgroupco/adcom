@@ -324,17 +324,25 @@ function pintarResumen() {
   const listas = conteo["Aprobada"] + conteo["Entregada"];
   $("#cm-kpi").innerHTML = [
     ["Piezas planificadas", plan, "Sin canceladas"],
-    ["Por aprobar", conteo["Por aprobar"], "Esperan al cliente", true],
+    ["Por aprobar", conteo["Por aprobar"], "Esperan al cliente"],
     ["Aprobadas o entregadas", listas, plan ? `${Math.round(listas / plan * 100)} % del plan` : "Sin dato"],
     ["Vencidas al corte", vencidas, "Entrega anterior al corte y sin aprobar"]
-  ].map(([t, n, m, destacar]) => `<div class="ad-kpi${destacar ? " ad-kpi--on" : ""}"><dt class="ad-kpi__l">${t}</dt><dd class="ad-kpi__n">${entero.format(n)}</dd><dd class="ad-kpi__m">${m}</dd></div>`).join("");
+  ].map(([t, n, m]) => `<div class="ad-kpi"><dt class="ad-kpi__l">${t}</dt><dd class="ad-kpi__n">${entero.format(n)}</dd><dd class="ad-kpi__m">${m}</dd></div>`).join("");
 
-  const max = Math.max(...ESTADOS.map(e => conteo[e]), 1);
+  /* Ciclo de una pieza: los cinco estados activos en orden; el de más piezas va en lima. */
+  const CICLO = [
+    ["Solicitada", "Pedida a creatividad con su brief"],
+    ["En producción", "En manos de creatividad"],
+    ["Por aprobar", "Esperan al cliente"],
+    ["Aprobada", "Con visto bueno del cliente"],
+    ["Entregada", "Con el enlace final"]
+  ];
   const mayor = ESTADOS.filter(e => e !== "Cancelada").sort((a, b) => conteo[b] - conteo[a])[0];
-  $("#cm-barras").innerHTML = ESTADOS.map(e => `<li><span>${e}</span><span class="ad-barra${e === mayor ? " ad-barra--on" : ""}" aria-hidden="true"><span style="--v:${conteo[e] / max * 100}%"></span></span><strong>${entero.format(conteo[e])}</strong></li>`).join("");
+  $("#cm-barras").innerHTML = CICLO.map(([e, d], i) => `<li class="ad-paso${e === mayor ? " is-on" : ""}"><span class="ad-n ad-n--lg" aria-hidden="true">${i + 1}</span><h3>${e}</h3><strong class="cm-ciclo__n">${entero.format(conteo[e])}</strong><p>${d}</p></li>`).join("");
+  $("#cm-canceladas").textContent = `Canceladas: ${entero.format(conteo["Cancelada"])}. No cuentan en el plan ni en el ciclo.`;
 
   $("#cm-lectura").innerHTML = `<span class="ad-lectura__k">Lectura</span><p>De ${entero.format(plan)} piezas planificadas, ${entero.format(listas)} ya están aprobadas o entregadas. ` +
-    `El mayor bloque está en «${mayor}» (${entero.format(conteo[mayor])}) y ${entero.format(vencidas)} piezas pasaron su fecha de entrega sin aprobación: son <span class="ad-hl">lo primero que se gestiona</span> con creatividad y con el cliente.</p>`;
+    `El mayor bloque está en «${mayor}» (${entero.format(conteo[mayor])}) y ${entero.format(vencidas)} piezas pasaron su fecha de entrega sin aprobación: son lo primero que se gestiona con creatividad y con el cliente.</p>`;
 }
 
 /* ---------- Brief ---------- */
@@ -537,7 +545,7 @@ function iniciar() {
   pintarProduccion();
   pintarCopys();
   pintarEspecificaciones();
-  document.querySelectorAll(".formato-filtros").forEach(f => { f.hidden = false; });
+  document.querySelectorAll(".cm-filtros").forEach(f => { f.hidden = false; });
 }
 
 iniciar();

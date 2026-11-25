@@ -6,11 +6,9 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#F7F6F2">
   <title>Componentes | Banco de formatos | Adcom</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
-  <link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261123">
-  <link rel="stylesheet" href="formatos.css?v=20261123">
+  <link rel="stylesheet" href="../assets/ds/fonts.css">
+  <link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261126">
+  <link rel="stylesheet" href="formatos.css?v=20261125">
   <style>
     /* Solo la presentación de la galería. Los componentes viven en adcom-v2.css, sección 5b. */
     .cp-bloque{padding-block:var(--space-16);border-top:1px solid var(--piedra)}
@@ -25,8 +23,11 @@
     .cp-reglas h3{margin:0 0 var(--space-2);font-size:19px}
     .cp-reglas p{margin:0;font-size:15px;color:var(--tinta-secundaria)}
     .cp-indice{display:flex;flex-wrap:wrap;gap:var(--space-2)}
+    .cp-sub{margin:var(--space-12) 0 var(--space-4);font-size:22px;font-weight:500}
     @media (max-width:760px){.cp-uso{grid-template-columns:minmax(0,1fr)}}
   </style>
+  <link rel="icon" type="image/png" href="../assets/favicon-adcom.png">
+  <link rel="apple-touch-icon" href="../assets/ds/logos/apple-touch-icon.png">
 </head>
 <body>
 <a class="skip-link" href="#contenido">Ir al contenido</a>
@@ -314,6 +315,98 @@
     <details class="ad-datos"><summary>Ver los datos del gráfico</summary>
       <div class="ad-tabla" style="margin-block-start:var(--space-2)"><table><thead><tr><th scope="col">Semana</th><th scope="col" class="valor">Costo por lead</th></tr></thead><tbody><tr><th scope="row">Del 20 al 26 oct</th><td class="valor">$19.800</td></tr><tr><th scope="row">Del 27 oct al 2 nov</th><td class="valor">$21.600</td></tr></tbody></table></div>
     </details>
+  </section>
+
+  <!-- ============ COMPOSICIÓN ============ -->
+  <section class="cp-bloque" aria-labelledby="t-comp">
+    <div class="ad-sec-cab">
+      <p class="ad-eyebrow">Composición</p>
+      <h2 id="t-comp">Ritmo, secciones y diagramas</h2>
+      <p>Lo que hace que una página se vea elaborada: aire entre secciones, un titular grande por sección, la idea a un lado y la figura al otro, fondos que alternan y un diagrama que explica la lógica de esa página. El diagrama se adapta al contenido; no se copia.</p>
+    </div>
+
+    <h3 class="cp-sub">Marca</h3>
+    <div class="cp-demo" style="display:flex;gap:var(--space-8);flex-wrap:wrap;align-items:center">
+      <a class="ad-marca" href="#t-comp"><img src="../assets/ds/logos/adcom-mark.png" alt="Adcom" width="30" height="25"><i>Área digital</i></a>
+      <span class="cp-demo--oscuro" style="padding:var(--space-4) var(--space-6);border-radius:var(--radius-card)"><a class="ad-marca ad-marca--claro" href="#t-comp"><img src="../assets/ds/logos/adcom-mark.png" alt="Adcom" width="30" height="25"><i>Banco de formatos</i></a></span>
+    </div>
+    <div class="cp-uso"><p><b>Cuándo</b>En el encabezado de cada página: isotipo oficial y el nombre del documento. Nunca «Adcom» escrito como logotipo.</p><p><b>Clases</b><code>.ad-marca</code> · <code>--claro</code> sobre fondo oscuro. Archivo: <code>assets/ds/logos/adcom-mark.png</code></p></div>
+
+    <h3 class="cp-sub">Sección en dos columnas con anillo</h3>
+    <div class="cp-demo" style="padding:0;overflow:hidden">
+      <section class="ad-sec ad-sec--oscuro">
+        <div class="ad-wrap ad-split">
+          <div class="ad-sec-cab ad-sec-cab--grande" style="margin:0">
+            <p class="ad-eyebrow ad-eyebrow--dark">Cómo trabajamos</p>
+            <h2>Planear, ejecutar, <span class="ad-hl">reportar</span>.</h2>
+            <p class="ad-lead">Cada documento del área vive en una de tres etapas. La última alimenta a la primera del siguiente periodo.</p>
+          </div>
+          <figure class="ad-anillo" role="img" aria-label="Ciclo: planear, ejecutar, reportar, aprender">
+            <svg viewBox="0 0 400 400" aria-hidden="true">
+              <circle class="ad-dg-line" cx="200" cy="200" r="120"/>
+              <g class="ad-orbit"><circle class="ad-dg-lima" cx="200" cy="80" r="7"/></g>
+            </svg>
+            <span class="ad-anillo__c">Área digital</span>
+            <ol class="ad-anillo__nodos">
+              <li><b><span class="ad-n ad-n--md">1</span>Planear</b><small>Estrategia · Flow · Materiales</small></li>
+              <li><b><span class="ad-n ad-n--md">2</span>Ejecutar</b><small>Implementación · Inversión</small></li>
+              <li class="is-on"><b><span class="ad-n ad-n--md">3</span>Reportar</b><small>Tablero · Informes</small></li>
+              <li><b><span class="ad-n ad-n--md">4</span>Aprender</b><small>Decisiones</small></li>
+            </ol>
+          </figure>
+        </div>
+      </section>
+    </div>
+    <div class="cp-uso"><p><b>Cuándo</b>Para un ciclo que se repite. Los cuatro nodos se nombran con la lógica de la página (aquí, las etapas del trabajo del área).</p><p><b>Clases</b><code>.ad-sec--oscuro</code> · <code>.ad-split</code> · <code>.ad-sec-cab--grande</code> · <code>.ad-lead</code> · <code>.ad-anillo</code></p></div>
+
+    <h3 class="cp-sub">Eje</h3>
+    <div class="cp-demo">
+      <ol class="ad-eje">
+        <li><span class="ad-eje__t">Estrategia</span><span class="ad-eje__d">Qué decidimos</span></li>
+        <li class="is-on"><span class="ad-eje__t">Operación y táctica</span><span class="ad-eje__d">Cómo lo hacemos</span></li>
+        <li><span class="ad-eje__t">Automatización e IA</span><span class="ad-eje__d">Qué delegamos</span></li>
+      </ol>
+    </div>
+    <div class="cp-uso"><p><b>Cuándo</b>De lo amplio a lo específico, o las fases de un recorrido. En móvil se vuelve vertical.</p><p><b>Lima</b>El punto actual (<code>.is-on</code>).</p></div>
+
+    <h3 class="cp-sub">Suma</h3>
+    <div class="cp-demo">
+      <ol class="ad-suma">
+        <li class="ad-suma__i"><span class="ad-suma__n">01</span><h3>Estrategia ›</h3><p>Qué priorizar y por qué.</p><p class="ad-suma__m">Mide: cumplimiento de meta</p></li>
+        <li class="ad-op" aria-hidden="true">+</li>
+        <li class="ad-suma__i"><span class="ad-suma__n">02</span><h3>Medios ›</h3><p>Pauta por canal y etapa.</p><p class="ad-suma__m">Mide: costo por lead</p></li>
+        <li class="ad-op" aria-hidden="true">+</li>
+        <li class="ad-suma__i"><span class="ad-suma__n">03</span><h3>Datos ›</h3><p>CRM, tablero y tracking.</p><p class="ad-suma__m">Mide: matrículas</p></li>
+        <li class="ad-op ad-op--x" aria-hidden="true">×</li>
+        <li class="ad-suma__i"><span class="ad-suma__n">04</span><h3>IA ›</h3><p>Acelera cada paso.</p><p class="ad-suma__m">Mide: tiempo de respuesta</p></li>
+      </ol>
+    </div>
+    <div class="cp-uso"><p><b>Cuándo</b>Capacidades o piezas que se suman; la que multiplica va con «×» en lima.</p><p><b>Clases</b><code>.ad-suma</code> · <code>.ad-suma__i</code> · <code>.ad-op</code> · <code>.ad-op--x</code></p></div>
+
+    <h3 class="cp-sub">Cifras y fila de acción</h3>
+    <div class="cp-demo">
+      <div class="ad-cifras">
+        <div class="ad-stat"><span class="ad-stat__n">$86,4&nbsp;M</span><span class="ad-stat__l">Inversión del periodo</span><span class="ad-stat__m">Corte 16 nov · Fuente CRM</span></div>
+        <div class="ad-stat"><span class="ad-stat__n">3.840</span><span class="ad-stat__l">Leads CRM</span><span class="ad-stat__m">−4&nbsp;% vs periodo anterior</span></div>
+        <div class="ad-stat"><span class="ad-stat__n"><span class="ad-fill">$22.500</span></span><span class="ad-stat__l">Costo por lead</span><span class="ad-stat__m">+25&nbsp;% vs periodo anterior</span></div>
+      </div>
+      <ol class="ad-filas" style="margin-block-start:var(--space-12)">
+        <li><a class="ad-fila" href="#t-comp"><span class="ad-n ad-n--md" aria-hidden="true">1</span><span><span class="ad-fila__k">Planear</span><span class="ad-fila__t">Estrategia para universidades</span></span><span class="ad-go">Abrir</span></a></li>
+        <li><a class="ad-fila" href="#t-comp"><span class="ad-n ad-n--md" aria-hidden="true">2</span><span><span class="ad-fila__k">Ejecutar</span><span class="ad-fila__t">Seguimiento de inversión</span></span><span class="ad-go">Abrir</span></a></li>
+      </ol>
+    </div>
+    <div class="cp-uso"><p><b>Cuándo</b><code>.ad-cifras</code> con <code>.ad-stat</code>: números grandes y finos con contexto y fuente. <code>.ad-go</code>: la píldora lima de las acciones de una lista.</p><p><b>Lima</b>Una cifra con <code>.ad-fill</code> por fila. La píldora <code>.ad-go</code> marca lo que se pulsa.</p></div>
+
+    <h3 class="cp-sub">Banda de cierre</h3>
+    <div class="cp-demo" style="padding:0;overflow:hidden">
+      <section class="ad-sec ad-sec--oscuro ad-cierre">
+        <div class="ad-wrap ad-cierre__in">
+          <div><h2>El próximo informe empieza con una pregunta.</h2><p>Revisamos la fuente, definimos el resultado y proponemos el primer corte.</p></div>
+          <a class="ad-btn ad-btn--accent" href="#t-comp">Abrir el banco</a>
+        </div>
+      </section>
+    </div>
+    <div class="cp-uso"><p><b>Cuándo</b>Al final de una página larga: una frase y una acción.</p><p><b>Clases</b><code>.ad-sec--oscuro</code> · <code>.ad-cierre</code> · <code>.ad-btn--accent</code></p></div>
   </section>
 
   <!-- ============ CÓMO AGREGAR UNO ============ -->

@@ -7,10 +7,8 @@
   <meta name="theme-color" content="#F7F6F2">
   <title>Acta de entrega de vacaciones | Digital / Pauta</title>
   <meta name="robots" content="noindex, nofollow">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
-  <link rel="stylesheet" href="assets/css/adcom-v2.css?v=20261123">
+  <link rel="stylesheet" href="assets/ds/fonts.css">
+  <link rel="stylesheet" href="assets/css/adcom-v2.css?v=20261126">
   <style>
 /* Documento operativo en v2: solo tokens del sistema, ningún valor suelto. */
 *,*::before,*::after{box-sizing:border-box}
@@ -18,41 +16,40 @@ html{scroll-behavior:smooth}
 body{margin:0;background:var(--washi);color:var(--sumi)}
 a{color:inherit}
 
-/* header del portal; aquí no es fijo para que el índice sí lo sea */
+/* encabezado: aquí no es fijo para que el índice sí lo sea */
 .ad-nav{position:relative}
-.marca{font-family:var(--font-display);font-size:20px;font-weight:600;letter-spacing:-.02em;color:var(--sumi);text-decoration:none;min-height:var(--target-min);display:inline-flex;align-items:center}
-.marca span{font-weight:400;color:var(--tinta-suave);margin-left:8px;font-size:14px;letter-spacing:0}
 .masthead-label{font-size:14px;color:var(--tinta-suave)}
 
-.container{max-width:var(--container-max);margin:0 auto;padding:0 var(--space-6) var(--space-16)}
-
-/* cabecera del acta */
-.page-header{padding:var(--space-16) 0 var(--space-8)}
-.page-header h1{margin:var(--space-4) 0 0}
-.metadata{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--space-6);margin:var(--space-12) 0 0;padding:var(--space-6) 0 0;border-top:1px solid var(--piedra)}
+/* cabecera del acta: titular grande y los datos del documento en una franja */
+.metadata{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--space-6);margin:var(--space-16) 0 0;padding:var(--space-6) 0 0;border-top:1px solid var(--piedra)}
 .metadata div{min-width:0}
 .metadata dt{font-size:13px;line-height:1.4;color:var(--tinta-suave)}
 .metadata dd{margin:4px 0 0;font-size:15px;font-weight:500;line-height:1.4}
 
-/* índice: fijo arriba, separado por líneas */
-.toc{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:var(--space-2);overflow-x:auto;margin:0 0 var(--space-12);padding:var(--space-2) 0;border-top:1px solid var(--piedra);border-bottom:1px solid var(--piedra);background:var(--washi-vidrio);-webkit-backdrop-filter:blur(var(--blur-header));backdrop-filter:blur(var(--blur-header));white-space:nowrap;scrollbar-width:thin;scrollbar-color:var(--piedra-borde) transparent}
+/* índice: fijo arriba, ancho completo, separado por líneas */
+.toc{position:sticky;top:0;z-index:5;border-block:1px solid var(--piedra);background:var(--washi-vidrio);-webkit-backdrop-filter:blur(var(--blur-header));backdrop-filter:blur(var(--blur-header))}
+.toc__in{display:flex;align-items:center;gap:var(--space-2);overflow-x:auto;padding-block:var(--space-2);white-space:nowrap;scrollbar-width:thin;scrollbar-color:var(--piedra-borde) transparent}
 .toc strong{padding:0 var(--space-4) 0 0;margin-right:var(--space-2);border-right:1px solid var(--piedra);font-size:13px;color:var(--tinta-suave)}
 .toc a{display:inline-flex;align-items:center;min-height:var(--target-min);padding:0 14px;border-radius:var(--radius-pill);text-decoration:none;font-size:14px;color:var(--tinta-secundaria);transition:background-color var(--duration-hover),color var(--duration-hover)}
 .toc a:hover{background:var(--crema);color:var(--sumi)}
 .toc a:focus-visible{outline-offset:-2px}
+.ad-sec,.ad-hero{scroll-margin-top:72px}
 
-/* secciones: cabecera .ad-sec-cab */
-section,.client{scroll-margin-top:72px}
-section{margin-top:var(--space-16);padding-top:var(--space-8);border-top:1px solid var(--sumi)}
-section > p{max-width:75ch;color:var(--tinta-secundaria)}
-section > ul{max-width:75ch;padding-left:20px;color:var(--tinta-secundaria)}
-section strong{color:var(--sumi)}
-.ad-sec-cab h2{font-size:clamp(28px,3vw,40px)}
+/* secciones: cabecera grande a un lado, contenido al otro */
+.ad-sec-cab{margin-block-end:0}
+.ad-split>.ad-sec-cab{position:sticky;top:calc(var(--space-16) + var(--space-8))}
+.ad-sec-cab--grande h2{font-size:clamp(34px,4.4vw,56px)}
+.ad-sec-cab--plana{margin-block-end:var(--space-12);max-width:none}
+.ad-sec strong{color:var(--sumi)}
+
+/* listas: una línea piedra entre punto y punto */
+.acta-lista{margin:0;padding:0;list-style:none;border-top:1px solid var(--piedra)}
+.acta-lista li{margin:0;padding:var(--space-4) 0;border-bottom:1px solid var(--piedra);font-size:17px;line-height:1.5;color:var(--tinta-secundaria)}
 
 /* clientes: .ad-filas; dentro de cada fila, título a la izquierda y contenido a la derecha */
-.client{display:grid;grid-template-columns:minmax(180px,.42fr) minmax(0,1fr);column-gap:var(--space-8);padding:var(--space-8) 0;border-bottom:1px solid var(--piedra)}
-.ad-filas > .client:first-child{padding-top:var(--space-6)}
+.client{display:grid;grid-template-columns:minmax(180px,.42fr) minmax(0,1fr);column-gap:var(--space-8);padding:var(--space-10) 0;border-bottom:1px solid var(--piedra)}
 .client h3,.client .owner{grid-column:1;align-self:start;margin:0}
+.client h3{font-size:clamp(22px,2.4vw,28px)}
 .client .owner{margin-top:var(--space-2);line-height:1.5}
 .client .owner strong{font-weight:400;color:var(--tinta-suave)}
 .client h4,.client ul,.client .ad-tabla,.client > p:not(.owner){grid-column:2}
@@ -60,8 +57,8 @@ section strong{color:var(--sumi)}
 .client h4:not(:first-of-type){margin-top:var(--space-6);padding-top:var(--space-6);border-top:1px solid var(--piedra)}
 .client ul{margin:0;padding-left:20px;color:var(--tinta-secundaria)}
 .client strong{color:var(--sumi)}
-li{padding-left:2px}
-li + li{margin-top:6px}
+.client li{padding-left:2px}
+.client li + li{margin-top:6px}
 .client > p:not(.owner){margin:var(--space-4) 0 0;color:var(--tinta-secundaria)}
 
 /* tablas: .ad-tabla; solo ancho mínimo y primera columna */
@@ -75,8 +72,14 @@ li + li{margin-top:6px}
 .ad-lectura{margin-top:var(--space-6)}
 code{padding:1px 6px;background:var(--crema);border-radius:var(--radius-input);overflow-wrap:anywhere}
 
-.cierre{margin-top:var(--space-16)}
+/* cierre */
+.ad-cierre h2{max-width:20ch}
+.ad-cierre p+p{margin-block-start:var(--space-2)}
+.ad-cierre .ad-btn{flex:none}
 
+@media (max-width:900px){
+  .ad-split>.ad-sec-cab{position:static}
+}
 @media (max-width:850px){
   .metadata{grid-template-columns:repeat(3,minmax(0,1fr))}
   .client{grid-template-columns:1fr}
@@ -86,19 +89,19 @@ code{padding:1px 6px;background:var(--crema);border-radius:var(--radius-input);o
 @media (max-width:580px){
   body{font-size:16px}
   .masthead-label{display:none}
-  .page-header{padding:var(--space-8) 0 var(--space-6)}
   .metadata{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:var(--space-8)}
-  .toc{margin-bottom:var(--space-8)}
-  section{margin-top:var(--space-12)}
 }
 @media print{
   body{background:#fff;color:#000;font-size:10.5pt;line-height:1.5}
-  .ad-nav,.toc,.skip-link,.ad-foot{display:none}
-  .container{max-width:none;padding:0}
-  .page-header{padding:0 0 12pt}
-  .page-header h1{font-size:30pt}
+  .ad-nav,.toc,.skip-link,.ad-foot,.ad-cierre .ad-btn{display:none}
+  .ad-sec,.ad-sec--papel,.ad-sec--crema,.ad-sec--oscuro{--sec-bg:#fff;--sec-fg:#000;padding-block:14pt}
+  .ad-sec--oscuro :where(h1,h2,h3,h4,p){color:#000}
+  .ad-hero{padding-block:0 12pt}
+  .ad-hero h1{font-size:30pt}
+  .ad-split{display:block}
+  .ad-split>.ad-sec-cab{position:static}
+  .ad-sec-cab--grande h2{font-size:20pt}
   .metadata{margin-top:16pt;padding-top:10pt}
-  section{margin-top:22pt}
   .client{padding:14pt 0;break-inside:avoid}
   .client h3{font-size:14pt}
   .ad-sec-cab h2{break-after:avoid}
@@ -106,47 +109,61 @@ code{padding:1px 6px;background:var(--crema);border-radius:var(--radius-input);o
   tr{break-inside:avoid}
   thead{display:table-header-group}
   .ad-lectura,.ad-estado,.ad-hl{print-color-adjust:exact;-webkit-print-color-adjust:exact}
-  .cierre{margin-top:22pt}
-  .cierre p{font-size:14pt}
+  .ad-cierre h2{font-size:18pt}
   a{overflow-wrap:anywhere}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   </style>
+  <link rel="icon" type="image/png" href="assets/favicon-adcom.png">
+  <link rel="apple-touch-icon" href="assets/ds/logos/apple-touch-icon.png">
 </head>
 <body>
 <a class="skip-link" href="#objetivo">Ir al contenido</a>
 <header class="ad-nav">
   <div class="ad-nav__in">
-    <a class="marca" href="index.html">Adcom<span>área digital</span></a>
+    <a class="ad-marca" href="index.html"><img src="assets/ds/logos/adcom-mark.png" alt="Adcom" width="30" height="25"><i>Acta de entrega</i></a>
     <span class="masthead-label">Dirección Digital · Documento de continuidad</span>
   </div>
 </header>
-<main class="container">
-  <header class="page-header">
-    <p class="ad-eyebrow">Dirección Digital · Continuidad operativa</p>
-    <h1 class="ad-t-statement"><span class="ad-ln">Acta de entrega</span><span class="ad-ln">de <span class="ad-hl">vacaciones</span>.</span></h1>
-    <dl class="metadata">
-      <div><dt>Área</dt><dd>Digital / Pauta</dd></div>
-      <div><dt>Entrega</dt><dd>Dirección Digital</dd></div>
-      <div><dt>Seguimiento principal</dt><dd>Eros; CESDE: Mike</dd></div>
-      <div><dt>Periodo de cobertura</dt><dd>Por definir</dd></div>
-      <div><dt>Fecha de elaboración</dt><dd>26 de octubre de 2026</dd></div>
-    </dl>
-  </header>
-
-  <nav aria-label="Contenido" class="toc">
-    <strong>Contenido</strong>
-    <a href="#objetivo">Objetivo</a><a href="#clientes">Clientes</a><a href="#matriz">Matriz de seguimiento</a><a href="#lineamientos">Lineamientos</a><a href="#recursos">Recursos</a><a href="#regreso">Al regreso</a>
-  </nav>
-
-  <section id="objetivo">
-    <header class="ad-sec-cab"><p class="ad-eyebrow">Sección 1</p><h2>Objetivo</h2></header>
-    <p>Mantener la operación de las cuentas durante el periodo de vacaciones, haciendo seguimiento a las campañas activas, la implementación de materiales, los compromisos y las solicitudes puntuales de los clientes.</p>
+<main>
+  <section class="ad-hero" aria-labelledby="titulo">
+    <div class="ad-wrap">
+      <p class="ad-eyebrow">Dirección Digital · Continuidad operativa</p>
+      <h1 id="titulo"><span class="ad-ln">Acta de entrega</span><span class="ad-ln">de <span class="ad-hl">vacaciones</span>.</span></h1>
+      <dl class="metadata">
+        <div><dt>Área</dt><dd>Digital / Pauta</dd></div>
+        <div><dt>Entrega</dt><dd>Dirección Digital</dd></div>
+        <div><dt>Seguimiento principal</dt><dd>Eros; CESDE: Mike</dd></div>
+        <div><dt>Periodo de cobertura</dt><dd>Por definir</dd></div>
+        <div><dt>Fecha de elaboración</dt><dd>26 de octubre de 2026</dd></div>
+      </dl>
+    </div>
   </section>
 
-  <section id="clientes">
-    <header class="ad-sec-cab"><p class="ad-eyebrow">Sección 2</p><h2>Gestión por cliente</h2></header>
-    <div class="ad-filas">
+  <nav aria-label="Contenido" class="toc">
+    <div class="ad-wrap toc__in">
+      <strong>Contenido</strong>
+      <a href="#objetivo">Objetivo</a><a href="#clientes">Clientes</a><a href="#matriz">Matriz de seguimiento</a><a href="#lineamientos">Lineamientos</a><a href="#recursos">Recursos</a><a href="#regreso">Al regreso</a>
+    </div>
+  </nav>
+
+  <section class="ad-sec" id="objetivo" aria-labelledby="t-objetivo">
+    <div class="ad-wrap ad-split ad-split--arriba">
+      <header class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">Sección 1 · Objetivo</p>
+        <h2 id="t-objetivo">Que la operación <span class="ad-hl">no se detenga</span>.</h2>
+      </header>
+      <p class="ad-lead">Mantener la operación de las cuentas durante el periodo de vacaciones, haciendo seguimiento a las campañas activas, la implementación de materiales, los compromisos y las solicitudes puntuales de los clientes.</p>
+    </div>
+  </section>
+
+  <section class="ad-sec ad-sec--papel" id="clientes" aria-labelledby="t-clientes">
+    <div class="ad-wrap">
+      <header class="ad-sec-cab ad-sec-cab--grande ad-sec-cab--plana">
+        <p class="ad-eyebrow">Sección 2 · Gestión por cliente</p>
+        <h2 id="t-clientes">Siete cuentas, qué seguir en cada una.</h2>
+      </header>
+      <div class="ad-filas">
     <article id="raza" class="client">
       <h3 class="ad-fila__t">2.1. Raza</h3><p class="owner ad-fila__k"><strong>Responsable de seguimiento:</strong> Eros</p>
       <h4>Reporting y tráfico</h4>
@@ -190,12 +207,17 @@ code{padding:1px 6px;background:var(--crema);border-radius:var(--radius-input);o
       <h4>Medición de FTD</h4><ul><li>Proyecto pendiente del componente tecnológico del cliente; no es prioritario durante la ausencia salvo nueva solicitud.</li><li>Retomar al regreso.</li></ul>
       <h4>Digital Out of Home (DOOH)</h4><ul><li>Presupuesto por confirmar; Laura gestiona validación con el cliente.</li><li>Estar pendiente de novedades y próximos pasos.</li></ul>
     </article>
+      </div>
     </div>
   </section>
 
-  <section id="matriz">
-    <header class="ad-sec-cab"><p class="ad-eyebrow">Sección 3</p><h2>Matriz general de seguimiento</h2></header>
-    <div class="ad-tabla"><table><thead><tr><th>Cliente</th><th>Actividad</th><th>Responsable / apoyo</th><th>Prioridad</th></tr></thead><tbody>
+  <section class="ad-sec" id="matriz" aria-labelledby="t-matriz">
+    <div class="ad-wrap">
+      <header class="ad-sec-cab ad-sec-cab--grande ad-sec-cab--plana">
+        <p class="ad-eyebrow">Sección 3 · Matriz general de seguimiento</p>
+        <h2 id="t-matriz">Quién sigue qué, y con qué <span class="ad-hl">prioridad</span>.</h2>
+      </header>
+      <div class="ad-tabla"><table><thead><tr><th>Cliente</th><th>Actividad</th><th>Responsable / apoyo</th><th>Prioridad</th></tr></thead><tbody>
       <tr><td>Raza</td><td>Implementación Serie Mundial</td><td>Eros / Óscar</td><td>Alta</td></tr>
       <tr><td>Raza</td><td>Presentación Looker y tráfico</td><td>Eros</td><td>Media</td></tr>
       <tr><td>Ya Juego</td><td>Seguimiento TikTok</td><td>Eros</td><td>Alta</td></tr>
@@ -209,17 +231,35 @@ code{padding:1px 6px;background:var(--crema);border-radius:var(--radius-input);o
       <tr><td>Betplay</td><td>TopView y DOOH</td><td>Eros / Laura</td><td>Según confirmación</td></tr>
       <tr><td>Betplay</td><td>Medición FTD</td><td>Dirección Digital al regreso</td><td>Baja</td></tr>
     </tbody></table></div>
+    </div>
   </section>
 
-  <section id="lineamientos">
-    <header class="ad-sec-cab"><p class="ad-eyebrow">Sección 4</p><h2>Lineamientos durante la ausencia</h2></header><ul>
-    <li><strong>Continuidad:</strong> mantener seguimiento de las campañas ya gestionadas.</li><li><strong>Implementaciones:</strong> priorizar fechas comprometidas y necesidades inmediatas.</li><li><strong>Presupuestos:</strong> evitar cambios estructurales sin validación, salvo ajustes operativos necesarios.</li><li><strong>Informes:</strong> mantener reuniones y presentaciones con los dashboards disponibles.</li><li><strong>Comunicación:</strong> centralizar novedades de CESDE con Mike y de las demás cuentas con Eros.</li><li><strong>Trazabilidad:</strong> registrar cambios, solicitudes y decisiones que se deban revisar al regreso.</li><li><strong>Dirección de agencia:</strong> escalar a Mike los asuntos relacionados con dirección general.</li>
-  </ul></section>
+  <section class="ad-sec ad-sec--crema" id="lineamientos" aria-labelledby="t-lineamientos">
+    <div class="ad-wrap ad-split ad-split--arriba">
+      <header class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">Sección 4 · Lineamientos</p>
+        <h2 id="t-lineamientos">Cómo actuar durante la ausencia.</h2>
+      </header>
+      <ul class="acta-lista">
+          <li><strong>Continuidad:</strong> mantener seguimiento de las campañas ya gestionadas.</li>
+          <li><strong>Implementaciones:</strong> priorizar fechas comprometidas y necesidades inmediatas.</li>
+          <li><strong>Presupuestos:</strong> evitar cambios estructurales sin validación, salvo ajustes operativos necesarios.</li>
+          <li><strong>Informes:</strong> mantener reuniones y presentaciones con los dashboards disponibles.</li>
+          <li><strong>Comunicación:</strong> centralizar novedades de CESDE con Mike y de las demás cuentas con Eros.</li>
+          <li><strong>Trazabilidad:</strong> registrar cambios, solicitudes y decisiones que se deban revisar al regreso.</li>
+          <li><strong>Dirección de agencia:</strong> escalar a Mike los asuntos relacionados con dirección general.</li>
+      </ul>
+    </div>
+  </section>
 
-  <section id="recursos">
-    <header class="ad-sec-cab"><p class="ad-eyebrow">Sección 5</p><h2>Accesos y enlaces importantes</h2></header>
-    <p>El equipo ya cuenta con acceso a <strong>Repor</strong> para el seguimiento y reporting. Las fuentes de datos de CESDE y Betplay están enlazadas en Google Drive.</p>
-    <div class="ad-tabla"><table><thead><tr><th>Cliente</th><th>Recurso</th><th>Acceso / referencia</th></tr></thead><tbody>
+  <section class="ad-sec" id="recursos" aria-labelledby="t-recursos">
+    <div class="ad-wrap">
+      <header class="ad-sec-cab ad-sec-cab--grande ad-sec-cab--plana">
+        <p class="ad-eyebrow">Sección 5 · Accesos y enlaces importantes</p>
+        <h2 id="t-recursos">Dónde está todo lo que se necesita.</h2>
+        <p class="ad-lead">El equipo ya cuenta con acceso a <strong>Repor</strong> para el seguimiento y reporting. Las fuentes de datos de CESDE y Betplay están enlazadas en Google Drive.</p>
+      </header>
+      <div class="ad-tabla"><table><thead><tr><th>Cliente</th><th>Recurso</th><th>Acceso / referencia</th></tr></thead><tbody>
       <tr><td>CESDE</td><td>Zoho Analytics — Vista 1</td><td><a href="https://analytics.zoho.com/open-view/2393306000014331119/e691ca5b127b651ba738265233cfa9e4" target="_blank" rel="noopener noreferrer">Abrir reporte</a></td></tr>
       <tr><td>CESDE</td><td>Zoho Analytics — Vista 2</td><td><a href="https://analytics.zoho.com/open-view/2393306000015988262/7d921b270e810411994c8744cf0c6f37" target="_blank" rel="noopener noreferrer">Abrir reporte</a></td></tr>
       <tr><td>CESDE</td><td>Fuente de datos</td><td><a href="https://docs.google.com/spreadsheets/d/1cW9IyICXOt2Yy6v8mpRPEgZY8bHkySH1Pmk_Wc7oPsE/edit?usp=drivesdk" target="_blank" rel="noopener noreferrer">Abrir fuente de datos en Drive</a></td></tr>
@@ -230,17 +270,34 @@ code{padding:1px 6px;background:var(--crema);border-radius:var(--radius-input);o
       <tr><td>La Santé</td><td>Informes / Repor</td><td>Acceso del equipo; enlace pendiente de registrar.</td></tr>
       <tr><td>Colgas</td><td>Administrador de campañas / Repor</td><td>Enlace pendiente de registrar.</td></tr>
     </tbody></table></div>
-    <aside class="ad-lectura"><span class="ad-lectura__k">Nota</span><p>Los enlaces se comparten como referencias; el acceso efectivo depende de los permisos de cada plataforma. No se modifican permisos desde este documento.</p></aside>
+      <aside class="ad-lectura"><span class="ad-lectura__k">Nota</span><p>Los enlaces se comparten como referencias; el acceso efectivo depende de los permisos de cada plataforma. No se modifican permisos desde este documento.</p></aside>
+    </div>
   </section>
 
-  <section id="regreso">
-    <header class="ad-sec-cab"><p class="ad-eyebrow">Sección 6</p><h2>Pendientes para retomar al regreso</h2></header><ul>
-    <li><strong>Raza:</strong> verificar integración de Metricool y programática en Looker, si queda abierta.</li>
-    <li><strong>Colgas:</strong> ajustar presupuesto definitivo de la campaña de seguidores.</li>
-    <li><strong>Betplay:</strong> retomar medición de FTD con el equipo tecnológico del cliente.</li>
-    <li><strong>Transversal:</strong> revisar novedades, decisiones, implementaciones y ajustes presupuestales realizados.</li>
-  </ul></section>
-  <footer class="cierre"><blockquote class="ad-cita"><p>La mayoría de las actividades ya están gestionadas. Durante la ausencia corresponde mantener seguimiento y continuidad. Los desarrollos de mayor alcance sin urgencia podrán retomarse al regreso.</p></blockquote></footer>
+  <section class="ad-sec ad-sec--papel" id="regreso" aria-labelledby="t-regreso">
+    <div class="ad-wrap ad-split ad-split--arriba">
+      <header class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">Sección 6 · Pendientes</p>
+        <h2 id="t-regreso">Lo que se retoma <span class="ad-hl">al regreso</span>.</h2>
+      </header>
+      <ul class="acta-lista">
+          <li><strong>Raza:</strong> verificar integración de Metricool y programática en Looker, si queda abierta.</li>
+          <li><strong>Colgas:</strong> ajustar presupuesto definitivo de la campaña de seguidores.</li>
+          <li><strong>Betplay:</strong> retomar medición de FTD con el equipo tecnológico del cliente.</li>
+          <li><strong>Transversal:</strong> revisar novedades, decisiones, implementaciones y ajustes presupuestales realizados.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="ad-sec ad-sec--oscuro ad-cierre" aria-labelledby="t-cierre">
+    <div class="ad-wrap ad-cierre__in">
+      <div>
+        <h2 id="t-cierre">La mayoría de las actividades ya están gestionadas.</h2>
+        <p>Durante la ausencia corresponde mantener seguimiento y continuidad. Los desarrollos de mayor alcance sin urgencia podrán retomarse al regreso.</p>
+      </div>
+      <a class="ad-btn ad-btn--accent" href="index.html">Volver a los documentos</a>
+    </div>
+  </section>
 </main>
 <footer class="ad-foot">
   <div class="ad-foot__in">

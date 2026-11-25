@@ -285,16 +285,17 @@ const DATOS = {
   // La lima marca la compuerta actual: la primera que aún no está cerrada (o la última si todas lo están).
   const primeraAbierta = DATOS.compuertas.findIndex((c) => c.estado !== "cerrada");
   const actual = primeraAbierta === -1 ? DATOS.compuertas.length - 1 : primeraAbierta;
-  $("ri-compuertas").innerHTML = DATOS.compuertas.map((c, i) => `<li class="ad-paso ri-compuerta ri-compuerta--${esc(c.estado)}${i === actual ? " is-on" : ""}">
-    <span class="ad-n ad-n--md" aria-hidden="true">${i + 1}</span>
-    <h3>${esc(c.nombre)}</h3>
-    <p class="ri-compuerta__estado">${esc(COMPUERTA[c.estado] || c.estado)}</p>
-    <p class="ri-compuerta__nota">${esc(c.nota)}</p></li>`).join("");
+  // Cada compuerta es un nodo del eje: punto lleno (cerrada), medio lleno (parcial) o vacío (abierta), y su estado en texto.
+  $("ri-compuertas").innerHTML = DATOS.compuertas.map((c, i) => `<li class="ri-compuerta ri-compuerta--${esc(c.estado)}${i === actual ? " is-on" : ""}"${i === actual ? ' aria-current="step"' : ""}>
+    <span class="ri-compuerta__n">Compuerta ${i + 1}</span>
+    <span class="ad-eje__t">${esc(c.nombre)}</span>
+    <span class="ri-compuerta__estado">${esc(COMPUERTA[c.estado] || c.estado)}</span>
+    <span class="ad-eje__d">${esc(c.nota)}</span></li>`).join("");
   $("ri-validaciones").innerHTML = DATOS.validaciones.map((v) => `<tr><th scope="row">${esc(v.nombre)}</th><td><span class="ad-estado ad-estado--${VALIDACION_ESTADO[v.estado] || "sin"}">${esc(VALIDACION[v.estado] || "Sin dato")}</span></td><td>${esc(v.evidencia)}</td><td>${esc(v.responsable)}</td><td class="ri-nowrap">${fecha(v.fecha)}</td></tr>`).join("");
 
   // ---------- Pendientes
   $("ri-pendientes").innerHTML = DATOS.pendientes.length
-    ? DATOS.pendientes.map((p, i) => `<tr${i === 0 ? ' class="is-on"' : ""}><td class="ri-nowrap">${fecha(p.fecha)}</td><th scope="row">${esc(p.que)}</th><td>${esc(p.criterio)}</td><td>${esc(p.responsable)}</td></tr>`).join("")
+    ? DATOS.pendientes.map((p, i) => `<tr><td class="ri-nowrap">${i === 0 ? `<span class="ad-tag">${fecha(p.fecha)}</span>` : fecha(p.fecha)}</td><th scope="row">${esc(p.que)}</th><td>${esc(p.criterio)}</td><td>${esc(p.responsable)}</td></tr>`).join("")
     : `<tr><td colspan="4">Sin pendientes al corte.</td></tr>`;
 
   // ---------- Anexo técnico (nombres internos; identificador nunca real en repositorio público)

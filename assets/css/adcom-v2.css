@@ -39,7 +39,7 @@
   --piedra-borde:#D6D3CB;       /* borde de chip y campo · 1,4:1: aviso conocido */
   --sumi:#141414;               /* titulares, datos, botón oscuro · 17:1 sobre washi */
   --tinta-secundaria:#4A4A46;   /* párrafos · 8,2:1 */
-  --tinta-suave:#6B6B66;        /* etiquetas y metadatos · 4,9:1 */
+  --tinta-suave:#55554F;        /* etiquetas y metadatos · 7,3:1 · más oscuro que el original (#6B6B66): el equipo lo encontró difícil de leer */
   --tinta-tenue:#8A8A84;        /* SOLO texto de 24 px o más · 3,2:1 */
   --lima:#D8FF3D;               /* acento único: solo relleno, con texto sumi */
   --indigo:#16233A;             /* reservado, sin uso todavía */
@@ -425,7 +425,7 @@ thead th,tbody th,tbody td b,.tabla-abierta th,.tabla-abierta .es-total td,
 
 /* Cifra */
 .ad-stat{display:flex;flex-direction:column;gap:8px}
-.ad-stat__n{font-family:var(--font-display);font-size:64px;font-weight:300;letter-spacing:-.04em;line-height:1}
+.ad-stat__n{font-family:var(--font-display);font-size:clamp(40px,5vw,64px);font-weight:300;letter-spacing:-.04em;line-height:1}
 .ad-stat--lg .ad-stat__n{font-size:44px}
 .ad-stat__n .ad-fill,.ad-fill{background:var(--lima);color:var(--sumi);padding:0 8px}
 .ad-stat__l{font-size:15px;color:var(--tinta-secundaria)}
@@ -481,7 +481,7 @@ thead th,tbody th,tbody td b,.tabla-abierta th,.tabla-abierta .es-total td,
 .ad-dg-line{stroke:var(--sumi);stroke-width:1;fill:none}
 .ad-dg-soft{stroke:var(--piedra);stroke-width:1;fill:none}
 .ad-dg-dot{fill:var(--sumi)}
-.ad-dg-lima{fill:var(--lima)}
+.ad-dg-lima{fill:var(--lima);stroke:var(--sumi);stroke-width:1}
 .ad-dg-paper{fill:var(--papel);stroke:var(--sumi);stroke-width:1}
 .ad-dg-text{font-family:var(--font-display);font-size:12px;fill:var(--sumi)}
 @keyframes adOrbit{to{transform:rotate(360deg)}}
@@ -546,8 +546,9 @@ a.ad-fila:hover .ad-fila__t{text-decoration:underline;text-decoration-thickness:
 /* Estado: siempre con texto y forma, nunca solo color. Cumplido = lima. */
 .ad-estado{display:inline-flex;align-items:center;gap:6px;min-height:24px;padding:1px 10px;border:1px solid var(--piedra-borde);border-radius:var(--radius-pill);background:var(--papel);color:var(--sumi);font-size:13px;font-weight:500;line-height:1.3;white-space:nowrap}
 .ad-estado::before{content:"";width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor;flex:none}
-.ad-estado--ok{background:var(--lima);border-color:var(--lima)}
+.ad-estado--ok{border-color:var(--sumi)}
 .ad-estado--ok::before{background:currentColor}
+.ad-estado--ok.is-on{background:var(--lima);border-color:var(--lima)}
 .ad-estado--parcial::before{background:linear-gradient(90deg,currentColor 50%,transparent 50%)}
 .ad-estado--pendiente{color:var(--tinta-secundaria)}
 .ad-estado--sin{color:var(--tinta-suave);border-style:dashed}
@@ -637,19 +638,19 @@ a.ad-fila:hover .ad-fila__t{text-decoration:underline;text-decoration-thickness:
 .ad-barra-apilada>li.is-on{background:var(--lima)}
 
 /* Variantes sobre superficie oscura: se activan con .ad-oscuro en el contenedor */
-.ad-oscuro .ad-lectura{background:rgba(247,246,242,.06);border-color:rgba(247,246,242,.16)}
-.ad-oscuro .ad-lectura__k{color:var(--sobre-oscuro-300)}
-.ad-oscuro .ad-lectura p{color:var(--sobre-oscuro-200)}
-.ad-oscuro .ad-kpis{background:#151515;border-color:rgba(247,246,242,.16)}
-.ad-oscuro .ad-kpi{background:#151515;border-color:rgba(247,246,242,.16)}
-.ad-oscuro .ad-kpi__l{color:var(--sobre-oscuro-200)}
-.ad-oscuro .ad-kpi__n{color:var(--sobre-oscuro-100)}
-.ad-oscuro .ad-kpi__m{color:var(--sobre-oscuro-300)}
-.ad-oscuro .ad-kpi--on .ad-kpi__n{color:var(--sumi)}
-.ad-oscuro .ad-barra{background:rgba(247,246,242,.10);border-color:rgba(247,246,242,.24)}
-.ad-oscuro .ad-barra>span{background:var(--sobre-oscuro-100)}
-.ad-oscuro .ad-barra--on>span{background:var(--lima);outline-color:var(--sobre-oscuro-100)}
-.ad-oscuro .ad-barra>i{background:var(--sobre-oscuro-100)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-lectura{background:rgba(247,246,242,.06);border-color:rgba(247,246,242,.16)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-lectura__k{color:var(--sobre-oscuro-300)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-lectura p{color:var(--sobre-oscuro-200)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-kpis{background:#151515;border-color:rgba(247,246,242,.16)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-kpi{background:#151515;border-color:rgba(247,246,242,.16)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-kpi__l{color:var(--sobre-oscuro-200)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-kpi__n{color:var(--sobre-oscuro-100)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-kpi__m{color:var(--sobre-oscuro-300)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-kpi--on .ad-kpi__n{color:var(--sumi)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-barra{background:rgba(247,246,242,.10);border-color:rgba(247,246,242,.24)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-barra>span{background:var(--sobre-oscuro-100)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-barra--on>span{background:var(--lima);outline-color:var(--sobre-oscuro-100)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-barra>i{background:var(--sobre-oscuro-100)}
 
 /* Bloque «ver los datos» */
 .ad-datos{border-top:1px solid var(--piedra);padding-block-start:var(--space-2)}
@@ -659,6 +660,135 @@ a.ad-fila:hover .ad-fila__t{text-decoration:underline;text-decoration-thickness:
   .ad-fila{grid-template-columns:auto minmax(0,1fr);padding:var(--space-4) 0}
   .ad-fila__go{grid-column:2}
   .ad-card{padding:var(--space-4)}
+}
+
+/* ===================== 5c. COMPOSICIÓN: RITMO, SECCIONES Y DIAGRAMAS =====================
+   Lo que hace que una página se vea elaborada: aire entre secciones, un titular
+   grande por sección, dos columnas (idea a la izquierda, figura a la derecha),
+   fondos que alternan (claro, oscuro, noche) y un diagrama protagonista que
+   explica la lógica de ESA página. Las figuras se adaptan al contenido: no se
+   copian. Vocabulario cerrado: anillo (ciclo), eje (de lo amplio a lo
+   específico), suma (capacidades que se suman), cruce y pasos.
+
+   ACCIONES Y LIMA: lo que se PULSA como acción primaria lleva píldora lima
+   (.ad-go, .ad-btn--accent). Lo que hay que VER primero (palabra clave, cifra,
+   estado actual) lleva una marca lima por bloque. Siempre relleno con sumi. */
+
+.ad-wrap{max-width:var(--container-max);margin-inline:auto;padding-inline:var(--space-6)}
+
+/* Marca: isotipo oficial + nombre del documento. Nunca un wordmark escrito a mano. */
+.ad-marca{display:inline-flex;align-items:center;gap:12px;min-height:var(--target-min);color:var(--sumi);text-decoration:none}
+.ad-marca img{display:block;width:30px;height:auto}
+.ad-marca i{font-style:normal;font-size:14px;line-height:1.2;color:var(--tinta-secundaria);padding-left:12px;border-left:1px solid var(--piedra-borde)}
+.ad-marca--claro{color:var(--sobre-oscuro-100)}
+.ad-marca--claro img{filter:invert(1)}
+.ad-marca--claro i{color:var(--sobre-oscuro-200);border-color:rgba(247,246,242,.24)}
+
+/* Sección: ritmo vertical. Dos secciones seguidas suman 112 a 160 px. */
+.ad-sec{padding-block:clamp(56px,6vw,80px);background:var(--sec-bg,transparent);color:var(--sec-fg,inherit)}
+.ad-sec--papel{--sec-bg:var(--papel)}
+.ad-sec--crema{--sec-bg:var(--crema)}
+.ad-sec--oscuro{--sec-bg:var(--negro-escena);--sec-fg:var(--sobre-oscuro-100)}
+.ad-sec--noche{--sec-bg:var(--noche);--sec-fg:var(--sobre-oscuro-100)}
+.ad-sec--linea{border-top:1px solid var(--piedra)}
+.ad-sec--oscuro :where(h1,h2,h3,h4),.ad-sec--noche :where(h1,h2,h3,h4){color:var(--sobre-oscuro-100)}
+.ad-sec--oscuro .ad-sec-cab p,.ad-sec--noche .ad-sec-cab p,.ad-sec--oscuro .ad-lead,.ad-sec--noche .ad-lead{color:var(--sobre-oscuro-200)}
+.ad-sec--oscuro .ad-eyebrow,.ad-sec--noche .ad-eyebrow{color:var(--sobre-oscuro-300)}
+
+/* Portada de página */
+.ad-hero{padding-block:clamp(72px,10vw,128px) clamp(56px,7vw,96px)}
+.ad-hero--centro{text-align:center}
+.ad-hero--centro .ad-lead,.ad-hero--centro .ad-sec-cab{margin-inline:auto}
+.ad-hero h1{margin:var(--space-4) 0 0;font-size:clamp(48px,8vw,104px);line-height:1.02;letter-spacing:-.035em;font-weight:500}
+.ad-hero .ad-lead{margin-block-start:var(--space-6)}
+.ad-hero__acciones{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-4) var(--space-6);margin-block-start:var(--space-8)}
+.ad-hero--centro .ad-hero__acciones{justify-content:center}
+
+/* Entradilla */
+.ad-lead{margin:0;max-width:44ch;font-size:clamp(18px,1.6vw,21px);line-height:1.5;color:var(--tinta-secundaria);text-wrap:pretty}
+
+/* Cabecera de sección grande y variantes */
+.ad-sec-cab--grande h2{font-size:clamp(36px,5vw,60px);line-height:1.05;letter-spacing:-.03em}
+.ad-sec-cab--centro{align-items:center;text-align:center;margin-inline:auto}
+.ad-sec-cab .ad-lead{margin-block-start:var(--space-2)}
+
+/* Dos columnas: la idea a la izquierda y la figura a la derecha */
+.ad-split{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:var(--space-12) clamp(40px,7vw,112px);align-items:center}
+.ad-split--inversa>:first-child{order:2}
+.ad-split--arriba{align-items:start}
+
+/* Enlace de acción en píldora lima: «Abrir ›» */
+.ad-go{display:inline-flex;align-items:center;gap:6px;min-height:var(--target-min);padding:0 20px;border-radius:var(--radius-pill);background:var(--lima);color:var(--sumi);font-size:14px;font-weight:500;line-height:1;text-decoration:none;white-space:nowrap}
+.ad-go::after{content:"›"}
+a:hover>.ad-go,.ad-go:hover{background:var(--sumi);color:var(--lima)}
+
+/* Cifras grandes y finas: una fila por bloque, con contexto y fuente */
+.ad-cifras{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:var(--space-12) var(--space-8);margin:0}
+.ad-cifras .ad-stat__n{font-size:clamp(40px,5vw,64px)}
+
+/* Suma: capacidades que se suman (+) y la que multiplica (×) */
+.ad-suma{display:flex;flex-wrap:wrap;align-items:flex-start;gap:var(--space-8) 0;margin:0;padding:0;list-style:none}
+.ad-suma__i{flex:1 1 200px;min-width:0;padding-inline:var(--space-4);display:flex;flex-direction:column;gap:var(--space-2)}
+.ad-suma__i:first-child{padding-inline-start:0}
+.ad-suma__n{font-size:14px;color:var(--tinta-suave)}
+.ad-suma__i h3{font-size:clamp(24px,2.4vw,30px);line-height:1.15;letter-spacing:-.02em}
+.ad-suma__r{font-size:14px;font-weight:500;color:var(--sumi)}
+.ad-suma__i p{margin:0;font-size:15px;color:var(--tinta-secundaria)}
+.ad-suma__m{margin-block-start:auto;padding-block-start:var(--space-2);border-top:1px solid var(--piedra);font-size:13px!important;color:var(--tinta-suave)!important}
+.ad-suma .ad-op{flex:0 0 48px;align-self:flex-start;padding-block-start:var(--space-6)}
+.ad-suma .ad-op--x{margin-block-start:var(--space-4);padding:0;align-self:flex-start}
+@media (max-width:760px){.ad-suma .ad-op{display:none}.ad-suma__i{flex-basis:100%;padding-inline:0}}
+
+/* Eje: de lo amplio a lo específico, o las fases de un recorrido. El actual, en lima. */
+.ad-eje{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);margin:0;padding:0;list-style:none}
+.ad-eje>li{position:relative;padding-block-start:var(--space-8);text-align:center;padding-inline:var(--space-2)}
+.ad-eje>li::before{content:"";position:absolute;top:9px;left:0;right:0;height:1px;background:var(--sumi)}
+.ad-eje>li:first-child::before{left:50%}
+.ad-eje>li:last-child::before{right:50%}
+.ad-eje>li::after{content:"";position:absolute;top:0;left:50%;width:19px;height:19px;margin-left:-9.5px;border:1px solid var(--sumi);border-radius:var(--radius-circle);background:var(--washi);box-sizing:border-box}
+.ad-eje>li.is-on::after{background:var(--lima)}
+.ad-eje__t{display:block;font-family:var(--font-display);font-size:17px;font-weight:500;line-height:1.2}
+.ad-eje__d{display:block;margin-block-start:4px;font-size:14px;color:var(--tinta-secundaria)}
+.ad-sec--oscuro .ad-eje>li::before{background:var(--sobre-oscuro-200)}
+.ad-sec--oscuro .ad-eje>li::after{background:var(--negro-escena);border-color:var(--sobre-oscuro-200)}
+.ad-sec--oscuro .ad-eje>li.is-on::after{background:var(--lima);border-color:var(--lima)}
+.ad-sec--oscuro .ad-eje__d{color:var(--sobre-oscuro-200)}
+@media (max-width:640px){
+  .ad-eje{grid-auto-flow:row;gap:var(--space-6)}
+  .ad-eje>li{text-align:left;padding:0 0 0 40px}
+  .ad-eje>li::before{top:19px;bottom:-24px;left:9px;right:auto;width:1px;height:auto}
+  .ad-eje>li:first-child::before{left:9px}
+  .ad-eje>li:last-child::before{display:none}
+  .ad-eje>li::after{left:0;margin-left:0}
+}
+
+/* Anillo: un ciclo que se repite. Cuatro nodos alrededor de un centro; el punto lima orbita. */
+.ad-anillo{position:relative;width:100%;max-width:520px;margin:0 auto;aspect-ratio:1/1}
+.ad-anillo>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.ad-anillo__c{position:absolute;left:50%;top:50%;width:26%;aspect-ratio:1/1;transform:translate(-50%,-50%);display:grid;place-items:center;border-radius:var(--radius-circle);background:var(--sumi);color:var(--sobre-oscuro-100);font-family:var(--font-display);font-size:clamp(12px,1.5vw,15px);font-weight:500;line-height:1.2;text-align:center;padding:8%}
+.ad-anillo__nodos{position:absolute;inset:0;margin:0;padding:0;list-style:none}
+.ad-anillo__nodos>li{position:absolute;display:flex;flex-direction:column;align-items:center;gap:2px;transform:translate(-50%,-50%);text-align:center;font-size:13px;line-height:1.2;color:var(--tinta-suave)}
+.ad-anillo__nodos b{display:flex;align-items:center;gap:8px;font-family:var(--font-display);font-size:clamp(15px,1.6vw,19px);font-weight:500;color:var(--sumi)}
+.ad-anillo__nodos li:nth-child(1){left:50%;top:6%}
+.ad-anillo__nodos li:nth-child(2){left:91%;top:50%}
+.ad-anillo__nodos li:nth-child(3){left:50%;top:94%}
+.ad-anillo__nodos li:nth-child(4){left:9%;top:50%}
+.ad-anillo__nodos li.is-on .ad-n{background:var(--lima);border-color:var(--lima)}
+.ad-sec--oscuro .ad-anillo__c{background:var(--sobre-oscuro-100);color:var(--sumi)}
+.ad-sec--oscuro .ad-anillo__nodos b{color:var(--sobre-oscuro-100)}
+.ad-sec--oscuro .ad-anillo__nodos li{color:var(--sobre-oscuro-300)}
+.ad-sec--oscuro .ad-anillo .ad-dg-line{stroke:var(--sobre-oscuro-200)}
+.ad-sec--oscuro .ad-anillo .ad-n{background:var(--negro-escena);border-color:var(--sobre-oscuro-200);color:var(--sobre-oscuro-100)}
+.ad-sec--oscuro .ad-anillo .ad-n--on,.ad-sec--oscuro .ad-anillo__nodos li.is-on .ad-n{background:var(--lima);border-color:var(--lima);color:var(--sumi)}
+
+/* Banda de cierre: una conversación, un botón */
+.ad-cierre__in{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--space-8)}
+.ad-cierre h2{max-width:16ch;font-size:clamp(36px,5.5vw,72px);line-height:1.04;letter-spacing:-.035em}
+.ad-cierre p{margin:var(--space-4) 0 0;max-width:48ch;font-size:17px;color:var(--sobre-oscuro-200)}
+
+@media (max-width:900px){
+  .ad-split{grid-template-columns:minmax(0,1fr)}
+  .ad-split--inversa>:first-child{order:0}
 }
 
 /* =============================== 6. IMPRESIÓN ===============================

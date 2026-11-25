@@ -5,11 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Tablero Educación</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
 <link rel="stylesheet" href="../assets/css/adcom.css">
-<link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261123">
+<link rel="stylesheet" href="../assets/ds/fonts.css">
+<link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261126">
 <script defer src="../assets/js/adcom.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
@@ -29,7 +27,15 @@ body{font-family:var(--font-body);font-size:15px;line-height:1.6;background:var(
 .main{flex:1;display:flex;flex-direction:column;min-width:0}
 
 /* RIEL (adcom.css) ajustado a v2 */
-.app-sidebar-nav a{min-height:var(--target-min);font-size:.875rem}
+.app-sidebar-top{padding:24px 20px 22px}
+.app-sidebar .ad-marca{margin-bottom:24px}
+.app-sidebar-client-name{font-size:1rem;font-weight:500;line-height:1.25;margin-top:6px}
+.app-sidebar-client-label,.app-sidebar-client-period{font-size:13px}
+.app-sidebar-client-period{margin-top:6px;line-height:1.4}
+.app-sidebar-nav{padding:20px 12px}
+.app-sidebar-nav-title{padding:6px 12px 10px;font-size:13px;font-weight:400}
+.app-sidebar-nav a{min-height:var(--target-min);font-size:.9375rem;font-weight:400;padding-inline:12px}
+.app-sidebar-nav a.active{font-weight:500}
 .app-sidebar-nav a:focus-visible{outline:2px solid var(--shell-fg);outline-offset:-3px}
 .app-sidebar-client{border-radius:var(--radius-card);background:rgba(247,246,242,.04)}
 .app-sidebar-nav a:hover{background:var(--shell-active)}
@@ -37,32 +43,43 @@ body{font-family:var(--font-body);font-size:15px;line-height:1.6;background:var(
 .app-sidebar .btn-reset:hover{background:var(--shell-active)}
 
 /* TOPBAR */
-.topbar{background:var(--papel);border-bottom:1px solid var(--gray-200);padding:10px 20px;position:sticky;top:0;z-index:50;display:flex;flex-direction:column;gap:8px}
-.tb-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.topbar-title{font-family:var(--font-display);font-size:15px;font-weight:500;margin-right:4px;white-space:nowrap}
-.f-sep{width:1px;height:18px;background:var(--gray-200)}
+.topbar{background:var(--papel);border-bottom:1px solid var(--gray-200);padding:10px clamp(20px,1.8vw,28px);position:sticky;top:0;z-index:50;display:flex;flex-direction:column;gap:8px}
+.tb-row{display:flex;align-items:center;gap:8px 10px;flex-wrap:wrap}
+.topbar-title{font-family:var(--font-display);font-size:16px;font-weight:500;letter-spacing:-.015em;margin-right:4px;white-space:nowrap}
+.f-sep{display:none}
 .fg{display:flex;align-items:center;gap:6px}
 .fl{font-size:13px;color:var(--gray-600);font-weight:400;white-space:nowrap}
 select,input[type=date]{font:inherit;font-size:13px;min-height:var(--target-min);padding:0 10px;border:1px solid var(--piedra-borde);border-radius:var(--radius-input);background:var(--papel);color:var(--fg)}
-select{cursor:pointer;max-width:220px}
+select{cursor:pointer;max-width:200px}
+#f-medio{max-width:150px}
+#f-niv{max-width:170px}
+#f-cli{max-width:130px}
 select:focus-visible,input:focus-visible{border-color:var(--fg)}
-.topbar .ad-chip,.sec-tools .ad-chip{font-size:13px;padding:0 16px}
+.topbar .ad-chip,.sec-tools .ad-chip{font-size:13px;padding:0 14px}
 .ad-chip:hover{border-color:var(--sumi)}
-/* lo seleccionado va en lima (relleno con texto sumi) */
-.ad-chip[aria-pressed="true"]{background:var(--lima);border-color:var(--lima);color:var(--sumi)}
-.btn-reset{font:inherit;font-size:13px;font-weight:500;min-height:var(--target-min);padding:0 18px;background:var(--sumi);color:var(--papel);border:1px solid var(--sumi);border-radius:var(--radius-pill);cursor:pointer}
-.last-upd{margin-left:auto;font-size:13px;color:var(--gray-400)}
+/* lo activo va en sumi; la lima se reserva a una marca por bloque: rango rápido, métrica del gráfico y vista de nivel y medio */
+.ad-chip[aria-pressed="true"]{background:var(--sumi);border-color:var(--sumi);color:var(--papel)}
+#quick .ad-chip[data-q][aria-pressed="true"],.g-btns .ad-chip[aria-pressed="true"],.sec-tools .ad-chip[aria-pressed="true"]{background:var(--lima);border-color:var(--sumi);color:var(--sumi)}
+.g-btns .g-sep~.ad-chip[aria-pressed="true"],#g1-tbtn[aria-pressed="true"],#g2-tbtn[aria-pressed="true"]{background:var(--sumi);border-color:var(--sumi);color:var(--papel)}
+.btn-reset{font:inherit;font-size:13px;font-weight:500;min-height:var(--target-min);padding:0 14px;background:transparent;color:var(--sumi);border:1px solid var(--sumi);border-radius:var(--radius-pill);cursor:pointer}
+.last-upd{margin-top:10px;font-size:13px;line-height:1.4;color:var(--shell-fg-muted)}
 
 /* CONTENT */
-.content{padding:24px 24px;min-width:0}
-.sec-title{font-family:var(--font-display);font-size:19px;line-height:1.3;font-weight:500;letter-spacing:-.01em;margin:8px 0 12px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;scroll-margin-top:170px}
-.sec-note{font-family:var(--font-body);font-size:13px;letter-spacing:0;color:var(--gray-400);font-weight:400;margin-left:4px}
-.sec-tools{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.content{padding:48px clamp(24px,3vw,48px) 96px;min-width:0}
+/* título de sección: titular grande con su nota debajo; las herramientas, a la derecha */
+.sec-title{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:8px 24px;font-family:var(--font-display);font-size:clamp(28px,2.6vw,38px);line-height:1.1;font-weight:500;letter-spacing:-.03em;margin:clamp(72px,7vw,104px) 0 28px;padding-top:clamp(32px,3vw,48px);border-top:1px solid var(--piedra);text-wrap:balance;scroll-margin-top:150px}
+.content>.sec-title:first-child{margin-top:0;padding-top:0;border-top:0}
+.sec-note{grid-column:1;font-family:var(--font-body);font-size:15px;line-height:1.5;letter-spacing:0;color:var(--tinta-secundaria);font-weight:400;max-width:78ch}
+.sec-note:empty{display:none}
+.sec-tools{grid-column:2;grid-row:1 / span 2;align-self:end;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 .box{background:var(--papel);border-radius:var(--radius-card);border:1px solid var(--gray-200)}
 
 /* KPIs: .ad-kpis; la barra de avance es .ad-barra */
-.ad-kpis{margin-bottom:28px;grid-template-columns:repeat(4,minmax(0,1fr))}
-.ad-kpi__n{font-size:clamp(24px,2.2vw,32px)}
+.ad-kpis{margin-bottom:32px;grid-template-columns:repeat(4,minmax(0,1fr))}
+.ad-kpi{padding:28px 24px 24px;gap:6px}
+.ad-kpi__l{font-size:15px}
+.ad-kpi__n{font-size:clamp(26px,2.1vw,34px);margin-block:2px 4px;overflow-wrap:normal;white-space:nowrap}
+.ad-kpi__m{font-size:14px;color:var(--tinta-secundaria)}
 @media(max-width:1300px){.ad-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.ad-kpis{grid-template-columns:1fr}}
 .kpi-bwrap{margin-top:10px}
@@ -71,21 +88,23 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
 .t-pos{color:var(--c-pos);font-weight:500} .t-mid{color:var(--c-mid);font-weight:500} .t-neg{color:var(--c-neg);font-weight:500} .t-mute{color:var(--gray-400)}
 
 /* COMPARATIVO */
-.cmp{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-bottom:28px}
-.bars-card{max-width:760px}
+.cmp{display:grid;grid-template-columns:minmax(0,1fr);gap:56px;margin-bottom:28px}
 .cmp .tcard{margin-bottom:0}
-.bars-card{padding:20px}
-.bars-card h3{font-size:17px;font-weight:500;margin-bottom:4px}
-.bars-card .bars-note{font-size:13px;color:var(--gray-400);margin-bottom:16px}
+.bars-card{padding:0}
+.bars-card h3{font-size:clamp(22px,2vw,28px);line-height:1.15;letter-spacing:-.02em;font-weight:500;margin-bottom:8px}
+.bars-card .bars-note{font-size:15px;color:var(--tinta-secundaria);max-width:78ch;margin-bottom:28px}
+/* un cliente por columna: tres barras cada uno */
+#cli-bars{grid-template-columns:repeat(auto-fit,minmax(min(360px,100%),1fr));gap:12px 56px}
 .bars-card .bar-head .val{font-size:1.05rem}
 /* cumplimiento por cliente: tres barras por cliente; la raya marca el 100 % (la barra llega hasta 150 %) */
-.cum-cli{display:grid;gap:6px;padding:12px 0;border-top:1px solid var(--gray-200)}
-.cum-cli:first-child{border-top:0;padding-top:0}
-.cum-cli .name{font-family:var(--font-display);font-weight:500;font-size:15px}
+.cum-cli{display:grid;gap:10px;align-content:start;padding:20px 0 28px;border-top:1px solid var(--sumi)}
+.cum-cli .name{font-family:var(--font-display);font-weight:500;font-size:20px;letter-spacing:-.015em;margin-bottom:4px}
 .cum-line{display:grid;grid-template-columns:118px minmax(0,1fr) 64px;gap:10px;align-items:center;font-size:13px;color:var(--gray-600)}
 .cum-line .val{text-align:right;font-variant-numeric:tabular-nums}
 .cum-line .ad-barra{height:10px}
-.cum-line .det{grid-column:2 / 4;font-size:12px;color:var(--gray-400);margin-top:-4px}
+.cum-line .det{grid-column:2 / 4;font-size:13px;color:var(--tinta-suave);margin-top:-4px}
+/* la meta cumplida no se rellena de lima: la raya del 100 % ya la marca */
+.cum-line .ad-barra--on>span{background:var(--sumi);outline:0}
 /* mes a mes: mes → cliente → nivel */
 .mm-chip{cursor:pointer;user-select:none;white-space:nowrap}
 .mm-chip .car{display:inline-block;font-size:9px;color:var(--gray-400);margin-right:6px;transition:transform .15s}
@@ -94,34 +113,37 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
 .mm-l3 td:first-child{padding-left:40px;color:var(--gray-600)}
 
 /* GRÁFICOS Y FUENTES */
-.chart-card{padding:16px;margin-bottom:20px}
-.chart-wrap{height:280px;position:relative}
-.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
-.nivel-card{padding:16px;gap:0}
+.chart-card{padding:28px 28px 24px;margin-bottom:32px}
+.chart-wrap{height:340px;position:relative}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:32px}
+.nivel-card{padding:28px;gap:0}
 /* la etiqueta repite el color de la serie en los gráficos: pauta sumi, orgánico tinta-secundaria, otras tinta-tenue */
 .nivel-tag{display:inline-block;justify-self:start;font-size:13px;font-weight:500;padding:2px 12px;border-radius:var(--radius-pill);margin-bottom:12px}
 .tag-pau{background:var(--sumi);color:var(--papel)} .tag-org{background:var(--tinta-secundaria);color:var(--papel)} .tag-otr{background:var(--tinta-tenue);color:var(--sumi)}
-.nm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 10px}
-.nm-label{font-size:13px;color:var(--gray-400);font-weight:400}
-.nm-value{font-family:var(--font-display);font-size:20px;font-weight:400;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.nm-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 12px}
+.nm-label{font-size:14px;color:var(--tinta-secundaria);font-weight:400}
+.nm-value{font-family:var(--font-display);font-size:clamp(20px,1.7vw,26px);font-weight:300;letter-spacing:-.03em;font-variant-numeric:tabular-nums;white-space:nowrap}
+/* la fuente actual (pauta) marca con lima su etiqueta, no toda la tarjeta */
+.nivel-card.is-on{background:var(--papel);border-color:var(--sumi);color:var(--sumi)}
+.nivel-card.is-on .tag-pau{background:var(--lima);color:var(--sumi);border:1px solid var(--sumi)}
 
 /* TABLAS: .ad-tabla; aquí solo la densidad, las columnas de cifras y los niveles */
-.tcard{margin-bottom:28px}
+.tcard{margin-bottom:32px}
 .ad-tabla table{min-width:0;font-size:13px;line-height:1.4}
-.ad-tabla thead th{padding:10px;position:sticky;top:0;background:var(--papel)}
+.ad-tabla thead th{padding:14px 12px;position:sticky;top:0;background:var(--papel)}
 .ad-tabla th,.ad-tabla td{text-align:left}
 .ad-tabla th.r,.ad-tabla td.r{text-align:right}
 .ad-tabla td.r{font-variant-numeric:tabular-nums}
 .ad-tabla th.grp,.ad-tabla td.grp{border-left:1px solid var(--gray-200)}
-.ad-tabla tbody td{padding:8px 10px;color:var(--gray-600);white-space:nowrap;vertical-align:middle}
+.ad-tabla tbody td{padding:11px 12px;color:var(--gray-600);white-space:nowrap;vertical-align:middle}
 .ad-tabla tbody tr:hover td{background:var(--gray-50)}
 .ad-tabla .tr-total td{font-weight:500;color:var(--fg);background:var(--gray-50) !important;border-top:1px solid var(--fg) !important}
 .lv1 td{font-weight:500;color:var(--fg)}
 .lv3 td:first-child{padding-left:30px;color:var(--gray-600)}
-.foot-note{font-size:13px;color:var(--gray-400);padding:10px 0 0;line-height:1.6}
+.foot-note{font-size:14px;color:var(--tinta-secundaria);padding:16px 0 0;line-height:1.65;max-width:120ch}
 .foot-note b{color:var(--gray-600)}
 .empty{padding:18px;text-align:center;color:var(--gray-400);font-size:13px}
-@media(max-width:1700px){.ad-tabla thead th,.ad-tabla tbody td{font-size:12px;padding:7px 8px}}
+@media(max-width:1700px){.ad-tabla thead th,.ad-tabla tbody td{font-size:13px;padding:10px 10px}}
 @media(pointer:coarse){.ad-tabla tbody td{padding-block:12px}}
 
 /* FUENTE (pie del riel) */
@@ -131,30 +153,30 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
 
 /* LOADING */
 #loading{position:fixed;inset:0;background:rgba(14,14,15,.96);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:12px}
-.ld-logo img{height:36px}
+.ld-marca{margin-bottom:8px}
 .spinner{width:28px;height:28px;border:3px solid rgba(247,246,242,.18);border-top-color:var(--sobre-oscuro-100);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 #ld-msg{color:var(--sobre-oscuro-300);font-size:13px}
 @media(prefers-reduced-motion:reduce){.spinner{animation:none}}
 
 @media(max-width:1300px){.three-col{grid-template-columns:1fr}}
-@media(max-width:900px){.content{padding:16px}.topbar{position:static}}
+@media(max-width:900px){.content{padding:32px 16px 64px}.topbar{position:static;padding-inline:16px}.app-sidebar .ad-marca{margin:0}.app-sidebar-top{padding:10px 14px}.sec-title{grid-template-columns:minmax(0,1fr)}.sec-tools{grid-column:1;grid-row:auto;justify-content:flex-start}}
 @media(max-width:560px){.nm-grid{grid-template-columns:repeat(2,1fr)}
   .fg,#quick{flex-wrap:wrap}.f-sep{display:none}.last-upd{margin-left:0}select{max-width:100%}.topbar,.content{padding-inline:16px}
-  .bar-head{flex-wrap:wrap}.sec-tools{margin-left:0}.cum-line{grid-template-columns:96px minmax(0,1fr) 56px}}
+  .bar-head{flex-wrap:wrap}.ad-kpi{padding:20px}.chart-card,.nivel-card{padding:18px}.cum-line{grid-template-columns:96px minmax(0,1fr) 56px}}
 /* COMPARATIVOS Y SEMANA A SEMANA */
 #cmp-btns,.g-btns{flex-wrap:wrap}
 .g-btns .ad-chip,.g-top .ad-chip{font-size:13px;padding:0 16px}
 .kpi-cmp{font-size:13px;line-height:1.45;margin-top:2px;color:var(--gray-400)}
 .kpi-cmp b{font-weight:500}
-.cmp-note{font-size:13px;color:var(--gray-400);margin:-14px 0 24px;line-height:1.6}
+.cmp-note{font-size:14px;color:var(--tinta-secundaria);margin:-8px 0 0;line-height:1.65;max-width:120ch}
 .cmp-note b{color:var(--gray-600);font-weight:500}
 .sem-cards{grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:16px}
 .sem-cards:empty{display:none}
 .alerta{display:inline-block;font-size:12px;font-weight:500;padding:1px 8px;border-radius:var(--radius-pill);margin-right:4px;white-space:nowrap;border:1px solid currentColor}
 .al-neg{color:var(--c-neg)} .al-mid{color:var(--c-mid)} .al-pos{color:var(--c-pos)} .al-cur{color:var(--gray-600)}
 .ad-tabla th.gcab{text-align:center;border-left:1px solid var(--gray-200);border-bottom:1px solid var(--gray-200)}
-.pb{--pbc:rgba(34,160,90,.16);background:linear-gradient(90deg,var(--pbc) var(--w),transparent var(--w))}
+.pb{--pbc:rgba(34,160,90,.16);background:linear-gradient(270deg,transparent calc(100% - var(--w)),var(--pbc) calc(100% - var(--w)))}
 .pb.t-neg{--pbc:rgba(194,38,28,.13)} .pb.t-mid{--pbc:rgba(235,104,52,.15)}
 .g-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px}
 .g-top .sem-sub{margin:0;flex:1}
@@ -167,7 +189,7 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
 .sem-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:-2px 0 12px}
 .ad-tabla .sem-actual td{background-color:var(--gray-100)}
 .sem-c b{display:block;font-weight:500;color:var(--fg)} .sem-c span{display:block;font-size:12px;color:var(--gray-400);white-space:nowrap}
-#sem-body td:first-child,#sem-head th:first-child,#sem-body2 td:first-child,#sem-head2 th:first-child{position:sticky;left:0;z-index:1;background-color:var(--papel);box-shadow:1px 0 0 var(--gray-200)}
+#sem-body td:first-child,#sem-head th:first-child,#sem-body2 td:first-child,#sem-head2 th:first-child{position:sticky;left:0;z-index:1;background-color:var(--papel);background-image:linear-gradient(90deg,transparent calc(100% - 1px),var(--piedra) calc(100% - 1px))}
 #sem-head th:first-child,#sem-head2 th:first-child{z-index:2}
 #sem-body tr.sem-actual td:first-child,#sem-body2 tr.sem-actual td:first-child{background-color:var(--gray-100)}
 select.sem-sel{max-width:160px}
@@ -180,14 +202,14 @@ select.sem-sel{max-width:160px}
 <body class="con-shell">
 <a class="skip-link" href="#sec-kpi">Ir al resumen</a>
 <div id="loading">
-  <div class="ld-logo"><img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/wAARCABkAGQDASIAAhEBAxEB/8QAHAAAAgMBAQEBAAAAAAAAAAAAAAUEBgcDAgH/xAA4EAACAQMDAgQEBAUEAwAAAAABAgMABBEFEiExBhNBUWEicYGRBxQjMqEVQlKxwdHwJGJy4fH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A2miiigCiiigCiiigCiiigCiiigCiiigCiiigCiiigCiiigCiiigCiio+oahb6Xp8t7dOUhiALEKWPJAHABJ5IoJFFeW41O3t7KO7kEgjkxsATLMT0AA5JrMT/aBpKXnkLFeNG0bOt0Ihs4zgMCeQRgjt3oA9FY5vjlpYlnBtLwQQP5T3JiHlhsZXBBOQfXFaltcRXdrFcQNuilQSIcEZBGR19KAqiiqnxBqsuj2SXEdub2SR9gt4s5c8kkdOMc0Au8TeLNK8Krbf2k8im4LiIRxlySBk9B24815n/bHRlRXa3u0VwSpaIYY4OAw7E4OP3r578e/Etl4u1K31OGzmtLi3DxOjuHVlO04IwMHJPbpXkmtanHJp9rbWNq1rbRbnz57SSSSWZieSSSf3oA9P1j9pOl2Msq2tvPdmN2Utj92xHr15r0v4b8U6T4s092029WQKQJIY2VpIs/3AAkA+xr5Lk0u9e1nuBZzNDA5SSQRna3bAPr1FX3wftY7bVJNSmvmskFuwjxGSJJpMBFXBHopz6mgD7bRRRQBRRRQBRRRQBXif4oQadqmqadb67ZXGs6Tpk6SX9lYSokpJBKHk+jDjGPWvbVSdU0m01izNneozwllfaDg5U5U/mBQB868OeIfDP8A9Rfw4fDkNzqyT/ZLq/nj3K6uSMyE/MQCoyvPFeoeDfjJpOptZaIkV1LqxXyo1mTapZfmHJbKgDn6V48fhX4aMt/HFG6G0meFGKgFlUnv0PFQPC1xNoXxT0y7s5pFjg1KJFDkHZl9pGR1HNAHutFFFAFcOorXriigCiiigCiiigCiiigP/9k=" alt="Universidad Católica"></div>
+  <span class="ad-marca ad-marca--claro ld-marca"><img src="../assets/ds/logos/adcom-mark.png" alt="Adcom" width="30" height="25"><i>Tablero Educación</i></span>
   <div class="spinner"></div>
   <div id="ld-msg">Cargando datos...</div>
 </div>
 
 <nav class="app-sidebar" data-roles="tinta" aria-label="Secciones">
   <div class="app-sidebar-top">
-    <a class="app-sidebar-brand" href="../index.html"><i></i>Adcom</a>
+    <a class="ad-marca ad-marca--claro" href="../index.html"><img src="../assets/ds/logos/adcom-mark.png" alt="Adcom" width="30" height="25"><i>Tablero Educación</i></a>
     <div class="app-sidebar-client">
       <span class="app-sidebar-client-label">Cuenta</span>
       <strong class="app-sidebar-client-name">Educación, pauta digital</strong>
@@ -206,6 +228,7 @@ select.sem-sel{max-width:160px}
   <div class="app-sidebar-foot">
     Fuente actualizada
     <div class="src-list" id="src-list">—</div>
+    <div class="last-upd" id="last-upd"></div>
     <button class="tbtn btn-reset" style="margin-top:8px" onclick="load()">Volver a cargar</button>
   </div>
 </nav>
@@ -219,7 +242,6 @@ select.sem-sel{max-width:160px}
       <div class="fg"><span class="fl">Hasta</span><input type="date" id="f-hasta" onchange="onDate()"></div>
       <div class="f-sep"></div>
       <div id="quick" class="fg"></div>
-      <span class="last-upd" id="last-upd"></span>
     </div>
     <div class="tb-row">
       <div class="fg"><span class="fl">Cliente</span><select id="f-cli" onchange="onSel()"><option value="">Todos</option></select></div>
@@ -232,12 +254,12 @@ select.sem-sel{max-width:160px}
   </div>
 
   <div class="content">
-    <div class="sec-title" id="sec-kpi">Resumen del rango<span class="sec-note" id="rango-note"></span></div>
+    <h2 class="sec-title" id="sec-kpi">Resumen del rango<span class="sec-note" id="rango-note"></span></h2>
     <div class="ad-kpis" id="kpi-grid"></div>
     <div class="cmp-note" id="cmp-note"></div>
 
     <div id="blk-cliente">
-      <div class="sec-title" id="sec-cliente">Por cliente<span class="sec-note">metas de pauta del periodo 2027-1, proporcionales al rango</span></div>
+      <h2 class="sec-title" id="sec-cliente">Por cliente<span class="sec-note">metas de pauta del periodo 2027-1, proporcionales al rango</span></h2>
       <div class="cmp">
         <div class="tcard"><div class="ad-tabla"><table><thead id="cli-head"></thead><tbody id="cli-body"></tbody></table></div></div>
         <div class="bars-card">
@@ -248,7 +270,7 @@ select.sem-sel{max-width:160px}
       </div>
     </div>
 
-    <div class="sec-title" id="sec-sem">Semana a semana<span class="sec-note" id="sem-note"></span></div>
+    <h2 class="sec-title" id="sec-sem">Semana a semana<span class="sec-note" id="sem-note"></span></h2>
     <div class="sem-bar" id="sem-bar"><span class="fl">Periodo</span><div class="fg" id="sem-tools"></div></div>
     <div class="ad-kpis sem-cards" id="sem-cards"></div>
     <div id="sem-graf">
@@ -265,15 +287,15 @@ select.sem-sel{max-width:160px}
     <div class="tcard"><div class="ad-tabla"><table><thead id="sem-head2"></thead><tbody id="sem-body2"></tbody></table></div><div class="foot-note" id="sem-foot2"></div></div></div>
     </div>
 
-    <div class="sec-title" id="sec-mes">Mes a mes<span class="sec-note" id="mes-note">cada etapa del CRM cuenta en su propia fecha</span></div>
+    <h2 class="sec-title" id="sec-mes">Mes a mes<span class="sec-note" id="mes-note">cada etapa del CRM cuenta en su propia fecha</span></h2>
     <div class="box chart-card"><div class="chart-wrap"><canvas id="chart-mes"></canvas></div></div>
     <div class="tcard"><div class="ad-tabla"><table><thead id="mes-head"></thead><tbody id="mes-body"></tbody></table></div><div class="foot-note" id="mes-foot"></div></div>
 
-    <div class="sec-title" id="sec-medio">Por nivel y medio<span class="sec-note">el medio del CRM sale de cada cliente; EIA no lo trae</span>
-      <span class="sec-tools"><button class="ad-chip" aria-pressed="true" data-mv="niv" onclick="setMedioVista('niv')">Nivel · medio</button><button class="ad-chip" aria-pressed="false" data-mv="medio" onclick="setMedioVista('medio')">Solo medio</button><button class="ad-chip" aria-pressed="false" data-mv="cli" onclick="setMedioVista('cli')">Cliente · nivel</button></span></div>
+    <h2 class="sec-title" id="sec-medio">Por nivel y medio<span class="sec-note">el medio del CRM sale de cada cliente; EIA no lo trae</span>
+      <span class="sec-tools"><button class="ad-chip" aria-pressed="true" data-mv="niv" onclick="setMedioVista('niv')">Nivel · medio</button><button class="ad-chip" aria-pressed="false" data-mv="medio" onclick="setMedioVista('medio')">Solo medio</button><button class="ad-chip" aria-pressed="false" data-mv="cli" onclick="setMedioVista('cli')">Cliente · nivel</button></span></h2>
     <div class="tcard"><div class="ad-tabla"><table><thead id="medio-head"></thead><tbody id="medio-body"></tbody></table></div></div>
 
-    <div class="sec-title" id="sec-fuentes">Pauta vs orgánico y otras fuentes<span class="sec-note">leads y matrículas del CRM de todas las fuentes · conversión = matrículas / leads del rango · aplican fechas, cliente y nivel</span></div>
+    <h2 class="sec-title" id="sec-fuentes">Pauta vs orgánico y otras fuentes<span class="sec-note">leads y matrículas del CRM de todas las fuentes · conversión = matrículas / leads del rango · aplican fechas, cliente y nivel</span></h2>
     <div class="three-col" id="fuente-cards"></div>
     <div class="box chart-card"><div class="chart-wrap"><canvas id="chart-fu"></canvas></div></div>
     <div class="tcard"><div class="ad-tabla"><table><thead id="fu-head"></thead><tbody id="fu-body"></tbody></table></div>

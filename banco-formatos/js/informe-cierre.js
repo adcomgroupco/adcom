@@ -216,7 +216,7 @@ function pintarFrentes() {
   el.innerHTML = DATOS.frentes.map((f, i) => {
     const parte = dividir(f.inversion, T.inversionTotal);
     return `<div><dt>${escapar(f.nombre)}${f.nota ? `<small>${escapar(f.nota)}</small>` : ""}</dt>
-      <dd><span class="ad-barra${f.inversion === mayor ? " ad-barra--on" : ""}" style="--v:${(parte * 100).toFixed(1)}%" aria-hidden="true"><span></span></span></dd>
+      <dd><span class="ad-barra" style="--v:${(parte * 100).toFixed(1)}%" aria-hidden="true"><span></span></span></dd>
       <dd class="cierre-valor">${pct(parte * 100)}<small>${millones(f.inversion)}</small></dd></div>`;
   }).join("");
 }
@@ -285,7 +285,7 @@ function pintarMedios() {
   const mayorMatricula = Math.max(...DATOS.medios.map(m => m.matriculas || 0));
   const fila = (m, th) => {
     const cplCrm = dividir(m.inversion, m.leadsCrm);
-    return `<tr${th === "th" && m.matriculas === mayorMatricula ? ' class="is-on"' : ""}><${th} scope="row">${escapar(m.medio)}${m.nota ? `<br><small class="formato-nota">${escapar(m.nota)}</small>` : ""}</${th}>
+    return `<tr><${th} scope="row">${escapar(m.medio)}${m.nota ? `<br><small class="formato-nota">${escapar(m.nota)}</small>` : ""}</${th}>
       <td class="valor">${pesos(m.inversion)}</td>
       <td class="valor">${pct(dividir(m.inversion, T.inversionConversion) * 100)}</td>
       <td class="valor">${entero(m.impresiones)}</td>
@@ -315,7 +315,8 @@ function pintarEmbudo() {
     const d = dividir(e[i].actual, e[i - 1].actual) - dividir(e[i].anterior, e[i - 1].anterior);
     if (d < peor) { peor = d; cuello = i; }
   }
-  el.innerHTML = e.map((s, i) => `<li class="ad-paso">
+  // la lima marca el paso con la mayor caída (is-on); el último paso ya no se pinta solo
+  el.innerHTML = e.map((s, i) => `<li class="ad-paso${i === cuello ? " is-on" : ""}">
       <span class="ad-n" aria-hidden="true">${i + 1}</span>
       <h3>${escapar(s.etapa)}${s.estado ? " " + estado(s.estado) : ""}</h3>
       <p class="cierre-embudo__n">${entero(s.actual)}</p>
@@ -341,7 +342,7 @@ function pintarHistorico() {
   }), { formato: v => fmtDos.format(v) + " %" });
   $("cierre-hist-tabla").innerHTML = h.map((p, i) => {
     const marca = p.periodo === actual ? " · este cierre" : p.periodo === DATOS.periodo.equivalente ? " · equivalente" : "";
-    return `<tr${p.periodo === actual ? ' class="is-on"' : ""}><th scope="row">${p.periodo}${marca}</th><td class="valor">${pesos(p.inversion)}</td>
+    return `<tr><th scope="row">${p.periodo}${marca}</th><td class="valor">${pesos(p.inversion)}</td>
       <td class="valor">${i ? conSigno(variacion(p.inversion, h[i - 1].inversion)) : "—"}</td>
       <td class="valor">${entero(p.leadsCrm)}</td><td class="valor">${pesos(dividir(p.inversion, p.leadsCrm))}</td>
       <td class="valor">${entero(p.matriculas)}</td><td class="valor">${pct(dividir(p.matriculas, p.leadsCrm) * 100, 2)}</td></tr>`;
@@ -467,7 +468,7 @@ function pintarCreativos() {
   if (!el) return;
   el.innerHTML = DATOS.piezas.map((p, i) => {
     const vertical = p.formato === "vertical";
-    return `<li class="ad-card cierre-pieza${i === 0 ? " is-on" : ""}">
+    return `<li class="ad-card cierre-pieza">
       ${p.imagen ? `<img class="cierre-img${vertical ? " cierre-img--vertical" : ""}" src="${escapar(p.imagen)}" alt="Pieza ${escapar(p.nombre)} de ${escapar(p.programa)}" loading="lazy">`
                  : `<div class="ad-marcador ad-marcador--${vertical ? "9x16" : "4x5"}" role="img" aria-label="Marcador de la pieza ${escapar(p.nombre)}">Miniatura de la pieza<br>${vertical ? "9:16" : "4:5"}</div>`}
       <p class="cierre-pieza__cab"><span class="ad-n" aria-hidden="true">${i + 1}</span>${escapar(p.medio)} · ${escapar(p.programa)}</p>
@@ -494,7 +495,7 @@ function pintarContacto() {
     ["Con interés confirmado", entero(c.conInteres), pct(dividir(c.conInteres, c.contactados) * 100) + " de los contactados"],
     ["Inscritos tras la llamada", entero(c.inscritosTrasLlamada), pct(dividir(c.inscritosTrasLlamada, c.conInteres) * 100) + " de los interesados"],
     ["Matriculados tras la llamada", entero(c.matriculadosTrasLlamada), "cruce con matrícula pendiente"]
-  ].map(([dt, dd, s], i) => `<div class="ad-kpi${i === 2 ? " ad-kpi--on" : ""}"><span class="ad-kpi__l">${dt}</span><span class="ad-kpi__n">${dd}</span><span class="ad-kpi__m">${s}</span></div>`).join("");
+  ].map(([dt, dd, s], i) => `<div class="ad-kpi"><span class="ad-kpi__l">${dt}</span><span class="ad-kpi__n">${dd}</span><span class="ad-kpi__m">${s}</span></div>`).join("");
 }
 
 function iniciar() {

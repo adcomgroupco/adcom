@@ -178,7 +178,7 @@ var DATOS = {
     var cs = getComputedStyle(cont);
     var ancho = Math.max(260, Math.floor(cont.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight)));
     var estrecho = ancho < 560;
-    var alto = estrecho ? 250 : 320;
+    var alto = estrecho ? 250 : 380;
     var m = { t: 30, r: estrecho ? 8 : 20, b: 30, l: estrecho ? 58 : 68 };
     var w = ancho - m.l - m.r, h = alto - m.t - m.b;
     var max = Math.max.apply(null, series.reduce(function (a, s) { return a.concat(s.filter(function (v) { return v != null; })); }, []).concat([D.meta || 0]));
@@ -259,12 +259,16 @@ var DATOS = {
     });
     var max = Math.max.apply(null, filas.map(function (f) { return Math.max(f.ant || 0, f.act || 0); }).concat([DATOS.diario.meta || 0]));
     var meta = DATOS.diario.meta;
-    dl.innerHTML = filas.map(function (f) {
+    // La lima marca la campaña con mayor alza del costo (solo si hay más de una y alguna sube).
+    var alzas = filas.map(function (f) { var d = delta(f.act, f.ant); return d == null ? -Infinity : d; });
+    var peor = Math.max.apply(null, alzas);
+    var iPeor = filas.length > 1 && peor > 0 ? alzas.indexOf(peor) : -1;
+    dl.innerHTML = filas.map(function (f, i) {
       var mp = meta != null ? (meta / max * 100).toFixed(2) + '%' : '100%';
       var marca = meta != null ? '<i></i>' : '';
       return '<div><dt>' + esc(f.nombre) + ' <small>· ' + esc(f.plataforma) + '</small></dt><dd>' +
         '<span class="ip-fila ip-fila--ant"><span class="ad-barra" style="--v:' + ((f.ant || 0) / max * 100).toFixed(2) + '%;--meta:' + mp + '" aria-hidden="true"><span></span>' + marca + '</span><b><span class="ip-sr">Anterior </span>' + (f.ant == null ? 'Sin dato' : dinero(f.ant)) + '</b></span>' +
-        '<span class="ip-fila"><span class="ad-barra ad-barra--on" style="--v:' + ((f.act || 0) / max * 100).toFixed(2) + '%;--meta:' + mp + '" aria-hidden="true"><span></span>' + marca + '</span><b><span class="ip-sr">Actual </span>' + (f.act == null ? 'Sin dato' : dinero(f.act)) + '</b></span>' +
+        '<span class="ip-fila"><span class="ad-barra' + (i === iPeor ? ' ad-barra--on' : '') + '" style="--v:' + ((f.act || 0) / max * 100).toFixed(2) + '%;--meta:' + mp + '" aria-hidden="true"><span></span>' + marca + '</span><b><span class="ip-sr">Actual </span>' + (f.act == null ? 'Sin dato' : dinero(f.act)) + '</b></span>' +
         '</dd></div>';
     }).join('');
   }
@@ -293,9 +297,8 @@ var DATOS = {
     var tabla = document.getElementById('ip-detalle');
     if (!tabla) return;
     var filas = filasDetalle();
-    var peorAlza = Math.max.apply(null, filas.map(function (f) { return f.dCosto == null ? -Infinity : f.dCosto; }));
     tabla.querySelector('tbody').innerHTML = filas.map(function (f) {
-      return '<tr' + (filas.length > 1 && f.dCosto === peorAlza && peorAlza > 0 ? ' class="is-on"' : '') + '><th scope="row">' + esc(f.c.campana) + '<span class="ip-sub">' + esc(f.c.plataforma) + '</span></th>' +
+      return '<tr><th scope="row">' + esc(f.c.campana) + '<span class="ip-sub">' + esc(f.c.plataforma) + '</span></th>' +
         '<td class="valor">' + dinero(f.inv) + '</td><td class="valor">' + signo(f.dInv) + '</td>' +
         '<td class="valor">' + num(f.res) + '</td><td class="valor">' + signo(f.dRes) + '</td>' +
         '<td class="valor">' + dinero(f.costo) + '</td><td class="valor">' + signo(f.dCosto) + '</td>' +

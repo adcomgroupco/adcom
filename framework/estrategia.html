@@ -5,13 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Lee el contexto, formula una hipótesis y acuerda qué señal justificaría sostener o cambiar el rumbo.">
 <title>Estrategia | Framework Digital de Adcom</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%230E0E0F'/%3E%3Ctext x='16' y='21' font-family='Inter Tight,Arial,sans-serif' font-size='13' font-weight='500' fill='%23F7F6F2' text-anchor='middle'%3EFD%3C/text%3E%3Ccircle cx='25' cy='8' r='3' fill='%23D8FF3D'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="../assets/favicon-adcom.png">
 <meta name="theme-color" content="#0E0E0F">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
 <!-- sistema v2: tokens y componentes ad-*; 01-tokens.css re-apunta los nombres del framework encima -->
-<link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261123">
+<link rel="stylesheet" href="../assets/ds/fonts.css">
+<link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261126">
 <link rel="stylesheet" href="assets/css/01-tokens.css">
 <link rel="stylesheet" href="assets/css/02-layout.css">
 <link rel="stylesheet" href="assets/css/03-componentes.css">
@@ -45,9 +43,7 @@
 </defs></svg>
 
 <header class="site-header page-header">
-  <a class="brand" href="index.html" aria-label="Inicio del Framework Digital">
-    <span class="brand-mark" aria-hidden="true">FD</span><span class="page-wordmark">Framework Digital<small>Adcom</small></span>
-  </a>
+  <a class="ad-marca ad-marca--claro" href="index.html" aria-label="Inicio del Framework Digital"><img src="../assets/ds/logos/adcom-mark.png" alt="Adcom" width="30" height="25"><i>Framework Digital</i></a>
   <button class="header-search" id="header-search" type="button" aria-label="Buscar en el framework">
     <svg class="ico" aria-hidden="true"><use href="#i-search"/></svg><span>Buscar</span>
   </button>
@@ -87,38 +83,42 @@
 
 <main id="inicio" tabindex="-1">
 <section class="framework-area" id="estrategia" aria-labelledby="estrategia-title" tabindex="-1">
-  <header class="area-intro page-intro section-dark">
+<header class="area-intro page-intro ad-sec ad-sec--oscuro ad-hero">
   <div class="wrap">
     <p class="page-kicker" id="estrategia-title">Estrategia</p>
-    <h1 id="hero-title" tabindex="-1">Decisiones de <span class="ad-hl">negocio</span> y de medios</h1>
-    <p class="page-lead">Antes de definir campañas, acuerda qué resultado debe cambiar, qué barrera lo limita y qué áreas pueden aportar la evidencia.</p>
-    <figure class="route-diagram decision-map">
-      <figcaption>Qué reúne una decisión de medios</figcaption>
-      <ul role="list">
-        <li><a class="ad-card ad-card--dark" href="#contexto"><strong>Prioridad de negocio</strong><span class="ad-card__d">Resultado, audiencia y restricción comercial.</span></a></li>
-        <li><a class="ad-card ad-card--dark" href="#modelo"><strong>Evidencia disponible</strong><span class="ad-card__d">Plataforma, contexto y resultado confirmado.</span></a></li>
-        <li><a class="ad-card ad-card--dark" href="#interfaces"><strong>Acuerdo con otras áreas</strong><span class="ad-card__d">La pregunta que cada equipo ayuda a resolver.</span></a></li>
-      </ul>
-      <p class="decision-result"><a href="#escenarios">Acordar escenario, inversión y señal de revisión</a></p>
+    <h1 id="hero-title" tabindex="-1"><span class="ad-ln">Del problema</span><span class="ad-ln"><span class="ad-hl">a la métrica</span>.</span></h1>
+    <p class="ad-lead">Antes de definir campañas, acuerda qué resultado debe cambiar, qué barrera lo limita y qué áreas pueden aportar la evidencia.</p>
+    <figure class="fw-diagrama">
+      <figcaption class="fw-diagrama__t">Qué reúne una decisión de medios</figcaption>
+      <ol class="ad-pasos">
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">1</span><span class="fw-paso__k">El problema</span><h3><a href="#contexto">Prioridad de negocio</a></h3><p>Resultado, audiencia y restricción comercial.</p></li>
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">2</span><span class="fw-paso__k">La evidencia</span><h3><a href="#modelo">Evidencia disponible</a></h3><p>Plataforma, contexto y resultado confirmado.</p></li>
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">3</span><span class="fw-paso__k">La dirección</span><h3><a href="#interfaces">Acuerdo con otras áreas</a></h3><p>La pregunta que cada equipo ayuda a resolver.</p></li>
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">4</span><span class="fw-paso__k">La métrica</span><h3><a href="#escenarios">Señal de revisión</a></h3><p>Acordar escenario, inversión y señal de revisión.</p></li>
+      </ol>
     </figure>
-    <p class="page-example"><strong>Ejemplo</strong> Si suben los leads y cae la calidad, valida primero con Martech dónde cae la conversión. Con Cuentas, acuerda qué calidad necesita el negocio. Esa evidencia define si conviene ajustar la oferta, el formulario o la compra de medios.</p>
-    <nav class="chapter-nav" aria-label="Capítulos de estrategia">
-      <ul class="area-topics" aria-label="Capítulos de estrategia">
-        <li><a href="#contexto">Contexto y objetivos</a></li>
-        <li><a href="#pilares">Pilares</a></li>
-        <li><a href="#modelo">Modelo de resultados</a></li>
-        <li><a href="#inteligencia">Inteligencia estratégica</a></li>
-        <li><a href="#interfaces">Cómo decidimos con otras áreas</a></li>
-        <li><a href="#futuro">Evolución y éxito</a></li>
-      </ul>
-    </nav>
-    <div class="page-search">
-    <form class="buscador" id="buscador" role="search">
-      <label class="sr-only" for="q">Buscar en el framework</label>
-      <input id="q" type="search" autocomplete="off" placeholder="Busca un tema o una regla…">
-    </form>
-    <div class="q-res" id="q-res" aria-live="polite" hidden></div>
-  </div>
+    <div class="fw-pie">
+      <p class="page-example"><strong>Ejemplo</strong> Si suben los leads y cae la calidad, valida primero con Martech dónde cae la conversión. Con Cuentas, acuerda qué calidad necesita el negocio. Esa evidencia define si conviene ajustar la oferta, el formulario o la compra de medios.</p>
+      <div>
+        <nav class="chapter-nav" aria-label="Capítulos de estrategia">
+          <ul class="area-topics" aria-label="Capítulos de estrategia">
+            <li><a href="#contexto">Contexto y objetivos</a></li>
+            <li><a href="#pilares">Pilares</a></li>
+            <li><a href="#modelo">Modelo de resultados</a></li>
+            <li><a href="#inteligencia">Inteligencia estratégica</a></li>
+            <li><a href="#interfaces">Cómo decidimos con otras áreas</a></li>
+            <li><a href="#futuro">Evolución y éxito</a></li>
+          </ul>
+        </nav>
+        <div class="page-search">
+          <form class="buscador" id="buscador" role="search">
+            <label class="sr-only" for="q">Buscar en el framework</label>
+            <input id="q" type="search" autocomplete="off" placeholder="Busca un tema o una regla…">
+          </form>
+          <div class="q-res" id="q-res" aria-live="polite" hidden></div>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -602,7 +602,7 @@
 </section>
 
   <div class="area-handoff section-light">
-    <div class="wrap"><p>La dirección acordada se convierte en un plan de trabajo. Cada prueba y cada cierre devuelven evidencia para revisarla.</p><a href="operacion-tactica.html#operacion-tactica">Continuar a operación y táctica</a></div>
+    <div class="wrap"><p>La dirección acordada se convierte en un plan de trabajo. Cada prueba y cada cierre devuelven evidencia para revisarla.</p><a class="ad-go" href="operacion-tactica.html#operacion-tactica">Continuar a operación y táctica</a></div>
   </div>
 </section>
 

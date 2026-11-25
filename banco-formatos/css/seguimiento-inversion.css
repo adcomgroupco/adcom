@@ -1,10 +1,11 @@
-/* Seguimiento de inversión · estilos propios (v2).
-   Reusa de css/flow-medios.css: .flow-sub, .eje-*. */
-
 /* Seguimiento de inversión · solo lo específico (v2).
-   Estados, KPIs, barras, tablas, lecturas, tarjetas y leyendas vienen de ad-*.
+   Portada, secciones, estados, KPIs, barras, tablas, lecturas, tarjetas y
+   leyendas vienen de ad-* (adcom-v2.css, secciones 5b y 5c).
    Reusa de css/flow-medios.css: .flow-sub, .eje-*. */
 
+.seg-hero .seg-lead { max-width: 56ch; }
+.seg-franja { margin-block-start: var(--space-12); }
+.seg-ficha { margin-block-start: var(--space-6); }
 .seg-parcial { display: block; font-size: 12px; color: var(--tinta-suave); }
 
 /* Barra de ejecución dentro de la tabla */
@@ -12,18 +13,32 @@
 .seg-barra { display: inline-block; vertical-align: middle; width: 96px; height: 10px; }
 .seg-medidor__n { display: inline-block; min-width: 5ch; margin-inline-start: 8px; text-align: right; font-variant-numeric: tabular-nums; }
 
-/* Curva acumulada */
-.seg-real { fill: none; stroke: var(--sumi); stroke-width: 2.5; }
-.seg-esperado { fill: none; stroke: var(--tinta-secundaria); stroke-width: 1.5; stroke-dasharray: 6 4; }
-.seg-proyeccion { fill: none; stroke: var(--tinta-secundaria); stroke-width: 1.5; stroke-dasharray: 2 4; }
-.seg-presupuesto { stroke: var(--tinta-tenue); stroke-width: 1; }
-.seg-punto { fill: var(--sumi); }
-.ad-leyenda i.seg-ley { width: 24px; border-top: 2.5px solid var(--sumi); }
-.ad-leyenda i.seg-ley--esperado { border-top: 1.5px dashed var(--tinta-secundaria); }
-.ad-leyenda i.seg-ley--proyeccion { border-top: 2px dotted var(--tinta-secundaria); }
+/* Curva acumulada: el diagrama protagonista, sobre fondo oscuro.
+   Los trazos usan el primer plano del suelo oscuro; el punto «al corte» es lima. */
+.seg-ritmo-cab { align-items: end; margin-block-end: var(--space-12); }
+.seg-ritmo-cab .ad-sec-cab { margin: 0; max-width: none; }
+.seg-lectura { max-width: 70ch; }
+.seg-figura { gap: var(--space-6); }
+.seg-figura svg { display: block; width: 100%; height: auto; }
+.seg-real { fill: none; stroke: var(--sobre-oscuro-100); stroke-width: 3; }
+.seg-esperado { fill: none; stroke: var(--sobre-oscuro-200); stroke-width: 1.75; stroke-dasharray: 7 5; }
+.seg-proyeccion { fill: none; stroke: var(--sobre-oscuro-200); stroke-width: 1.75; stroke-dasharray: 2 5; }
+.seg-presupuesto { stroke: var(--sobre-oscuro-300); stroke-width: 1; }
+.seg-brecha { stroke: var(--sobre-oscuro-100); stroke-width: 2; }
+.seg-punto { fill: var(--lima); stroke: var(--sobre-oscuro-100); stroke-width: 2; }
+.seg-figura .eje-linea { stroke: rgba(247, 246, 242, .16); }
+.seg-figura .eje-texto { fill: var(--sobre-oscuro-300); font-size: 13px; }
+.seg-figura .eje-valor { fill: var(--sobre-oscuro-100); font-size: 13px; }
+.seg-figura .seg-brecha-txt { fill: var(--sobre-oscuro-100); }
+.seg-figura .ad-leyenda { color: var(--sobre-oscuro-200); font-size: 14px; }
+.seg-figura .formato-nota { color: var(--sobre-oscuro-200); }
+.ad-leyenda i.seg-ley { width: 28px; border-top: 3px solid var(--sobre-oscuro-100); }
+.ad-leyenda i.seg-ley--esperado { border-top: 2px dashed var(--sobre-oscuro-200); }
+.ad-leyenda i.seg-ley--proyeccion { border-top: 2px dotted var(--sobre-oscuro-200); }
 .ad-leyenda i.seg-ley { height: 0; background: none; border-inline: 0; border-bottom: 0; }
-.seg-figura svg { display: block; width: 100%; height: auto; max-width: 760px; }
-.seg-lectura { margin-block-start: var(--space-4); max-width: 70ch; }
+
+/* Filtros de la tabla de control */
+.seg-filtros { margin-block-end: var(--space-6); }
 
 /* Tabla de control */
 .seg-control { font-size: 14px; }
@@ -32,18 +47,23 @@
 .seg-producto > * { background: var(--crema); font-weight: 500; }
 .seg-accion { min-width: 22ch; }
 .seg-control tfoot > tr > * { background: var(--crema); }
+.seg-control .ad-fill { padding-inline: 6px; }
 
 /* Puntos para revisar: cada punto es una .ad-card; el primero (prioridad 1) en lima */
-.seg-puntos { margin: 0; padding: 0; list-style: none; max-width: 76ch; }
+.seg-puntos { --col: 300px; --gap: var(--space-6); margin: 0; padding: 0; list-style: none; }
+.seg-punto-item { gap: var(--space-4); }
 .seg-punto-item p { margin: 0; }
-.seg-punto-item__t { display: flex; align-items: center; gap: var(--space-2); font: 500 20px/1.25 var(--font-display); }
+.seg-punto-item__t { display: flex; align-items: flex-start; gap: var(--space-2); font: 500 20px/1.25 var(--font-display); }
 
-.seg-definiciones { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4) var(--space-8); margin: 0; }
-.seg-definiciones dt { font-weight: 500; }
-.seg-definiciones dd { margin: 4px 0 0; color: var(--tinta-secundaria); font-size: 15px; }
+.seg-definiciones { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-8) var(--space-12); margin: 0; }
+.seg-definiciones dt { font-weight: 500; padding-block-start: var(--space-4); border-block-start: 1px solid var(--sumi); }
+.seg-definiciones dd { margin: var(--space-2) 0 0; color: var(--tinta-secundaria); font-size: 15px; }
 
 @media (max-width: 720px) {
   .seg-definiciones { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 560px) {
+  .ad-nav__links { gap: 10px; font-size: 13px; }
 }
 
 @media print {
@@ -53,4 +73,4 @@
 
 /* Seis cifras por fila: tamaño menor para que no partan línea */
 #seg-kpi { grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); }
-#seg-kpi .ad-kpi__n { font-size: clamp(26px, 2.4vw, 34px); white-space: nowrap; }
+#seg-kpi .ad-kpi__n { font-size: clamp(24px, 2vw, 28px); white-space: nowrap; }

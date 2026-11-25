@@ -183,7 +183,7 @@ function renderKpi() {
 
 /* Curva acumulada: real, esperado lineal, proyección y presupuesto. SVG propio. */
 function renderCurva() {
-  const w = 720, h = 300, m = { t: 20, r: 16, b: 34, l: 64 };
+  const w = 1040, h = 400, m = { t: 24, r: 24, b: 38, l: 72 };
   const conPlan = medidas.filter(x => Number.isFinite(x.a.asignado));
   const asign = total.asignado;
   const acum = [];
@@ -192,7 +192,7 @@ function renderCurva() {
   const x = d => m.l + (w - m.l - m.r) * (d / dur);
   const y = v => m.t + (h - m.t - m.b) * (1 - v / tope);
   let svg = "";
-  const paso = Math.pow(10, Math.floor(Math.log10(tope))) / 2;
+  const paso = Math.pow(10, Math.floor(Math.log10(tope)));
   for (let v = 0; v <= tope; v += paso) svg += `<line class="eje-linea" x1="${m.l}" x2="${w - m.r}" y1="${y(v)}" y2="${y(v)}"/><text class="eje-texto" x="${m.l - 8}" y="${y(v) + 4}" text-anchor="end">${millones(v)}</text>`;
   [1, 8, 15, 22, dur].forEach(d => { svg += `<text class="eje-texto" x="${x(d)}" y="${h - m.b + 20}" text-anchor="middle">día ${d}</text>`; });
   // esperado: suma de las curvas de cada asignación por día (lineal o curva declarada al corte)
@@ -206,8 +206,11 @@ function renderCurva() {
   const ultimo = acum[acum.length - 1] || 0;
   svg += `<polyline class="seg-proyeccion" points="${x(acum.length)},${y(ultimo)} ${x(dur)},${y(total.proyeccion)}"/>`;
   svg += `<polyline class="seg-real" points="${x(0)},${y(0)} ${acum.map((v, i) => `${x(i + 1)},${y(v)}`).join(" ")}"/>`;
-  svg += `<circle cx="${x(acum.length)}" cy="${y(ultimo)}" r="4" class="seg-punto"/><text class="eje-valor" x="${x(acum.length) + 8}" y="${y(ultimo) + 16}">${millones(ultimo)} al corte</text>`;
-  svg += `<text class="eje-valor" x="${x(dur) - 4}" y="${y(total.proyeccion) + 16}" text-anchor="end">Cierre ${millones(total.proyeccion)}</text>`;
+  // brecha al corte: lo que separa el gasto real del esperado, dibujado como la distancia vertical entre las dos curvas
+  const esperadoCorte = esperadoDia(acum.length);
+  if (Math.abs(esperadoCorte - ultimo) > 0) svg += `<line class="seg-brecha" x1="${x(acum.length)}" x2="${x(acum.length)}" y1="${y(esperadoCorte)}" y2="${y(ultimo)}"/><text class="eje-texto seg-brecha-txt" x="${x(acum.length) - 10}" y="${Math.min(y(esperadoCorte), y(ultimo)) - 14}" text-anchor="end">Desvío ${signo(ultimo - esperadoCorte)}</text>`;
+  svg += `<circle cx="${x(acum.length)}" cy="${y(ultimo)}" r="6" class="seg-punto"/><text class="eje-valor" x="${x(acum.length) + 12}" y="${y(ultimo) + 20}">${millones(ultimo)} al corte</text>`;
+  svg += `<text class="eje-valor" x="${x(dur) - 4}" y="${y(total.proyeccion) + 54}" text-anchor="end">Cierre ${millones(total.proyeccion)}</text>`;
   const el = $("#seg-curva");
   el.setAttribute("viewBox", `0 0 ${w} ${h}`);
   el.insertAdjacentHTML("beforeend", svg);
@@ -221,10 +224,10 @@ function renderMedios() {
   const filas = plats.map(p => ({ p, g: agregar(medidas.filter(m => m.a.plataforma === p)) }))
     .sort((a, b) => b.g.asignado - a.g.asignado);
   const mayor = filas.reduce((m, f) => (Math.abs(f.g.desvio) > Math.abs(m.g.desvio) ? f : m), filas[0]);
-  $("#seg-medios").innerHTML = filas.map(({ p, g }) => `<tr${filas.length > 1 && mayor.p === p ? ' class="is-on"' : ""}>
+  $("#seg-medios").innerHTML = filas.map(({ p, g }) => `<tr>
     <th scope="row">${esc(p)}</th>
     <td class="valor">${pesos(g.asignado)}</td><td class="valor">${pesos(g.gasto)}</td>
-    <td class="seg-col-medidor">${medidor(g.ejecutado, g.ritmo)}<span class="seg-medidor__n">${pct(g.ejecutado)}</span></td>
+    <td class="seg-col-medidor">${medidor(g.ejecutado, g.ritmo, filas.length > 1 && mayor.p === p)}<span class="seg-medidor__n">${pct(g.ejecutado)}</span></td>
     <td class="valor">${pct(g.pacing, 1)}</td><td class="valor">${pesos(g.proyeccion)}</td><td>${chip(g.estado)}</td></tr>`).join("");
 }
 
@@ -246,7 +249,7 @@ function renderControl() {
     <td class="valor">${m.a.asignado === null ? NO_APLICA : pesos(m.a.asignado)}</td>
     <td class="valor">${pesos(m.a.gasto)}${m.a.parcial ? `<span class="seg-parcial">Parcial</span>` : ""}</td>
     <td class="valor">${m.esperado === null ? NO_APLICA : pesos(m.esperado)}${Number.isFinite(m.a.curva) ? `<span class="seg-parcial">curva ${pct(m.a.curva)}</span>` : ""}</td>
-    <td class="valor">${m.desvio === null ? NO_APLICA : signo(m.desvio)}</td>
+    <td class="valor">${m.desvio === null ? NO_APLICA : m === mayorDesvio ? `<span class="ad-fill">${signo(m.desvio)}</span>` : signo(m.desvio)}</td>
     <td class="valor">${m.pacing === null ? NO_APLICA : pct(m.pacing, 1)}</td>
     <td class="valor">${m.saldo === null ? NO_APLICA : pesos(m.saldo)}</td>
     <td class="valor">${pesos(m.diario)}</td>
@@ -262,7 +265,7 @@ function renderControl() {
       <td class="valor">${signo(g.desvio)}</td><td class="valor">${pct(g.pacing, 1)}</td><td class="valor">${pesos(g.saldo)}</td>
       <td class="valor">${pesos(g.diario)}</td><td class="valor">${pesos(g.requerido)}</td><td class="valor">${pesos(g.proyeccion)}</td>
       <td>${g.asignado ? chip(g.estado) : ""}</td><td></td></tr>`;
-    html += ms.map(m => `<tr${m === mayorDesvio ? ' class="is-on"' : ""}>
+    html += ms.map(m => `<tr>
       <th scope="row" class="seg-campana">${esc(m.a.campana)}<span class="flow-sub">${diaMes.format(fecha(m.a.inicio))}–${diaMes.format(fecha(m.a.fin))} · ${esc(m.a.responsable)}${m.a.parcial ? " · " + esc(m.a.parcial) : ""}</span></th>
       <td>${esc(m.a.plataforma)}</td>${celdas(m)}<td class="seg-accion">${esc(m.a.accion || "")}</td></tr>`).join("");
   });
@@ -288,7 +291,7 @@ function renderHistorico() {
 
 function renderPuntos() {
   $("#seg-puntos").innerHTML = puntos.map((p, i) => `<li class="ad-card seg-punto-item${i === 0 ? " is-on" : ""}">
-    <p class="seg-punto-item__t"><span class="ad-n${i === 0 ? " ad-n--on" : ""}">${esc(p.prioridad)}</span>${esc(p.titulo)}</p>
+    <p class="seg-punto-item__t"><span class="ad-n">${esc(p.prioridad)}</span>${esc(p.titulo)}</p>
     <p class="ad-card__d">${esc(p.evidencia)}</p>
     <p class="ad-card__d">${esc(p.responsable)} · ${diaMes.format(fecha(p.fecha))} · criterio: ${esc(p.criterio)}</p>
   </li>`).join("");

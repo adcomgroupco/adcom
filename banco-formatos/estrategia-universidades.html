@@ -6,12 +6,12 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#F7F6F2">
   <title>Ruta estratégica para universidades | Adcom</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
-  <link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261123">
+  <link rel="stylesheet" href="../assets/ds/fonts.css">
+  <link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261126">
   <link rel="stylesheet" href="formatos.css?v=20261123">
-  <link rel="stylesheet" href="css/estrategia-universidades.css?v=20261123">
+  <link rel="stylesheet" href="css/estrategia-universidades.css?v=20261126g">
+  <link rel="icon" type="image/png" href="../assets/favicon-adcom.png">
+  <link rel="apple-touch-icon" href="../assets/ds/logos/apple-touch-icon.png">
 </head>
 <body>
 <!--
@@ -34,12 +34,12 @@
 <a class="skip-link" href="#contenido">Ir al contenido</a>
 <header class="ad-nav formato-nav">
   <nav class="ad-nav__in" aria-label="Principal">
-    <a class="formato-nav__marca" href="../index.html">Adcom</a>
+    <a class="ad-marca" href="../index.html"><img src="../assets/ds/logos/adcom-mark.png" alt="Adcom" width="30" height="25"><i>Ruta estratégica</i></a>
     <div class="ad-nav__links"><a href="index.html">Banco de formatos</a><a href="../framework/estrategia.html">Framework · Estrategia</a></div>
   </nav>
 </header>
 
-<main class="formato-shell formato-contenido" id="contenido" tabindex="-1">
+<main id="contenido" tabindex="-1">
 
   <!-- PORTADA
        Qué va: institución, periodo de admisiones, alcance (niveles, modalidades,
@@ -47,11 +47,12 @@
        Cifras de portada: presupuesto total, meta institucional, matrículas de
        pauta y leads. Salen del bloque DATOS; el anillo muestra cuánto de la meta
        aporta la pauta. No poner aquí cifras que no estén en el plan. -->
-  <header class="formato-portada">
-    <p class="formato-meta ad-t-eyebrow">Ruta estratégica · Admisiones 2027-1 · Plantilla con datos ficticios</p>
-    <h1 class="ad-t-statement"><span class="ad-ln">Universidad Andina.</span><span class="ad-ln">Ruta de <span class="ad-hl">crecimiento</span> 2027-1.</span></h1>
-    <p class="ad-t-lead">Contexto, diagnóstico y plan de medios para pregrado y posgrado: dónde se pierde hoy la matrícula, qué cambiamos primero y cómo se reparte la inversión de agosto a febrero.</p>
-    <dl class="formato-ficha">
+  <section class="ad-hero" aria-labelledby="titulo-ruta">
+  <div class="ad-wrap">
+    <p class="ad-eyebrow">Ruta estratégica · Admisiones 2027-1 · Plantilla con datos ficticios</p>
+    <h1 id="titulo-ruta"><span class="ad-ln">Universidad Andina.</span><span class="ad-ln">Ruta de <span class="ad-hl">crecimiento</span> 2027-1.</span></h1>
+    <p class="ad-lead">Contexto, diagnóstico y plan de medios para pregrado y posgrado: dónde se pierde hoy la matrícula, qué cambiamos primero y cómo se reparte la inversión de agosto a febrero.</p>
+    <dl class="ad-ficha eu-ficha">
       <div><dt>Institución</dt><dd>Universidad Andina · sede principal y oferta virtual</dd></div>
       <div><dt>Periodo</dt><dd>Admisiones 2027-1 · campaña ago-26 a feb-27</dd></div>
       <div><dt>Alcance</dt><dd>Pregrado y posgrado · Google, Meta, TikTok, LinkedIn, programática y YouTube</dd></div>
@@ -78,38 +79,26 @@
       </figure>
     </div>
     <noscript><p class="eu-noscript">Las cifras se calculan con JavaScript desde js/estrategia-universidades.js. Ábrelo en un navegador con JavaScript activo.</p></noscript>
-  </header>
+  </div>
+</section>
 
-  <!-- ÍNDICE: dos partes, como en las rutas reales. Si se borra una sección, se borra su enlace. -->
-  <nav class="eu-indice" aria-label="Contenido de la ruta">
-    <div>
-      <h2>Parte 01 · Punto de partida</h2>
-      <ol>
-        <li><a href="#contexto"><span>01</span>Contexto de mercado</a></li>
-        <li><a href="#radiografia"><span>02</span>Radiografía de la cuenta</a></li>
-        <li><a href="#diagnostico"><span>03</span>Diagnóstico de seis columnas</a></li>
+  <!-- ======================= PARTE 01 · PUNTO DE PARTIDA =======================
+       Cabecera de la parte a la izquierda y, a la derecha, el índice de sus secciones.
+       Si se borra una sección, se borra su enlace. -->
+  <section class="ad-sec ad-sec--papel eu-parte" aria-labelledby="parte-1-t">
+    <div class="ad-wrap ad-split ad-split--arriba">
+      <div class="ad-sec-cab ad-sec-cab--grande" style="margin:0">
+        <p class="ad-eyebrow">Parte 01</p>
+        <h2 id="parte-1-t">Punto de partida</h2>
+        <p class="ad-lead">Antes de mover presupuesto confirmamos dónde está el problema: en el mercado, en la cuenta o en lo que pasa después del formulario.</p>
+      </div>
+      <ol class="ad-filas eu-indice" aria-label="Contenido de la parte 01">
+        <li><a class="ad-fila eu-fila" href="#contexto"><span class="ad-n ad-n--md" aria-hidden="true">01</span><span class="ad-fila__t">Contexto de mercado</span><span class="ad-fila__go">Ir ›</span></a></li>
+        <li><a class="ad-fila eu-fila" href="#radiografia"><span class="ad-n ad-n--md" aria-hidden="true">02</span><span class="ad-fila__t">Radiografía de la cuenta</span><span class="ad-fila__go">Ir ›</span></a></li>
+        <li><a class="ad-fila eu-fila" href="#diagnostico"><span class="ad-n ad-n--md" aria-hidden="true">03</span><span class="ad-fila__t">Diagnóstico de seis columnas</span><span class="ad-fila__go">Ir ›</span></a></li>
       </ol>
     </div>
-    <div>
-      <h2>Parte 02 · Ruta 2027-1</h2>
-      <ol>
-        <li><a href="#objetivos"><span>04</span>Objetivos y metas</a></li>
-        <li><a href="#iman"><span>05</span>Recorrido y Efecto Imán®</a></li>
-        <li><a href="#verticales"><span>06</span>Audiencias y verticales</a></li>
-        <li><a href="#canales"><span>07</span>Canales y embudo</a></li>
-        <li><a href="#inversion"><span>08</span>Inversión y escenarios</a></li>
-        <li><a href="#calendario"><span>09</span>Calendario y fases</a></li>
-        <li><a href="#medicion"><span>10</span>Medición, riesgos y próximos pasos</a></li>
-      </ol>
-    </div>
-  </nav>
-
-  <!-- ======================= PARTE 01 · PUNTO DE PARTIDA ======================= -->
-  <header class="eu-parte">
-    <p class="ad-t-eyebrow">Parte 01</p>
-    <h2 class="ad-t-h2">Punto de partida</h2>
-    <p class="ad-t-lead">Antes de mover presupuesto confirmamos dónde está el problema: en el mercado, en la cuenta o en lo que pasa después del formulario.</p>
-  </header>
+  </section>
 
   <!-- 01 CONTEXTO DE MERCADO · framework punto 18 (radar de contexto)
        Qué va: estado de la demanda (MEN–SNIES), clasificación del portafolio,
@@ -117,8 +106,9 @@
        Fuente: datos públicos con fecha de publicación, e histórico propio de
        Adcom en educación. Nunca cifras de otra universidad cliente.
        Las cifras de esta plantilla son ilustrativas: reemplazarlas todas. -->
-  <section class="formato-seccion" id="contexto" aria-labelledby="contexto-t">
-    <div class="ad-sec-cab"><p class="ad-t-eyebrow">01 · Contexto de mercado</p><h2 id="contexto-t">La demanda no cae: se redistribuye hacia virtual, posgrado y oferta pública.</h2></div>
+  <section class="ad-sec" id="contexto" aria-labelledby="contexto-t">
+  <div class="ad-wrap">
+    <div class="ad-sec-cab eu-cab"><p class="ad-eyebrow">01 · Contexto de mercado</p><h2 id="contexto-t">La demanda no cae: se redistribuye hacia virtual, posgrado y oferta pública.</h2></div>
 
     <h3 class="eu-sub"><small>1.1 · Estado del mercado</small>Matrícula de educación superior</h3>
     <div class="ad-tabla" role="region" aria-labelledby="mercado-cap" tabindex="0">
@@ -179,17 +169,30 @@
     </div>
     <div class="ad-lectura"><span class="ad-lectura__k">Lectura</span><p>El costo subió más que la estacionalidad del año pasado en junio. Para el pico de noviembre planeamos con el escenario base y dejamos la señal del escenario restrictivo escrita en la sección 08.</p></div>
 
-    <h3 class="eu-sub"><small>1.5 · Marca y performance</small>Dos funciones que se multiplican</h3>
-    <!-- Cruce marca × performance: justifica la bolsa de branding y cómo se mide. -->
-    <ul class="eu-suma" aria-label="Marca por performance da resultado de negocio">
-      <li><span class="eu-suma__t">Marca<br><small class="ad-t-caption">conocimiento, búsquedas de marca, tráfico directo</small></span></li>
-      <li><span class="ad-op" aria-hidden="true">×</span></li>
-      <li><span class="eu-suma__t">Performance<br><small class="ad-t-caption">lead válido, contactado, preinscrito</small></span></li>
-      <li><span class="ad-op" aria-hidden="true">=</span></li>
-      <li><span class="eu-suma__t eu-suma__t--res">Negocio<br><small class="ad-t-caption">costo por matrícula y tasa de matrícula por programa</small></span></li>
-    </ul>
+</div>
+  </section>
 
-    <h3 class="eu-sub"><small>1.6 · Por qué importa</small>Una decisión que no se cierra en un clic</h3>
+  <!-- 1.5 MARCA × PERFORMANCE · la idea fuerte de la parte 01, en sección oscura.
+       Cruce marca × performance: justifica la bolsa de branding y cómo se mide.
+       Es una suma del sistema (.ad-suma): lo que se suma o se multiplica, con su métrica. -->
+  <section class="ad-sec ad-sec--oscuro eu-oscuro" id="marca-performance" aria-labelledby="marca-performance-t">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab eu-cab"><p class="ad-eyebrow ad-eyebrow--dark">1.5 · Marca y performance</p><h2 id="marca-performance-t">Dos funciones que se multiplican.</h2>
+        <p class="ad-lead">La marca hace que te busquen; el performance convierte la búsqueda en matrícula. Medirlas por separado esconde el resultado.</p></div>
+      <ol class="ad-suma eu-suma-3" aria-label="Marca por performance da resultado de negocio">
+        <li class="ad-suma__i"><span class="ad-suma__n">01</span><h3>Marca</h3><p>Conocimiento, búsquedas de marca, tráfico directo.</p><p class="ad-suma__m">Mide: búsquedas de marca</p></li>
+        <li class="ad-op ad-op--x" aria-hidden="true">×</li>
+        <li class="ad-suma__i"><span class="ad-suma__n">02</span><h3>Performance</h3><p>Lead válido, contactado, preinscrito.</p><p class="ad-suma__m">Mide: costo por preinscrito</p></li>
+        <li class="ad-op" aria-hidden="true">=</li>
+        <li class="ad-suma__i"><span class="ad-suma__n">03</span><h3>Negocio</h3><p>Costo por matrícula y tasa de matrícula por programa.</p><p class="ad-suma__m">Mide: costo por matrícula</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 01 (continuación): por qué importa y qué significa el contexto -->
+  <section class="ad-sec" aria-labelledby="porque-t">
+    <div class="ad-wrap">
+    <div class="ad-sec-cab eu-cab"><p class="ad-eyebrow">1.6 · Por qué importa</p><h2 id="porque-t">Una decisión que no se cierra en un clic.</h2></div>
     <dl class="ad-kpis">
       <div class="ad-kpi"><dt class="ad-kpi__l">Horas de contenido</dt><dd class="ad-kpi__n">7</dd><dd class="ad-kpi__m">acumuladas antes de decidir</dd></div>
       <div class="ad-kpi ad-kpi--on"><dt class="ad-kpi__l">Puntos de contacto</dt><dd class="ad-kpi__n">11</dd><dd class="ad-kpi__m">anuncio, correo, WhatsApp, recomendación</dd></div>
@@ -203,6 +206,7 @@
         <li>Antes de comprar más formularios revisamos que la estructura no pierda lo que la pauta ya trae.</li>
       </ul>
     </div>
+  </div>
   </section>
 
   <!-- 02 RADIOGRAFÍA DE LA CUENTA
@@ -212,9 +216,10 @@
        Declarar el alcance: qué inversión no tiene atribución (programática,
        branding) y qué leads se excluyen (sin programa, lead magnets).
        No mezclar leads de plataforma con leads de CRM en la misma columna. -->
-  <section class="formato-seccion" id="radiografia" aria-labelledby="radiografia-t">
-    <div class="ad-sec-cab"><p class="ad-t-eyebrow">02 · Radiografía de la cuenta · periodo 2026-2</p><h2 id="radiografia-t">Google trae la matrícula; Meta trae el volumen.</h2></div>
-    <dl class="ad-kpis" aria-label="Resultados del periodo anterior">
+  <section class="ad-sec ad-sec--papel" id="radiografia" aria-labelledby="radiografia-t">
+  <div class="ad-wrap">
+    <div class="ad-sec-cab eu-cab"><p class="ad-eyebrow">02 · Radiografía de la cuenta · periodo 2026-2</p><h2 id="radiografia-t">Google trae la matrícula; Meta trae el volumen.</h2></div>
+    <dl class="ad-kpis eu-kpis-6" aria-label="Resultados del periodo anterior">
       <div class="ad-kpi"><dt class="ad-kpi__l">Inversión</dt><dd class="ad-kpi__n" id="rx-inversion">Sin dato</dd></div>
       <div class="ad-kpi"><dt class="ad-kpi__l">Leads</dt><dd class="ad-kpi__n" id="rx-leads">Sin dato</dd></div>
       <div class="ad-kpi"><dt class="ad-kpi__l">Matrículas</dt><dd class="ad-kpi__n" id="rx-matriculas">Sin dato</dd></div>
@@ -241,7 +246,8 @@
         <tbody id="rx-historico"></tbody>
       </table>
     </div>
-    <div class="ad-lectura"><span class="ad-lectura__k">Lectura</span><p>2026-2 es el periodo de mayor inversión y todavía está abierto: la conversión puede subir mientras maduran los leads de junio y julio. El costo por lead de Google duplica el de Meta, pero su costo por matrícula es menor; la decisión se toma <span class="ad-hl">sobre la matrícula, no sobre el lead</span>.</p></div>
+    <div class="ad-lectura"><span class="ad-lectura__k">Lectura</span><p>2026-2 es el periodo de mayor inversión y todavía está abierto: la conversión puede subir mientras maduran los leads de junio y julio. El costo por lead de Google duplica el de Meta, pero su costo por matrícula es menor; la decisión se toma <b>sobre la matrícula, no sobre el lead</b>.</p></div>
+  </div>
   </section>
 
   <!-- 03 DIAGNÓSTICO DE SEIS COLUMNAS (Marketing Estructural®)
@@ -251,18 +257,20 @@
        Tier B (revisión visual de anuncios y landings frente a competidores).
        Competidores: nombrarlos en la entrega real; aquí van anónimos.
        Framework punto 05: el resultado digital es una suma de capas. -->
-  <section class="formato-seccion" id="diagnostico" aria-labelledby="diagnostico-t">
-    <div class="ad-sec-cab"><p class="ad-t-eyebrow">03 · Diagnóstico de seis columnas</p><h2 id="diagnostico-t">Seis columnas, un cuello de botella: el contacto después del formulario.</h2>
-      <p>Evaluamos la estructura antes que los medios. Si una capa es débil, más inversión solo lleva más leads al mismo punto de fuga.</p></div>
-    <ul class="eu-suma" aria-label="Componentes del resultado digital">
-      <li><span class="eu-suma__t">Medios</span></li><li><span class="ad-op" aria-hidden="true">+</span></li>
-      <li><span class="eu-suma__t">Creatividad</span></li><li><span class="ad-op" aria-hidden="true">+</span></li>
-      <li><span class="eu-suma__t">Oferta</span></li><li><span class="ad-op" aria-hidden="true">+</span></li>
-      <li><span class="eu-suma__t">Experiencia</span></li><li><span class="ad-op" aria-hidden="true">+</span></li>
-      <li><span class="eu-suma__t">Gestión comercial</span></li><li><span class="ad-op" aria-hidden="true">+</span></li>
-      <li><span class="eu-suma__t">Medición</span></li><li><span class="ad-op" aria-hidden="true">=</span></li>
-      <li><span class="eu-suma__t eu-suma__t--res">Resultado</span></li>
-    </ul>
+  <section class="ad-sec" id="diagnostico" aria-labelledby="diagnostico-t">
+  <div class="ad-wrap">
+    <div class="ad-sec-cab eu-cab"><p class="ad-eyebrow">03 · Diagnóstico de seis columnas</p><h2 id="diagnostico-t">Seis columnas, un cuello de botella: el contacto después del formulario.</h2>
+      <p class="ad-lead">Evaluamos la estructura antes que los medios. Si una capa es débil, más inversión solo lleva más leads al mismo punto de fuga.</p></div>
+    <!-- Suma de seis capas: el resultado digital es la suma de todas (framework punto 05). -->
+    <ol class="ad-suma eu-suma-6" aria-label="Componentes del resultado digital">
+      <li class="ad-suma__i"><h3>Medios</h3></li><li class="ad-op" aria-hidden="true">+</li>
+      <li class="ad-suma__i"><h3>Creatividad</h3></li><li class="ad-op" aria-hidden="true">+</li>
+      <li class="ad-suma__i"><h3>Oferta</h3></li><li class="ad-op" aria-hidden="true">+</li>
+      <li class="ad-suma__i"><h3>Experiencia</h3></li><li class="ad-op" aria-hidden="true">+</li>
+      <li class="ad-suma__i"><h3>Gestión comercial</h3></li><li class="ad-op" aria-hidden="true">+</li>
+      <li class="ad-suma__i"><h3>Medición</h3></li><li class="ad-op" aria-hidden="true">=</li>
+      <li class="ad-suma__i eu-suma__res"><h3>Resultado</h3></li>
+    </ol>
 
     <h3 class="eu-sub">Resumen del semáforo</h3>
     <ul class="eu-semaforo">
@@ -340,42 +348,64 @@
     </div>
 
     <blockquote class="ad-cita">
-      <p>La columna prioritaria es <span class="ad-hl">nutrición y seguimiento</span>. El lead de pauta se busca tanto como el orgánico, pero casi no llega a una conversación. Más presupuesto no resuelve eso: lo resuelve cambiar quién da el primer paso.</p>
+      <p>La columna prioritaria es <b>nutrición y seguimiento</b>. El lead de pauta se busca tanto como el orgánico, pero casi no llega a una conversación. Más presupuesto no resuelve eso: lo resuelve cambiar quién da el primer paso.</p>
       <cite>Columna prioritaria · activa el Efecto Imán® de la sección 05</cite>
     </blockquote>
+  </div>
   </section>
 
-  <!-- ======================= PARTE 02 · RUTA ======================= -->
-  <header class="eu-parte">
-    <p class="ad-t-eyebrow">Parte 02</p>
-    <h2 class="ad-t-h2">Ruta 2027-1</h2>
-    <p class="ad-t-lead">En el orden en que el aspirante vive la ruta: qué queremos lograr, cómo lo contactamos, qué le decimos, por dónde llega y cuánto invertimos.</p>
-  </header>
+  <!-- ======================= PARTE 02 · RUTA =======================
+       Misma composición: cabecera a la izquierda e índice de sus siete secciones a la derecha. -->
+  <section class="ad-sec ad-sec--crema eu-parte" aria-labelledby="parte-2-t">
+    <div class="ad-wrap ad-split ad-split--arriba">
+      <div class="ad-sec-cab ad-sec-cab--grande" style="margin:0">
+        <p class="ad-eyebrow">Parte 02</p>
+        <h2 id="parte-2-t">Ruta 2027-1</h2>
+        <p class="ad-lead">En el orden en que el aspirante vive la ruta: qué queremos lograr, cómo lo contactamos, qué le decimos, por dónde llega y cuánto invertimos.</p>
+      </div>
+      <ol class="ad-filas eu-indice" aria-label="Contenido de la parte 02">
+        <li><a class="ad-fila eu-fila" href="#objetivos"><span class="ad-n ad-n--md" aria-hidden="true">04</span><span class="ad-fila__t">Objetivos y metas</span><span class="ad-fila__go">Ir ›</span></a></li>
+        <li><a class="ad-fila eu-fila" href="#iman"><span class="ad-n ad-n--md" aria-hidden="true">05</span><span class="ad-fila__t">Recorrido y Efecto Imán®</span><span class="ad-fila__go">Ir ›</span></a></li>
+        <li><a class="ad-fila eu-fila" href="#verticales"><span class="ad-n ad-n--md" aria-hidden="true">06</span><span class="ad-fila__t">Audiencias y verticales</span><span class="ad-fila__go">Ir ›</span></a></li>
+        <li><a class="ad-fila eu-fila" href="#canales"><span class="ad-n ad-n--md" aria-hidden="true">07</span><span class="ad-fila__t">Canales y embudo</span><span class="ad-fila__go">Ir ›</span></a></li>
+        <li><a class="ad-fila eu-fila" href="#inversion"><span class="ad-n ad-n--md" aria-hidden="true">08</span><span class="ad-fila__t">Inversión y escenarios</span><span class="ad-fila__go">Ir ›</span></a></li>
+        <li><a class="ad-fila eu-fila" href="#calendario"><span class="ad-n ad-n--md" aria-hidden="true">09</span><span class="ad-fila__t">Calendario y fases</span><span class="ad-fila__go">Ir ›</span></a></li>
+        <li><a class="ad-fila eu-fila" href="#medicion"><span class="ad-n ad-n--md" aria-hidden="true">10</span><span class="ad-fila__t">Medición, riesgos y próximos pasos</span><span class="ad-fila__go">Ir ›</span></a></li>
+      </ol>
+    </div>
+  </section>
 
   <!-- 04 OBJETIVOS Y METAS · framework punto 00 (problema de negocio) y 20
        Qué va: el resultado de negocio que cambia, la evidencia y los supuestos,
        y tres objetivos con meta medible, fuente y fecha. Las metas por programa
        están en la tabla de la sección 08. -->
-  <section class="formato-seccion" id="objetivos" aria-labelledby="objetivos-t">
-    <div class="ad-sec-cab"><p class="ad-t-eyebrow">04 · Objetivos y metas</p><h2 id="objetivos-t">Más matrículas por peso invertido, no más formularios.</h2></div>
-    <dl class="formato-ficha">
+  <section class="ad-sec" id="objetivos" aria-labelledby="objetivos-t">
+  <div class="ad-wrap">
+    <div class="ad-split ad-split--arriba">
+    <div class="ad-sec-cab eu-cab" style="margin:0"><p class="ad-eyebrow">04 · Objetivos y metas</p><h2 id="objetivos-t">Más matrículas por peso invertido, no más formularios.</h2></div>
+    <dl class="ad-ficha eu-ficha eu-ficha--col">
       <div><dt>Pregunta de negocio</dt><dd>¿Cómo subimos la matrícula de pauta sin subir el costo por matrícula?</dd></div>
       <div><dt>Evidencia</dt><dd>El cuello está entre lead y preinscripción (sección 03), no en la captación.</dd></div>
       <div><dt>Supuesto por validar</dt><dd>Un primer contacto en minutos sube el paso a preinscrito. Lo valida Martech en el CRM.</dd></div>
       <div><dt>Revisión</dt><dd>Primer corte el 15 oct 2026 con Cuentas y Admisiones.</dd></div>
     </dl>
+    </div>
     <ol class="ad-pasos eu-pasos eu-pasos--neutro"><li class="ad-paso is-on"><span class="ad-n">1</span><h3>Matrícula de pauta</h3><p>Llegar a la proyección digital del plan (sección 08) con un costo por matrícula igual o menor al de 2026-2. Fuente: CRM, corte mensual.</p></li><li class="ad-paso"><span class="ad-n">2</span><h3>Contacto efectivo</h3><p>Pasar de 38 % a 55 % de leads de pauta con una conversación real a las 48 horas. Fuente: CRM, estados de gestión.</p></li><li class="ad-paso"><span class="ad-n">3</span><h3>Calidad del lead</h3><p>Bajar los descartados de 22 % a 15 % sin subir el CPL más de 15 %. Fuente: CRM y plataformas.</p></li></ol>
+  </div>
   </section>
 
   <!-- 05 RECORRIDO Y EFECTO IMÁN®
        Qué va: el recorrido de hoy frente al propuesto y la jerarquía de botones
        de la página de gracias, de menor a mayor fricción. Parámetros que faltan
        (números, agenda, enlaces) se listan como pendientes, nunca inventados. -->
-  <section class="formato-seccion" id="iman" aria-labelledby="iman-t">
-    <div class="ad-sec-cab"><p class="ad-t-eyebrow">05 · Recorrido y Efecto Imán®</p><h2 id="iman-t">De aspirante perseguido a aspirante que levanta la mano.</h2></div>
-    <div class="ad-grid eu-antes-despues" style="--col:300px">
+  <section class="ad-sec ad-sec--papel" id="iman" aria-labelledby="iman-t">
+  <div class="ad-wrap">
+    <div class="ad-split ad-split--arriba">
+    <div class="ad-sec-cab eu-cab" style="margin:0"><p class="ad-eyebrow">05 · Recorrido y Efecto Imán®</p><h2 id="iman-t">De aspirante perseguido a aspirante que levanta la mano.</h2></div>
+    <div class="ad-grid eu-antes-despues" style="--col:100%">
       <div class="ad-card"><h3 class="ad-card__n">Hoy</h3><p class="ad-card__d">El formulario termina en «Te contactaremos pronto». El asesor llama por orden de llegada, en promedio a las 30 horas, y el interés ya se enfrió.</p></div>
       <div class="ad-card is-on"><h3 class="ad-card__n">Con la ruta</h3><p class="ad-card__d">Justo después del formulario, el aspirante elige cómo hablar. El botón que elige dice qué tan listo está y define la prioridad del asesor.</p></div>
+    </div>
     </div>
     <h3 class="eu-sub">Botones de la página de gracias, en orden de fricción</h3>
     <ol class="ad-pasos eu-pasos eu-pasos--neutro"><li class="ad-paso"><span class="ad-n">1</span><h3>Continuar inscripción</h3><p>Enlace directo al formulario de inscripción o al pago. Ya decidió y quiere avanzar solo.</p></li><li class="ad-paso"><span class="ad-n">2</span><h3>Escribir por WhatsApp</h3><p>Mensaje ya escrito con el programa. Perfil de pregrado, quiere resolver por texto.</p></li><li class="ad-paso"><span class="ad-n">3</span><h3>Agendar una cita</h3><p>Elige su horario. Perfil de posgrado con agenda ocupada.</p></li><li class="ad-paso"><span class="ad-n">4</span><h3>Llamar ahora</h3><p>Toque para llamar. Prefiere voz y quiere resolver ya.</p></li><li class="ad-paso"><span class="ad-n">5</span><h3>Prefiero que me llamen</h3><p>Opción discreta. Es la única que entra al seguimiento tradicional.</p></li></ol>
@@ -384,7 +414,8 @@
       <li class="ad-card"><h4 class="ad-card__t">Medible desde el primer corte</h4><p class="ad-card__d">Porcentaje que elige una acción inmediata frente al que cae en «que me llamen».</p></li>
       <li class="ad-card"><h4 class="ad-card__t">Sin costo adicional de medios</h4><p class="ad-card__d">Ataca la fuga, no el volumen. No sube el presupuesto de pauta.</p></li>
     </ul>
-    <p class="formato-nota eu-pendiente"><b>Pendiente con la institución:</b> número de WhatsApp y mensaje por programa · enlace de agenda de Admisiones · teléfono por sede · enlace directo de inscripción. Autorización de contacto por llamada y WhatsApp, incluso automatizado (Ley 1581).</p>
+    <p class="ad-aviso eu-pendiente"><span class="ad-aviso__k">Pendiente con la institución</span>Número de WhatsApp y mensaje por programa · enlace de agenda de Admisiones · teléfono por sede · enlace directo de inscripción. Autorización de contacto por llamada y WhatsApp, incluso automatizado (Ley 1581).</p>
+  </div>
   </section>
 
   <!-- 06 AUDIENCIAS, BARRERAS Y VERTICALES
@@ -393,8 +424,9 @@
        su prueba verificable y CTA. Pregrado y posgrado por separado.
        La prueba debe ser real en la institución; si no existe, la vertical no
        se pauta. Copys de ejemplo, no aprobados. -->
-  <section class="formato-seccion" id="verticales" aria-labelledby="verticales-t">
-    <div class="ad-sec-cab"><p class="ad-t-eyebrow">06 · Audiencias, barreras y verticales</p><h2 id="verticales-t">Cada anuncio habla a una audiencia con una sola prueba.</h2></div>
+  <section class="ad-sec" id="verticales" aria-labelledby="verticales-t">
+  <div class="ad-wrap">
+    <div class="ad-sec-cab eu-cab"><p class="ad-eyebrow">06 · Audiencias, barreras y verticales</p><h2 id="verticales-t">Cada anuncio habla a una audiencia con una sola prueba.</h2></div>
     <div class="eu-cruce" role="group" aria-label="Cuatro audiencias por dos mensajes dan ocho combinaciones a evaluar">
       <div class="eu-cruce__col ad-card"><h3>Audiencias</h3><ul><li>Bachilleres 16–19 y familia</li><li>Adultos que retoman estudios</li><li>Profesionales 25–40</li><li>Profesionales técnicos</li></ul></div>
       <span class="ad-op ad-op--x" aria-hidden="true">×</span>
@@ -428,14 +460,16 @@
         <p class="eu-pie">CTA: micro caso y luego cita · LinkedIn y Meta</p>
       </li>
     </ul>
+  </div>
   </section>
 
   <!-- 07 CANALES, ROLES Y EMBUDO
        Qué va: el rol de cada medio en el embudo, qué campañas y audiencias usa y
        con qué KPI se lee; luego el recorrido hasta la matrícula y la estructura
        de campañas con sus pruebas. Un medio de marca no se lee por CPL. -->
-  <section class="formato-seccion" id="canales" aria-labelledby="canales-t">
-    <div class="ad-sec-cab"><p class="ad-t-eyebrow">07 · Canales, roles y embudo</p><h2 id="canales-t">Cada medio cumple un papel distinto hasta la matrícula.</h2></div>
+  <section class="ad-sec ad-sec--papel" id="canales" aria-labelledby="canales-t">
+  <div class="ad-wrap">
+    <div class="ad-sec-cab eu-cab"><p class="ad-eyebrow">07 · Canales, roles y embudo</p><h2 id="canales-t">Cada medio cumple un papel distinto hasta la matrícula.</h2></div>
     <div class="ad-tabla" role="region" aria-labelledby="roles-cap" tabindex="0">
       <table>
         <caption id="roles-cap">Rol de cada medio</caption>
@@ -451,7 +485,7 @@
     </div>
 
     <h3 class="eu-sub">Recorrido del aspirante</h3>
-    <ol class="ad-pasos eu-recorrido"><li class="ad-paso"><span class="ad-n">1</span><h3>Descubrimiento</h3><p>Programática · YouTube · TikTok</p></li><li class="ad-paso"><span class="ad-n">2</span><h3>Interés</h3><p>Meta · TikTok</p></li><li class="ad-paso"><span class="ad-n">3</span><h3>Consideración</h3><p>Google · remarketing</p></li><li class="ad-paso"><span class="ad-n">4</span><h3>Lead</h3><p>Landing o formulario nativo</p></li><li class="ad-paso"><span class="ad-n">5</span><h3>Filtro</h3><p>Dos preguntas de perfil</p></li><li class="ad-paso"><span class="ad-n">6</span><h3>Contacto</h3><p>Efecto Imán® · minutos</p></li><li class="ad-paso"><span class="ad-n">7</span><h3>Preinscripción</h3><p>Pago abonable</p></li><li class="ad-paso"><span class="ad-n">8</span><h3>Matrícula</h3><p>Admisiones</p></li></ol>
+    <ol class="ad-pasos eu-recorrido eu-pasos--neutro"><li class="ad-paso"><span class="ad-n">1</span><h3>Descubrimiento</h3><p>Programática · YouTube · TikTok</p></li><li class="ad-paso"><span class="ad-n">2</span><h3>Interés</h3><p>Meta · TikTok</p></li><li class="ad-paso"><span class="ad-n">3</span><h3>Consideración</h3><p>Google · remarketing</p></li><li class="ad-paso"><span class="ad-n">4</span><h3>Lead</h3><p>Landing o formulario nativo</p></li><li class="ad-paso"><span class="ad-n">5</span><h3>Filtro</h3><p>Dos preguntas de perfil</p></li><li class="ad-paso"><span class="ad-n">6</span><h3>Contacto</h3><p>Efecto Imán® · minutos</p></li><li class="ad-paso"><span class="ad-n">7</span><h3>Preinscripción</h3><p>Pago abonable</p></li><li class="ad-paso"><span class="ad-n">8</span><h3>Matrícula</h3><p>Admisiones</p></li></ol>
 
     <h3 class="eu-sub"><small>Framework · pilar 4.3, experimentación</small>Estructura de campañas y pruebas</h3>
     <div class="ad-tabla" role="region" aria-labelledby="pruebas-cap" tabindex="0">
@@ -465,6 +499,7 @@
         </tbody>
       </table>
     </div>
+  </div>
   </section>
 
   <!-- 08 INVERSIÓN Y ESCENARIOS · framework punto 21
@@ -473,10 +508,11 @@
        y meta) y tres escenarios con señal y respuesta.
        Fuente: el flow de medios aprobado. Todo sale del bloque DATOS; si cambia
        el flow, se cambia ahí. -->
-  <section class="formato-seccion" id="inversion" aria-labelledby="inversion-t">
-    <div class="ad-sec-cab"><p class="ad-t-eyebrow">08 · Inversión y escenarios</p><h2 id="inversion-t">La inversión se concentra en noviembre y en los programas tractores.</h2></div>
+  <section class="ad-sec" id="inversion" aria-labelledby="inversion-t">
+  <div class="ad-wrap">
+    <div class="ad-sec-cab eu-cab"><p class="ad-eyebrow">08 · Inversión y escenarios</p><h2 id="inversion-t">La inversión se concentra en noviembre y en los programas tractores.</h2></div>
     <dl class="ad-kpis">
-      <div class="ad-kpi ad-kpi--on"><dt class="ad-kpi__l">Presupuesto total</dt><dd class="ad-kpi__n" id="inv-total">Sin dato</dd></div>
+      <div class="ad-kpi"><dt class="ad-kpi__l">Presupuesto total</dt><dd class="ad-kpi__n" id="inv-total">Sin dato</dd></div>
       <div class="ad-kpi"><dt class="ad-kpi__l">Captación por programa</dt><dd class="ad-kpi__n" id="inv-formal">Sin dato</dd></div>
       <div class="ad-kpi"><dt class="ad-kpi__l">Branding</dt><dd class="ad-kpi__n" id="inv-branding">Sin dato</dd></div>
     </dl>
@@ -516,6 +552,7 @@
       </table>
     </div>
     <div class="ad-lectura"><span class="ad-lectura__k">Lectura</span><p><span id="meta-solo-pauta">Sin dato</span> Por eso la meta se cubre entre pauta, orgánico y gestión de Admisiones, y la pauta se compromete con su proyección, no con la meta completa.</p></div>
+  </div>
   </section>
 
   <!-- 09 CALENDARIO DE ADMISIONES Y FASES
@@ -523,25 +560,31 @@
        calendario académico (apertura, eventos, fechas límite, inicio de clases),
        con responsable y dependencia. Fechas de la institución, no supuestas.
        Para cambiar los meses: una fase ocupa grid-column inicio / fin. -->
-  <section class="formato-seccion" id="calendario" aria-labelledby="calendario-t">
-    <div class="ad-sec-cab"><p class="ad-t-eyebrow">09 · Calendario de admisiones y fases</p><h2 id="calendario-t">Preparar en agosto, captar hasta diciembre y cerrar en febrero.</h2></div>
-    <div class="eu-eje-wrap" role="region" aria-label="Fases de campaña e hitos de admisiones, agosto a febrero" tabindex="0">
-      <div class="eu-eje">
-        <span class="eu-eje__mes">ago-26</span><span class="eu-eje__mes">sep-26</span><span class="eu-eje__mes">oct-26</span><span class="eu-eje__mes">nov-26</span><span class="eu-eje__mes">dic-26</span><span class="eu-eje__mes">ene-27</span><span class="eu-eje__mes">feb-27</span>
-        <div class="eu-eje__fase" style="grid-column:1 / 2"><b>Preparar</b><span>Tracking, landings y botones</span></div>
-        <div class="eu-eje__fase" style="grid-column:2 / 4"><b>Captación temprana</b><span>Verticales y pruebas A/B</span></div>
-        <div class="eu-eje__fase eu-eje__fase--pico" style="grid-column:4 / 6"><b>Pico</b><span>Escalar lo que matricula</span></div>
-        <div class="eu-eje__fase" style="grid-column:6 / 8"><b>Cierre</b><span>Inscripción y matrícula</span></div>
-        <div class="eu-eje__hito" style="grid-column:1"><b>15 ago</b>Prueba real del formulario al CRM</div>
-        <div class="eu-eje__hito" style="grid-column:2"><b>1 sep</b>Apertura de inscripciones</div>
-        <div class="eu-eje__hito" style="grid-column:3"><b>18 oct</b>Open house</div>
-        <div class="eu-eje__hito" style="grid-column:4"><b>15 nov</b>Resultados de pruebas de Estado</div>
-        <div class="eu-eje__hito" style="grid-column:5"><b>12 dic</b>Fin del descuento temprano</div>
-        <div class="eu-eje__hito" style="grid-column:6"><b>20 ene</b>Cierre de inscripciones</div>
-        <div class="eu-eje__hito" style="grid-column:7"><b>2 feb</b>Inicio de clases</div>
+  <section class="ad-sec ad-sec--oscuro eu-oscuro" id="calendario" aria-labelledby="calendario-t">
+  <div class="ad-wrap">
+    <div class="ad-sec-cab eu-cab"><p class="ad-eyebrow">09 · Calendario de admisiones y fases</p><h2 id="calendario-t">Preparar en agosto, captar hasta diciembre y cerrar en febrero.</h2></div>
+    <!-- Calendario: la banda de fases va sobre los siete meses (una fase ocupa grid-column inicio / fin)
+         y el eje del sistema (.ad-eje) marca un hito por mes con su fecha. Para cambiar los meses,
+         se cambia el número de columnas en css/estrategia-universidades.css (--meses) y se agregan o quitan hitos. -->
+    <div class="eu-calendario" role="group" aria-label="Fases de campaña e hitos de admisiones, agosto a febrero">
+      <div class="eu-fases">
+        <span class="eu-fases__mes">ago-26</span><span class="eu-fases__mes">sep-26</span><span class="eu-fases__mes">oct-26</span><span class="eu-fases__mes">nov-26</span><span class="eu-fases__mes">dic-26</span><span class="eu-fases__mes">ene-27</span><span class="eu-fases__mes">feb-27</span>
+        <div class="eu-fases__fase" style="grid-column:1 / 2"><b>Preparar</b><span>Tracking, landings y botones</span></div>
+        <div class="eu-fases__fase" style="grid-column:2 / 4"><b>Captación temprana</b><span>Verticales y pruebas A/B</span></div>
+        <div class="eu-fases__fase eu-fases__fase--pico" style="grid-column:4 / 6"><b>Pico</b><span>Escalar lo que matricula</span></div>
+        <div class="eu-fases__fase" style="grid-column:6 / 8"><b>Cierre</b><span>Inscripción y matrícula</span></div>
       </div>
+      <ol class="ad-eje eu-eje-hitos">
+        <li><span class="ad-eje__t">15 ago</span><span class="ad-eje__d">Prueba real del formulario al CRM</span></li>
+        <li><span class="ad-eje__t">1 sep</span><span class="ad-eje__d">Apertura de inscripciones</span></li>
+        <li><span class="ad-eje__t">18 oct</span><span class="ad-eje__d">Open house</span></li>
+        <li><span class="ad-eje__t">15 nov</span><span class="ad-eje__d">Resultados de pruebas de Estado</span></li>
+        <li><span class="ad-eje__t">12 dic</span><span class="ad-eje__d">Fin del descuento temprano</span></li>
+        <li><span class="ad-eje__t">20 ene</span><span class="ad-eje__d">Cierre de inscripciones</span></li>
+        <li><span class="ad-eje__t">2 feb</span><span class="ad-eje__d">Inicio de clases</span></li>
+      </ol>
     </div>
-    <div class="ad-tabla eu-tabla--espacio" role="region" aria-labelledby="hitos-cap" tabindex="0">
+    <div class="ad-tabla eu-tabla--espacio eu-tabla-oscura" role="region" aria-labelledby="hitos-cap" tabindex="0">
       <table>
         <caption id="hitos-cap">Hitos, responsables y dependencias</caption>
         <thead><tr><th scope="col">Fecha</th><th scope="col">Hito</th><th scope="col">Responsable</th><th scope="col">Depende de</th></tr></thead>
@@ -553,14 +596,16 @@
         </tbody>
       </table>
     </div>
+  </div>
   </section>
 
   <!-- 10 MEDICIÓN, RIESGOS Y PRÓXIMOS PASOS · framework 05 y 18–20
        KPI: definición, fuente, frecuencia, meta y umbral de revisión.
        Riesgos: señal observable y respuesta preparada, con responsable.
        Próximos pasos: acción, responsable y fecha. Nada sin dueño. -->
-  <section class="formato-seccion" id="medicion" aria-labelledby="medicion-t">
-    <div class="ad-sec-cab"><p class="ad-t-eyebrow">10 · Medición, riesgos y próximos pasos</p><h2 id="medicion-t">Medimos hasta la matrícula y decidimos con señales acordadas.</h2></div>
+  <section class="ad-sec ad-sec--papel" id="medicion" aria-labelledby="medicion-t">
+  <div class="ad-wrap">
+    <div class="ad-sec-cab eu-cab"><p class="ad-eyebrow">10 · Medición, riesgos y próximos pasos</p><h2 id="medicion-t">Medimos hasta la matrícula y decidimos con señales acordadas.</h2></div>
     <div class="ad-tabla" role="region" aria-labelledby="kpi-cap" tabindex="0">
       <table>
         <caption id="kpi-cap">Indicadores, fuente y umbral de revisión</caption>
@@ -590,7 +635,7 @@
     </div>
 
     <h3 class="eu-sub">Próximos pasos</h3>
-    <ol class="ad-pasos eu-pasos"><li class="ad-paso"><span class="ad-n">1</span><h3>Aprobar presupuesto y curva mensual <span class="ad-estado ad-estado--pendiente">Pendiente</span></h3><p>Cuentas con la institución · 14 ago 2026.</p></li><li class="ad-paso"><span class="ad-n">2</span><h3>Recibir parámetros del Efecto Imán® <span class="ad-estado ad-estado--pendiente">Pendiente</span></h3><p>WhatsApp, agenda, teléfono y enlace de inscripción por programa · Admisiones · 14 ago 2026.</p></li><li class="ad-paso"><span class="ad-n">3</span><h3>Validar las pruebas de cada vertical <span class="ad-estado ad-estado--parcial">Parcial</span></h3><p>Acreditación y egresados confirmados; convenios pendientes · Cuentas · 20 ago 2026.</p></li><li class="ad-paso"><span class="ad-n">4</span><h3>Construir campañas por programa y landings A/B</h3><p>Paid Media y Martech · 28 ago 2026.</p></li></ol>
+    <ol class="ad-pasos eu-pasos eu-pasos--neutro"><li class="ad-paso"><span class="ad-n">1</span><h3>Aprobar presupuesto y curva mensual <span class="ad-estado ad-estado--pendiente">Pendiente</span></h3><p>Cuentas con la institución · 14 ago 2026.</p></li><li class="ad-paso"><span class="ad-n">2</span><h3>Recibir parámetros del Efecto Imán® <span class="ad-estado ad-estado--pendiente">Pendiente</span></h3><p>WhatsApp, agenda, teléfono y enlace de inscripción por programa · Admisiones · 14 ago 2026.</p></li><li class="ad-paso"><span class="ad-n">3</span><h3>Validar las pruebas de cada vertical <span class="ad-estado ad-estado--parcial">Parcial</span></h3><p>Acreditación y egresados confirmados; convenios pendientes · Cuentas · 20 ago 2026.</p></li><li class="ad-paso"><span class="ad-n">4</span><h3>Construir campañas por programa y landings A/B</h3><p>Paid Media y Martech · 28 ago 2026.</p></li></ol>
 
     <details class="ad-datos eu-nota-det">
       <summary>Antes de presentar: las trece preguntas del framework (punto 19)</summary>
@@ -598,17 +643,23 @@
         <p>Negocio · categoría · comportamiento esperado · barrera · oferta · hipótesis de medios · hipótesis creativa · factores externos · línea base · resultado esperado · señal de cambio · medición · áreas involucradas. Si alguna no tiene respuesta en esta ruta, se resuelve o se declara como supuesto antes de enviarla.</p>
       </div>
     </details>
+  </div>
   </section>
 
-  <!-- CIERRE: una idea en una frase. Sin cifras nuevas. -->
-  <section class="eu-cierre" aria-labelledby="cierre-t">
-    <h2 class="ad-t-h2-compact" id="cierre-t">No es hacer más anuncios. Es que cada anuncio pruebe algo y que alguien responda a tiempo.</h2>
-    <p>Ruta estratégica 2027-1 · Universidad Andina · V01 · Fuentes: CRM de admisiones (corte 31 jul 2026), plataformas de medios, MEN–SNIES e histórico de categoría de Adcom.</p>
+  <!-- CIERRE: una idea en una frase y la siguiente plantilla del ciclo. Sin cifras nuevas. -->
+  <section class="ad-sec ad-sec--noche ad-cierre eu-cierre" aria-labelledby="cierre-t">
+    <div class="ad-wrap ad-cierre__in">
+      <div>
+        <h2 id="cierre-t">No es hacer más anuncios. Es que cada anuncio pruebe algo y que alguien responda a tiempo.</h2>
+        <p>Ruta estratégica 2027-1 · Universidad Andina · V01 · Fuentes: CRM de admisiones (corte 31 jul 2026), plataformas de medios, MEN–SNIES e histórico de categoría de Adcom.</p>
+      </div>
+      <a class="ad-btn ad-btn--accent" href="flow-medios.html">Ver el flow de medios</a>
+    </div>
   </section>
 </main>
 
 <footer class="ad-foot">
-  <div class="ad-foot__in"><span>Adcom · Área digital · Banco de formatos</span><span>Plantilla con datos ficticios</span></div>
+  <div class="ad-foot__in"><span>Área digital · Banco de formatos</span><span>Plantilla con datos ficticios</span></div>
 </footer>
 <script src="js/estrategia-universidades.js"></script>
 </body>

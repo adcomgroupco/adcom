@@ -9,13 +9,18 @@
    gráficos, con borde sumi.
    ========================================================================= */
 
+.cierre-hero .cierre-lead { max-width: 56ch; }
+.cierre-ficha { margin-block-start: var(--space-10); }
 .cierre-ficha dd { overflow-wrap: anywhere; }
 .cierre-acciones { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-block-start: var(--space-6); }
 
-.formato-seccion .ad-sec-cab { margin-block-end: var(--space-6); }
-.formato-seccion .ad-sec-cab h2 { margin: 0; }
+/* los titulares del cierre son conclusiones largas: un escalón menos que el h2 grande del sistema */
+main .ad-sec-cab--grande h2 { font-size: clamp(32px, 4vw, 52px); }
+main .ad-cierre h2 { font-size: clamp(36px, 5.5vw, 72px); }
+.ad-sec .ad-wrap > p:not(.formato-nota) { max-width: 70ch; }
 .cierre-eyebrow { display: flex; align-items: center; gap: 12px; margin: 0; }
-.cierre-sub { margin-block: var(--space-10) var(--space-4) !important; }
+.ad-sec--oscuro .cierre-eyebrow .ad-n { background: transparent; border-color: var(--sobre-oscuro-200); color: var(--sobre-oscuro-100); }
+.cierre-sub { margin-block: var(--space-12) var(--space-4) !important; font: 500 clamp(22px, 2.4vw, 28px)/1.2 var(--font-display); letter-spacing: -.015em; }
 .cierre-bloque + .cierre-bloque { margin-block-start: var(--space-8); }
 .ad-lectura { max-width: 72ch; margin-block-start: var(--space-6); }
 .ad-lectura p { margin: 0; }
@@ -23,7 +28,7 @@
 /* ---- índice: ad-filas en dos columnas ---- */
 .cierre-indice {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(480px, 100%), 1fr));
   gap: 0 var(--space-8);
   border-block-start: 0;
 }
@@ -37,7 +42,11 @@
 .ad-kpi__l .ad-estado { margin-inline-start: var(--space-2); }
 
 /* ---- conclusión ejecutiva: ad-pasos con una frase por paso ---- */
+.cierre-conclusion { gap: var(--space-8); }
 .cierre-conclusion .ad-paso p { font-size: 16px; color: var(--sumi); }
+/* los pasos de la conclusión no son una secuencia con final: el último no se pinta de lima */
+.cierre-conclusion .ad-paso:last-child .ad-n { background: var(--washi); border-color: var(--sumi); }
+.ad-sec--crema .ad-paso .ad-n { background: var(--crema); }
 
 /* ---- filas de barras con etiqueta y valor (frentes, cumplimiento) ---- */
 .cierre-barras { display: grid; gap: var(--space-4); margin: 0; max-width: 860px; }
@@ -88,8 +97,19 @@
 /* ---- embudo: ad-pasos con cifra grande ---- */
 .cierre-embudo .ad-paso h3 { font-size: 17px; }
 .cierre-embudo .ad-paso p { margin: 0; }
-.cierre-embudo { padding-block-start: var(--space-4); }
-.cierre-embudo .ad-paso .cierre-embudo__n { font: 300 clamp(30px, 3.4vw, 40px)/1.1 var(--font-display); letter-spacing: -.04em; font-variant-numeric: tabular-nums; color: var(--sumi) !important; }
+.cierre-embudo { padding-block-start: var(--space-4); margin-block-end: var(--space-12) !important; }
+/* embudo protagonista (fondo oscuro): la lima marca el paso con la mayor caída; el último paso ya no se pinta solo */
+.ad-sec--oscuro .cierre-embudo .ad-paso { border-top-color: rgba(247, 246, 242, .24); }
+.ad-sec--oscuro .cierre-embudo .ad-paso .ad-n,
+.ad-sec--oscuro .cierre-embudo .ad-paso:last-child:not(.is-on) .ad-n { background: var(--negro-escena); border-color: var(--sobre-oscuro-200); color: var(--sobre-oscuro-100); }
+.ad-sec--oscuro .cierre-embudo .ad-paso.is-on .ad-n { background: var(--lima); border-color: var(--lima); color: var(--sumi); }
+.ad-sec--oscuro .cierre-embudo .ad-paso p { color: var(--sobre-oscuro-200); }
+.ad-sec--oscuro .cierre-embudo .ad-paso .cierre-embudo__n { color: var(--sobre-oscuro-100) !important; }
+.ad-sec--oscuro .cierre-embudo .cierre-embudo__antes { color: var(--sobre-oscuro-300) !important; border-block-start-color: rgba(247, 246, 242, .24); }
+.ad-sec--oscuro .cierre-tabla { color: var(--sumi); }
+.ad-sec--oscuro .cierre-tabla .ad-estado { color: var(--sumi); }
+.ad-sec--oscuro .cierre-tabla .ad-estado--alerta { color: var(--neg); }
+.cierre-embudo .ad-paso .cierre-embudo__n { font: 300 clamp(36px, 4.6vw, 60px)/1.05 var(--font-display); letter-spacing: -.04em; font-variant-numeric: tabular-nums; color: var(--sumi) !important; }
 .cierre-embudo__tasa { font-size: 13px !important; }
 .cierre-embudo__antes { margin-block-start: auto !important; padding-block-start: var(--space-2); border-block-start: 1px solid var(--piedra); font-size: 13px !important; color: var(--tinta-suave) !important; }
 
@@ -161,6 +181,7 @@
 /* ---- decisiones para el siguiente periodo ---- */
 .cierre-decisiones { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; border-block-start: 1px solid var(--sumi); }
 .cierre-decisiones > li {
+  align-items: start;
   display: grid;
   grid-template-columns: 48px minmax(0, 1.3fr) minmax(0, 1fr);
   gap: var(--space-2) var(--space-6);
@@ -174,11 +195,12 @@
 .cierre-decisiones dd { margin: 0; }
 
 .cierre-definiciones { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: var(--space-4) var(--space-8); margin: 0; }
-.cierre-definiciones dt { font-weight: 500; }
+.cierre-definiciones dt { padding-block-start: var(--space-4); border-block-start: 1px solid var(--sumi); font-weight: 500; }
 .cierre-definiciones dd { margin: 4px 0 0; font-size: 15px; color: var(--tinta-secundaria); }
 .cierre-estados { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); margin: 0; padding: 0; list-style: none; font-size: 14px; color: var(--tinta-secundaria); }
 .cierre-estados li { display: flex; align-items: center; gap: var(--space-2); }
 
+@media (max-width: 560px) { .ad-nav__links { gap: 10px; font-size: 13px; } }
 @media (max-width: 900px) {
   .cierre-dos, .cierre-extremos { grid-template-columns: minmax(0, 1fr); }
   .cierre-decisiones > li { grid-template-columns: 48px minmax(0, 1fr); }
@@ -203,3 +225,5 @@
   .cierre-col--actual .cierre-col__pila > span, .ad-barra > span, .ad-leyenda i { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
   .cierre-col__pila > span { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 }
+
+.cierre-dos + .ad-leyenda { margin-block: var(--space-6) var(--space-10); }

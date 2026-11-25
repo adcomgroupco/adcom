@@ -6,146 +6,256 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#F7F6F2">
   <title>Banco de formatos | Adcom</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
-  <link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261123">
+  <link rel="stylesheet" href="../assets/ds/fonts.css">
+  <link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261126">
   <link rel="stylesheet" href="formatos.css?v=20261123">
   <script src="instructivo-web.js" defer></script>
   <style>
-    .banco-enlace { margin: var(--space-4) 0 0; }
-    .banco-enlace .ad-link { display: inline-flex; align-items: center; min-height: var(--target-min); text-decoration: underline; text-underline-offset: 4px; }
-    .banco-grupos .ad-sec-cab { max-width: none; margin-block-end: var(--space-6); }
-    .banco-grupos .ad-sec-cab h2 { margin: 0; }
-    .banco-grupos ul.ad-grid { margin: 0; padding: 0; list-style: none; }
-    .banco-card__acc { margin-block-start: auto !important; padding-block-start: var(--space-4); display: flex; flex-wrap: wrap; gap: var(--space-2); }
-    .banco-card__acc .ad-btn { box-sizing: border-box; min-height: var(--target-min); padding: 8px var(--space-4); font-size: 14px; }
-    .banco-card__acc .ad-btn--outline { background: var(--papel); }
-    .ad-card h3.ad-card__t { margin: 0; padding-block-start: var(--space-6); }
-    .ad-card .banco-card__tipo { margin: 0; font-size: 13px; color: var(--tinta-suave); }
-    .ad-card .ad-card__d { margin: 0; }
+    /* Portada del banco: composición con los componentes ad-* de la sección 5c; aquí solo lo que no tiene componente (prefijo bf-). */
+    .bf-eje-bloque { margin-block-start: clamp(64px, 8vw, 112px); }
+    .bf-eje-bloque > .ad-eyebrow { margin: 0 0 var(--space-8); }
+    .bf-eje a { display: block; min-height: var(--target-min); color: inherit; text-decoration: none; }
+    .bf-eje a:hover .ad-eje__t { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; }
+    .bf-eje a:focus-visible { outline: 2px solid var(--sumi); outline-offset: 4px; }
+    .bf-eje .ad-eje__t { font-size: clamp(22px, 2.4vw, 30px); letter-spacing: -.02em; }
+    .bf-eje .ad-eje__d { max-width: 28ch; margin-inline: auto; }
+    .bf-eje-nota { margin: var(--space-8) 0 0; max-width: 60ch; font-size: 15px; color: var(--tinta-secundaria); }
+
+    /* Cabecera de cada etapa: número y nombre del paso, titular grande y la entradilla. */
+    .bf-cab .ad-eyebrow { display: flex; align-items: center; gap: var(--space-2); margin-block-end: var(--space-4); }
+    .bf-cab h2 { text-wrap: balance; }
+    .bf-cab .ad-lead { margin-block-start: var(--space-4); }
+    .bf-cab { position: sticky; top: calc(var(--nav-height) + var(--space-8)); }
+
+    /* Lista de plantillas: una fila por plantilla; ver plantilla es la acción primaria, Excel la secundaria. */
+    .bf-lista { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--piedra); }
+    .bf-fila { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: var(--space-4) var(--space-8); padding: var(--space-8) 0; border-bottom: 1px solid var(--piedra); }
+    .bf-fila__tipo { margin: 0; font-size: 13px; color: var(--tinta-suave); }
+    .bf-fila h3 { margin: 4px 0 0; font-size: clamp(22px, 2.4vw, 28px); line-height: 1.15; letter-spacing: -.02em; }
+    .bf-fila__d { margin: var(--space-2) 0 0; max-width: 56ch; font-size: 15px; color: var(--tinta-secundaria); }
+    .bf-fila__acc { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: var(--space-2); }
+    .bf-fila__acc .ad-btn { min-height: var(--target-min); padding: 0 20px; font-size: 14px; }
+    .bf-fila__acc .ad-btn--outline { padding: 0 19px; }
+
+    /* Instructivo: sección oscura con tres partes del documento y su descarga. */
+    .bf-inst-lista { margin: 0 0 var(--space-8); padding: 0; list-style: none; border-top: 1px solid rgba(247, 246, 242, .24); }
+    .bf-inst-lista li { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: var(--space-2) var(--space-4); padding: var(--space-4) 0; border-bottom: 1px solid rgba(247, 246, 242, .24); }
+    .bf-inst-lista .ad-n { background: transparent; border-color: var(--sobre-oscuro-200); color: var(--sobre-oscuro-100); }
+    .bf-inst-lista h3 { margin: 0; font-size: 20px; line-height: 1.2; }
+    .bf-inst-lista p { margin: 2px 0 0; font-size: 15px; color: var(--sobre-oscuro-200); }
+    .bf-inst-acc { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+    .ad-sec--oscuro .ad-btn--outline { border-color: var(--sobre-oscuro-100); color: var(--sobre-oscuro-100); }
+    .ad-sec--oscuro .ad-btn--outline:hover { background: var(--sobre-oscuro-100); color: var(--sumi); }
+    .ad-sec--oscuro a:focus-visible, .ad-sec--noche a:focus-visible { outline-color: var(--sobre-oscuro-100); }
+    .ad-nav .ad-marca { margin-inline-end: var(--space-4); }
+
+    @media (max-width: 900px) { .bf-cab { position: static; } }
+    @media (max-width: 640px) {
+      .bf-fila { grid-template-columns: minmax(0, 1fr); padding-block: var(--space-6); }
+      .bf-fila__acc { justify-content: flex-start; }
+      .ad-hero__acciones .ad-btn { flex: 1 1 100%; }
+    }
   </style>
+  <link rel="icon" type="image/png" href="../assets/favicon-adcom.png">
+  <link rel="apple-touch-icon" href="../assets/ds/logos/apple-touch-icon.png">
 </head>
 <body>
 <a class="skip-link" href="#contenido">Ir al contenido</a>
 <header class="ad-nav formato-nav">
   <nav class="ad-nav__in" aria-label="Principal">
-    <a class="formato-nav__marca" href="../index.html">Adcom</a>
+    <a class="ad-marca" href="../index.html"><img src="../assets/ds/logos/adcom-mark.png" alt="Adcom" width="30" height="25"><i>Banco de formatos</i></a>
     <div class="ad-nav__links"><a href="componentes.html">Componentes</a><a href="../framework/index.html">Framework Digital</a></div>
   </nav>
 </header>
-<main class="formato-shell" id="contenido" tabindex="-1">
-  <header class="banco-portada">
-    <div>
-      <h1 class="ad-t-display-hero">Banco de <span class="ad-hl">formatos</span></h1>
-      <p class="ad-t-lead">Las plantillas de los entregables que hacemos en cada cliente, con la estructura que de verdad mostramos. Se copian, se cambian los datos y se construye encima.</p>
-      <p class="banco-enlace"><a class="ad-link" href="componentes.html">Ver los componentes de diseño con los que se arman ›</a></p>
+<main id="contenido" tabindex="-1">
+
+<!-- PORTADA: qué es el banco y el ciclo del área como diagrama protagonista.
+     El eje va de planear a reportar; cada nodo lleva a su grupo y nombra las plantillas que contiene.
+     Si cambian las plantillas de un grupo, se actualiza la descripción del nodo y el conteo. -->
+<section class="ad-hero" aria-labelledby="titulo-banco">
+  <div class="ad-wrap">
+    <h1 id="titulo-banco"><span class="ad-ln">Banco de</span><span class="ad-ln"><span class="ad-hl">formatos</span>.</span></h1>
+    <p class="ad-lead">Las plantillas de los entregables que hacemos en cada cliente, con la estructura que de verdad mostramos. Se copian, se cambian los datos y se construye encima.</p>
+    <div class="ad-hero__acciones">
+      <a class="ad-btn ad-btn--accent" href="#planear">Ver las plantillas</a>
+      <a class="ad-link" href="#instructivo">Instructivo para IA ›</a>
     </div>
-    <section class="banco-guia" aria-labelledby="titulo-guia">
-      <h2 class="ad-t-h3-capacidad" id="titulo-guia">Instructivo para IA</h2>
-      <p>Prompt reutilizable, datos mínimos por formato y criterios de revisión.</p>
-      <div class="banco-acciones">
+
+    <div class="bf-eje-bloque">
+      <p class="ad-eyebrow">El ciclo del área, en el orden en que se usa</p>
+      <ol class="ad-eje bf-eje">
+        <li><a href="#planear"><span class="ad-eje__t">Planear</span><span class="ad-eje__d">3 plantillas: estrategia, flow y materiales</span></a></li>
+        <li><a href="#ejecutar"><span class="ad-eje__t">Ejecutar</span><span class="ad-eje__d">3 plantillas: implementación, inversión y tablero</span></a></li>
+        <li><a href="#reportar"><span class="ad-eje__t">Reportar</span><span class="ad-eje__d">2 plantillas: informe particular y de cierre</span></a></li>
+      </ol>
+      <p class="bf-eje-nota">Lo que se decide al reportar alimenta el plan del siguiente periodo: el ciclo vuelve a empezar en Planear.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PLANEAR: Qué queremos lograr, con cuánto y con qué piezas.
+     Cabecera grande a la izquierda (fija al desplazarse) y la lista de plantillas a la derecha.
+     Una plantilla nueva es una fila más: tipo, título, descripción, «Ver plantilla» y, si hay hoja de cálculo, «Excel». -->
+<section class="ad-sec ad-sec--papel" id="planear" aria-labelledby="grupo-planear">
+  <div class="ad-wrap ad-split ad-split--arriba">
+    <div class="ad-sec-cab ad-sec-cab--grande bf-cab" style="margin:0">
+      <p class="ad-eyebrow"><span class="ad-n ad-n--md" aria-hidden="true">1</span>Planear</p>
+      <h2 id="grupo-planear">Se decide antes de salir al aire.</h2>
+      <p class="ad-lead">Qué queremos lograr, con cuánto y con qué piezas.</p>
+    </div>
+    <ol class="bf-lista">
+        <li class="bf-fila">
+          <div>
+            <p class="bf-fila__tipo">RUTA o ESTRATEGIA · framework 18–21</p>
+            <h3>Estrategia para universidades</h3>
+            <p class="bf-fila__d">Contexto de mercado, radiografía de la cuenta, diagnóstico, objetivos por programa, recorrido, canales, inversión con escenarios y calendario de admisiones.</p>
+          </div>
+          <div class="bf-fila__acc">
+            <a class="ad-go" href="estrategia-universidades.html" aria-label="Ver plantilla: Estrategia para universidades">Ver plantilla</a>
+          </div>
+        </li>
+        <li class="bf-fila">
+          <div>
+            <p class="bf-fila__tipo">FLOW · framework 26–29</p>
+            <h3>Flow de medios y forecast</h3>
+            <p class="bf-fila__d">Plan por medio y mes, calendario de vuelos, resultados proyectados por programa, escenarios y supuestos con fuente.</p>
+          </div>
+          <div class="bf-fila__acc">
+            <a class="ad-go" href="flow-medios.html" aria-label="Ver plantilla: Flow de medios y forecast">Ver plantilla</a>
+            <a class="ad-btn ad-btn--outline" href="flow-medios.xlsx" download aria-label="Descargar Excel: Flow de medios y forecast">Excel</a>
+          </div>
+        </li>
+        <li class="bf-fila">
+          <div>
+            <p class="bf-fila__tipo">Hoja por campaña · framework 23–24, 94.3</p>
+            <h3>Cuadro de materiales y copys</h3>
+            <p class="bf-fila__d">Brief por mensaje, producción por pieza con formato y estado, copys por programa con límites de caracteres.</p>
+          </div>
+          <div class="bf-fila__acc">
+            <a class="ad-go" href="cuadro-materiales.html" aria-label="Ver plantilla: Cuadro de materiales y copys">Ver plantilla</a>
+            <a class="ad-btn ad-btn--outline" href="cuadro-materiales.xlsx" download aria-label="Descargar Excel: Cuadro de materiales y copys">Excel</a>
+          </div>
+        </li>
+    </ol>
+  </div>
+</section>
+
+<!-- EJECUTAR: Qué se montó, cuánto se ha gastado y cómo va contra la meta.
+     Cabecera grande a la izquierda (fija al desplazarse) y la lista de plantillas a la derecha.
+     Una plantilla nueva es una fila más: tipo, título, descripción, «Ver plantilla» y, si hay hoja de cálculo, «Excel». -->
+<section class="ad-sec" id="ejecutar" aria-labelledby="grupo-ejecutar">
+  <div class="ad-wrap ad-split ad-split--arriba">
+    <div class="ad-sec-cab ad-sec-cab--grande bf-cab" style="margin:0">
+      <p class="ad-eyebrow"><span class="ad-n ad-n--md" aria-hidden="true">2</span>Ejecutar</p>
+      <h2 id="grupo-ejecutar">Se controla mientras la pauta corre.</h2>
+      <p class="ad-lead">Qué se montó, cuánto se ha gastado y cómo va contra la meta.</p>
+    </div>
+    <ol class="bf-lista">
+        <li class="bf-fila">
+          <div>
+            <p class="bf-fila__tipo">IMPLEMENTACIÓN · framework 25</p>
+            <h3>Reporte de implementación</h3>
+            <p class="bf-fila__d">Resumen de la tanda, destinos por programa, piezas por creativo, anuncios anteriores, validaciones de tracking y pendientes.</p>
+          </div>
+          <div class="bf-fila__acc">
+            <a class="ad-go" href="reporte-implementacion.html" aria-label="Ver plantilla: Reporte de implementación">Ver plantilla</a>
+          </div>
+        </li>
+        <li class="bf-fila">
+          <div>
+            <p class="bf-fila__tipo">Control presupuestal · framework 26–29</p>
+            <h3>Seguimiento de inversión</h3>
+            <p class="bf-fila__d">Presupuesto contra gasto, ritmo esperado, desvío, proyección de cierre y puntos para revisar, por medio, producto y campaña.</p>
+          </div>
+          <div class="bf-fila__acc">
+            <a class="ad-go" href="seguimiento-inversion.html" aria-label="Ver plantilla: Seguimiento de inversión">Ver plantilla</a>
+            <a class="ad-btn ad-btn--outline" href="seguimiento-inversion.xlsx" download aria-label="Descargar Excel: Seguimiento de inversión">Excel</a>
+          </div>
+        </li>
+        <li class="bf-fila">
+          <div>
+            <p class="bf-fila__tipo">Tablero · framework 05, 42</p>
+            <h3>Tablero de seguimiento</h3>
+            <p class="bf-fila__d">Inversión, leads de plataforma y CRM, embudo hasta matrícula, metas y cumplimiento, por programa, nivel, medio y mes.</p>
+          </div>
+          <div class="bf-fila__acc">
+            <a class="ad-go" href="tablero-seguimiento.html" aria-label="Ver plantilla: Tablero de seguimiento">Ver plantilla</a>
+          </div>
+        </li>
+    </ol>
+  </div>
+</section>
+
+<!-- REPORTAR: Qué pasó, por qué, y qué decidimos.
+     Cabecera grande a la izquierda (fija al desplazarse) y la lista de plantillas a la derecha.
+     Una plantilla nueva es una fila más: tipo, título, descripción, «Ver plantilla» y, si hay hoja de cálculo, «Excel». -->
+<section class="ad-sec ad-sec--papel" id="reportar" aria-labelledby="grupo-reportar">
+  <div class="ad-wrap ad-split ad-split--arriba">
+    <div class="ad-sec-cab ad-sec-cab--grande bf-cab" style="margin:0">
+      <p class="ad-eyebrow"><span class="ad-n ad-n--md" aria-hidden="true">3</span>Reportar</p>
+      <h2 id="grupo-reportar">Se explica después, con una decisión.</h2>
+      <p class="ad-lead">Qué pasó, por qué, y qué decidimos.</p>
+    </div>
+    <ol class="bf-lista">
+        <li class="bf-fila">
+          <div>
+            <p class="bf-fila__tipo">INFORME · framework 35–41</p>
+            <h3>Informe particular</h3>
+            <p class="bf-fila__d">Responde una pregunta concreta: respuesta al inicio, cifras clave, evolución, desglose, hallazgos, límites de medición y acciones.</p>
+          </div>
+          <div class="bf-fila__acc">
+            <a class="ad-go" href="informe-particular.html" aria-label="Ver plantilla: Informe particular">Ver plantilla</a>
+          </div>
+        </li>
+        <li class="bf-fila">
+          <div>
+            <p class="bf-fila__tipo">INFORME · framework 42–43</p>
+            <h3>Informe de cierre de periodo</h3>
+            <p class="bf-fila__d">Resultados del semestre contra meta y contra el periodo equivalente, embudo, programas, medios, creativos y decisiones para el siguiente periodo.</p>
+          </div>
+          <div class="bf-fila__acc">
+            <a class="ad-go" href="informe-cierre.html" aria-label="Ver plantilla: Informe de cierre de periodo">Ver plantilla</a>
+          </div>
+        </li>
+    </ol>
+  </div>
+</section>
+
+<!-- INSTRUCTIVO PARA IA: sección oscura. El enlace de descarga lo completa instructivo-web.js (data-descargar-instructivo). -->
+<section class="ad-sec ad-sec--oscuro" id="instructivo" aria-labelledby="titulo-guia">
+  <div class="ad-wrap ad-split ad-split--arriba">
+    <div class="ad-sec-cab ad-sec-cab--grande" style="margin:0">
+      <p class="ad-eyebrow ad-eyebrow--dark">Instructivo para IA</p>
+      <h2 id="titulo-guia">Una guía para que la IA replique <span class="ad-hl">cada formato</span>.</h2>
+      <p class="ad-lead">Prompt reutilizable, datos mínimos por formato y criterios de revisión.</p>
+    </div>
+    <div>
+      <ol class="bf-inst-lista">
+        <li><span class="ad-n ad-n--md" aria-hidden="true">1</span><div><h3>Encargo para una IA</h3><p>El prompt reutilizable que se completa con formato, objetivo, periodo y fuentes.</p></div></li>
+        <li><span class="ad-n ad-n--md" aria-hidden="true">2</span><div><h3>Cómo replicar cada formato</h3><p>Los datos mínimos y la lógica de cada una de las ocho plantillas.</p></div></li>
+        <li><span class="ad-n ad-n--md" aria-hidden="true">3</span><div><h3>Control antes de entregar</h3><p>Los criterios de revisión que debe pasar el entregable.</p></div></li>
+      </ol>
+      <div class="bf-inst-acc">
         <a class="ad-btn ad-btn--outline" href="instructivo.html">Leer guía</a>
         <a class="ad-btn ad-btn--accent" href="INSTRUCTIVO.md" download="INSTRUCTIVO.md" data-descargar-instructivo>Descargar .md</a>
       </div>
-    </section>
-  </header>
-  <div class="banco-grupos">
-  <section aria-labelledby="grupo-planear">
-    <div class="ad-sec-cab">
-      <h2 id="grupo-planear">Planear</h2>
-      <p>Antes de salir al aire: qué queremos lograr, con cuánto y con qué piezas.</p>
     </div>
-  <ul class="ad-grid" style="--col:300px" role="list">
-    <li class="ad-card">
-        <p class="banco-card__tipo">RUTA o ESTRATEGIA · framework 18–21</p>
-        <h3 class="ad-card__t">Estrategia para universidades</h3>
-        <p class="ad-card__d">Contexto de mercado, radiografía de la cuenta, diagnóstico, objetivos por programa, recorrido, canales, inversión con escenarios y calendario de admisiones.</p>
-        <div class="banco-card__acc">
-        <a class="ad-btn ad-btn--outline" href="estrategia-universidades.html" aria-label="Ver plantilla: Estrategia para universidades">Ver plantilla</a>
-      </div>
-      </li>
-    <li class="ad-card">
-        <p class="banco-card__tipo">FLOW · framework 26–29</p>
-        <h3 class="ad-card__t">Flow de medios y forecast</h3>
-        <p class="ad-card__d">Plan por medio y mes, calendario de vuelos, resultados proyectados por programa, escenarios y supuestos con fuente.</p>
-        <div class="banco-card__acc">
-        <a class="ad-btn ad-btn--outline" href="flow-medios.html" aria-label="Ver plantilla: Flow de medios y forecast">Ver plantilla</a>
-        <a class="ad-btn ad-btn--outline" href="flow-medios.xlsx" download aria-label="Descargar Excel: Flow de medios y forecast">Excel</a>
-      </div>
-      </li>
-    <li class="ad-card">
-        <p class="banco-card__tipo">Hoja por campaña · framework 23–24, 94.3</p>
-        <h3 class="ad-card__t">Cuadro de materiales y copys</h3>
-        <p class="ad-card__d">Brief por mensaje, producción por pieza con formato y estado, copys por programa con límites de caracteres.</p>
-        <div class="banco-card__acc">
-        <a class="ad-btn ad-btn--outline" href="cuadro-materiales.html" aria-label="Ver plantilla: Cuadro de materiales y copys">Ver plantilla</a>
-        <a class="ad-btn ad-btn--outline" href="cuadro-materiales.xlsx" download aria-label="Descargar Excel: Cuadro de materiales y copys">Excel</a>
-      </div>
-      </li>
-  </ul>
-  </section>
-  <section aria-labelledby="grupo-ejecutar">
-    <div class="ad-sec-cab">
-      <h2 id="grupo-ejecutar">Ejecutar</h2>
-      <p>Mientras la pauta corre: qué se montó, cuánto se ha gastado y cómo va contra la meta.</p>
-    </div>
-  <ul class="ad-grid" style="--col:300px" role="list">
-    <li class="ad-card">
-        <p class="banco-card__tipo">IMPLEMENTACIÓN · framework 25</p>
-        <h3 class="ad-card__t">Reporte de implementación</h3>
-        <p class="ad-card__d">Resumen de la tanda, destinos por programa, piezas por creativo, anuncios anteriores, validaciones de tracking y pendientes.</p>
-        <div class="banco-card__acc">
-        <a class="ad-btn ad-btn--outline" href="reporte-implementacion.html" aria-label="Ver plantilla: Reporte de implementación">Ver plantilla</a>
-      </div>
-      </li>
-    <li class="ad-card">
-        <p class="banco-card__tipo">Control presupuestal · framework 26–29</p>
-        <h3 class="ad-card__t">Seguimiento de inversión</h3>
-        <p class="ad-card__d">Presupuesto contra gasto, ritmo esperado, desvío, proyección de cierre y puntos para revisar, por medio, producto y campaña.</p>
-        <div class="banco-card__acc">
-        <a class="ad-btn ad-btn--outline" href="seguimiento-inversion.html" aria-label="Ver plantilla: Seguimiento de inversión">Ver plantilla</a>
-        <a class="ad-btn ad-btn--outline" href="seguimiento-inversion.xlsx" download aria-label="Descargar Excel: Seguimiento de inversión">Excel</a>
-      </div>
-      </li>
-    <li class="ad-card">
-        <p class="banco-card__tipo">Tablero · framework 05, 42</p>
-        <h3 class="ad-card__t">Tablero de seguimiento</h3>
-        <p class="ad-card__d">Inversión, leads de plataforma y CRM, embudo hasta matrícula, metas y cumplimiento, por programa, nivel, medio y mes.</p>
-        <div class="banco-card__acc">
-        <a class="ad-btn ad-btn--outline" href="tablero-seguimiento.html" aria-label="Ver plantilla: Tablero de seguimiento">Ver plantilla</a>
-      </div>
-      </li>
-  </ul>
-  </section>
-  <section aria-labelledby="grupo-reportar">
-    <div class="ad-sec-cab">
-      <h2 id="grupo-reportar">Reportar</h2>
-      <p>Después: qué pasó, por qué, y qué decidimos.</p>
-    </div>
-  <ul class="ad-grid" style="--col:300px" role="list">
-    <li class="ad-card">
-        <p class="banco-card__tipo">INFORME · framework 35–41</p>
-        <h3 class="ad-card__t">Informe particular</h3>
-        <p class="ad-card__d">Responde una pregunta concreta: respuesta al inicio, cifras clave, evolución, desglose, hallazgos, límites de medición y acciones.</p>
-        <div class="banco-card__acc">
-        <a class="ad-btn ad-btn--outline" href="informe-particular.html" aria-label="Ver plantilla: Informe particular">Ver plantilla</a>
-      </div>
-      </li>
-    <li class="ad-card">
-        <p class="banco-card__tipo">INFORME · framework 42–43</p>
-        <h3 class="ad-card__t">Informe de cierre de periodo</h3>
-        <p class="ad-card__d">Resultados del semestre contra meta y contra el periodo equivalente, embudo, programas, medios, creativos y decisiones para el siguiente periodo.</p>
-        <div class="banco-card__acc">
-        <a class="ad-btn ad-btn--outline" href="informe-cierre.html" aria-label="Ver plantilla: Informe de cierre de periodo">Ver plantilla</a>
-      </div>
-      </li>
-  </ul>
-  </section>
   </div>
+</section>
+
+<!-- CIERRE: una frase y una acción hacia la galería de componentes. -->
+<section class="ad-sec ad-sec--noche ad-cierre" aria-labelledby="titulo-cierre">
+  <div class="ad-wrap ad-cierre__in">
+    <div>
+      <h2 id="titulo-cierre">Las plantillas se arman con las mismas piezas.</h2>
+      <p>La galería muestra cada componente de diseño, cuándo usarlo y dónde va la lima.</p>
+    </div>
+    <a class="ad-btn ad-btn--accent" href="componentes.html">Ver los componentes</a>
+  </div>
+</section>
 </main>
 <footer class="ad-foot">
-  <div class="ad-foot__in"><span>Adcom · Área digital</span></div>
+  <div class="ad-foot__in"><span>Área digital · Banco de formatos</span></div>
 </footer>
 </body>
 </html>

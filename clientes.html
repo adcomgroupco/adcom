@@ -7,54 +7,54 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#F7F6F2">
   <title>Adcom | Hub de informes de clientes</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
-  <link rel="stylesheet" href="assets/css/adcom-v2.css?v=20261123">
+  <link rel="stylesheet" href="assets/ds/fonts.css">
+  <link rel="stylesheet" href="assets/css/adcom-v2.css?v=20261126">
   <style>
     /* Hermano del portal (index.html): mismos tokens v2, ningún valor suelto. */
     *,*::before,*::after{box-sizing:border-box}
     body{margin:0;background:var(--washi);color:var(--sumi)}
     a{color:inherit}
-    .wrap{max-width:var(--container-max);margin:0 auto;padding:0 var(--space-6)}
 
-    /* header y pie: los del portal */
-    .marca{font-family:var(--font-display);font-size:20px;font-weight:600;letter-spacing:-.02em;color:var(--sumi);text-decoration:none;min-height:var(--target-min);display:inline-flex;align-items:center}
-    .marca span{font-weight:400;color:var(--tinta-suave);margin-left:8px;font-size:14px;letter-spacing:0}
     .ad-nav__links a:hover,.ad-nav__links a[aria-current]{color:var(--sumi)}
     .ad-foot a{color:var(--tinta-secundaria);text-decoration:none;min-height:var(--target-min);display:inline-flex;align-items:center}
     .ad-foot a:hover{color:var(--sumi)}
 
-    /* cabecera de la página */
-    .hero{padding:var(--space-16) 0 var(--space-12)}
-    .volver{display:inline-flex;align-items:center;min-height:var(--target-min);font-size:15px;color:var(--tinta-secundaria);text-decoration:none}
+    /* cabecera: titular grande, entradilla y las cuatro cifras del hub */
+    .hub-hero{padding-block:clamp(48px,6vw,88px) clamp(40px,5vw,72px)}
+    .hub-hero h1{font-size:clamp(44px,6.4vw,84px)}
+    .volver{display:inline-flex;align-items:center;min-height:var(--target-min);margin-block-end:var(--space-4);font-size:15px;color:var(--tinta-secundaria);text-decoration:none}
     .volver:hover{color:var(--sumi)}
-    .hero .ad-eyebrow{margin:var(--space-6) 0 0}
-    .hero h1{margin:var(--space-4) 0 0}
-    .hero-pie{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--space-6);margin-top:var(--space-8)}
-    .hero .ad-t-lead{margin:0;max-width:44ch;color:var(--tinta-secundaria)}
-
-    /* selector de vista: dos chips del sistema */
-    .view-toggle{display:inline-flex;gap:var(--space-2);flex:none}
+    .hub-hero .ad-eyebrow{margin:0}
+    .hero-pie{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--space-8) var(--space-16);margin-top:var(--space-10)}
+    .hero-pie .ad-lead{margin:0}
+    .hub-cifras{display:flex;flex-wrap:wrap;gap:var(--space-6) var(--space-12);margin:0}
+    .hub-cifras .ad-stat__n{margin:0;font-size:clamp(36px,4vw,52px)}
+    .hub-cifras .ad-stat{flex-direction:column-reverse}
+    .hub-cifras .ad-stat__l{margin:0}
 
     /* filtros: una franja entre líneas, sin caja; campos y botón del sistema */
-    .filters{display:grid;grid-template-columns:minmax(220px,1.4fr) repeat(3,minmax(150px,1fr)) auto;gap:var(--space-4);align-items:end;padding:var(--space-6) 0;border-top:1px solid var(--piedra);border-bottom:1px solid var(--piedra)}
+    .hub-sec{padding-block-start:0}
+    .filters{display:grid;grid-template-columns:minmax(220px,1.4fr) repeat(3,minmax(150px,1fr)) auto;gap:var(--space-4);align-items:end;padding:var(--space-8) 0;border-top:1px solid var(--sumi);border-bottom:1px solid var(--piedra)}
     .filters .ad-field{min-width:0}
-    .filters .ad-input{width:100%;min-height:var(--target-min);font-size:15px;padding:10px 14px}
+    .filters .ad-input{width:100%;height:var(--target-min);min-height:var(--target-min);font-size:15px;padding:0 14px}
     .filters .ad-input::placeholder{color:var(--tinta-suave)}
     .ad-btn--outline:hover{background:var(--sumi);color:var(--papel)}
 
-    /* chips: el activo va en lima (relleno con texto sumi) */
-    .category-strip{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:var(--space-6) 0}
+    /* categorías a la izquierda y selector de vista a la derecha; el activo va en lima */
+    .hub-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-4) var(--space-8);margin:var(--space-8) 0}
+    .category-strip{display:flex;flex-wrap:wrap;gap:var(--space-2)}
+    .view-toggle{display:inline-flex;gap:var(--space-2);flex:none}
     .ad-chip{transition:border-color var(--duration-hover)}
     .ad-chip:hover{border-color:var(--sumi)}
-    .ad-chip[aria-pressed="true"]{background:var(--lima);border-color:var(--lima);color:var(--sumi)}
+    .ad-chip[aria-pressed="true"]{background:var(--lima);border-color:var(--sumi);color:var(--sumi)}
+    .category-strip .ad-chip[aria-pressed="true"]{background:var(--sumi);color:var(--washi)}
 
     /* tarjetas: .ad-card en rejilla; lo específico es el bloque de datos */
-    .content-layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:var(--space-8);align-items:start;padding-bottom:var(--space-16)}
-    .cards{--col:250px;--gap:var(--space-4)}
+    .content-layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:var(--space-10);align-items:start}
+    .cards{--col:260px;--gap:var(--space-6)}
     .cards .ad-card{gap:var(--space-4);min-width:0}
-    .cards .ad-card__t,.detail .ad-card__t{margin-block-start:0;padding-block-start:0;font-size:22px}
+    .cards .ad-card__d{margin:0}
+    .cards .ad-card__t,.detail .ad-card__t{margin:0;padding-block-start:0;font-size:26px;letter-spacing:-.02em}
     .meta-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4);margin:auto 0 0;padding-top:var(--space-4);border-top:1px solid var(--piedra)}
     .meta-grid dt{font-size:13px;color:var(--tinta-suave)}
     .meta-grid dd{margin:2px 0 0;font-size:14px;font-weight:500}
@@ -68,14 +68,14 @@
 
     /* panel de detalle: tarjeta del sistema, fija al desplazar */
     .detail{position:sticky;top:calc(var(--nav-height) + var(--space-6));gap:var(--space-6)}
-    .detail .ad-card__t{font-size:26px}
+    .detail .ad-card__t{font-size:30px}
     .detail-list{margin:0}
     .detail-row{display:grid;grid-template-columns:100px minmax(0,1fr);gap:var(--space-4);padding:10px 0;border-bottom:1px solid var(--piedra);font-size:14px}
     .detail-row dt{font-size:13px;color:var(--tinta-suave)}
     .detail-row dd{margin:0;font-weight:500}
 
     /* vista de tabla: .ad-tabla; solo el ancho mínimo para que desplace en móvil */
-    .table-view{display:none;margin-bottom:var(--space-16)}
+    .table-view{display:none}
     .table-view.active{display:block}
     .table-view .ad-tabla table{min-width:980px}
     .table-view td{vertical-align:middle}
@@ -94,17 +94,21 @@
     }
     @media (max-width:640px){
       .ad-nav__links{display:none}
-      .hero{padding:var(--space-8) 0 var(--space-8)}
+      .hub-cifras{gap:var(--space-6) var(--space-8)}
+    }
+    @media (max-width:460px){
       .filters{grid-template-columns:1fr}
     }
   </style>
+  <link rel="icon" type="image/png" href="assets/favicon-adcom.png">
+  <link rel="apple-touch-icon" href="assets/ds/logos/apple-touch-icon.png">
 </head>
 <body>
 <a class="skip-link" href="#informes">Ir a los informes</a>
 
 <header class="ad-nav">
   <nav class="ad-nav__in" aria-label="Principal">
-    <a class="marca" href="index.html">Adcom<span>área digital</span></a>
+    <a class="ad-marca" href="index.html"><img src="assets/ds/logos/adcom-mark.png" alt="Adcom" width="30" height="25"><i>Hub de clientes</i></a>
     <div class="ad-nav__links">
       <a href="framework/index.html">Framework</a>
       <a href="playbook-creativo/index.html">Playbook</a>
@@ -114,74 +118,88 @@
   </nav>
 </header>
 
-<main class="wrap">
-  <section class="hero" aria-labelledby="titulo">
-    <a class="volver" href="index.html">‹ Documentos</a>
-    <p class="ad-eyebrow">Hub de clientes</p>
-    <h1 class="ad-t-statement" id="titulo">
-      <span class="ad-ln">Clientes e informes</span>
-      <span class="ad-ln"><span class="ad-hl">disponibles</span>.</span>
-    </h1>
-    <div class="hero-pie">
-      <p class="ad-t-lead">Los tableros de Looker, Zoho y HTML de cada cliente, con un filtro por fuente y cobertura.</p>
-      <div class="view-toggle" role="group" aria-label="Cambiar vista">
-        <button class="ad-chip active" type="button" data-view="cards" aria-pressed="true">Cards</button>
-        <button class="ad-chip" type="button" data-view="table" aria-pressed="false">Tabla</button>
+<main>
+  <section class="ad-hero hub-hero" aria-labelledby="titulo">
+    <div class="ad-wrap">
+      <a class="volver" href="index.html">‹ Documentos</a>
+      <p class="ad-eyebrow">Hub de clientes</p>
+      <h1 id="titulo">
+        <span class="ad-ln">Clientes e informes</span>
+        <span class="ad-ln"><span class="ad-hl">disponibles</span>.</span>
+      </h1>
+      <div class="hero-pie">
+        <p class="ad-lead">Los tableros de Looker, Zoho y HTML de cada cliente, con un filtro por fuente y cobertura.</p>
+        <dl class="hub-cifras" aria-label="Resumen del hub">
+          <div class="ad-stat"><dt class="ad-stat__l">Informes</dt><dd class="ad-stat__n" id="statTotal">0</dd></div>
+          <div class="ad-stat"><dt class="ad-stat__l">Con Looker</dt><dd class="ad-stat__n" id="statLooker">0</dd></div>
+          <div class="ad-stat"><dt class="ad-stat__l">Con Zoho</dt><dd class="ad-stat__n" id="statZoho">0</dd></div>
+          <div class="ad-stat"><dt class="ad-stat__l">Con HTML</dt><dd class="ad-stat__n" id="statHtml">0</dd></div>
+        </dl>
       </div>
     </div>
   </section>
 
-  <section class="filters" aria-label="Filtros">
-    <div class="ad-field field--search">
-      <label for="searchInput">Buscar</label>
-      <input class="ad-input" id="searchInput" type="search" placeholder="Cliente, informe, canal o resumen">
-    </div>
-    <div class="ad-field">
-      <label for="clientFilter">Cliente</label>
-      <select class="ad-input" id="clientFilter"></select>
-    </div>
-    <div class="ad-field">
-      <label for="channelFilter">Fuente</label>
-      <select class="ad-input" id="channelFilter"></select>
-    </div>
-    <div class="ad-field">
-      <label for="priorityFilter">Cobertura</label>
-      <select class="ad-input" id="priorityFilter">
-        <option value="all">Todas</option>
-        <option value="Alta">3 fuentes</option>
-        <option value="Media">2 fuentes</option>
-        <option value="Base">1 fuente</option>
-      </select>
-    </div>
-    <button class="ad-btn ad-btn--outline" type="button" id="resetBtn">Limpiar</button>
-  </section>
+  <section class="ad-sec hub-sec" aria-label="Informes por cliente">
+    <div class="ad-wrap">
+      <section class="filters" aria-label="Filtros">
+        <div class="ad-field field--search">
+          <label for="searchInput">Buscar</label>
+          <input class="ad-input" id="searchInput" type="search" placeholder="Cliente, informe, canal o resumen">
+        </div>
+        <div class="ad-field">
+          <label for="clientFilter">Cliente</label>
+          <select class="ad-input" id="clientFilter"></select>
+        </div>
+        <div class="ad-field">
+          <label for="channelFilter">Fuente</label>
+          <select class="ad-input" id="channelFilter"></select>
+        </div>
+        <div class="ad-field">
+          <label for="priorityFilter">Cobertura</label>
+          <select class="ad-input" id="priorityFilter">
+            <option value="all">Todas</option>
+            <option value="Alta">3 fuentes</option>
+            <option value="Media">2 fuentes</option>
+            <option value="Base">1 fuente</option>
+          </select>
+        </div>
+        <button class="ad-btn ad-btn--outline" type="button" id="resetBtn">Limpiar</button>
+      </section>
 
-  <nav class="category-strip" id="categoryStrip" aria-label="Categorías"></nav>
+      <div class="hub-bar">
+        <nav class="category-strip" id="categoryStrip" aria-label="Categorías"></nav>
+        <div class="view-toggle" role="group" aria-label="Cambiar vista">
+          <button class="ad-chip active" type="button" data-view="cards" aria-pressed="true">Cards</button>
+          <button class="ad-chip" type="button" data-view="table" aria-pressed="false">Tabla</button>
+        </div>
+      </div>
 
-  <section class="content-layout" id="cardsView" aria-label="Informes">
-    <div id="informes">
-      <div class="ad-grid cards" id="cardsContainer"></div>
-      <div class="empty" id="emptyState" hidden>No hay informes para los filtros actuales.</div>
-    </div>
-    <aside class="ad-card detail" id="detailPanel" aria-live="polite"></aside>
-  </section>
+      <section class="content-layout" id="cardsView" aria-label="Informes">
+        <div id="informes">
+          <div class="ad-grid cards" id="cardsContainer"></div>
+          <div class="empty" id="emptyState" hidden>No hay informes para los filtros actuales.</div>
+        </div>
+        <aside class="ad-card detail" id="detailPanel" aria-live="polite"></aside>
+      </section>
 
-  <section class="table-view" id="tableView" aria-label="Informes en tabla">
-    <div class="ad-tabla">
-    <table>
-      <thead>
-        <tr>
-          <th>Cliente</th>
-          <th>Informe</th>
-          <th>Categoría</th>
-          <th>Fuentes</th>
-          <th>Estado</th>
-          <th>Cobertura</th>
-          <th>Links</th>
-        </tr>
-      </thead>
-      <tbody id="tableBody"></tbody>
-    </table>
+      <section class="table-view" id="tableView" aria-label="Informes en tabla">
+        <div class="ad-tabla">
+        <table>
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Informe</th>
+              <th>Categoría</th>
+              <th>Fuentes</th>
+              <th>Estado</th>
+              <th>Cobertura</th>
+              <th>Links</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+        </div>
+      </section>
     </div>
   </section>
 </main>
@@ -269,7 +287,21 @@
     const unique = (key) => [...new Set(reports.map((item) => item[key]).filter(Boolean))].sort((a, b) => a.localeCompare(b));
     const reportId = (report) => `${report.client}-${report.title}-${report.category}`;
 
+    function categoryLabel(value) {
+      const text = String(value || "");
+      return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase()
+    }
+
+    function renderStats() {
+      const withSource = (label) => reports.filter((report) => (report.links || []).some((link) => link.label === label)).length;
+      document.querySelector("#statTotal").textContent = String(reports.length);
+      document.querySelector("#statLooker").textContent = String(withSource("Looker"));
+      document.querySelector("#statZoho").textContent = String(withSource("Zoho"));
+      document.querySelector("#statHtml").textContent = String(withSource("HTML"))
+    }
+
     function init() {
+      renderStats();
       populateSelect("clientFilter", "client", "Todos los clientes");
       populateSourceSelect();
       renderCategoryStrip();
@@ -308,7 +340,7 @@
         button.type = "button";
         button.className = `ad-chip${filters.category === cat.value ? " active" : ""}`;
         button.setAttribute("aria-pressed", String(filters.category === cat.value));
-        button.textContent = cat.label;
+        button.textContent = categoryLabel(cat.label);
         button.addEventListener("click", () => {
           filters.category = cat.value;
           renderCategoryStrip();
@@ -381,8 +413,8 @@
         const card = document.createElement("article");
         card.className = `ad-card${reportId(report) === selectedId ? " is-on" : ""}`;
         card.innerHTML = `
-          <span class="ad-card__n">${escapeHtml(report.client)} · ${escapeHtml(report.category)}</span>
-          <h3 class="ad-card__t">${escapeHtml(report.title)}</h3>
+          <span class="ad-card__n">${escapeHtml(categoryLabel(report.category))}</span>
+          <h3 class="ad-card__t">${escapeHtml(report.client)}</h3>
           <p class="ad-card__d">${escapeHtml(report.summary)}</p>
           <dl class="meta-grid">
             <div><dt>Fuentes</dt><dd>${escapeHtml(report.channel)}</dd></div>
@@ -411,7 +443,7 @@
         row.innerHTML = `
           <td><strong>${escapeHtml(report.client)}</strong></td>
           <td>${escapeHtml(report.title)}</td>
-          <td>${escapeHtml(report.category)}</td>
+          <td>${escapeHtml(categoryLabel(report.category))}</td>
           <td>${escapeHtml(report.channel)}</td>
           <td>${statusBadge(report.status)}</td>
           <td>${coverageLabel(report.priority)}</td>
@@ -431,11 +463,12 @@
         return
       }
       detailPanel.innerHTML = `
-        <span class="ad-card__n">${escapeHtml(report.client)} · ${escapeHtml(report.category)}</span>
-        <h3 class="ad-card__t">${escapeHtml(report.title)}</h3>
+        <span class="ad-card__n">${escapeHtml(categoryLabel(report.category))}</span>
+        <h3 class="ad-card__t">${escapeHtml(report.client)}</h3>
         <div class="ad-lectura"><p>${escapeHtml(report.summary)}</p></div>
         <div>
           <dl class="detail-list">
+            <div class="detail-row"><dt>Informe</dt><dd>${escapeHtml(report.title)}</dd></div>
             <div class="detail-row"><dt>Fuentes</dt><dd>${escapeHtml(report.channel)}</dd></div>
             <div class="detail-row"><dt>Estado</dt><dd>${statusBadge(report.status, true)}</dd></div>
             <div class="detail-row"><dt>Accesos</dt><dd>${(report.links || []).length}</dd></div>
@@ -473,6 +506,7 @@
         populateSelect("clientFilter", "client", "Todos los clientes");
         populateSourceSelect();
         renderCategoryStrip();
+        renderStats();
         render()
       };
       reader.readAsText(file, "utf-8")

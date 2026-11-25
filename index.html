@@ -7,40 +7,67 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#F7F6F2">
   <title>Adcom | Documentos</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
-  <link rel="stylesheet" href="assets/css/adcom-v2.css?v=20261123">
+  <link rel="stylesheet" href="assets/ds/fonts.css">
+  <link rel="stylesheet" href="assets/css/adcom-v2.css?v=20261126">
   <style>
-    /* El portal es nativo de v2: solo tokens del sistema, ningún valor suelto. */
+    /* El portal es nativo de v2: solo tokens del sistema, ningún valor suelto.
+       Lo propio de esta página es el diagrama del ciclo (prefijo .pt-). */
+    *,*::before,*::after{box-sizing:border-box}
     body{margin:0;background:var(--washi);color:var(--sumi)}
-    .wrap{max-width:var(--container-max);margin:0 auto;padding:0 var(--space-6)}
-    .marca{font-family:var(--font-display);font-size:20px;font-weight:600;letter-spacing:-.02em;color:var(--sumi);text-decoration:none;min-height:var(--target-min);display:inline-flex;align-items:center}
-    .marca span{font-weight:400;color:var(--tinta-suave);margin-left:8px;font-size:14px;letter-spacing:0}
     .ad-nav__links a:hover{color:var(--sumi)}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;background:var(--papel);padding:1px 6px;border-radius:var(--radius-input)}
 
-    .hero{padding:var(--space-32) 0 var(--space-24)}
-    .hero h1{margin:var(--space-4) 0 0}
-    .hero .ad-t-lead{margin:var(--space-6) 0 0;max-width:40ch;color:var(--tinta-secundaria)}
+    /* colofón: tres datos, sin caja */
+    .pt-colofon dd{margin:0;font-size:17px;line-height:1.5;color:var(--tinta-secundaria)}
 
-    .colofon{padding:var(--space-24) 0 var(--space-16)}
-    .colofon dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--space-6) var(--space-8);margin:0}
-    .colofon dt{font-size:13px;color:var(--tinta-suave)}
-    .colofon dd{margin:4px 0 0;font-size:15px;color:var(--tinta-secundaria)}
-    code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;background:var(--crema);padding:1px 6px;border-radius:var(--radius-input)}
+    /* documentos: la cabecera se queda fija mientras se recorre la lista */
+    .pt-cab{margin:0}
+    @media (min-width:901px){.pt-cab{position:sticky;top:calc(var(--nav-height) + var(--space-8))}}
+    .pt-docs .ad-fila__t{font-size:clamp(20px,2.2vw,26px)}
+    .pt-docs .ad-fila .ad-go{justify-self:end}
 
+    /* ciclo: un disco al centro, cuatro etapas sobre el anillo y sus documentos hacia afuera */
+    .pt-ciclo{max-width:600px;margin:0 auto}
+    .pt-disco{position:absolute;inset:0}
+    .pt-disco svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+    .pt-disco .ad-anillo__c{width:30%;padding:6%;box-sizing:border-box;font-size:clamp(14px,1.6vw,18px)}
+    .pt-ciclo .ad-anillo__nodos li{width:30px;height:30px;transform:none;margin:-15px 0 0 -15px;display:block;color:var(--sobre-oscuro-300)}
+    .pt-ciclo .ad-anillo__nodos li:nth-child(1){left:50%;top:23%}
+    .pt-ciclo .ad-anillo__nodos li:nth-child(2){left:77%;top:50%}
+    .pt-ciclo .ad-anillo__nodos li:nth-child(3){left:50%;top:77%}
+    .pt-ciclo .ad-anillo__nodos li:nth-child(4){left:23%;top:50%}
+    .pt-et{position:absolute;width:max-content;max-width:132px;font-size:14px;line-height:1.35}
+    .pt-et b{display:block;font-size:clamp(18px,2vw,22px);line-height:1.15;color:var(--sobre-oscuro-100)}
+    .pt-et span{display:block}
+    .pt-et b+span{margin-block-start:6px}
+    li:nth-child(1)>.pt-et{bottom:calc(100% + 14px);left:50%;transform:translateX(-50%);text-align:center}
+    li:nth-child(2)>.pt-et{left:calc(100% + 16px);top:50%;transform:translateY(-50%);text-align:left}
+    li:nth-child(3)>.pt-et{top:calc(100% + 14px);left:50%;transform:translateX(-50%);text-align:center}
+    li:nth-child(4)>.pt-et{right:calc(100% + 16px);top:50%;transform:translateY(-50%);text-align:right}
+
+    @media (min-width:901px) and (max-width:1199px){.pt-ciclo{width:calc(100% - 72px)}.pt-et{max-width:120px}}
+
+    /* en pantallas angostas el anillo queda solo y las etapas pasan a una lista debajo */
     @media (max-width:640px){
+      .pt-ciclo{aspect-ratio:auto;display:flex;flex-direction:column;gap:var(--space-8)}
+      .pt-disco{position:relative;inset:auto;width:min(300px,100%);aspect-ratio:1/1;margin:0 auto}
+      .pt-docs .ad-fila{grid-template-columns:auto minmax(0,1fr) auto;gap:var(--space-4)}
+      .pt-docs .ad-fila .ad-go{grid-column:auto;padding:0 14px}
+      .pt-ciclo .ad-anillo__nodos{position:static;display:grid;gap:var(--space-6);padding-block-start:var(--space-4)}
+      .pt-ciclo .ad-anillo__nodos li{position:static!important;width:auto;height:auto;margin:0;display:grid;grid-template-columns:30px minmax(0,1fr);column-gap:var(--space-4);align-items:start}
+      .pt-et{position:static!important;transform:none!important;width:auto;max-width:none;text-align:left!important}
       .ad-nav__links{display:none}
-      .hero{padding:var(--space-16) 0 var(--space-12)}
     }
   </style>
+  <link rel="icon" type="image/png" href="assets/favicon-adcom.png">
+  <link rel="apple-touch-icon" href="assets/ds/logos/apple-touch-icon.png">
 </head>
 <body>
 <a class="skip-link" href="#documentos">Ir a los documentos</a>
 
 <header class="ad-nav">
   <nav class="ad-nav__in" aria-label="Principal">
-    <a class="marca" href="index.html">Adcom<span>área digital</span></a>
+    <a class="ad-marca" href="index.html"><img src="assets/ds/logos/adcom-mark.png" alt="Adcom" width="30" height="25"><i>Área digital</i></a>
     <div class="ad-nav__links">
       <a href="framework/index.html">Framework</a>
       <a href="guias/como-trabajamos-con-ia.html">IA</a>
@@ -53,71 +80,121 @@
 </header>
 
 <main>
-  <section class="hero wrap">
-    <p class="ad-eyebrow">Documentos de la cuenta</p>
-    <h1 class="ad-t-display-hero">
-      <span class="ad-ln">Cómo operamos.</span>
-      <span class="ad-ln">Cómo lo <span class="ad-hl">medimos</span>.</span>
-    </h1>
-    <p class="ad-t-lead">El framework de operación, la guía de cómo trabajamos con IA, las plantillas de trabajo, el playbook creativo y los tableros del área digital.</p>
+  <section class="ad-hero ad-hero--centro" aria-labelledby="titulo">
+    <div class="ad-wrap">
+      <p class="ad-eyebrow">Documentos de la cuenta</p>
+      <h1 id="titulo">
+        <span class="ad-ln">Cómo operamos.</span>
+        <span class="ad-ln">Cómo lo <span class="ad-hl">medimos</span>.</span>
+      </h1>
+      <p class="ad-lead">El framework de operación, la guía de cómo trabajamos con IA, las plantillas de trabajo, el playbook creativo y los tableros del área digital.</p>
+      <div class="ad-hero__acciones">
+        <a class="ad-btn ad-btn--accent" href="#documentos">Ver los documentos</a>
+        <a class="ad-link" href="#ciclo">Cómo se conectan ›</a>
+      </div>
+    </div>
   </section>
 
-  <section class="wrap" id="documentos" aria-label="Documentos">
-    <ol class="ad-filas">
-      <li><a class="ad-fila" href="framework/index.html">
-        <span class="ad-n ad-n--md" aria-hidden="true">1</span>
-        <span><span class="ad-fila__k">Framework · v0.3</span><span class="ad-fila__t">Framework del área digital</span></span>
-        <span class="ad-fila__go">Abrir ›</span>
-      </a></li>
-      <li><a class="ad-fila" href="guias/como-trabajamos-con-ia.html">
-        <span class="ad-n ad-n--md" aria-hidden="true">2</span>
-        <span><span class="ad-fila__k">Guía interactiva</span><span class="ad-fila__t">Cómo trabajamos con IA</span></span>
-        <span class="ad-fila__go">Abrir ›</span>
-      </a></li>
-      <li><a class="ad-fila" href="playbook-creativo/index.html">
-        <span class="ad-n ad-n--md" aria-hidden="true">3</span>
-        <span><span class="ad-fila__k">Biblioteca creativa</span><span class="ad-fila__t">Playbook creativo de medios digitales</span></span>
-        <span class="ad-fila__go">Abrir ›</span>
-      </a></li>
-      <li><a class="ad-fila" href="banco-formatos/index.html">
-        <span class="ad-n ad-n--md" aria-hidden="true">4</span>
-        <span><span class="ad-fila__k">Plantillas reutilizables</span><span class="ad-fila__t">Banco de formatos</span></span>
-        <span class="ad-fila__go">Abrir ›</span>
-      </a></li>
-      <li><a class="ad-fila" href="clientes.html">
-        <span class="ad-n ad-n--md" aria-hidden="true">5</span>
-        <span><span class="ad-fila__k">Hub</span><span class="ad-fila__t">Informes y tableros por cliente</span></span>
-        <span class="ad-fila__go">Abrir ›</span>
-      </a></li>
-      <li><a class="ad-fila" href="informes/diagnostico-educacion.html">
-        <span class="ad-n ad-n--md" aria-hidden="true">6</span>
-        <span><span class="ad-fila__k">Diagnóstico · Educación</span><span class="ad-fila__t">Educación superior y leads de valor</span></span>
-        <span class="ad-fila__go">Abrir ›</span>
-      </a></li>
-      <li><a class="ad-fila" href="tableros/tablero-educacion.html">
-        <span class="ad-n ad-n--md" aria-hidden="true">7</span>
-        <span><span class="ad-fila__k">Tablero · Educación</span><span class="ad-fila__t">Tablero de pauta de educación</span></span>
-        <span class="ad-fila__go">Abrir ›</span>
-      </a></li>
-      <li><a class="ad-fila" href="tableros/inversion-agencia.html">
-        <span class="ad-n ad-n--md" aria-hidden="true">8</span>
-        <span><span class="ad-fila__k">Tablero · Agencia</span><span class="ad-fila__t">Inversión de la agencia</span></span>
-        <span class="ad-fila__go">Abrir ›</span>
-      </a></li>
-      <li><a class="ad-fila" href="acta-entrega-vacaciones.html">
-        <span class="ad-n ad-n--md" aria-hidden="true">9</span>
-        <span><span class="ad-fila__k">Documento temporal</span><span class="ad-fila__t">Acta de entrega de vacaciones</span></span>
-        <span class="ad-fila__go">Abrir ›</span>
-      </a></li>
-    </ol>
+  <section class="ad-sec ad-sec--papel pt-docs" id="documentos" aria-labelledby="t-docs">
+    <div class="ad-wrap ad-split ad-split--arriba">
+      <header class="ad-sec-cab ad-sec-cab--grande pt-cab">
+        <p class="ad-eyebrow">Nueve documentos</p>
+        <h2 id="t-docs">Cada documento, en su lugar.</h2>
+        <p class="ad-lead">Del framework de operación a los tableros: el material interno del área, ordenado por lo que hace cada uno.</p>
+      </header>
+      <ol class="ad-filas">
+        <li><a class="ad-fila" href="framework/index.html">
+          <span class="ad-n ad-n--md" aria-hidden="true">1</span>
+          <span><span class="ad-fila__k">Framework · v0.3</span><span class="ad-fila__t">Framework del área digital</span></span>
+          <span class="ad-go">Abrir</span>
+        </a></li>
+        <li><a class="ad-fila" href="guias/como-trabajamos-con-ia.html">
+          <span class="ad-n ad-n--md" aria-hidden="true">2</span>
+          <span><span class="ad-fila__k">Guía interactiva</span><span class="ad-fila__t">Cómo trabajamos con IA</span></span>
+          <span class="ad-go">Abrir</span>
+        </a></li>
+        <li><a class="ad-fila" href="playbook-creativo/index.html">
+          <span class="ad-n ad-n--md" aria-hidden="true">3</span>
+          <span><span class="ad-fila__k">Biblioteca creativa</span><span class="ad-fila__t">Playbook creativo de medios digitales</span></span>
+          <span class="ad-go">Abrir</span>
+        </a></li>
+        <li><a class="ad-fila" href="banco-formatos/index.html">
+          <span class="ad-n ad-n--md" aria-hidden="true">4</span>
+          <span><span class="ad-fila__k">Plantillas reutilizables</span><span class="ad-fila__t">Banco de formatos</span></span>
+          <span class="ad-go">Abrir</span>
+        </a></li>
+        <li><a class="ad-fila" href="clientes.html">
+          <span class="ad-n ad-n--md" aria-hidden="true">5</span>
+          <span><span class="ad-fila__k">Hub</span><span class="ad-fila__t">Informes y tableros por cliente</span></span>
+          <span class="ad-go">Abrir</span>
+        </a></li>
+        <li><a class="ad-fila" href="informes/diagnostico-educacion.html">
+          <span class="ad-n ad-n--md" aria-hidden="true">6</span>
+          <span><span class="ad-fila__k">Diagnóstico · Educación</span><span class="ad-fila__t">Educación superior y leads de valor</span></span>
+          <span class="ad-go">Abrir</span>
+        </a></li>
+        <li><a class="ad-fila" href="tableros/tablero-educacion.html">
+          <span class="ad-n ad-n--md" aria-hidden="true">7</span>
+          <span><span class="ad-fila__k">Tablero · Educación</span><span class="ad-fila__t">Tablero de pauta de educación</span></span>
+          <span class="ad-go">Abrir</span>
+        </a></li>
+        <li><a class="ad-fila" href="tableros/inversion-agencia.html">
+          <span class="ad-n ad-n--md" aria-hidden="true">8</span>
+          <span><span class="ad-fila__k">Tablero · Agencia</span><span class="ad-fila__t">Inversión de la agencia</span></span>
+          <span class="ad-go">Abrir</span>
+        </a></li>
+        <li><a class="ad-fila" href="acta-entrega-vacaciones.html">
+          <span class="ad-n ad-n--md" aria-hidden="true">9</span>
+          <span><span class="ad-fila__k">Documento temporal</span><span class="ad-fila__t">Acta de entrega de vacaciones</span></span>
+          <span class="ad-go">Abrir</span>
+        </a></li>
+      </ol>
+    </div>
   </section>
 
-  <section class="colofon wrap" aria-label="Sobre esta biblioteca">
-    <dl>
-      <div><dt>Cuenta</dt><dd>Adcom, área digital</dd></div>
-      <div><dt>Uso</dt><dd>Abrir <code>index.html</code> en el navegador, o servir la carpeta con <code>python -m http.server</code></dd></div>
-      <div><dt>Alcance</dt><dd>Documentos internos de la cuenta</dd></div>
-    </dl>
+  <section class="ad-sec ad-sec--oscuro" id="ciclo" aria-labelledby="t-ciclo">
+    <div class="ad-wrap ad-split">
+      <header class="ad-sec-cab ad-sec-cab--grande pt-cab">
+        <p class="ad-eyebrow ad-eyebrow--dark">El ciclo del área</p>
+        <h2 id="t-ciclo">Planear, ejecutar, reportar, <span class="ad-hl">aprender</span>.</h2>
+        <p class="ad-lead">Cada documento vive en una etapa. Lo que se aprende al reportar alimenta el siguiente periodo.</p>
+      </header>
+      <figure class="ad-anillo pt-ciclo" aria-label="Ciclo del área: planear, ejecutar, reportar y aprender, con los documentos de cada etapa">
+        <div class="pt-disco">
+          <svg viewBox="0 0 400 400" aria-hidden="true">
+            <circle class="ad-dg-line" cx="200" cy="200" r="108"/>
+            <g class="ad-orbit"><circle class="ad-dg-lima" cx="200" cy="92" r="7"/></g>
+          </svg>
+          <span class="ad-anillo__c">Área digital</span>
+        </div>
+        <ol class="ad-anillo__nodos">
+          <li><span class="ad-n ad-n--md" aria-hidden="true">1</span><span class="pt-et"><b>Planear</b><span>Framework</span><span>Banco de formatos</span></span></li>
+          <li><span class="ad-n ad-n--md" aria-hidden="true">2</span><span class="pt-et"><b>Ejecutar</b><span>Playbook creativo</span><span>Guía de IA</span><span>Acta de entrega</span></span></li>
+          <li><span class="ad-n ad-n--md" aria-hidden="true">3</span><span class="pt-et"><b>Reportar</b><span>Tableros</span><span>Clientes</span></span></li>
+          <li><span class="ad-n ad-n--md" aria-hidden="true">4</span><span class="pt-et"><b>Aprender</b><span>Diagnóstico de educación</span></span></li>
+        </ol>
+      </figure>
+    </div>
+  </section>
+
+  <section class="ad-sec" aria-label="Sobre esta biblioteca">
+    <div class="ad-wrap">
+      <dl class="ad-cifras pt-colofon">
+        <div class="ad-stat"><dt class="ad-stat__m">Cuenta</dt><dd>Adcom, área digital</dd></div>
+        <div class="ad-stat"><dt class="ad-stat__m">Uso</dt><dd>Abrir <code>index.html</code> en el navegador, o servir la carpeta con <code>python -m http.server</code></dd></div>
+        <div class="ad-stat"><dt class="ad-stat__m">Alcance</dt><dd>Documentos internos de la cuenta</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="ad-sec ad-sec--oscuro ad-cierre" aria-labelledby="t-cierre">
+    <div class="ad-wrap ad-cierre__in">
+      <div>
+        <h2 id="t-cierre">El próximo documento empieza con una pregunta.</h2>
+        <p>Revisamos la fuente, definimos el resultado y partimos de una plantilla del banco de formatos.</p>
+      </div>
+      <a class="ad-btn ad-btn--accent" href="banco-formatos/index.html">Abrir el banco de formatos</a>
+    </div>
   </section>
 </main>
 

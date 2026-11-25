@@ -1,13 +1,20 @@
 /* Reporte de implementación · solo lo específico de esta página (prefijo ri-).
-   KPIs, estados, tablas, lecturas, pasos, tarjetas, marcadores, leyendas y
-   «ver los datos» vienen del sistema (ad-*, adcom-v2.css sección 5b).
-   Aquí quedan: la barra apilada de estado, los filtros y la galería. */
+   Portada, secciones, KPIs, estados, tablas, lecturas, tarjetas, marcadores,
+   leyendas, eje y «ver los datos» vienen del sistema (ad-*, adcom-v2.css
+   secciones 5b y 5c). Aquí quedan: la franja de portada, la barra apilada de
+   estado, los filtros, la galería y el dibujo de cada compuerta. */
 
 .ri-regla { max-width: 70ch; margin-block-start: var(--space-4); }
-.formato-seccion .ri-subtitulo { margin-block: var(--space-10) 0; }
+.ri-hero .ri-lead { max-width: 56ch; }
+.ri-franja { margin-block-start: var(--space-12); }
+.ri-ficha { margin-block-start: var(--space-6); }
+.ri-bloque { display: grid; gap: var(--space-6); align-content: start; }
+.ri-bloque .ri-regla { margin: 0; }
+.ri-subtitulo { margin: 0; font: 500 clamp(22px, 2.4vw, 28px)/1.2 var(--font-display); letter-spacing: -.015em; }
 .ri-sub { display: block; font-size: 14px; color: var(--tinta-suave); font-weight: 400; }
 .ri-nowrap { white-space: nowrap; }
 .ri-num { font-variant-numeric: tabular-nums; }
+.ad-tabla .ad-tag:not(.ad-tag--line) { font-size: 15px; padding-block: 2px; }
 .ri-fuente { margin-block-start: var(--space-8); }
 .ri-opcional { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
 .ri-lista { max-width: 70ch; padding-inline-start: 1.2em; }
@@ -17,8 +24,8 @@
 /* ---------- Estado al corte: barra apilada con base cero.
    El tramo clave (con entrega) va en lima con borde sumi; la leyenda
    .ad-leyenda reusa las mismas clases en su muestra. */
-.ri-estado { max-width: 760px; }
-.ri-barra { display: flex; gap: 2px; height: 28px; margin-block-start: var(--space-4); }
+.ri-estado { max-width: none; }
+.ri-barra { display: flex; gap: 2px; height: 40px; }
 .ri-barra__seg { display: block; min-width: 6px; box-sizing: border-box; background: var(--c); border: 1px solid var(--sumi); }
 .ri-barra__seg--entrega { --c: var(--lima); }
 .ri-barra__seg--activo { --c: var(--sumi); }
@@ -37,9 +44,9 @@
 .ri-chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 
 /* ---------- Galería por programa: cada pieza es una .ad-card */
-.ri-grupo { margin-block-start: var(--space-8); }
+.ri-grupo { margin-block-start: var(--space-12); }
 .ri-grupo[hidden] { display: none; }
-.ri-grupo > h3 { margin: 0; }
+.ri-grupo > h3 { margin: 0; font: 500 24px/1.2 var(--font-display); letter-spacing: -.015em; }
 .ri-grupo > .formato-nota { margin: 4px 0 var(--space-4); }
 .ri-galeria { --col: 340px; --gap: var(--space-4); }
 .ri-pieza[hidden] { display: none; }
@@ -60,28 +67,51 @@
 .ri-destinos-lista li { display: flex; flex-wrap: wrap; align-items: center; gap: 2px var(--space-2); }
 .ri-pieza__datos .ri-url { font-size: 13px; color: var(--tinta-secundaria); overflow-wrap: anywhere; }
 
-/* ---------- Compuertas (framework 25): .ad-pasos con la compuerta actual en lima.
-   .ad-paso pinta de lima el último paso; aquí la lima va solo en la actual
-   (.is-on) y las compuertas cerradas se rellenan de sumi. */
-.ri-pasos { grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr)); margin-block: var(--space-6); }
-.ri-pasos .ad-paso:last-child:not(.is-on) .ad-n { background: var(--washi); border-color: var(--sumi); }
-.ri-pasos .ri-compuerta--cerrada:not(.is-on) .ad-n { background: var(--sumi); border-color: var(--sumi); color: var(--washi); }
-.ri-pasos .ad-paso h3 { font-size: 17px; }
-.ri-compuerta__estado { color: var(--tinta-secundaria); }
-.ri-compuerta__nota { font-size: 13px; color: var(--tinta-suave); }
+/* ---------- Compuertas (framework 25): el diagrama protagonista.
+   Es el .ad-eje del sistema sobre fondo oscuro; aquí solo se dice cómo se
+   dibuja cada estado: cerrada = punto lleno, parcial = medio lleno, abierta =
+   vacío. La actual (.is-on) es el punto lima: la primera compuerta que aún no
+   está cerrada. Cada nodo dice su estado también con texto. */
+.ri-tracking-cab { align-items: end; }
+.ri-tracking-lado { display: grid; gap: var(--space-6); }
+.ri-clave { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); margin: 0; padding: 0; list-style: none; font-size: 14px; color: var(--sobre-oscuro-200); }
+.ri-clave li { display: inline-flex; align-items: center; gap: 8px; }
+.ri-clave__p { display: block; width: 16px; height: 16px; box-sizing: border-box; border: 1px solid var(--sobre-oscuro-200); border-radius: var(--radius-circle); background: var(--negro-escena); flex: none; }
+.ri-clave__p--cerrada { background: var(--sobre-oscuro-100); }
+.ri-clave__p--parcial { background: linear-gradient(270deg, transparent 50%, var(--sobre-oscuro-100) 50%) var(--negro-escena); }
+.ri-clave__p--actual { background: var(--lima); border-color: var(--lima); }
 
+.ri-eje { margin-block: var(--space-16); }
+.ri-eje > li { padding-inline: var(--space-4); }
+.ri-compuerta__n { display: block; margin-block-end: 4px; font-size: 13px; color: var(--sobre-oscuro-300); }
+.ri-compuerta__estado { display: block; margin-block-start: var(--space-2); font-size: 14px; font-weight: 500; color: var(--sobre-oscuro-100); }
+.ri-eje .ad-eje__t { font-size: clamp(17px, 1.6vw, 20px); }
+.ri-eje .ad-eje__d { max-width: 24ch; margin-inline: auto; }
+.ri-eje > li::after { width: 21px; height: 21px; margin-left: -10.5px; }
+.ri-eje > li::before { top: 10px; }
+.ad-sec--oscuro .ri-eje > li.ri-compuerta--cerrada:not(.is-on)::after { background: var(--sobre-oscuro-100); border-color: var(--sobre-oscuro-100); }
+.ad-sec--oscuro .ri-eje > li.ri-compuerta--parcial:not(.is-on)::after { background: linear-gradient(270deg, transparent 50%, var(--sobre-oscuro-100) 50%) var(--negro-escena); }
+.ad-sec--oscuro .ri-eje > li.is-on .ri-compuerta__n { color: var(--sobre-oscuro-100); }
+.ri-tabla-oscura { margin-block-start: var(--space-4); color: var(--sumi); } /* la tabla es una tarjeta clara dentro del fondo oscuro */
+
+@media (max-width: 640px) {
+  .ri-eje { margin-block: var(--space-12); }
+  .ri-eje > li { padding: 0 0 0 40px; }
+  .ri-eje > li::after { width: 19px; height: 19px; margin-left: 0; }
+  .ri-eje > li::before { top: 19px; }
+  .ri-eje .ad-eje__d { margin-inline: 0; max-width: none; }
+}
 @media (max-width: 560px) {
-  .ri-pasos { grid-template-columns: minmax(0, 1fr); }
   .ri-pieza .ad-marcador { height: 168px; }
   .ri-pieza__datos > div { grid-template-columns: minmax(0, 1fr); gap: 0; }
-  .ad-nav__links { gap: var(--space-4); }
+  .ad-nav__links { gap: 10px; font-size: 13px; }
 }
 
 @media print {
   .ri-filtros, #ri-piezas-resumen { display: none; }
   .ri-pieza[hidden], .ri-grupo[hidden] { display: flex; }
   .ri-galeria { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .ri-pieza, .ri-pasos, .ri-estado { break-inside: avoid; }
+  .ri-pieza, .ri-eje > li, .ri-estado { break-inside: avoid; }
   .ri-pieza .ad-marcador { height: 140px; }
 }
 
