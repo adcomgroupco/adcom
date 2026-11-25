@@ -15,7 +15,9 @@ adcom/
 ├── acta-entrega-vacaciones.html  acta temporal de continuidad durante vacaciones
 ├── informes/                     diagnósticos de sector (educación superior)
 ├── tableros/                     tablero de educación (lee la hoja Consolidado Educación) e inversión de la agencia
-├── banco-formatos/               plantillas HTML, hojas de trabajo e instructivo de replicación
+├── banco-formatos/               plantillas HTML, hojas de trabajo, galería de componentes (componentes.html),
+│                                 página base (pagina-base.html) e instructivo de replicación
+├── guias/                        guía interactiva de cómo trabajamos con IA
 ├── playbook-creativo/            biblioteca visual de formatos y posibilidades de pauta
 ├── framework/                    framework del área digital · v0.3
 │   ├── index.html                el documento completo, con herramientas interactivas
@@ -23,6 +25,9 @@ adcom/
 │   ├── _archivo/                 versiones sustituidas y el .md fuente original
 │   └── README.md                 cómo editarlo: dónde cambiar qué, utilidades, checklist
 ├── assets/css/adcom-v2.css       sistema de diseño v2 (fuente; ver abajo)
+├── ESTANDARES-DISENO.md          estándares de diseño v2: la regla, la verificación y cómo replicar
+├── AGENTS.md · CLAUDE.md         reglas para asistentes de IA que trabajen en el repo
+├── herramientas/auditar_v2.py    verificador de los estándares (python -I herramientas/auditar_v2.py)
 ├── sistema/                      sistema v1 de los repos de cliente y su sync.ps1
 └── README.md
 ```
@@ -32,20 +37,31 @@ Los `.html` de la raíz con nombre de informe o tablero (`tablero-educacion.html
 
 ## Sistema de diseño
 
+**La regla completa está en [`ESTANDARES-DISENO.md`](ESTANDARES-DISENO.md)** (tokens, lima, tipografía, composición,
+componentes, diagramas, marca, verificación y cómo replicarlo en otro repo). Lo que sigue es el resumen.
+
 Este repo usa el **sistema v2**: washi, sumi y un solo acento lima; Inter Tight para titulares y
 cifras, Inter para el cuerpo. Sus valores vienen del artefacto «Adcom — Sistema de diseño» y viven
 en `assets/css/adcom-v2.css`, que es la fuente: se edita ahí.
 
 Lo mínimo que cumple toda página:
 
-- Carga Inter Tight e Inter y enlaza `adcom-v2.css` (después del CSS viejo, si todavía lo usa).
+- Carga las fuentes locales (`assets/ds/fonts.css`, sin Google Fonts) y enlaza `adcom-v2.css?v=AAAAMMDD`
+  (después del CSS viejo, si todavía lo usa).
+- El encabezado lleva `.ad-marca`: el isotipo oficial (`assets/ds/logos/adcom-mark.png`) y el nombre del
+  documento. Nunca «Adcom» escrito como si fuera el logotipo, ni logos de cliente.
 - Fondo `washi`, texto `sumi`, líneas de 1 px en `piedra`. Nada de sombras ni degradados.
-- La lima marca lo primero que hay que ver en cada bloque: la palabra clave del titular (`.ad-hl`), lo
-  seleccionado o actual (`.is-on`, `aria-current`), la cifra clave (`.ad-kpi--on`), lo cumplido
-  (`.ad-estado--ok`) y la acción principal. Una marca por bloque, varias por página. Siempre relleno con
-  texto `sumi`; nunca texto, borde ni línea; en gráficos, con borde `sumi`.
-- La información se ordena con los componentes `ad-*` de `adcom-v2.css` (sección 5b): tarjetas, filas,
-  cifras, estados, tablas, lecturas, pasos, barras, marcadores. No se escribe CSS suelto por página. Si falta
+- La lima marca lo que se pulsa (`.ad-go`, `.ad-btn--accent`) y lo primero que hay que ver en cada bloque:
+  la palabra clave del titular (`.ad-hl`), lo seleccionado o actual (`.is-on`, `aria-current`) y la cifra
+  clave (`.ad-kpi--on`). Una marca por bloque, entre 4 y 10 por página. Siempre relleno con texto `sumi`;
+  nunca texto, borde ni línea; en gráficos, con borde `sumi`. `.ad-estado--ok` es neutro: solo con `.is-on`
+  se rellena.
+- Una página no densa se compone en secciones: `.ad-sec` (aire entre secciones), fondos que alternan
+  (claro, oscuro, noche), titular grande `.ad-sec-cab--grande`, la idea a un lado y la figura al otro
+  (`.ad-split`), un diagrama protagonista con la lógica de esa página (`.ad-anillo`, `.ad-eje`, `.ad-suma`,
+  `.ad-pasos`) y una banda de cierre `.ad-cierre`. Los tableros e informes de datos conservan fondo claro.
+- La información se ordena con los componentes `ad-*` de `adcom-v2.css` (secciones 5b y 5c): tarjetas, filas,
+  cifras, estados, tablas, lecturas, pasos, barras, marcadores, secciones y diagramas. No se escribe CSS suelto por página. Si falta
   una pieza, se crea en `adcom-v2.css` y se documenta en `banco-formatos/componentes.html`.
 - Titulares en peso 500, cifras grandes en 300, etiquetas sin mayúsculas.
 - Lo que se toca es redondo (píldora); lo que se lee es recto (4 px tarjetas, 6 px paneles).
@@ -55,6 +71,11 @@ Lo mínimo que cumple toda página:
 (amarillo, Poppins) que `sistema/sync.ps1` regenera para los repos de cliente: no se editan aquí.
 Las páginas que aún los cargan los reciben con `adcom-v2.css` encima, que re-apunta sus tokens a v2.
 Cuando v2 se apruebe para los clientes, `adcom-v2.css` pasa a `sistema/` y entra al sync.
+
+Los enlaces a `adcom-v2.css`, `formatos.css` y `css/*.css` llevan `?v=AAAAMMDD`. Al cambiar uno de esos
+archivos, sube ese número en las páginas que lo enlazan: sin él, el navegador (y GitHub Pages) siguen
+sirviendo la hoja anterior y las páginas se ven sin los estilos de los componentes. Para verlo al momento
+basta con recargar sin caché (Ctrl+Shift+R).
 
 Cada pieza es autocontenida: `framework/` trae sus propios `assets/`, y los informes de la raíz
 llevan su CSS embebido. Mover una carpeta no rompe a las demás.

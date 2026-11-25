@@ -7,12 +7,12 @@
   <meta name="theme-color" content="#F7F6F2">
   <!-- Título de pestaña: el tema y el periodo, igual que el h1. -->
   <title>Costo por lead · Octubre y noviembre 2026 | Adcom</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
-  <link rel="stylesheet" href="../assets/css/adcom-v2.css">
-  <link rel="stylesheet" href="formatos.css">
-  <link rel="stylesheet" href="css/informe-particular.css">
+  <link rel="stylesheet" href="../assets/ds/fonts.css">
+  <link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261127">
+  <link rel="stylesheet" href="formatos.css?v=20261123">
+  <link rel="stylesheet" href="css/informe-particular.css?v=20261127">
+  <link rel="icon" type="image/png" href="../assets/favicon-adcom.png">
+  <link rel="apple-touch-icon" href="../assets/ds/logos/apple-touch-icon.png">
 </head>
 <body>
 <!--
@@ -37,92 +37,101 @@
   - Datos numéricos en js/informe-particular.js (bloque «Reemplazar con los
     datos del cliente»). El texto de este HTML debe citar esas mismas cifras.
   - Sin IDs de cuenta, URLs de tableros ni datos personales de leads.
+
+  Ritmo: cada sección es un .ad-sec con .ad-wrap y alterna fondo claro y crema.
+  «En tres ideas» y el cierre van sobre fondo oscuro. El diagrama protagonista
+  es el gráfico de evolución (sección 03). Lima: una marca por bloque (palabra
+  del titular, cifra clave, primera idea, hallazgo que presiona, campaña con
+  mayor alza, primera pieza y la acción del cierre).
 -->
 <a class="skip-link" href="#contenido">Ir al contenido</a>
 <header class="ad-nav formato-nav">
   <nav class="ad-nav__in" aria-label="Principal">
-    <a class="formato-nav__marca" href="../index.html">Adcom</a>
-    <div class="ad-nav__links"><a href="index.html">Banco de formatos</a></div>
+    <a class="ad-marca" href="../index.html"><img src="../assets/ds/logos/adcom-mark.png" alt="Adcom" width="30" height="25"><i>Informe particular</i></a>
+    <div class="ad-nav__links"><a href="#respuesta">La respuesta</a><a href="#evolucion">Evolución</a><a href="#acciones">Acciones</a><a href="index.html">Banco de formatos</a></div>
   </nav>
 </header>
 
-<main class="formato-shell formato-contenido" id="contenido" tabindex="-1">
+<main id="contenido" tabindex="-1">
 
   <!-- ============================================================
        PORTADA
-       Eyebrow: plataformas que cubre · tipo. Título en dos líneas cortas
-       cerradas con punto: tema y periodo. Entradilla = la respuesta corta
-       (dos frases, con la cifra que la sostiene). La ficha nombra la pregunta,
-       las dos ventanas, la fuente que manda, la acción de resultado, el
-       alcance (qué cuentas y qué queda fuera), la moneda y el estado del dato.
+       Eyebrow: plataformas que cubre · tipo. Título que AFIRMA la respuesta,
+       en dos líneas cortas cerradas con punto: lo que pasó y el periodo.
+       Entradilla = la respuesta corta (dos frases, con la cifra que la
+       sostiene). La ficha nombra la pregunta, las dos ventanas, la fuente que
+       manda, la acción de resultado, el alcance (qué cuentas y qué queda
+       fuera), la moneda y el estado del dato. Debajo, el índice.
        ============================================================ -->
-  <header class="formato-portada ip-portada">
-    <p class="ip-aviso"><span>Universidad Andina</span><span aria-hidden="true">·</span><span>Uso interno y del cliente, no compartir sin autorización</span><span aria-hidden="true">·</span><span>Plantilla con datos ficticios</span></p>
-    <p class="ad-t-eyebrow formato-meta">Google Ads, Meta y TikTok · informe particular</p>
-    <h1 class="ad-t-statement"><span class="ad-ln"><span class="ad-hl">Costo por lead</span> del pregrado.</span><span class="ad-ln">Octubre y noviembre 2026.</span></h1>
-    <p class="ad-t-lead">El costo por lead subió 25 % porque Google Ads recibió $12 M más y entregó 150 leads menos. Meta y TikTok se mantuvieron; la respuesta está en Performance Max y en el formulario nuevo.</p>
-    <dl class="formato-ficha ip-ficha">
-      <div><dt>Pregunta</dt><dd>¿Por qué subió el costo por lead del pregrado desde fines de octubre?</dd></div>
-      <div><dt>Periodo</dt><dd>20 oct – 16 nov 2026 (28 días)</dd></div>
-      <div><dt>Comparación</dt><dd>22 sep – 19 oct 2026 (28 días)</dd></div>
-      <div><dt>Referencia principal</dt><dd>Leads en plataforma; CRM para calidad</dd></div>
-      <div><dt>Resultado</dt><dd>Formulario enviado (instantáneo en Meta, en el sitio en Google Ads y TikTok)</dd></div>
-      <div><dt>Alcance</dt><dd>Campañas de pregrado; sin posgrado ni YouTube</dd></div>
-      <div><dt>Moneda</dt><dd>COP, inversión sin IVA ni comisión</dd></div>
-      <div><dt>Corte</dt><dd>17 nov 2026 · CRM <span class="ad-estado ad-estado--parcial">Parcial</span></dd></div>
-    </dl>
+  <header class="ad-hero ip-portada">
+    <div class="ad-wrap">
+      <p class="ip-aviso"><span>Universidad Andina</span><span aria-hidden="true">·</span><span>Uso interno y del cliente, no compartir sin autorización</span><span aria-hidden="true">·</span><span>Plantilla con datos ficticios</span></p>
+      <p class="formato-meta">Google Ads, Meta y TikTok · informe particular</p>
+      <h1><span class="ad-ln"><span class="ad-hl">Costo por lead</span> arriba 25 %.</span><span class="ad-ln">Pregrado, octubre y noviembre 2026.</span></h1>
+      <p class="ad-lead ip-lead">El costo por lead subió 25 % porque Google Ads recibió $12 M más y entregó 150 leads menos. Meta y TikTok se mantuvieron; la respuesta está en Performance Max y en el formulario nuevo.</p>
+      <dl class="ad-ficha ip-ficha">
+        <div><dt>Pregunta</dt><dd>¿Por qué subió el costo por lead del pregrado desde fines de octubre?</dd></div>
+        <div><dt>Periodo</dt><dd>20 oct – 16 nov 2026 (28 días)</dd></div>
+        <div><dt>Comparación</dt><dd>22 sep – 19 oct 2026 (28 días)</dd></div>
+        <div><dt>Referencia principal</dt><dd>Leads en plataforma; CRM para calidad</dd></div>
+        <div><dt>Resultado</dt><dd>Formulario enviado (instantáneo en Meta, en el sitio en Google Ads y TikTok)</dd></div>
+        <div><dt>Alcance</dt><dd>Campañas de pregrado; sin posgrado ni YouTube</dd></div>
+        <div><dt>Moneda</dt><dd>COP, inversión sin IVA ni comisión</dd></div>
+        <div><dt>Corte</dt><dd>17 nov 2026 · CRM <span class="ad-estado ad-estado--parcial">Parcial</span></dd></div>
+      </dl>
+
+      <!-- ÍNDICE: una entrada por sección numerada. Si quitas una sección, quítala aquí. -->
+      <nav class="ip-indice" aria-labelledby="indice-titulo">
+        <h2 id="indice-titulo">Contenido</h2>
+        <ol>
+          <li><a href="#respuesta"><span class="ad-n" aria-hidden="true">01</span><span>En tres ideas</span></a></li>
+          <li><a href="#cifras"><span class="ad-n" aria-hidden="true">02</span><span>Cifras clave</span></a></li>
+          <li><a href="#evolucion"><span class="ad-n" aria-hidden="true">03</span><span>Cómo se movió</span></a></li>
+          <li><a href="#desglose"><span class="ad-n" aria-hidden="true">04</span><span>Por campaña</span></a></li>
+          <li><a href="#creativos"><span class="ad-n" aria-hidden="true">05</span><span>Piezas y ángulos</span></a></li>
+          <li><a href="#hallazgos"><span class="ad-n" aria-hidden="true">06</span><span>Hallazgos</span></a></li>
+          <li><a href="#medicion"><span class="ad-n" aria-hidden="true">07</span><span>Medición</span></a></li>
+          <li><a href="#acciones"><span class="ad-n" aria-hidden="true">08</span><span>Acciones</span></a></li>
+          <li><a href="#anexo"><span class="ad-n" aria-hidden="true">09</span><span>Anexo</span></a></li>
+        </ol>
+      </nav>
+    </div>
   </header>
 
-  <!-- ÍNDICE: una entrada por sección numerada. Si quitas una sección, quítala aquí. -->
-  <nav class="ip-indice" aria-labelledby="indice-titulo">
-    <h2 id="indice-titulo">Contenido</h2>
-    <ol>
-      <li><a href="#respuesta"><span class="ad-n" aria-hidden="true">01</span><span>En tres ideas</span></a></li>
-      <li><a href="#cifras"><span class="ad-n" aria-hidden="true">02</span><span>Cifras clave</span></a></li>
-      <li><a href="#evolucion"><span class="ad-n" aria-hidden="true">03</span><span>Cómo se movió</span></a></li>
-      <li><a href="#desglose"><span class="ad-n" aria-hidden="true">04</span><span>Por campaña</span></a></li>
-      <li><a href="#creativos"><span class="ad-n" aria-hidden="true">05</span><span>Piezas y ángulos</span></a></li>
-      <li><a href="#hallazgos"><span class="ad-n" aria-hidden="true">06</span><span>Hallazgos</span></a></li>
-      <li><a href="#medicion"><span class="ad-n" aria-hidden="true">07</span><span>Medición</span></a></li>
-      <li><a href="#acciones"><span class="ad-n" aria-hidden="true">08</span><span>Acciones</span></a></li>
-      <li><a href="#anexo"><span class="ad-n" aria-hidden="true">09</span><span>Anexo</span></a></li>
-    </ol>
-  </nav>
-
   <!-- ============================================================
-       01 · EN TRES IDEAS (la respuesta)
+       01 · EN TRES IDEAS (la respuesta) · sección oscura
        Tres causas, lecturas o decisiones; nunca más de cuatro. Cada tarjeta:
        título-afirmación, una o dos frases con la cifra, y una línea de cierre
        con la consecuencia. Si la respuesta es una sola, deja una tarjeta y
-       súbela a la entradilla. Al final, a dónde ir para ver la ruta.
+       súbela a la entradilla. La lima marca la idea principal (.is-on).
        ============================================================ -->
-  <section class="formato-seccion" id="respuesta" aria-labelledby="respuesta-titulo">
-    <div class="ad-sec-cab">
-      <p class="ad-eyebrow">01 · En tres ideas</p>
-      <h2 id="respuesta-titulo">Google Ads explica el alza; Meta y TikTok se mantuvieron</h2>
-    </div>
-    <div class="ad-stack ip-cuerpo">
-    <ol class="ad-grid ip-ideas" style="--col:260px">
-      <li class="ad-card is-on">
-        <span class="ad-card__n">1</span>
-        <h3 class="ad-card__t">Performance Max recibió más y no devolvió más</h3>
-        <p class="ad-card__d">Pasó de $8 M a $18 M y sumó 10 leads. Su costo por lead pasó de $40.000 a $85.714.</p>
-        <p class="ad-card__d ip-cierre">Más presupuesto en Performance Max no compra más leads.</p>
-      </li>
-      <li class="ad-card">
-        <span class="ad-card__n">2</span>
-        <h3 class="ad-card__t">El 3 de noviembre cambió el formulario</h3>
-        <p class="ad-card__d">Desde ese día Búsqueda · programas convierte menos con el mismo tráfico: los leads diarios de Google Ads bajaron de 55 a 34 en promedio.</p>
-        <p class="ad-card__d ip-cierre">Se revirtió el 17 de noviembre; se verifica el 24.</p>
-      </li>
-      <li class="ad-card">
-        <span class="ad-card__n">3</span>
-        <h3 class="ad-card__t">La calidad todavía no se puede cerrar</h3>
-        <p class="ad-card__d">El CRM marca 30 % de calificados frente a 34 % del periodo anterior, pero la última semana aún no tiene gestión completa.</p>
-        <p class="ad-card__d ip-cierre">La redistribución se decide el 8 de diciembre.</p>
-      </li>
-    </ol>
-    <p class="ip-ir">La ruta de respuesta está en <a href="#acciones">Acciones</a>.</p>
+  <section class="ad-sec ad-sec--oscuro" id="respuesta" aria-labelledby="respuesta-titulo">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow ad-eyebrow--dark">01 · En tres ideas</p>
+        <h2 id="respuesta-titulo">Google Ads explica el alza; Meta y TikTok se mantuvieron</h2>
+      </div>
+      <ol class="ad-grid ip-ideas" style="--col:280px">
+        <li class="ad-card ad-card--dark is-on">
+          <span class="ad-card__n">1</span>
+          <h3 class="ad-card__t">Performance Max recibió más y no devolvió más</h3>
+          <p class="ad-card__d">Pasó de $8 M a $18 M y sumó 10 leads. Su costo por lead pasó de $40.000 a $85.714.</p>
+          <p class="ad-card__d ip-cierre">Más presupuesto en Performance Max no compra más leads.</p>
+        </li>
+        <li class="ad-card ad-card--dark">
+          <span class="ad-card__n">2</span>
+          <h3 class="ad-card__t">El 3 de noviembre cambió el formulario</h3>
+          <p class="ad-card__d">Desde ese día Búsqueda · programas convierte menos con el mismo tráfico: los leads diarios de Google Ads bajaron de 55 a 34 en promedio.</p>
+          <p class="ad-card__d ip-cierre">Se revirtió el 17 de noviembre; se verifica el 24.</p>
+        </li>
+        <li class="ad-card ad-card--dark">
+          <span class="ad-card__n">3</span>
+          <h3 class="ad-card__t">La calidad todavía no se puede cerrar</h3>
+          <p class="ad-card__d">El CRM marca 30 % de calificados frente a 34 % del periodo anterior, pero la última semana aún no tiene gestión completa.</p>
+          <p class="ad-card__d ip-cierre">La redistribución se decide el 8 de diciembre.</p>
+        </li>
+      </ol>
+      <p class="ip-ir">La ruta de respuesta está en <a href="#acciones">Acciones</a>.</p>
     </div>
   </section>
 
@@ -133,53 +142,55 @@
        Se generan desde DATOS.kpi; «Parcial» cuando la fuente no ha madurado.
        No mezclar fuentes en una misma cifra sin declararlo en el anexo.
        ============================================================ -->
-  <section class="formato-seccion" id="cifras" aria-labelledby="cifras-titulo">
-    <div class="ad-sec-cab">
-      <p class="ad-eyebrow">02 · Cifras clave</p>
-      <h2 id="cifras-titulo">20 % más inversión y 160 leads menos</h2>
-    </div>
-    <div class="ad-stack ip-cuerpo">
-    <div class="ad-kpis" id="ip-kpi" aria-describedby="cifras-nota"></div>
-    <p class="formato-nota" id="cifras-nota">20 oct – 16 nov frente a 22 sep – 19 oct de 2026. Inversión y leads de Meta, Google Ads y TikTok; calificados del CRM al 17 de noviembre. «A favor» y «en contra» leen el cambio según lo que conviene a cada cifra.</p>
-    <noscript><p class="formato-nota">Las cifras, gráficos y tablas de este informe necesitan JavaScript.</p></noscript>
+  <section class="ad-sec" id="cifras" aria-labelledby="cifras-titulo">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">02 · Cifras clave</p>
+        <h2 id="cifras-titulo">20 % más inversión y 160 leads menos</h2>
+      </div>
+      <div class="ad-kpis" id="ip-kpi" aria-describedby="cifras-nota"></div>
+      <p class="formato-nota ip-nota" id="cifras-nota">20 oct – 16 nov frente a 22 sep – 19 oct de 2026. Inversión y leads de Meta, Google Ads y TikTok; calificados del CRM al 17 de noviembre. «A favor» y «en contra» leen el cambio según lo que conviene a cada cifra.</p>
+      <noscript><p class="formato-nota">Las cifras, gráficos y tablas de este informe necesitan JavaScript.</p></noscript>
     </div>
   </section>
 
   <!-- ============================================================
-       03 · CÓMO SE MOVIÓ (evolución)
+       03 · CÓMO SE MOVIÓ (evolución) · DIAGRAMA PROTAGONISTA
        Un gráfico de línea diario o semanal: la serie total y la que explica el
        cambio, con la meta punteada y los hitos numerados (cambios de
        presupuesto, piezas, formulario, evento, festivos). Debajo, la lectura
        del gráfico en el pie y los datos en «Ver los datos». Cierra con
        «Qué quiere decir»: interpretación separada del hecho.
        ============================================================ -->
-  <section class="formato-seccion" id="evolucion" aria-labelledby="evolucion-h2">
-    <div class="ad-sec-cab">
-      <p class="ad-eyebrow">03 · Cómo se movió</p>
-      <h2 id="evolucion-h2">El costo subió en dos tramos</h2>
-      <p>Hasta el 26 de octubre el costo por lead estuvo cerca de la meta. Desde el 27 subió con el presupuesto de Performance Max, y desde el 3 de noviembre con el formulario nuevo.</p>
-    </div>
-    <div class="ad-stack ip-cuerpo">
-    <figure class="ad-figura">
-      <h3 id="ip-evolucion-titulo">Costo por lead, por día</h3>
-      <ul class="ad-leyenda" id="ip-evolucion-leyenda"></ul>
-      <div class="ip-lienzo" id="ip-evolucion"></div>
-      <figcaption id="ip-evolucion-nota">Costo por lead diario de todas las plataformas y de Google Ads, 20 oct – 16 nov 2026. La línea punteada es la meta de $20.000. El total pasó de un promedio de $19.700 la primera semana a $24.700 la última; Google Ads, de $22.000 a $44.300.</figcaption>
-      <details class="ad-datos">
-        <summary>Ver los datos</summary>
-        <div class="ad-tabla" role="region" aria-labelledby="evolucion-caption" tabindex="0">
-          <table id="ip-evolucion-tabla">
-            <caption id="evolucion-caption">Costo por lead diario en COP: inversión del día sobre leads del día.</caption>
-            <thead></thead>
-            <tbody></tbody>
-          </table>
+  <section class="ad-sec ad-sec--crema" id="evolucion" aria-labelledby="evolucion-h2">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">03 · Cómo se movió</p>
+        <h2 id="evolucion-h2">El costo subió en dos tramos</h2>
+        <p class="ad-lead">Hasta el 26 de octubre el costo por lead estuvo cerca de la meta. Desde el 27 subió con el presupuesto de Performance Max, y desde el 3 de noviembre con el formulario nuevo.</p>
+      </div>
+      <div class="ad-stack ip-cuerpo">
+        <figure class="ad-figura">
+          <h3 id="ip-evolucion-titulo">Costo por lead, por día</h3>
+          <ul class="ad-leyenda" id="ip-evolucion-leyenda"></ul>
+          <div class="ip-lienzo" id="ip-evolucion"></div>
+          <figcaption id="ip-evolucion-nota">Costo por lead diario de todas las plataformas y de Google Ads, 20 oct – 16 nov 2026. La línea punteada es la meta de $20.000. El total pasó de un promedio de $19.700 la primera semana a $24.700 la última; Google Ads, de $22.000 a $44.300.</figcaption>
+          <details class="ad-datos">
+            <summary>Ver los datos</summary>
+            <div class="ad-tabla" role="region" aria-labelledby="evolucion-caption" tabindex="0">
+              <table id="ip-evolucion-tabla">
+                <caption id="evolucion-caption">Costo por lead diario en COP: inversión del día sobre leads del día.</caption>
+                <thead></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </details>
+        </figure>
+        <div class="ad-lectura">
+          <span class="ad-lectura__k">Qué quiere decir</span>
+          <p><span class="ad-hl">El alza no es de toda la cuenta</span>: Meta y TikTok cierran la ventana con un costo similar al de la anterior. El primer tramo es de reparto (dónde se puso el presupuesto) y el segundo de conversión (qué pasa después del clic). Se corrigen por separado y se miden por separado.</p>
         </div>
-      </details>
-    </figure>
-    <div class="ad-lectura">
-      <span class="ad-lectura__k">Qué quiere decir</span>
-      <p><span class="ad-hl">El alza no es de toda la cuenta</span>: Meta y TikTok cierran la ventana con un costo similar al de la anterior. El primer tramo es de reparto (dónde se puso el presupuesto) y el segundo de conversión (qué pasa después del clic). Se corrigen por separado y se miden por separado.</p>
-    </div>
+      </div>
     </div>
   </section>
 
@@ -187,54 +198,57 @@
        04 · POR CAMPAÑA (evidencia y detalle)
        El desglose que responde la pregunta: por plataforma, campaña,
        programa, sede o etapa del embudo. Primero el gráfico de comparación
-       (anterior sumi, actual lima con borde sumi, base cero, marca de meta), luego la tabla
-       con variaciones y una columna «Lectura» de una frase por fila.
+       (anterior en gris, actual en sumi, marca de meta, base cero; la lima
+       marca la campaña con mayor alza), luego la tabla con variaciones y una
+       columna «Lectura» de una frase por fila.
        Los totales se recalculan desde las filas: si no cuadran con las cifras
        clave, el anexo lo marca.
        ============================================================ -->
-  <section class="formato-seccion" id="desglose" aria-labelledby="desglose-titulo">
-    <div class="ad-sec-cab">
-      <p class="ad-eyebrow">04 · Por campaña</p>
-      <h2 id="desglose-titulo">Performance Max duplicó su costo por lead</h2>
-    </div>
-    <div class="ad-stack ip-cuerpo">
-    <figure class="ad-figura">
-      <h3>Costo por lead por campaña, antes y ahora</h3>
-      <ul class="ad-leyenda" aria-hidden="true">
-        <li><i style="--c:var(--sumi)"></i>22 sep – 19 oct</li>
-        <li><i style="--c:var(--lima)"></i>20 oct – 16 nov</li>
-        <li><svg width="4" height="14" aria-hidden="true"><rect width="2" height="14" x="1" fill="var(--sumi)"/></svg>Meta $20.000</li>
-      </ul>
-      <dl class="ip-barras" id="ip-barras"></dl>
-      <figcaption>Inversión de la campaña sobre sus leads en cada ventana. Búsqueda · programas y Performance Max explican el alza; las campañas de Meta y TikTok se mueven menos de 15 %.</figcaption>
-    </figure>
+  <section class="ad-sec" id="desglose" aria-labelledby="desglose-titulo">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">04 · Por campaña</p>
+        <h2 id="desglose-titulo">Performance Max duplicó su costo por lead</h2>
+      </div>
+      <div class="ad-stack ip-cuerpo">
+        <figure class="ad-figura">
+          <h3>Costo por lead por campaña, antes y ahora</h3>
+          <ul class="ad-leyenda" aria-hidden="true">
+            <li><i style="--c:var(--tinta-tenue)"></i>22 sep – 19 oct</li>
+            <li><i style="--c:var(--sumi)"></i>20 oct – 16 nov</li>
+            <li><svg width="4" height="14" aria-hidden="true"><rect width="2" height="14" x="1" fill="var(--sumi)"/></svg>Meta $20.000</li>
+          </ul>
+          <dl class="ip-barras" id="ip-barras"></dl>
+          <figcaption>Inversión de la campaña sobre sus leads en cada ventana. En lima, la campaña con mayor alza. Búsqueda · programas y Performance Max explican el alza; las campañas de Meta y TikTok se mueven menos de 15 %.</figcaption>
+        </figure>
 
-    <h3 class="ip-subtitulo">Detalle por campaña</h3>
-    <div class="ip-filtros" hidden>
-      <label class="ad-field">Plataforma
-        <select class="ad-input" id="ip-filtro-plataforma"><option value="">Todas</option></select>
-      </label>
-    </div>
-    <div class="ad-tabla" role="region" aria-labelledby="detalle-caption" tabindex="0">
-      <table id="ip-detalle">
-        <caption id="detalle-caption">Ventana actual y variación frente a la anterior. Cifras en COP. Los encabezados con flecha ordenan la tabla. <span id="ip-detalle-estado" aria-live="polite"></span></caption>
-        <thead>
-          <tr>
-            <th scope="col">Campaña</th>
-            <th scope="col" class="valor"><button type="button" class="ip-orden" data-orden="inv">Inversión <span aria-hidden="true">↕</span></button></th>
-            <th scope="col" class="valor"><button type="button" class="ip-orden" data-orden="dInv">vs anterior <span aria-hidden="true">↕</span></button></th>
-            <th scope="col" class="valor"><button type="button" class="ip-orden" data-orden="res">Leads <span aria-hidden="true">↕</span></button></th>
-            <th scope="col" class="valor"><button type="button" class="ip-orden" data-orden="dRes">vs anterior <span aria-hidden="true">↕</span></button></th>
-            <th scope="col" class="valor"><button type="button" class="ip-orden" data-orden="costo">Costo por lead <span aria-hidden="true">↕</span></button></th>
-            <th scope="col" class="valor"><button type="button" class="ip-orden" data-orden="dCosto">vs anterior <span aria-hidden="true">↕</span></button></th>
-            <th scope="col" class="valor"><button type="button" class="ip-orden" data-orden="cal">Calificados <span aria-hidden="true">↕</span></button></th>
-            <th scope="col">Lectura</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-        <tfoot></tfoot>
-      </table>
-    </div>
+        <h3 class="ip-subtitulo">Detalle por campaña</h3>
+        <div class="ip-filtros" hidden>
+          <label class="ad-field">Plataforma
+            <select class="ad-input" id="ip-filtro-plataforma"><option value="">Todas</option></select>
+          </label>
+        </div>
+        <div class="ad-tabla" role="region" aria-labelledby="detalle-caption" tabindex="0">
+          <table id="ip-detalle">
+            <caption id="detalle-caption">Ventana actual y variación frente a la anterior. Cifras en COP. Los encabezados con flecha ordenan la tabla. <span id="ip-detalle-estado" aria-live="polite"></span></caption>
+            <thead>
+              <tr>
+                <th scope="col">Campaña</th>
+                <th scope="col" class="valor"><button type="button" class="ip-orden" data-orden="inv">Inversión <span aria-hidden="true">↕</span></button></th>
+                <th scope="col" class="valor"><button type="button" class="ip-orden" data-orden="dInv">vs anterior <span aria-hidden="true">↕</span></button></th>
+                <th scope="col" class="valor"><button type="button" class="ip-orden" data-orden="res">Leads <span aria-hidden="true">↕</span></button></th>
+                <th scope="col" class="valor"><button type="button" class="ip-orden" data-orden="dRes">vs anterior <span aria-hidden="true">↕</span></button></th>
+                <th scope="col" class="valor"><button type="button" class="ip-orden" data-orden="costo">Costo por lead <span aria-hidden="true">↕</span></button></th>
+                <th scope="col" class="valor"><button type="button" class="ip-orden" data-orden="dCosto">vs anterior <span aria-hidden="true">↕</span></button></th>
+                <th scope="col" class="valor"><button type="button" class="ip-orden" data-orden="cal">Calificados <span aria-hidden="true">↕</span></button></th>
+                <th scope="col">Lectura</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+          </table>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -245,42 +259,44 @@
        decisión. Usa nombres que entienda el cliente, no la nomenclatura
        interna del anuncio. Si la pregunta no es creativa, borra la sección.
        ============================================================ -->
-  <section class="formato-seccion" id="creativos" aria-labelledby="creativos-titulo">
-    <div class="ad-sec-cab">
-      <p class="ad-eyebrow">05 · Piezas y ángulos</p>
-      <h2 id="creativos-titulo">En Meta y TikTok, la empleabilidad trae los leads más baratos</h2>
-    </div>
-    <div class="ad-stack ip-cuerpo">
-    <ol class="ad-grid ip-piezas" style="--col:240px">
-      <!-- Reemplaza cada marcador por <img src="..." alt="Descripción de la pieza"> -->
-      <li class="ad-card is-on">
-        <div class="ad-marcador ad-marcador--9x16" role="img" aria-label="Espacio para la pieza 1">Pieza 1 · video 9:16</div>
-        <p class="ad-card__n">#1 · Meta · Formularios · pregrado</p>
-        <h3 class="ip-pieza-t">Egresada cuenta su primer empleo</h3>
-        <dl><div><dt>Leads</dt><dd>612</dd></div><div><dt>Inversión</dt><dd>$8,4 M</dd></div><div><dt>Costo</dt><dd>$13.725</dd></div></dl>
-      </li>
-      <li class="ad-card">
-        <div class="ad-marcador ad-marcador--4x5" role="img" aria-label="Espacio para la pieza 2">Pieza 2 · imagen 4:5</div>
-        <p class="ad-card__n">#2 · Meta · Formularios · pregrado</p>
-        <h3 class="ip-pieza-t">Beca del 30 % para inscritos en noviembre</h3>
-        <dl><div><dt>Leads</dt><dd>448</dd></div><div><dt>Inversión</dt><dd>$6,9 M</dd></div><div><dt>Costo</dt><dd>$15.402</dd></div></dl>
-      </li>
-      <li class="ad-card">
-        <div class="ad-marcador ad-marcador--9x16" role="img" aria-label="Espacio para la pieza 3">Pieza 3 · video 9:16</div>
-        <p class="ad-card__n">#3 · TikTok · Video · programas</p>
-        <h3 class="ip-pieza-t">Un día en el laboratorio de ingeniería</h3>
-        <dl><div><dt>Leads</dt><dd>96</dd></div><div><dt>Inversión</dt><dd>$3,6 M</dd></div><div><dt>Costo</dt><dd>$37.500</dd></div></dl>
-      </li>
-    </ol>
-    <h3 class="ip-subtitulo">Resultados por ángulo</h3>
-    <div class="ad-tabla" role="region" aria-labelledby="angulos-caption" tabindex="0">
-      <table id="ip-angulos">
-        <caption id="angulos-caption">Meta y TikTok, 20 oct – 16 nov 2026. Una pieza replicada en varios conjuntos cuenta una vez.</caption>
-        <thead><tr><th scope="col">Ángulo</th><th scope="col" class="valor">Piezas</th><th scope="col" class="valor">Inversión</th><th scope="col" class="valor">Peso</th><th scope="col" class="valor">Leads</th><th scope="col" class="valor">Costo por lead</th><th scope="col">Decisión</th></tr></thead>
-        <tbody></tbody>
-        <tfoot></tfoot>
-      </table>
-    </div>
+  <section class="ad-sec ad-sec--crema" id="creativos" aria-labelledby="creativos-titulo">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">05 · Piezas y ángulos</p>
+        <h2 id="creativos-titulo">En Meta y TikTok, la empleabilidad trae los leads más baratos</h2>
+      </div>
+      <div class="ad-stack ip-cuerpo">
+        <ol class="ad-grid ip-piezas" style="--col:240px">
+          <!-- Reemplaza cada marcador por <img src="..." alt="Descripción de la pieza"> -->
+          <li class="ad-card is-on">
+            <div class="ad-marcador ad-marcador--9x16" role="img" aria-label="Espacio para la pieza 1">Pieza 1 · video 9:16</div>
+            <p class="ad-card__n">#1 · Meta · Formularios · pregrado</p>
+            <h3 class="ip-pieza-t">Egresada cuenta su primer empleo</h3>
+            <dl><div><dt>Leads</dt><dd>612</dd></div><div><dt>Inversión</dt><dd>$8,4 M</dd></div><div><dt>Costo</dt><dd>$13.725</dd></div></dl>
+          </li>
+          <li class="ad-card">
+            <div class="ad-marcador ad-marcador--4x5" role="img" aria-label="Espacio para la pieza 2">Pieza 2 · imagen 4:5</div>
+            <p class="ad-card__n">#2 · Meta · Formularios · pregrado</p>
+            <h3 class="ip-pieza-t">Beca del 30 % para inscritos en noviembre</h3>
+            <dl><div><dt>Leads</dt><dd>448</dd></div><div><dt>Inversión</dt><dd>$6,9 M</dd></div><div><dt>Costo</dt><dd>$15.402</dd></div></dl>
+          </li>
+          <li class="ad-card">
+            <div class="ad-marcador ad-marcador--9x16" role="img" aria-label="Espacio para la pieza 3">Pieza 3 · video 9:16</div>
+            <p class="ad-card__n">#3 · TikTok · Video · programas</p>
+            <h3 class="ip-pieza-t">Un día en el laboratorio de ingeniería</h3>
+            <dl><div><dt>Leads</dt><dd>96</dd></div><div><dt>Inversión</dt><dd>$3,6 M</dd></div><div><dt>Costo</dt><dd>$37.500</dd></div></dl>
+          </li>
+        </ol>
+        <h3 class="ip-subtitulo">Resultados por ángulo</h3>
+        <div class="ad-tabla" role="region" aria-labelledby="angulos-caption" tabindex="0">
+          <table id="ip-angulos">
+            <caption id="angulos-caption">Meta y TikTok, 20 oct – 16 nov 2026. Una pieza replicada en varios conjuntos cuenta una vez.</caption>
+            <thead><tr><th scope="col">Ángulo</th><th scope="col" class="valor">Piezas</th><th scope="col" class="valor">Inversión</th><th scope="col" class="valor">Peso</th><th scope="col" class="valor">Leads</th><th scope="col" class="valor">Costo por lead</th><th scope="col">Decisión</th></tr></thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+          </table>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -291,38 +307,38 @@
        Considera contexto (framework 36): oferta, calendario, competencia,
        CRM, creatividad y plataforma antes de culpar a la pauta.
        ============================================================ -->
-  <section class="formato-seccion" id="hallazgos" aria-labelledby="hallazgos-titulo">
-    <div class="ad-sec-cab">
-      <p class="ad-eyebrow">06 · Hallazgos</p>
-      <h2 id="hallazgos-titulo">Qué funciona, qué presiona y qué hay que mirar</h2>
-    </div>
-    <div class="ad-stack ip-cuerpo">
-    <div class="ip-tres">
-      <div>
-        <h3>Lo que funciona</h3>
-        <ul>
-          <li>Formularios de Meta sostienen 47 % de los leads a $13.846.</li>
-          <li>Búsqueda · marca se mantiene en $13.333 por lead.</li>
-          <li>El ángulo de empleabilidad tiene el costo más bajo: $15.000.</li>
-        </ul>
+  <section class="ad-sec" id="hallazgos" aria-labelledby="hallazgos-titulo">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">06 · Hallazgos</p>
+        <h2 id="hallazgos-titulo">Qué funciona, qué presiona y qué hay que mirar</h2>
       </div>
-      <div>
-        <h3><span class="ad-hl">Lo que presiona</span></h3>
-        <ul>
-          <li>Performance Max: 21 % de la inversión y 5 % de los leads.</li>
-          <li>El formulario nuevo bajó la conversión del sitio de 5,1 % a 3,2 %.</li>
-          <li>Tres universidades de la ciudad abrieron inscripciones la misma semana.</li>
-        </ul>
+      <div class="ip-tres">
+        <div>
+          <h3>Lo que funciona</h3>
+          <ul>
+            <li>Formularios de Meta sostienen 47 % de los leads a $13.846.</li>
+            <li>Búsqueda · marca se mantiene en $13.333 por lead.</li>
+            <li>El ángulo de empleabilidad tiene el costo más bajo: $15.000.</li>
+          </ul>
+        </div>
+        <div>
+          <h3><span class="ad-hl">Lo que presiona</span></h3>
+          <ul>
+            <li>Performance Max: 21 % de la inversión y 5 % de los leads.</li>
+            <li>El formulario nuevo bajó la conversión del sitio de 5,1 % a 3,2 %.</li>
+            <li>Tres universidades de la ciudad abrieron inscripciones la misma semana.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Lo que hay que mirar</h3>
+          <ul>
+            <li>Frecuencia de Remarketing en 4,1: rotar antes de que suba el costo.</li>
+            <li>La diferencia entre GA4 y las plataformas que llegan al sitio es de 18 %.</li>
+            <li>TikTok sin campaña en el CRM: su calidad no se puede leer.</li>
+          </ul>
+        </div>
       </div>
-      <div>
-        <h3>Lo que hay que mirar</h3>
-        <ul>
-          <li>Frecuencia de Remarketing en 4,1: rotar antes de que suba el costo.</li>
-          <li>La diferencia entre GA4 y las plataformas que llegan al sitio es de 18 %.</li>
-          <li>TikTok sin campaña en el CRM: su calidad no se puede leer.</li>
-        </ul>
-      </div>
-    </div>
     </div>
   </section>
 
@@ -333,26 +349,28 @@
        dato). Después, lo que este informe no puede afirmar. Una ausencia de
        datos nunca se reporta como cero.
        ============================================================ -->
-  <section class="formato-seccion" id="medicion" aria-labelledby="medicion-titulo">
-    <div class="ad-sec-cab">
-      <p class="ad-eyebrow">07 · Medición</p>
-      <h2 id="medicion-titulo">Lo que todavía no podemos afirmar</h2>
-    </div>
-    <div class="ad-stack ip-cuerpo">
-    <div class="ad-tabla" role="region" aria-labelledby="fuentes-caption" tabindex="0">
-      <table id="ip-fuentes">
-        <caption id="fuentes-caption">Leads de la ventana actual según cada fuente. La diferencia se calcula sobre la cifra comparable de la fuente anterior en el recorrido del lead.</caption>
-        <thead><tr><th scope="col">Fuente</th><th scope="col">Qué cuenta</th><th scope="col" class="valor">Leads</th><th scope="col" class="valor">Diferencia</th><th scope="col">Estado</th></tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
-    <div class="ad-lectura">
-      <span class="ad-lectura__k">Límites de esta lectura</span>
-      <p><span class="ad-estado ad-estado--parcial">Parcial</span> Los calificados del 10 al 16 de noviembre tienen menos de una semana de gestión: la tasa de 30 % puede subir.</p>
-      <p><span class="ad-estado ad-estado--pendiente">Por validar</span> La caída de conversión del sitio coincide con el formulario nuevo, pero el mismo día cambió también la versión móvil de la página.</p>
-      <p><span class="ad-estado ad-estado--sin">Sin dato</span> TikTok no envía campaña al CRM; su costo por calificado no se puede calcular.</p>
-      <p><span class="ad-estado ad-estado--na">No aplica</span> Comparación con 2025: el programa de becas no existía y la oferta no es comparable.</p>
-    </div>
+  <section class="ad-sec ad-sec--crema" id="medicion" aria-labelledby="medicion-titulo">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">07 · Medición</p>
+        <h2 id="medicion-titulo">Lo que todavía no podemos afirmar</h2>
+      </div>
+      <div class="ad-stack ip-cuerpo">
+        <div class="ad-tabla" role="region" aria-labelledby="fuentes-caption" tabindex="0">
+          <table id="ip-fuentes">
+            <caption id="fuentes-caption">Leads de la ventana actual según cada fuente. La diferencia se calcula sobre la cifra comparable de la fuente anterior en el recorrido del lead.</caption>
+            <thead><tr><th scope="col">Fuente</th><th scope="col">Qué cuenta</th><th scope="col" class="valor">Leads</th><th scope="col" class="valor">Diferencia</th><th scope="col">Estado</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="ad-lectura">
+          <span class="ad-lectura__k">Límites de esta lectura</span>
+          <p><span class="ad-estado ad-estado--parcial">Parcial</span> Los calificados del 10 al 16 de noviembre tienen menos de una semana de gestión: la tasa de 30 % puede subir.</p>
+          <p><span class="ad-estado ad-estado--pendiente">Por validar</span> La caída de conversión del sitio coincide con el formulario nuevo, pero el mismo día cambió también la versión móvil de la página.</p>
+          <p><span class="ad-estado ad-estado--sin">Sin dato</span> TikTok no envía campaña al CRM; su costo por calificado no se puede calcular.</p>
+          <p><span class="ad-estado ad-estado--na">No aplica</span> Comparación con 2025: el programa de becas no existía y la oferta no es comparable.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -364,32 +382,34 @@
        cada corte. Sin recomendaciones de presupuesto que nadie pidió (preset
        de informes de Media Bridge). Cada acción ejecutada va a la bitácora.
        ============================================================ -->
-  <section class="formato-seccion" id="acciones" aria-labelledby="acciones-titulo">
-    <div class="ad-sec-cab">
-      <p class="ad-eyebrow">08 · Acciones</p>
-      <h2 id="acciones-titulo">Una acción hecha y cinco que siguen</h2>
-    </div>
-    <div class="ad-stack ip-cuerpo">
-    <div class="ad-tabla" role="region" aria-labelledby="acciones-caption" tabindex="0">
-      <table id="ip-acciones">
-        <caption id="acciones-caption">Qué, quién y cuándo. Semanas que empiezan el lunes indicado.</caption>
-        <thead><tr><th scope="col">Acción</th><th scope="col">Responsable</th><th scope="col" data-semanas>Semanas</th><th scope="col">Criterio de verificación</th><th scope="col">Estado</th></tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
+  <section class="ad-sec" id="acciones" aria-labelledby="acciones-titulo">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">08 · Acciones</p>
+        <h2 id="acciones-titulo">Una acción hecha y cinco que siguen</h2>
+      </div>
+      <div class="ad-stack ip-cuerpo">
+        <div class="ad-tabla" role="region" aria-labelledby="acciones-caption" tabindex="0">
+          <table id="ip-acciones">
+            <caption id="acciones-caption">Qué, quién y cuándo. Semanas que empiezan el lunes indicado.</caption>
+            <thead><tr><th scope="col">Acción</th><th scope="col">Responsable</th><th scope="col" data-semanas>Semanas</th><th scope="col">Criterio de verificación</th><th scope="col">Estado</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
 
-    <h3 class="ip-subtitulo">Una lectura corta, con fecha</h3>
-    <div class="ad-tabla" role="region" aria-labelledby="seguimiento-caption" tabindex="0">
-      <table>
-        <caption id="seguimiento-caption">Cada corte responde una pregunta y alimenta la siguiente decisión.</caption>
-        <thead><tr><th scope="col">Cuándo</th><th scope="col">Qué miramos</th><th scope="col">Decide</th></tr></thead>
-        <tbody>
-          <tr><th scope="row">24 nov 2026</th><td>Conversión del sitio y costo por lead de Google Ads con el formulario restaurado.</td><td>Performance</td></tr>
-          <tr><th scope="row">1 dic 2026</th><td>Cuota de clics de marca en Performance Max y conciliación de GA4 con Google Ads.</td><td>Performance y Analítica</td></tr>
-          <tr><th scope="row">8 dic 2026</th><td>Costo por calificado por plataforma con 30 días de madurez; propuesta de redistribución.</td><td>Planner con el cliente</td></tr>
-        </tbody>
-      </table>
-    </div>
+        <h3 class="ip-subtitulo">Una lectura corta, con fecha</h3>
+        <div class="ad-tabla" role="region" aria-labelledby="seguimiento-caption" tabindex="0">
+          <table>
+            <caption id="seguimiento-caption">Cada corte responde una pregunta y alimenta la siguiente decisión.</caption>
+            <thead><tr><th scope="col">Cuándo</th><th scope="col">Qué miramos</th><th scope="col">Decide</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">24 nov 2026</th><td>Conversión del sitio y costo por lead de Google Ads con el formulario restaurado.</td><td>Performance</td></tr>
+              <tr><th scope="row">1 dic 2026</th><td>Cuota de clics de marca en Performance Max y conciliación de GA4 con Google Ads.</td><td>Performance y Analítica</td></tr>
+              <tr><th scope="row">8 dic 2026</th><td>Costo por calificado por plataforma con 30 días de madurez; propuesta de redistribución.</td><td>Planner con el cliente</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -400,35 +420,46 @@
        interna solo aquí y solo si el cliente los necesita. La comprobación
        de totales se genera sola desde DATOS.
        ============================================================ -->
-  <section class="formato-seccion ip-anexo" id="anexo" aria-labelledby="anexo-titulo">
-    <div class="ad-sec-cab">
-      <p class="ad-eyebrow">09 · Anexo</p>
-      <h2 id="anexo-titulo">Cómo leer este informe</h2>
-    </div>
-    <div class="ad-stack ip-cuerpo">
-    <dl>
-      <div><dt>Fuentes</dt><dd>Meta, Google Ads y TikTok por API, descargadas el 17 nov 2026. CRM: exportación del 17 nov 2026. GA4: evento de formulario del sitio.</dd></div>
-      <div><dt>Ventanas</dt><dd>Actual 20 oct – 16 nov 2026 y anterior 22 sep – 19 oct 2026, ambas de 28 días y en hora de Colombia. El 17 de noviembre queda fuera porque estaba en curso.</dd></div>
-      <div><dt>Atribución</dt><dd>La de cada plataforma: Meta 7 días clic y 1 día vista; Google Ads basada en datos; TikTok 7 días clic. Por eso la suma de plataformas no coincide con GA4.</dd></div>
-      <div><dt>Lead</dt><dd>Formulario enviado. Un lead no es un contacto único: una persona puede enviar dos formularios.</dd></div>
-      <div><dt>Calificado</dt><dd>Registro del CRM con programa de pregrado, ciudad de cobertura y teléfono válido, marcado por admisiones.</dd></div>
-      <div><dt>Costo por lead</dt><dd>Inversión sobre leads de la misma fuente y ventana. El costo por calificado divide la inversión de plataforma sobre calificados del CRM.</dd></div>
-      <div><dt>Exclusiones</dt><dd>Posgrado, educación continua y YouTube, que tienen otro objetivo de compra.</dd></div>
-      <div><dt>Ajustes</dt><dd>Ninguno. Si el cliente aplica un factor comercial a la inversión, se declara aquí con su origen.</dd></div>
-      <div><dt>Nombre del archivo</dt><dd><code>ANDINA_INFORME_Costo por lead Oct-Nov 2026_18-11-26_V01</code></dd></div>
-    </dl>
-    <p class="ip-cuadre" id="ip-cuadre" aria-live="polite"></p>
+  <section class="ad-sec ad-sec--crema ip-anexo" id="anexo" aria-labelledby="anexo-titulo">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">09 · Anexo</p>
+        <h2 id="anexo-titulo">Cómo leer este informe</h2>
+      </div>
+      <div class="ad-stack ip-cuerpo">
+        <dl>
+          <div><dt>Fuentes</dt><dd>Meta, Google Ads y TikTok por API, descargadas el 17 nov 2026. CRM: exportación del 17 nov 2026. GA4: evento de formulario del sitio.</dd></div>
+          <div><dt>Ventanas</dt><dd>Actual 20 oct – 16 nov 2026 y anterior 22 sep – 19 oct 2026, ambas de 28 días y en hora de Colombia. El 17 de noviembre queda fuera porque estaba en curso.</dd></div>
+          <div><dt>Atribución</dt><dd>La de cada plataforma: Meta 7 días clic y 1 día vista; Google Ads basada en datos; TikTok 7 días clic. Por eso la suma de plataformas no coincide con GA4.</dd></div>
+          <div><dt>Lead</dt><dd>Formulario enviado. Un lead no es un contacto único: una persona puede enviar dos formularios.</dd></div>
+          <div><dt>Calificado</dt><dd>Registro del CRM con programa de pregrado, ciudad de cobertura y teléfono válido, marcado por admisiones.</dd></div>
+          <div><dt>Costo por lead</dt><dd>Inversión sobre leads de la misma fuente y ventana. El costo por calificado divide la inversión de plataforma sobre calificados del CRM.</dd></div>
+          <div><dt>Exclusiones</dt><dd>Posgrado, educación continua y YouTube, que tienen otro objetivo de compra.</dd></div>
+          <div><dt>Ajustes</dt><dd>Ninguno. Si el cliente aplica un factor comercial a la inversión, se declara aquí con su origen.</dd></div>
+          <div><dt>Nombre del archivo</dt><dd><code>ANDINA_INFORME_Costo por lead Oct-Nov 2026_18-11-26_V01</code></dd></div>
+        </dl>
+        <p class="ip-cuadre" id="ip-cuadre" aria-live="polite"></p>
+
+        <!-- COLOFÓN: quién responde por el documento y cuándo se vuelve a revisar. -->
+        <dl class="ip-colofon" aria-label="Datos del documento">
+          <div><dt>Elaboró</dt><dd>Performance · Adcom</dd></div>
+          <div><dt>Revisó</dt><dd>Planner de la cuenta</dd></div>
+          <div><dt>Versión</dt><dd>V01 · 18 nov 2026</dd></div>
+          <div><dt>Próxima revisión</dt><dd>24 nov 2026</dd></div>
+        </dl>
+      </div>
     </div>
   </section>
 
-  <!-- COLOFÓN: quién responde por el documento y cuándo se vuelve a revisar. -->
-  <section class="formato-seccion" aria-label="Datos del documento">
-    <dl class="ip-colofon">
-      <div><dt>Elaboró</dt><dd>Performance · Adcom</dd></div>
-      <div><dt>Revisó</dt><dd>Planner de la cuenta</dd></div>
-      <div><dt>Versión</dt><dd>V01 · 18 nov 2026</dd></div>
-      <div><dt>Próxima revisión</dt><dd>24 nov 2026</dd></div>
-    </dl>
+  <!-- CIERRE: una frase y la acción que sigue. El botón lleva a la tabla de acciones. -->
+  <section class="ad-sec ad-sec--oscuro ad-cierre" aria-labelledby="cierre">
+    <div class="ad-wrap ad-cierre__in">
+      <div>
+        <h2 id="cierre">El 24 de noviembre se vuelve a medir.</h2>
+        <p>Conversión del sitio y costo por lead de Google Ads con el formulario restaurado. La redistribución se decide el 8 de diciembre.</p>
+      </div>
+      <a class="ad-btn ad-btn--accent" href="#acciones">Ver las acciones</a>
+    </div>
   </section>
 </main>
 

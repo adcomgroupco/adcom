@@ -674,6 +674,7 @@
   search.addEventListener('input', () => { if (search.value.trim()) selectedMedium = ''; currentPage = 1; renderFormats(); });
   $('#clear-filters').addEventListener('click', () => { search.value=''; selectedMedium=''; currentPage = 1; renderFormats(); search.focus(); });
   renderMedia();
+  document.querySelectorAll('[data-count]').forEach(node => { const total = {medios: media.length, formatos: formats.length}[node.dataset.count]; if (total) node.textContent = String(total); });
   const initialMedium = media.find(item => mediumKey(item.id) === location.hash.slice(1));
   selectedMedium = initialMedium?.id || '';
   renderFormats();

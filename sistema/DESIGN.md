@@ -1,5 +1,7 @@
 # Sistema de diseño Adcom
 
+> **Aviso:** en el repo `adcom` el estándar vigente es [`ESTANDARES-DISENO.md`](../ESTANDARES-DISENO.md) (sistema v2). Este documento describe el sistema anterior (amarillo y Poppins), que sigue vigente solo en los repos de cliente.
+
 El lenguaje visual de los documentos de cliente. Un archivo de CSS, un archivo de JS,
 y este documento. Lo comparten todos los repos de la organización.
 

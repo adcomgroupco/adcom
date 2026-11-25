@@ -1,0 +1,1046 @@
+<!doctype html>
+<html lang="es" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Cómo usamos la IA en Adcom: de la solicitud al entregable, con una persona que decide en cada paso.">
+  <meta name="theme-color" content="#F7F6F2">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Cómo trabajamos con IA | Adcom</title>
+  <script>document.documentElement.className='js'</script>
+  <link rel="stylesheet" href="../assets/ds/fonts.css">
+  <link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261127">
+  <style>
+/* Guía interactiva en v2. Solo tokens de adcom-v2.css: ningún color ni espacio suelto.
+   Lo propio de esta página es el comportamiento (recorrido, conexiones, versiones). */
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--washi);color:var(--sumi)}
+.ad-nav__links a:hover{color:var(--sumi)}
+.ad-nav__links a[aria-current="true"]{color:var(--sumi);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px}
+
+/* iconos dibujados y logos: monocromos, en el primer plano del suelo */
+.ico{width:16px;height:16px;flex:none;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.ico--lleno{fill:currentColor;stroke:none}
+.logo{width:24px;height:24px;flex:none;fill:currentColor}
+
+/* portada: las tres ideas van en su propia sección; son paralelas, no un orden, así que ninguna se rellena */
+.ad-hero .ad-aviso{margin-top:var(--space-6)}
+.ideas .ad-paso h3{margin:var(--space-4) 0 0}
+.ideas .ad-paso .ad-n,.ideas .ad-paso:last-child .ad-n{background:var(--papel);border-color:var(--sumi)}
+
+/* secciones: el ritmo lo da .ad-sec; aquí solo el margen de anclaje del índice */
+.bloque{scroll-margin-top:calc(var(--nav-height) + var(--space-4))}
+
+/* lo actual en lima es una sola cosa por bloque: el paso del recorrido, el nivel elegido, la versión elegida.
+   Los selectores (situación, conexión, herramienta) quedan en sumi */
+.situaciones .ad-chip[aria-pressed="true"],.cx-modos .ad-chip[aria-pressed="true"],.herr .ad-chip[aria-pressed="true"]{background:var(--sumi);border-color:var(--sumi);color:var(--washi)}
+.sub{font-family:var(--font-display);font-size:clamp(22px,2.6vw,28px);font-weight:500;line-height:1.15;letter-spacing:-.02em;margin:0}
+.sub-p{margin:var(--space-2) 0 0;max-width:68ch;color:var(--tinta-secundaria)}
+
+/* controles comunes */
+.fila-chips{display:flex;flex-wrap:wrap;gap:var(--space-2)}
+.controles{display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:center;margin:var(--space-6) 0}
+.controles .ad-btn,.git__acciones .ad-btn{min-height:var(--target-min);padding:10px 22px;font-size:15px;gap:var(--space-2)}
+.controles .ad-btn[disabled],.git__acciones .ad-btn[disabled]{opacity:.4;cursor:default}
+.progreso{flex:1 1 220px;display:flex;align-items:center;gap:var(--space-4);min-width:0;font-size:14px;color:var(--tinta-secundaria)}
+.progreso .ad-barra{flex:1;min-width:60px}
+.btn-texto{background:none;border:0;font:inherit;font-size:15px;cursor:pointer;min-height:var(--target-min);padding:0 var(--space-2);text-decoration:underline;text-underline-offset:3px;color:var(--tinta-secundaria)}
+.btn-texto:hover{color:var(--sumi)}
+
+/* 1. recorrido: base en lista (móvil y sin JS); el tablero llega con ancho */
+.recorrido{display:flex;flex-direction:column}
+.recorrido>.controles{order:1}
+.situacion-desc{margin:var(--space-4) 0 0;max-width:68ch;color:var(--tinta-secundaria)}
+.detalle{order:2;margin-top:0;display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-6);padding:var(--space-6)}
+.detalle__actor{display:flex;align-items:center;gap:var(--space-4);margin-bottom:var(--space-4)}
+.detalle__logos{display:flex;align-items:center;gap:var(--space-2)}
+.detalle__logos .logo{width:32px;height:32px}
+.detalle .ad-lectura__k{margin:0}
+.detalle p{max-width:68ch}
+.ad-lectura .detalle__nota{margin-top:var(--space-2);font-size:14px;font-weight:500;color:var(--sumi)}
+.detalle__ej{display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-2);min-width:0}
+.detalle__ej>div{width:100%}
+.tablero{order:3;position:relative;margin-top:var(--space-6)}
+.leyenda{order:4;margin-top:var(--space-6)}
+.escenario__t{font-family:var(--font-display);font-size:20px;font-weight:500;margin:var(--space-8) 0 var(--space-2)}
+.escenario__d{margin:0 0 var(--space-4);color:var(--tinta-secundaria)}
+.js .escenario__t,.js .escenario__d{display:none}
+.ruta{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:var(--space-2)}
+.celda{display:grid;grid-template-columns:auto minmax(0,1fr) auto;column-gap:var(--space-4);row-gap:2px;align-items:center;width:100%;min-height:var(--target-min);padding:var(--space-4);text-align:left;font:inherit;color:var(--sumi);background:var(--papel);border:1px solid var(--piedra);border-radius:var(--radius-card);cursor:pointer}
+.celda:hover{border-color:var(--sumi)}
+.celda .ad-n{grid-column:1;grid-row:1 / span 2}
+.celda .logo{grid-column:3;grid-row:1 / span 2}
+.celda__t{grid-column:2;grid-row:1;font-family:var(--font-display);font-size:16px;font-weight:500;line-height:1.25;letter-spacing:-.01em}
+.celda__m{grid-column:2;grid-row:2;font-size:13px;color:var(--tinta-suave)}
+.celda__v::before{content:" · "}
+.celda[aria-current="step"]{background:var(--lima);border-color:var(--sumi)}
+.celda[aria-current="step"] .celda__m{color:var(--sumi)}
+.ruta>li[data-impacto] .celda{border:2px solid var(--sumi);padding:calc(var(--space-4) - 1px)}
+.ruta .desc,.ruta .ejemplo{display:none}
+html:not(.js) .ruta .desc{display:block;margin:var(--space-2) 0;padding-left:calc(28px + var(--space-4));font-size:15px;color:var(--tinta-secundaria)}
+html:not(.js) .ruta .ejemplo{display:block;margin:0 0 var(--space-6)}
+.lane,.banda,.hilos{display:none}
+.hilo{fill:none;stroke-width:1.5}
+.hilo--hecho{stroke:var(--sumi)}
+.hilo--falta{stroke:var(--piedra-borde);stroke-dasharray:4 4}
+.hilo--vuelta{stroke:var(--sumi);stroke-dasharray:6 4}
+.hilo__txt{font-family:var(--font-body);font-size:13px;fill:var(--sumi);paint-order:stroke;stroke:var(--washi);stroke-width:5px;stroke-linejoin:round}
+.punta-hecha path,.punta-vuelta path{fill:var(--sumi)}
+.punta-falta path{fill:var(--piedra-borde)}
+.viajero{fill:var(--sumi);stroke:var(--washi);stroke-width:3}
+.leyenda .leyenda__banda{display:none}
+.leyenda i.grueso{border-width:2px}
+.leyenda i.rayas{background:transparent;border-style:dashed}
+
+/* ejemplos: cómo se ve cada paso en la herramienta real, con datos ficticios */
+.ej{border:1px solid var(--piedra);background:var(--papel);border-radius:var(--radius-card);overflow:hidden}
+.ej__cab{display:flex;align-items:center;gap:var(--space-2);padding:10px var(--space-4);background:var(--washi);border-bottom:1px solid var(--piedra);font-size:14px;font-weight:500;color:var(--sumi)}
+.ej__cab .logo{width:20px;height:20px}
+.ej__logos{display:inline-flex;gap:6px}
+.ej__logos .logo{width:18px;height:18px}
+.ej__cuerpo{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);font-size:15px;color:var(--tinta-secundaria)}
+.ej__cuerpo p{margin:0}
+.ej__linea{display:grid;grid-template-columns:64px minmax(0,1fr);gap:var(--space-2);align-items:baseline}
+.ej__linea>span{font-size:13px;color:var(--tinta-suave)}
+.ej__linea b{color:var(--sumi)}
+.ej__titulo{font-family:var(--font-display);font-size:18px;font-weight:500;color:var(--sumi)}
+.ej__nota{font-size:13px;color:var(--tinta-suave)}
+.ej__burbuja{padding:10px var(--space-4);border:1px solid var(--piedra);border-radius:var(--radius-card);color:var(--sumi)}
+.ej__burbuja--persona{background:var(--crema);border-color:var(--crema)}
+.ej__quien{display:block;margin-bottom:2px;font-size:13px;color:var(--tinta-suave)}
+.ej__lista{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.ej__lista li{display:flex;align-items:center;gap:var(--space-2);color:var(--sumi)}
+.ej__tabla{width:100%;border-collapse:collapse;font-size:14px}
+.ej__tabla th{padding:6px 0;text-align:left;font-size:13px;font-weight:500;color:var(--tinta-suave);border-bottom:1px solid var(--sumi)}
+.ej__tabla td{padding:6px 0;border-bottom:1px solid var(--piedra);color:var(--sumi)}
+.ej__tabla tr:last-child td{border-bottom:0}
+.ej__tabla .valor{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ej__tabla tfoot td{font-weight:500;border-top:1px solid var(--sumi);border-bottom:0}
+.ej code{padding:1px 6px;background:var(--crema);border-radius:var(--radius-input);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;color:var(--sumi);overflow-wrap:anywhere}
+
+@media (min-width:1200px){
+  .detalle{order:3;margin-top:var(--space-6);grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);align-items:start;min-height:340px}
+  .tablero{order:2}
+  .js .tablero{display:grid;grid-template-columns:132px repeat(var(--cols,6),minmax(0,1fr));grid-template-rows:repeat(5,minmax(88px,auto));column-gap:var(--space-4);padding-top:var(--space-16)}
+  .js .escenario,.js .ruta{display:contents}
+  .js .ruta>li{grid-column:calc(var(--c) + 1);grid-row:var(--r);display:flex;min-width:0;padding-block:var(--space-4);position:relative;z-index:1}
+  .js .celda{grid-template-columns:minmax(0,1fr);row-gap:var(--space-2);align-content:start;height:100%}
+  .js .celda .ad-n{grid-column:1;grid-row:1}
+  .js .celda .logo{display:none}
+  .js .celda__t{grid-column:1;grid-row:2}
+  .js .celda__m{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .js .banda{display:block;grid-column:1 / -1;grid-row:var(--r);border-top:1px solid var(--piedra);pointer-events:none}
+  .js .banda--persona{background:var(--crema)}
+  .js .leyenda .leyenda__banda{display:inline-flex}
+  .js .lane{display:flex;align-items:center;gap:var(--space-2);grid-column:1;grid-row:var(--r);padding-block:var(--space-4);padding-left:var(--space-2);min-width:0;font-family:var(--font-display);font-size:15px;font-weight:500}
+  .lane__logos{display:flex;flex-direction:column;gap:4px}
+  .lane__logos--3 .logo{width:18px;height:18px}
+  .js .hilos{display:block;position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible}
+}
+
+/* 2. conexiones */
+.cx-modos{margin-bottom:var(--space-6)}
+.conexion{display:grid;grid-template-columns:auto auto auto minmax(0,1fr) auto;grid-template-rows:repeat(3,minmax(var(--target-cta),auto));align-items:center;row-gap:var(--space-4);padding:var(--space-8) var(--space-6);background:var(--papel);border:1px solid var(--piedra);border-radius:var(--radius-panel)}
+.cx-ia,.cx-mcp{grid-row:1 / 4;align-self:stretch;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;padding:var(--space-4);border-radius:var(--radius-card);text-align:center;font-family:var(--font-display);font-weight:500}
+.cx-ia{grid-column:1;min-width:72px;background:var(--sumi);color:var(--washi)}
+.cx-ia .logo{width:28px;height:28px;margin-bottom:var(--space-2)}
+.cx-ia strong,.cx-mcp strong{font-size:20px;letter-spacing:-.02em}
+.cx-ia span,.cx-mcp span{font-size:13px;font-weight:400}
+.cx-mcp{grid-column:3;background:var(--papel);color:var(--sumi);border:2px solid var(--sumi);min-width:88px}
+.cx-tronco{grid-column:2;grid-row:1 / 4;align-self:center;width:var(--space-10);height:0;border-top:2px solid var(--sumi);transform-origin:left}
+.cx-hilo{grid-column:4;grid-row:var(--r);position:relative;height:0;min-width:var(--space-8)}
+.cx-hilo::before{content:"";position:absolute;left:0;right:0;top:-1px;border-top:2px solid var(--sumi);transform-origin:left}
+.cx-llave{position:absolute;left:50%;top:0;transform:translate(-50%,-50%);padding:2px 10px;background:var(--papel);border:1px solid var(--sumi);border-radius:var(--radius-pill);font-size:13px;font-style:normal;white-space:nowrap}
+.cx-tool{grid-column:5;grid-row:var(--r);display:flex;align-items:center;justify-content:center;gap:var(--space-2);min-width:96px;padding:12px 14px;background:var(--papel);border:1px solid var(--sumi);border-radius:var(--radius-card);font-family:var(--font-display);font-size:16px;font-weight:500;text-align:center}
+.cx-tool .logo{width:20px;height:20px}
+.conexion[data-modo="api"] .solo-mcp,.conexion[data-modo="mcp"] .solo-api{display:none}
+.conexion.anim .cx-hilo::before,.conexion.anim .cx-tronco{animation:cxTrazo var(--duration-rise) var(--easing-draw) both}
+.conexion.anim .cx-llave{animation:cxAparece var(--duration-rise) var(--easing-rise) .3s both}
+.conexion.anim .cx-mcp{animation:adRise var(--duration-rise) var(--easing-rise) .2s both}
+@keyframes cxTrazo{from{transform:scaleX(0)}to{transform:none}}
+@keyframes cxAparece{from{opacity:0}to{opacity:1}}
+.cx-textos{margin-top:var(--space-8)}
+.cx-textos h3{margin:0 0 var(--space-4)}
+.cx-textos .ad-ficha{margin-top:var(--space-4)}
+.cx-aviso{margin-top:var(--space-6)}
+
+.herr{margin-top:var(--space-16)}
+.herr__grupos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:var(--space-8);margin-top:var(--space-6)}
+.herr__g h4{display:flex;align-items:center;gap:var(--space-2);margin:0;font-family:var(--font-display);font-size:17px;font-weight:500}
+.herr__g p{margin:4px 0 var(--space-4);font-size:14px;color:var(--tinta-suave)}
+.herr__g ul{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:0;padding:0;list-style:none}
+.herr__det{margin-top:var(--space-6)}
+
+/* 3. quién decide */
+.niveles{--col:150px;--gap:var(--space-4)}
+.niveles .ad-card{--card-h:132px;cursor:pointer}
+.impacto{margin-top:var(--space-6)}
+.impacto ol{margin:0}
+.impacto li{--c:var(--crema)}
+.impacto li.is-lleno{--c:var(--sumi)}
+.impacto li.is-on{background:var(--sumi)}
+.impacto__ejes{display:flex;justify-content:space-between;margin-top:var(--space-2);font-size:13px;color:var(--tinta-suave)}
+.nivel-pan{margin-top:var(--space-6)}
+.nivel-pan h3{margin:0 0 var(--space-4)}
+.nivel-pan .ad-ficha{grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))}
+.nivel-pan dd{color:var(--tinta-secundaria)}
+
+/* 4. versiones */
+.git{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-6)}
+.git__col{min-width:0;padding:var(--space-6);background:var(--papel);border:1px solid var(--piedra);border-radius:var(--radius-panel)}
+.git__col h3{margin:0;font-size:20px}
+.git__s{margin:4px 0 var(--space-4);font-size:14px;color:var(--tinta-suave)}
+.git__flecha{display:none}
+.versiones{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:var(--space-2);min-height:var(--space-16)}
+.versiones:empty::before{content:"Todavía no hay versiones";font-size:14px;color:var(--tinta-suave)}
+.version{display:flex;align-items:center;gap:var(--space-4);width:100%;padding:10px var(--space-4);font:inherit;font-size:15px;text-align:left;color:var(--sumi);background:var(--washi);border:1px solid var(--piedra);border-radius:var(--radius-card)}
+.version.is-sin-subir{border-style:dashed;border-color:var(--sumi)}
+button.version{min-height:var(--target-min);cursor:pointer}
+button.version:hover{border-color:var(--sumi)}
+.version.is-on{background:var(--lima);border-color:var(--sumi)}
+.version .ad-tag{margin-left:auto;white-space:nowrap;flex:none}
+.pagina{border:1px solid var(--sumi);border-radius:var(--radius-card);overflow:hidden;background:var(--washi)}
+.pagina__url{padding:8px var(--space-4);font-size:13px;color:var(--tinta-secundaria);background:var(--crema);border-bottom:1px solid var(--piedra);overflow-wrap:anywhere}
+.pagina__cuerpo{display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4)}
+.pagina__cuerpo h4{margin:0 0 var(--space-2);font-family:var(--font-display);font-size:20px;font-weight:500;letter-spacing:-.015em}
+.pagina__cuerpo .ad-tag{align-self:flex-start}
+.pagina__fila{display:grid;grid-template-columns:80px minmax(0,1fr);gap:var(--space-4);align-items:center;font-size:13px;color:var(--tinta-secundaria)}
+.pagina__extra{margin:var(--space-2) 0 0;font-size:14px;color:var(--tinta-secundaria)}
+.pagina__vacia{padding:var(--space-6) var(--space-4);font-size:14px;color:var(--tinta-suave)}
+.git__acciones{display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:center;margin-top:var(--space-6)}
+.git__estado{margin-top:var(--space-4)}
+.glosario{margin-top:var(--space-8)}
+.glosario .ad-tabla{margin-top:var(--space-4)}
+.glosario .ad-tabla table{min-width:560px}
+.glosario td{color:var(--tinta-secundaria)}
+.glosario td:first-child{font-weight:500;white-space:nowrap;color:var(--sumi)}
+@media (min-width:1100px){
+  .git{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);align-items:start}
+  .git__flecha{display:flex;flex-direction:column;align-items:center;gap:var(--space-2);align-self:center;font-size:13px;color:var(--tinta-secundaria)}
+  .git__flecha .ico{width:32px;height:16px}
+}
+
+/* 5. resultados: una lista tranquila, sin cajas */
+.grupo-prod{margin:var(--space-10) 0 var(--space-2);font-family:var(--font-display);font-size:15px;font-weight:500;color:var(--tinta-suave)}
+.grupo-prod:first-of-type{margin-top:0}
+.lista-prod{margin:0;padding:0;list-style:none;border-top:1px solid var(--piedra)}
+.prod{display:grid;grid-template-columns:minmax(160px,.6fr) minmax(0,1.6fr) minmax(112px,auto);gap:var(--space-2) var(--space-8);align-items:baseline;padding:var(--space-4) 0;border-bottom:1px solid var(--piedra)}
+.prod__n{font-family:var(--font-display);font-size:18px;font-weight:500;line-height:1.3;letter-spacing:-.01em;color:var(--sumi)}
+.prod__d{font-size:15px;color:var(--tinta-secundaria)}
+.prod .ad-estado{justify-self:end;min-height:0;padding:0;background:transparent;border-color:transparent;color:var(--tinta-suave);font-weight:400}
+.prod .ad-estado--sin{border-style:solid}
+.ad-cierre h2{max-width:24ch;font-size:clamp(32px,4.6vw,56px)}
+.ad-cierre .ad-btn{flex:none}
+
+@media (max-width:760px){
+  .prod{grid-template-columns:minmax(0,1fr);gap:4px}
+  .prod .ad-estado{justify-self:start;margin-top:var(--space-2)}
+}
+@media (max-width:640px){
+  .ad-nav__links{display:none}
+  .conexion{padding:var(--space-6) var(--space-4)}
+  .cx-tool{min-width:88px;padding:12px 10px}
+  .cx-tool .logo{display:none}
+  .cx-ia{min-width:64px;padding:var(--space-2)}
+  .cx-mcp{min-width:72px;padding:var(--space-2)}
+  .cx-tronco{width:var(--space-6)}
+  .git__col{padding:var(--space-4)}
+  .detalle{padding:var(--space-4)}
+}
+@media print{
+  .ad-nav,.controles,.cx-modos,.git__acciones,.skip-link{display:none}
+}
+  </style>
+  <link rel="icon" type="image/png" href="../assets/favicon-adcom.png">
+  <link rel="apple-touch-icon" href="../assets/ds/logos/apple-touch-icon.png">
+</head>
+<body>
+<a class="skip-link" href="#recorrido">Ir al recorrido</a>
+
+<!-- Logos de las herramientas: marcas de sus titulares, usadas solo para identificarlas. Monocromos, siguen el color del texto. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="l-persona" viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="4.3"/><path d="M3.5 21.5a8.5 8.5 0 0 1 17 0z"/></symbol>
+<symbol id="l-gmail" viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></symbol>
+<symbol id="l-claude" viewBox="0 0 24 24"><path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></symbol>
+<symbol id="l-github" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></symbol>
+<symbol id="l-meta" viewBox="0 0 24 24"><path d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/></symbol>
+<symbol id="l-googleads" viewBox="0 0 24 24"><path d="M3.9998 22.9291C1.7908 22.9291 0 21.1383 0 18.9293s1.7908-3.9998 3.9998-3.9998 3.9998 1.7908 3.9998 3.9998-1.7908 3.9998-3.9998 3.9998zm19.4643-6.0004L15.4632 3.072C14.3586 1.1587 11.9121.5028 9.9988 1.6074S7.4295 5.1585 8.5341 7.0718l8.0009 13.8567c1.1046 1.9133 3.5511 2.5679 5.4644 1.4646 1.9134-1.1046 2.568-3.5511 1.4647-5.4644zM7.5137 4.8438L1.5645 15.1484A4.5 4.5 0 0 1 4 14.4297c2.5597-.0075 4.6248 2.1585 4.4941 4.7148l3.2168-5.5723-3.6094-6.25c-.4499-.7793-.6322-1.6394-.5878-2.4784z"/></symbol>
+<symbol id="l-tiktok" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></symbol>
+</defs></svg>
+
+<header class="ad-nav">
+  <nav class="ad-nav__in" aria-label="Principal">
+    <a class="ad-marca" href="../index.html"><img src="../assets/ds/logos/adcom-mark.png" alt="Adcom" width="30" height="25"><i>Cómo trabajamos con IA</i></a>
+    <div class="ad-nav__links" id="nav-secciones">
+      <a href="#recorrido">Recorrido</a>
+      <a href="#conexiones">Conexiones</a>
+      <a href="#control">Control</a>
+      <a href="#versiones">Versiones</a>
+      <a href="#resultados">Resultados</a>
+    </div>
+  </nav>
+</header>
+
+<main id="contenido">
+  <section class="ad-hero" aria-labelledby="titulo">
+    <div class="ad-wrap">
+      <p class="ad-eyebrow">Cómo trabajamos con IA</p>
+      <h1 id="titulo"><span class="ad-ln">La IA trabaja.</span><span class="ad-ln">La <span class="ad-hl">persona</span> decide.</span></h1>
+      <p class="ad-lead">Así recorre una solicitud nuestro flujo, desde que alguien la pide hasta que el cliente abre su link. Escoge una situación y pulsa Reproducir.</p>
+      <div class="ad-hero__acciones">
+        <a class="ad-btn ad-btn--accent" href="#recorrido">Ver el recorrido</a>
+        <a class="ad-link" href="#resultados">Qué sale de este flujo</a>
+      </div>
+      <noscript><p class="ad-aviso"><span class="ad-aviso__k">Aviso</span>Esta guía es interactiva y funciona mejor con JavaScript activado. Sin él, verás el contenido de cada recorrido como una lista.</p></noscript>
+    </div>
+  </section>
+
+  <section class="ad-sec ad-sec--papel" aria-label="Tres ideas">
+    <div class="ad-wrap">
+      <ol class="ad-pasos ideas">
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">1</span><h3>La IA lee y propone</h3><p>Consulta correos, hojas y plataformas, analiza y sugiere qué hacer.</p></li>
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">2</span><h3>La persona decide</h3><p>Un cambio en una cuenta o un entregable para el cliente se aprueba antes de salir.</p></li>
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">3</span><h3>Todo queda guardado</h3><p>Cada versión y cada cambio se registran, y se puede volver atrás.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================ 1. RECORRIDO ============================ -->
+  <section class="ad-sec bloque" id="recorrido" aria-labelledby="t-recorrido">
+    <div class="ad-wrap">
+    <header class="ad-sec-cab ad-sec-cab--grande">
+      <p class="ad-eyebrow">Recorrido</p>
+      <h2 id="t-recorrido">Sigue una solicitud de punta a punta</h2>
+      <p class="ad-lead">Tres situaciones de ejemplo, con datos ficticios. En cada paso verás quién actúa (una persona, Gmail, Claude, las plataformas o GitHub) y cómo se ve ese momento.</p>
+    </header>
+
+    <div class="fila-chips situaciones" role="group" aria-label="Elige una situación">
+      <button class="ad-chip" type="button" data-esc="informe" aria-pressed="true">Un informe para un cliente</button>
+      <button class="ad-chip" type="button" data-esc="presupuesto" aria-pressed="false">Mover el presupuesto de una campaña</button>
+      <button class="ad-chip" type="button" data-esc="correo" aria-pressed="false">Una solicitud por correo</button>
+    </div>
+    <p class="situacion-desc" id="situacion-desc">Cuando un cliente pide por correo el informe del mes.</p>
+
+    <div class="recorrido">
+      <div class="controles" role="group" aria-label="Controles del recorrido">
+        <button class="ad-btn ad-btn--outline" type="button" id="b-ant"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg>Anterior</button>
+        <button class="ad-btn ad-btn--dark" type="button" id="b-play">
+          <svg class="ico ico--lleno" viewBox="0 0 16 16" aria-hidden="true" data-ico="play"><path d="M4 2.5v11l9-5.5z"/></svg>
+          <svg class="ico ico--lleno" viewBox="0 0 16 16" aria-hidden="true" data-ico="pausa" hidden><path d="M4 2.5h3v11H4zM9 2.5h3v11H9z"/></svg>
+          <svg class="ico" viewBox="0 0 16 16" aria-hidden="true" data-ico="repetir" hidden><path d="M13 8a5 5 0 1 1-1.6-3.7M13 2.5v3h-3"/></svg>
+          <span>Reproducir</span>
+        </button>
+        <button class="ad-btn ad-btn--outline" type="button" id="b-sig">Siguiente<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></button>
+        <div class="progreso"><span id="prog-texto">Paso 1 de 7</span><div class="ad-barra" aria-hidden="true"><span id="prog-barra" style="--v:14%"></span></div></div>
+      </div>
+
+      <div class="ad-lectura detalle">
+        <div class="detalle__txt" aria-live="polite" aria-atomic="true">
+          <div class="detalle__actor"><span class="detalle__logos" id="detalle-logos" aria-hidden="true"></span><span class="ad-lectura__k" id="detalle-k">Paso 1</span></div>
+          <p id="detalle-p"></p>
+          <p class="detalle__nota" id="detalle-n" hidden></p>
+        </div>
+        <div class="detalle__ej">
+          <span class="ad-tag ad-tag--line">Ejemplo con datos ficticios</span>
+          <div id="detalle-ej"></div>
+        </div>
+      </div>
+
+      <div class="tablero" id="tablero">
+        <span class="banda banda--persona" style="--r:1" aria-hidden="true"></span>
+        <span class="banda" style="--r:2" aria-hidden="true"></span>
+        <span class="banda" style="--r:3" aria-hidden="true"></span>
+        <span class="banda" style="--r:4" aria-hidden="true"></span>
+        <span class="banda" style="--r:5" aria-hidden="true"></span>
+        <div class="lane" style="--r:1" aria-hidden="true"><span class="lane__logos"><svg class="logo"><use href="#l-persona"/></svg></span>Personas</div>
+        <div class="lane" style="--r:2" aria-hidden="true"><span class="lane__logos"><svg class="logo"><use href="#l-gmail"/></svg></span>Gmail</div>
+        <div class="lane" style="--r:3" aria-hidden="true"><span class="lane__logos"><svg class="logo"><use href="#l-claude"/></svg></span>Claude</div>
+        <div class="lane" style="--r:4" aria-hidden="true"><span class="lane__logos lane__logos--3"><svg class="logo"><use href="#l-meta"/></svg><svg class="logo"><use href="#l-googleads"/></svg><svg class="logo"><use href="#l-tiktok"/></svg></span>Plataformas</div>
+        <div class="lane" style="--r:5" aria-hidden="true"><span class="lane__logos"><svg class="logo"><use href="#l-github"/></svg></span>GitHub</div>
+
+        <!-- Situación: informe -->
+        <div class="escenario" data-id="informe" data-cols="7" data-retorno="5>4" data-retorno-texto="Si no: se ajusta" data-desc="Cuando un cliente pide por correo el informe del mes.">
+          <h3 class="escenario__t">Un informe para un cliente</h3>
+          <p class="escenario__d">Cuando un cliente pide por correo el informe del mes.</p>
+          <ol class="ruta" role="list">
+            <li style="--c:1;--r:2" data-actor="gmail" data-quien="Gmail" data-verbo="Llega"><button class="celda" type="button"><span class="ad-n" aria-hidden="true">1</span><svg class="logo" aria-hidden="true"><use href="#l-gmail"/></svg><span class="celda__t">Llega el correo</span><span class="celda__m"><span class="celda__q">Gmail</span><span class="celda__v">Llega</span></span></button>
+              <p class="desc">El cliente pide el informe del mes por correo. Es el punto de partida del recorrido.</p>
+              <div class="ejemplo"><div class="ej"><div class="ej__cab"><svg class="logo" aria-hidden="true"><use href="#l-gmail"/></svg>Gmail · Bandeja de entrada</div><div class="ej__cuerpo"><p class="ej__linea"><span>De</span>Ana, del cliente de ejemplo</p><p class="ej__linea"><span>Asunto</span><b>Informe de octubre</b></p><p>Hola, ¿nos compartes el informe de resultados de octubre? Lo necesitamos para la reunión del jueves.</p></div></div></div></li>
+            <li style="--c:2;--r:1" data-actor="persona" data-quien="Personas" data-verbo="Pide"><button class="celda" type="button"><span class="ad-n" aria-hidden="true">2</span><svg class="logo" aria-hidden="true"><use href="#l-persona"/></svg><span class="celda__t">Pide a Claude</span><span class="celda__m"><span class="celda__q">Personas</span><span class="celda__v">Pide</span></span></button>
+              <p class="desc">Una persona del equipo le pide a Claude que prepare el informe. Ella define qué se necesita y para cuándo.</p>
+              <div class="ejemplo"><div class="ej"><div class="ej__cab"><svg class="logo" aria-hidden="true"><use href="#l-claude"/></svg>Conversación con Claude</div><div class="ej__cuerpo"><p class="ej__burbuja ej__burbuja--persona"><span class="ej__quien">Persona del equipo</span>Arma el informe de octubre del cliente de ejemplo y compáralo con septiembre.</p><p class="ej__burbuja"><span class="ej__quien">Claude</span>Listo. Consulto las plataformas y la bitácora del cliente, y te aviso cuando tenga un borrador.</p></div></div></div></li>
+            <li style="--c:3;--r:4" data-actor="plataformas" data-quien="Plataformas" data-verbo="Lee"><button class="celda" type="button"><span class="ad-n" aria-hidden="true">3</span><svg class="logo" aria-hidden="true"><use href="#l-meta"/></svg><span class="celda__t">Lee los resultados</span><span class="celda__m"><span class="celda__q">Plataformas</span><span class="celda__v">Lee</span></span></button>
+              <p class="desc">Claude consulta Meta, Google Ads y TikTok, además del perfil y la bitácora del cliente. Es solo lectura: no se cambia nada.</p>
+              <div class="ejemplo"><div class="ej"><div class="ej__cab"><span class="ej__logos"><svg class="logo" aria-hidden="true"><use href="#l-meta"/></svg><svg class="logo" aria-hidden="true"><use href="#l-googleads"/></svg><svg class="logo" aria-hidden="true"><use href="#l-tiktok"/></svg></span>Resultados leídos de las plataformas</div><div class="ej__cuerpo"><table class="ej__tabla"><thead><tr><th>Indicador</th><th class="valor">Septiembre</th><th class="valor">Octubre</th></tr></thead><tbody><tr><td>Inversión</td><td class="valor">$4,0 M</td><td class="valor">$4,0 M</td></tr><tr><td>Leads</td><td class="valor">262</td><td class="valor">310</td></tr><tr><td>Costo por lead</td><td class="valor">$15.300</td><td class="valor">$12.900</td></tr></tbody></table><p class="ej__nota">Solo lectura: nada se modifica en las cuentas.</p></div></div></div></li>
+            <li style="--c:4;--r:3" data-actor="claude" data-quien="Claude" data-verbo="Propone"><button class="celda" type="button"><span class="ad-n" aria-hidden="true">4</span><svg class="logo" aria-hidden="true"><use href="#l-claude"/></svg><span class="celda__t">Analiza y redacta</span><span class="celda__m"><span class="celda__q">Claude</span><span class="celda__v">Propone</span></span></button>
+              <p class="desc">Claude compara contra el periodo anterior, explica qué pasó y arma el informe como una página web.</p>
+              <div class="ejemplo"><div class="ej"><div class="ej__cab"><svg class="logo" aria-hidden="true"><use href="#l-claude"/></svg>Borrador del informe</div><div class="ej__cuerpo"><p class="ej__titulo">Resultados de octubre</p><p>Los <span class="ad-hl">leads subieron 18%</span> frente a septiembre y el costo por lead bajó de $15.300 a $12.900.</p><p>Recomendación: mantener la inversión en la campaña que más aportó.</p></div></div></div></li>
+            <li style="--c:5;--r:1" data-actor="persona" data-quien="Personas" data-verbo="Decide" data-decide><button class="celda" type="button"><span class="ad-n" aria-hidden="true">5</span><svg class="logo" aria-hidden="true"><use href="#l-persona"/></svg><span class="celda__t">Revisa y aprueba</span><span class="celda__m"><span class="celda__q">Personas</span><span class="celda__v">Decide</span></span></button>
+              <p class="desc">La persona valida cifras y mensajes. Si no está de acuerdo, el informe vuelve a Claude para ajustarse.</p>
+              <div class="ejemplo"><div class="ej"><div class="ej__cab"><svg class="logo" aria-hidden="true"><use href="#l-persona"/></svg>Revisión de la persona</div><div class="ej__cuerpo"><ul class="ej__lista"><li><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3.5 3.5L13 4.5"/></svg>Las cifras coinciden con las plataformas</li><li><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3.5 3.5L13 4.5"/></svg>El mensaje es el adecuado para este cliente</li><li><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3.5 3.5L13 4.5"/></svg>No hay datos de otros clientes</li></ul><p class="ej__burbuja ej__burbuja--persona"><span class="ej__quien">Persona del equipo</span>Cambia el título y publícalo.</p></div></div></div></li>
+            <li style="--c:6;--r:5" data-actor="github" data-quien="GitHub" data-verbo="Publica" data-impacto><button class="celda" type="button"><span class="ad-n" aria-hidden="true">6</span><svg class="logo" aria-hidden="true"><use href="#l-github"/></svg><span class="celda__t">Guarda y publica</span><span class="celda__m"><span class="celda__q">GitHub</span><span class="celda__v">Publica</span></span></button>
+              <p class="desc">Se revisa que no haya claves ni datos de otros clientes, se guarda la versión en GitHub y se publica con un link.</p>
+              <div class="ejemplo"><div class="ej"><div class="ej__cab"><svg class="logo" aria-hidden="true"><use href="#l-github"/></svg>GitHub · Repositorio del cliente</div><div class="ej__cuerpo"><p class="ej__linea"><span>Versión</span><span><code>informe-octubre</code> Versión final aprobada</span></p><p class="ej__linea"><span>Revisión</span>Sin claves ni datos de otros clientes</p><p class="ej__linea"><span>Link</span><code>enlace-del-cliente/informe-octubre</code></p></div></div></div></li>
+            <li style="--c:7;--r:2" data-actor="gmail" data-quien="Gmail" data-verbo="Envía" data-impacto><button class="celda" type="button"><span class="ad-n" aria-hidden="true">7</span><svg class="logo" aria-hidden="true"><use href="#l-gmail"/></svg><span class="celda__t">Envía el link</span><span class="celda__m"><span class="celda__q">Gmail</span><span class="celda__v">Envía</span></span></button>
+              <p class="desc">Claude deja listo el borrador de la respuesta y una persona la envía con el link. Los comentarios del cliente pueden iniciar una nueva solicitud.</p>
+              <div class="ejemplo"><div class="ej"><div class="ej__cab"><svg class="logo" aria-hidden="true"><use href="#l-gmail"/></svg>Gmail · Respuesta al cliente</div><div class="ej__cuerpo"><p class="ej__linea"><span>Para</span>Ana, del cliente de ejemplo</p><p>Hola Ana, aquí está el informe de octubre: <code>enlace-del-cliente/informe-octubre</code>. Cualquier ajuste me cuentas.</p><p class="ej__nota">Borrador preparado por Claude. Lo envía una persona del equipo.</p></div></div></div></li>
+          </ol>
+        </div>
+
+        <!-- Situación: presupuesto -->
+        <div class="escenario" data-id="presupuesto" data-cols="6" data-retorno="5>3" data-retorno-texto="Si no: se ajusta el plan" data-desc="Cuando hay que mover presupuesto hacia las campañas que mejor rinden. Aquí no solo se lee: también se modifica una cuenta real.">
+          <h3 class="escenario__t">Mover el presupuesto de una campaña</h3>
+          <p class="escenario__d">Cuando hay que mover presupuesto hacia las campañas que mejor rinden. Aquí no solo se lee: también se modifica una cuenta real.</p>
+          <ol class="ruta" role="list">
+            <li style="--c:1;--r:1" data-actor="persona" data-quien="Personas" data-verbo="Pide"><button class="celda" type="button"><span class="ad-n" aria-hidden="true">1</span><svg class="logo" aria-hidden="true"><use href="#l-persona"/></svg><span class="celda__t">Pide el ajuste</span><span class="celda__m"><span class="celda__q">Personas</span><span class="celda__v">Pide</span></span></button>
+              <p class="desc">Una persona del equipo pide mover presupuesto hacia las campañas que mejor rinden.</p>
+              <div class="ejemplo"><div class="ej"><div class="ej__cab"><svg class="logo" aria-hidden="true"><use href="#l-claude"/></svg>Conversación con Claude</div><div class="ej__cuerpo"><p class="ej__burbuja ej__burbuja--persona"><span class="ej__quien">Persona del equipo</span>Pasa presupuesto de las campañas que rinden menos a las que rinden mejor. El total del mes no cambia.</p><p class="ej__burbuja"><span class="ej__quien">Claude</span>Entendido. Reviso el gasto y los resultados de cada campaña.</p></div></div></div></li>
+            <li style="--c:2;--r:4" data-actor="plataformas" data-quien="Plataformas" data-verbo="Lee"><button class="celda" type="button"><span class="ad-n" aria-hidden="true">2</span><svg class="logo" aria-hidden="true"><use href="#l-meta"/></svg><span class="celda__t">Lee gasto y resultados</span><span class="celda__m"><span class="celda__q">Plataformas</span><span class="celda__v">Lee</span></span></button>
+              <p class="desc">Claude consulta la inversión y los resultados de cada campaña en las plataformas. Es solo lectura.</p>
+              <div class="ejemplo"><div class="ej"><div class="ej__cab"><span class="ej__logos"><svg class="logo" aria-hidden="true"><use href="#l-meta"/></svg><svg class="logo" aria-hidden="true"><use href="#l-googleads"/></svg><svg class="logo" aria-hidden="true"><use href="#l-tiktok"/></svg></span>Campañas del mes</div><div class="ej__cuerpo"><table class="ej__tabla"><thead><tr><th>Campaña</th><th class="valor">Presupuesto</th><th class="valor">Costo por lead</th></tr></thead><tbody><tr><td>A</td><td class="valor">$4,0 M</td><td class="valor">$18.500</td></tr><tr><td>B</td><td class="valor">$3,0 M</td><td class="valor">$12.000</td></tr><tr><td>C</td><td class="valor">$3,0 M</td><td class="valor">$9.800</td></tr></tbody></table><p class="ej__nota">Solo lectura: nada se modifica en las cuentas.</p></div></div></div></li>
+            <li style="--c:3;--r:3" data-actor="claude" data-quien="Claude" data-verbo="Propone"><button class="celda" type="button"><span class="ad-n" aria-hidden="true">3</span><svg class="logo" aria-hidden="true"><use href="#l-claude"/></svg><span class="celda__t">Propone un plan</span><span class="celda__m"><span class="celda__q">Claude</span><span class="celda__v">Propone</span></span></button>
+              <p class="desc">Claude calcula cuánto subir o bajar en cada campaña y explica por qué.</p>
+              <div class="ejemplo"><div class="ej"><div class="ej__cab"><svg class="logo" aria-hidden="true"><use href="#l-claude"/></svg>Propuesta de Claude</div><div class="ej__cuerpo"><p>Bajar la campaña A de $4,0 M a $2,5 M y subir la C de $3,0 M a $4,5 M. La B queda igual. El total sigue en $10,0 M.</p><p>Motivo: la C cuesta <span class="ad-hl">casi la mitad por lead</span> que la A.</p></div></div></div></li>
+            <li style="--c:4;--r:3" data-actor="claude" data-quien="Claude" data-verbo="Simula"><button class="celda" type="button"><span class="ad-n" aria-hidden="true">4</span><svg class="logo" aria-hidden="true"><use href="#l-claude"/></svg><span class="celda__t">Simula el cambio</span><span class="celda__m"><span class="celda__q">Claude</span><span class="celda__v">Simula</span></span></button>
+              <p class="desc">Con la herramienta de Adcom, Claude simula el cambio: muestra exactamente qué cambiaría, sin tocar la cuenta.</p>
+              <div class="ejemplo"><div class="ej"><div class="ej__cab"><svg class="logo" aria-hidden="true"><use href="#l-claude"/></svg>Simulación</div><div class="ej__cuerpo"><table class="ej__tabla"><thead><tr><th>Campaña</th><th class="valor">Antes</th><th class="valor">Después</th></tr></thead><tbody><tr><td>A</td><td class="valor">$4,0 M</td><td class="valor">$2,5 M</td></tr><tr><td>B</td><td class="valor">$3,0 M</td><td class="valor">$3,0 M</td></tr><tr><td>C</td><td class="valor">$3,0 M</td><td class="valor">$4,5 M</td></tr></tbody><tfoot><tr><td>Total</td><td class="valor">$10,0 M</td><td class="valor">$10,0 M</td></tr></tfoot></table><p class="ej__nota">Simulación: la cuenta sigue igual.</p></div></div></div></li>
+            <li style="--c:5;--r:1" data-actor="persona" data-quien="Personas" data-verbo="Decide" data-decide><button class="celda" type="button"><span class="ad-n" aria-hidden="true">5</span><svg class="logo" aria-hidden="true"><use href="#l-persona"/></svg><span class="celda__t">Aprueba o rechaza</span><span class="celda__m"><span class="celda__q">Personas</span><span class="celda__v">Decide</span></span></button>
+              <p class="desc">La persona revisa el detalle. Si no está de acuerdo, Claude ajusta el plan antes de aplicar nada.</p>
+              <div class="ejemplo"><div class="ej"><div class="ej__cab"><svg class="logo" aria-hidden="true"><use href="#l-persona"/></svg>Decisión de la persona</div><div class="ej__cuerpo"><p class="ej__burbuja ej__burbuja--persona"><span class="ej__quien">Persona del equipo</span>Apruebo. Aplícalo.</p><p class="ej__nota">Si dijera "deja la C en $4,0 M", Claude rehace el plan y se simula de nuevo.</p></div></div></div></li>
+            <li style="--c:6;--r:4" data-actor="plataformas" data-quien="Plataformas" data-verbo="Aplica" data-impacto><button class="celda" type="button"><span class="ad-n" aria-hidden="true">6</span><svg class="logo" aria-hidden="true"><use href="#l-googleads"/></svg><span class="celda__t">Aplica con respaldo</span><span class="celda__m"><span class="celda__q">Plataformas</span><span class="celda__v">Aplica</span></span></button>
+              <p class="desc">Solo con la aprobación, el cambio se aplica en las plataformas. Antes se guarda una copia para poder revertir y queda anotado en la bitácora del cliente.</p>
+              <div class="ejemplo"><div class="ej"><div class="ej__cab"><span class="ej__logos"><svg class="logo" aria-hidden="true"><use href="#l-meta"/></svg><svg class="logo" aria-hidden="true"><use href="#l-googleads"/></svg><svg class="logo" aria-hidden="true"><use href="#l-tiktok"/></svg></span>Cambio aplicado</div><div class="ej__cuerpo"><p class="ej__linea"><span>Campaña A</span>$4,0 M a $2,5 M</p><p class="ej__linea"><span>Campaña C</span>$3,0 M a $4,5 M</p><p class="ej__linea"><span>Respaldo</span>Copia guardada para poder revertir</p><p class="ej__linea"><span>Bitácora</span>Cambio anotado en el historial del cliente</p></div></div></div></li>
+          </ol>
+        </div>
+
+        <!-- Situación: correo -->
+        <div class="escenario" data-id="correo" data-cols="7" data-retorno="6>5" data-retorno-texto="Si no: se ajusta" data-desc="Cuando llega por correo una solicitud y hay que convertirla en una presentación.">
+          <h3 class="escenario__t">Una solicitud por correo</h3>
+          <p class="escenario__d">Cuando llega por correo una solicitud y hay que convertirla en una presentación.</p>
+          <ol class="ruta" role="list">
+            <li style="--c:1;--r:2" data-actor="gmail" data-quien="Gmail" data-verbo="Llega"><button class="celda" type="button"><span class="ad-n" aria-hidden="true">1</span><svg class="logo" aria-hidden="true"><use href="#l-gmail"/></svg><span class="celda__t">Llega la solicitud</span><span class="celda__m"><span class="celda__q">Gmail</span><span class="celda__v">Llega</span></span></button>
+              <p class="desc">Una solicitud llega por correo. Claude puede leerla desde Gmail.</p>
+              <div class="ejemplo"><div class="ej"><div class="ej__cab"><svg class="logo" aria-hidden="true"><use href="#l-gmail"/></svg>Gmail · Bandeja de entrada</div><div class="ej__cuerpo"><p class="ej__linea"><span>De</span>Ana, del cliente de ejemplo</p><p class="ej__linea"><span>Asunto</span><b>Presentación para el comité</b></p><p>Necesitamos una presentación con los resultados del trimestre para el comité del jueves.</p></div></div></div></li>
+            <li style="--c:2;--r:3" data-actor="claude" data-quien="Claude" data-verbo="Resume"><button class="celda" type="button"><span class="ad-n" aria-hidden="true">2</span><svg class="logo" aria-hidden="true"><use href="#l-claude"/></svg><span class="celda__t">Lee y resume</span><span class="celda__m"><span class="celda__q">Claude</span><span class="celda__v">Resume</span></span></button>
+              <p class="desc">Claude resume qué piden, para cuándo y qué falta por definir.</p>
+              <div class="ejemplo"><div class="ej"><div class="ej__cab"><svg class="logo" aria-hidden="true"><use href="#l-claude"/></svg>Resumen de Claude</div><div class="ej__cuerpo"><p class="ej__linea"><span>Piden</span>Presentación de resultados del trimestre</p><p class="ej__linea"><span>Plazo</span>El jueves</p><p class="ej__linea"><span>Falta</span><b>Qué campañas incluir</b></p></div></div></div></li>
+            <li style="--c:3;--r:1" data-actor="persona" data-quien="Personas" data-verbo="Decide" data-decide><button class="celda" type="button"><span class="ad-n" aria-hidden="true">3</span><svg class="logo" aria-hidden="true"><use href="#l-persona"/></svg><span class="celda__t">Define qué se hace</span><span class="celda__m"><span class="celda__q">Personas</span><span class="celda__v">Decide</span></span></button>
+              <p class="desc">La persona decide qué se hace, qué no y para cuándo. Claude no fija prioridades.</p>
+              <div class="ejemplo"><div class="ej"><div class="ej__cab"><svg class="logo" aria-hidden="true"><use href="#l-claude"/></svg>Conversación con Claude</div><div class="ej__cuerpo"><p class="ej__burbuja ej__burbuja--persona"><span class="ej__quien">Persona del equipo</span>Incluye solo las tres campañas principales. Es prioridad alta.</p></div></div></div></li>
+            <li style="--c:4;--r:4" data-actor="plataformas" data-quien="Plataformas" data-verbo="Lee"><button class="celda" type="button"><span class="ad-n" aria-hidden="true">4</span><svg class="logo" aria-hidden="true"><use href="#l-tiktok"/></svg><span class="celda__t">Trae las cifras</span><span class="celda__m"><span class="celda__q">Plataformas</span><span class="celda__v">Lee</span></span></button>
+              <p class="desc">Claude trae las cifras que necesita desde las plataformas. Es solo lectura.</p>
+              <div class="ejemplo"><div class="ej"><div class="ej__cab"><span class="ej__logos"><svg class="logo" aria-hidden="true"><use href="#l-meta"/></svg><svg class="logo" aria-hidden="true"><use href="#l-googleads"/></svg><svg class="logo" aria-hidden="true"><use href="#l-tiktok"/></svg></span>Leads del trimestre</div><div class="ej__cuerpo"><table class="ej__tabla"><thead><tr><th>Mes</th><th class="valor">Leads</th></tr></thead><tbody><tr><td>Julio</td><td class="valor">280</td></tr><tr><td>Agosto</td><td class="valor">295</td></tr><tr><td>Septiembre</td><td class="valor">310</td></tr></tbody></table><p class="ej__nota">Solo lectura: nada se modifica en las cuentas.</p></div></div></div></li>
+            <li style="--c:5;--r:3" data-actor="claude" data-quien="Claude" data-verbo="Redacta"><button class="celda" type="button"><span class="ad-n" aria-hidden="true">5</span><svg class="logo" aria-hidden="true"><use href="#l-claude"/></svg><span class="celda__t">Arma el borrador</span><span class="celda__m"><span class="celda__q">Claude</span><span class="celda__v">Redacta</span></span></button>
+              <p class="desc">Claude prepara el borrador de la presentación con la información del cliente.</p>
+              <div class="ejemplo"><div class="ej"><div class="ej__cab"><svg class="logo" aria-hidden="true"><use href="#l-claude"/></svg>Borrador de la presentación</div><div class="ej__cuerpo"><p class="ej__titulo">8 láminas</p><p>Resumen, las tres campañas, comparación con el trimestre anterior y próximos pasos.</p><p>En el trimestre, los <span class="ad-hl">leads crecieron 11%</span> de julio a septiembre.</p></div></div></div></li>
+            <li style="--c:6;--r:1" data-actor="persona" data-quien="Personas" data-verbo="Decide" data-decide><button class="celda" type="button"><span class="ad-n" aria-hidden="true">6</span><svg class="logo" aria-hidden="true"><use href="#l-persona"/></svg><span class="celda__t">Revisa y ajusta</span><span class="celda__m"><span class="celda__q">Personas</span><span class="celda__v">Decide</span></span></button>
+              <p class="desc">La persona corrige, agrega criterio y aprueba. Si falta algo, el borrador vuelve a Claude.</p>
+              <div class="ejemplo"><div class="ej"><div class="ej__cab"><svg class="logo" aria-hidden="true"><use href="#l-claude"/></svg>Conversación con Claude</div><div class="ej__cuerpo"><p class="ej__burbuja ej__burbuja--persona"><span class="ej__quien">Persona del equipo</span>Cambia el título de la lámina 3 y suma una conclusión. Lo demás está bien.</p></div></div></div></li>
+            <li style="--c:7;--r:2" data-actor="gmail" data-quien="Gmail" data-verbo="Envía" data-impacto><button class="celda" type="button"><span class="ad-n" aria-hidden="true">7</span><svg class="logo" aria-hidden="true"><use href="#l-gmail"/></svg><span class="celda__t">Responde con el archivo</span><span class="celda__m"><span class="celda__q">Gmail</span><span class="celda__v">Envía</span></span></button>
+              <p class="desc">La presentación final queda guardada y se responde por correo. La envía una persona.</p>
+              <div class="ejemplo"><div class="ej"><div class="ej__cab"><svg class="logo" aria-hidden="true"><use href="#l-gmail"/></svg>Gmail · Respuesta al cliente</div><div class="ej__cuerpo"><p class="ej__linea"><span>Para</span>Ana, del cliente de ejemplo</p><p>Hola Ana, adjunto la presentación para el comité del jueves. Quedo atento a ajustes.</p><p class="ej__nota">Borrador preparado por Claude. Lo envía una persona del equipo.</p></div></div></div></li>
+          </ol>
+        </div>
+
+        <svg class="hilos" id="hilos" aria-hidden="true" focusable="false"></svg>
+      </div>
+
+      <ul class="ad-leyenda leyenda" aria-label="Cómo leer el recorrido">
+        <li><i style="--c:var(--lima)"></i>Paso actual</li>
+        <li class="leyenda__banda"><i style="--c:var(--crema)"></i>Franja crema: decide una persona</li>
+        <li><i class="grueso" style="--c:var(--papel)"></i>Cambia algo real</li>
+        <li><i class="rayas"></i>Camino si no se aprueba</li>
+      </ul>
+    </div>
+    </div>
+  </section>
+
+  <!-- =========================== 2. CONEXIONES =========================== -->
+  <section class="ad-sec bloque ad-sec--crema" id="conexiones" aria-labelledby="t-conexiones">
+    <div class="ad-wrap">
+    <header class="ad-sec-cab ad-sec-cab--grande">
+      <p class="ad-eyebrow">Conexiones</p>
+      <h2 id="t-conexiones">Cómo la IA llega a nuestras <span class="ad-hl">herramientas</span></h2>
+      <p class="ad-lead">Para leer una campaña o un correo, la IA necesita entrar a esas herramientas. Hay dos formas, y usamos las dos según la herramienta.</p>
+    </header>
+
+    <div class="fila-chips cx-modos" role="group" aria-label="Elige una forma de conexión">
+      <button class="ad-chip" type="button" data-modo-btn="api" aria-pressed="true">Llave propia (API)</button>
+      <button class="ad-chip" type="button" data-modo-btn="mcp" aria-pressed="false">Enchufe universal (MCP)</button>
+    </div>
+
+    <div class="conexion anim" id="conexion" data-modo="api" role="img" aria-label="Esquema: con la llave propia, la IA se conecta por separado a Meta, Google Ads y TikTok, cada una con su llave. Con el enchufe universal, usa un solo conector estándar para las tres.">
+      <div class="cx-ia"><svg class="logo" aria-hidden="true"><use href="#l-claude"/></svg><strong>IA</strong><span>Claude</span></div>
+      <span class="cx-tronco solo-mcp" aria-hidden="true"></span>
+      <div class="cx-mcp solo-mcp"><strong>MCP</strong><span>conector estándar</span></div>
+      <span class="cx-hilo" style="--r:1" aria-hidden="true"><i class="cx-llave solo-api">llave A</i></span><span class="cx-tool" style="--r:1"><svg class="logo" aria-hidden="true"><use href="#l-meta"/></svg>Meta</span>
+      <span class="cx-hilo" style="--r:2" aria-hidden="true"><i class="cx-llave solo-api">llave B</i></span><span class="cx-tool" style="--r:2"><svg class="logo" aria-hidden="true"><use href="#l-googleads"/></svg>Google Ads</span>
+      <span class="cx-hilo" style="--r:3" aria-hidden="true"><i class="cx-llave solo-api">llave C</i></span><span class="cx-tool" style="--r:3"><svg class="logo" aria-hidden="true"><use href="#l-tiktok"/></svg>TikTok</span>
+    </div>
+
+    <div class="cx-textos">
+      <article data-modo-txt="api">
+        <h3 class="sub">Una llave propia para cada herramienta</h3>
+        <dl class="ad-ficha">
+          <div><dt>Como si fuera</dt><dd>La llave de una oficina: abre esa puerta y ninguna otra.</dd></div>
+          <div><dt>Quién la prepara</dt><dd>Nosotros, dentro de cada plataforma, con los permisos que decidimos.</dd></div>
+          <div><dt>Lo bueno</dt><dd>Control fino sobre qué puede hacer la IA en esa cuenta.</dd></div>
+          <div><dt>Lo que hay que cuidar</dt><dd>Cada herramienta se conecta por separado y cada llave se guarda con seguridad.</dd></div>
+        </dl>
+      </article>
+      <article data-modo-txt="mcp">
+        <h3 class="sub">Un enchufe estándar para muchas herramientas</h3>
+        <dl class="ad-ficha">
+          <div><dt>Como si fuera</dt><dd>El cargador USB-C: un mismo conector sirve para muchos aparatos.</dd></div>
+          <div><dt>Quién lo prepara</dt><dd>La herramienta publica su conector y nosotros lo autorizamos.</dd></div>
+          <div><dt>Lo bueno</dt><dd>Conectar una herramienta nueva es rápido y se hace siempre de la misma forma.</dd></div>
+          <div><dt>Lo que hay que cuidar</dt><dd>Autorizar solo lo necesario: cada conector decide qué deja ver y tocar.</dd></div>
+        </dl>
+      </article>
+      <div class="ad-lectura cx-aviso">
+        <span class="ad-lectura__k">Lo que no cambia</span>
+        <p>Con cualquiera de las dos, <span class="ad-hl">los permisos los decidimos nosotros</span>: algunas conexiones solo leen y otras también pueden modificar. La IA solo ve y toca lo que se le habilitó.</p>
+      </div>
+    </div>
+
+    <div class="herr">
+      <h3 class="sub">Cada herramienta tiene su sentido</h3>
+      <p class="sub-p">Unas alimentan a la IA, otras van y vienen, y otras reciben lo que se produce. Toca una para ver qué hacemos con ella.</p>
+      <div class="herr__grupos">
+        <div class="herr__g">
+          <h4><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h12M10 4l4 4-4 4"/></svg>Entra a la IA</h4>
+          <p>La IA las lee para entender el pedido.</p>
+          <ul>
+            <li><button class="ad-chip" type="button" aria-pressed="false" data-herr data-grupo="Entra a la IA" data-texto="Aquí llegan las solicitudes. La IA las lee y propone qué hacer; la persona decide.">Gmail</button></li>
+            <li><button class="ad-chip" type="button" aria-pressed="false" data-herr data-grupo="Entra a la IA" data-texto="Fechas, reuniones y entregas. La IA las usa para ubicar plazos y compromisos.">Calendar</button></li>
+            <li><button class="ad-chip" type="button" aria-pressed="false" data-herr data-grupo="Entra a la IA" data-texto="Metas, fuentes de datos y seguimientos. De ahí lee la IA las cifras que no están en las plataformas.">Hojas de cálculo</button></li>
+            <li><button class="ad-chip" type="button" aria-pressed="false" data-herr data-grupo="Entra a la IA" data-texto="Briefs y material que el cliente ya compartió. Sirve de contexto para todo lo que se produce.">Documentos y presentaciones</button></li>
+          </ul>
+        </div>
+        <div class="herr__g">
+          <h4><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 5h12M10 1l4 4-4 4M14 11H2m4 4-4-4 4-4"/></svg>Va y viene</h4>
+          <p>La IA lee y, con aprobación, también puede modificar.</p>
+          <ul>
+            <li><button class="ad-chip" type="button" aria-pressed="false" data-herr data-grupo="Va y viene" data-texto="La IA lee resultados y, con aprobación, también puede aplicar cambios en campañas y anuncios.">Meta</button></li>
+            <li><button class="ad-chip" type="button" aria-pressed="false" data-herr data-grupo="Va y viene" data-texto="Lee resultados, propone cambios de presupuesto y de palabras clave, y los aplica solo con aprobación.">Google Ads</button></li>
+            <li><button class="ad-chip" type="button" aria-pressed="false" data-herr data-grupo="Va y viene" data-texto="Lee resultados y, con aprobación, puede cargar o ajustar anuncios.">TikTok</button></li>
+            <li><button class="ad-chip" type="button" aria-pressed="false" data-herr data-grupo="Va y viene" data-texto="Compra programática: se leen el gasto y los resultados, y se coordinan los cambios.">DSP</button></li>
+          </ul>
+        </div>
+        <div class="herr__g">
+          <h4><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h12M10 4l4 4-4 4"/></svg>Sale de la IA</h4>
+          <p>Lo que la IA ayuda a producir.</p>
+          <ul>
+            <li><button class="ad-chip" type="button" aria-pressed="false" data-herr data-grupo="Sale de la IA" data-texto="Páginas web con los resultados de cada cliente, cada una con su propio link.">Informes en HTML</button></li>
+            <li><button class="ad-chip" type="button" aria-pressed="false" data-herr data-grupo="Sale de la IA" data-texto="Presentaciones armadas con datos reales y con la imagen de Adcom.">Presentaciones</button></li>
+            <li><button class="ad-chip" type="button" aria-pressed="false" data-herr data-grupo="Sale de la IA" data-texto="Pequeños programas que automatizan una tarea que se repite.">Scripts</button></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ad-lectura herr__det" aria-live="polite">
+        <span class="ad-lectura__k" id="herr-k">Elige una herramienta</span>
+        <p id="herr-t">Cada una cumple un papel distinto en el flujo.</p>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- ============================= 3. CONTROL ============================= -->
+  <section class="ad-sec bloque ad-sec--papel" id="control" aria-labelledby="t-control">
+    <div class="ad-wrap">
+    <header class="ad-sec-cab ad-sec-cab--grande">
+      <p class="ad-eyebrow">Control</p>
+      <h2 id="t-control">Más impacto, más control humano</h2>
+      <p class="ad-lead">Un recorrido tiene cinco momentos. Mientras más impacto tiene la acción, más pesa la decisión de una persona. Elige un momento para ver quién hace qué.</p>
+    </header>
+
+    <div class="ad-grid niveles" role="group" aria-label="Momentos del recorrido">
+      <button class="ad-card" type="button" data-nivel-btn="1" aria-pressed="true"><span class="ad-card__n">Impacto bajo</span><span class="ad-card__t">Leer</span></button>
+      <button class="ad-card" type="button" data-nivel-btn="2" aria-pressed="false"><span class="ad-card__n">Impacto bajo</span><span class="ad-card__t">Proponer</span></button>
+      <button class="ad-card" type="button" data-nivel-btn="3" aria-pressed="false"><span class="ad-card__n">Impacto medio</span><span class="ad-card__t">Simular</span></button>
+      <button class="ad-card" type="button" data-nivel-btn="4" aria-pressed="false"><span class="ad-card__n">Impacto alto</span><span class="ad-card__t">Ejecutar</span></button>
+      <button class="ad-card" type="button" data-nivel-btn="5" aria-pressed="false"><span class="ad-card__n">Impacto alto</span><span class="ad-card__t">Publicar</span></button>
+    </div>
+
+    <div class="impacto" aria-hidden="true">
+      <ol class="ad-barra-apilada" id="impacto"><li></li><li></li><li></li><li></li><li></li></ol>
+      <div class="impacto__ejes"><span>Impacto bajo</span><span>Impacto alto</span></div>
+    </div>
+
+    <div class="nivel-pan" data-nivel-pan="1" aria-live="polite">
+      <h3 class="sub">Leer: consultar sin cambiar nada</h3>
+      <dl class="ad-ficha">
+        <div><dt>Qué hace la IA</dt><dd>Consulta resultados, correos y hojas.</dd></div>
+        <div><dt>Qué hace la persona</dt><dd>Pide la información y define qué le interesa saber.</dd></div>
+        <div><dt>Qué queda de respaldo</dt><dd>Nada que revertir: no se modificó ninguna cuenta.</dd></div>
+      </dl>
+    </div>
+    <div class="nivel-pan" data-nivel-pan="2">
+      <h3 class="sub">Proponer: recomendar, no actuar</h3>
+      <dl class="ad-ficha">
+        <div><dt>Qué hace la IA</dt><dd>Analiza y recomienda: qué ajustar, cuánto mover, qué pieza pausar.</dd></div>
+        <div><dt>Qué hace la persona</dt><dd>Evalúa si la propuesta tiene sentido para ese cliente.</dd></div>
+        <div><dt>Qué queda de respaldo</dt><dd>Es una propuesta, no una acción: todavía no cambió nada.</dd></div>
+      </dl>
+    </div>
+    <div class="nivel-pan" data-nivel-pan="3">
+      <h3 class="sub">Simular: ver el cambio antes de hacerlo</h3>
+      <dl class="ad-ficha">
+        <div><dt>Qué hace la IA</dt><dd>Muestra con precisión qué cambiaría: cuentas, montos y fechas.</dd></div>
+        <div><dt>Qué hace la persona</dt><dd>Revisa el detalle y detecta lo que no cuadra.</dd></div>
+        <div><dt>Qué queda de respaldo</dt><dd>La cuenta sigue igual: una simulación no modifica nada.</dd></div>
+      </dl>
+    </div>
+    <div class="nivel-pan" data-nivel-pan="4">
+      <h3 class="sub">Ejecutar: cambiar algo real, con aprobación</h3>
+      <dl class="ad-ficha">
+        <div><dt>Qué hace la IA</dt><dd>Aplica el cambio solo cuando recibe la orden explícita de hacerlo.</dd></div>
+        <div><dt>Qué hace la persona</dt><dd>Aprueba o rechaza. Sin su aprobación no se aplica.</dd></div>
+        <div><dt>Qué queda de respaldo</dt><dd>Una copia previa para revertir y una nota en la bitácora del cliente.</dd></div>
+      </dl>
+    </div>
+    <div class="nivel-pan" data-nivel-pan="5">
+      <h3 class="sub">Publicar: lo que llega al cliente</h3>
+      <dl class="ad-ficha">
+        <div><dt>Qué hace la IA</dt><dd>Revisa que no haya claves ni datos de otros clientes y sube el entregable.</dd></div>
+        <div><dt>Qué hace la persona</dt><dd>Valida el contenido y envía el link al cliente.</dd></div>
+        <div><dt>Qué queda de respaldo</dt><dd>Cada versión queda guardada y se puede volver a una anterior.</dd></div>
+      </dl>
+    </div>
+    </div>
+  </section>
+
+  <!-- ============================ 4. VERSIONES ============================ -->
+  <section class="ad-sec bloque" id="versiones" aria-labelledby="t-versiones">
+    <div class="ad-wrap">
+    <header class="ad-sec-cab ad-sec-cab--grande">
+      <p class="ad-eyebrow">Versiones</p>
+      <h2 id="t-versiones">Todo queda guardado y se puede volver atrás</h2>
+      <p class="ad-lead">Los entregables viven en un repositorio: la carpeta de un proyecto con todo su historial. Pruébalo tú: guarda una versión, súbela y publícala.</p>
+    </header>
+
+    <div class="git" id="git">
+      <div class="git__col">
+        <h3>Mi computador</h3>
+        <p class="git__s">Aquí se trabaja y se guardan versiones.</p>
+        <ol class="versiones" id="v-local" aria-live="polite"></ol>
+      </div>
+      <div class="git__flecha" aria-hidden="true"><svg class="ico" viewBox="0 0 32 16"><path d="M2 8h26M23 3l5 5-5 5"/></svg><span>Subir</span></div>
+      <div class="git__col">
+        <h3>GitHub</h3>
+        <p class="git__s">La copia central del equipo. Cuando hay una página publicada, toca una versión para mostrarla.</p>
+        <ol class="versiones" id="v-remoto"></ol>
+      </div>
+      <div class="git__flecha" aria-hidden="true"><svg class="ico" viewBox="0 0 32 16"><path d="M2 8h26M23 3l5 5-5 5"/></svg><span>Publicar</span></div>
+      <div class="git__col">
+        <h3>Página del cliente</h3>
+        <p class="git__s">Lo que ve quien abre el link.</p>
+        <div class="pagina" id="pagina">
+          <div class="pagina__url" id="pagina-url">Todavía no hay una página publicada</div>
+          <div class="pagina__vacia" id="pagina-vacia">Cuando publiques, aquí aparecerá el informe.</div>
+          <div class="pagina__cuerpo" id="pagina-cuerpo" hidden>
+            <h4 id="p-titulo"></h4>
+            <div class="pagina__fila"><span>Alcance</span><div class="ad-barra" id="p-b1" aria-hidden="true"><span></span></div></div>
+            <div class="pagina__fila"><span>Clics</span><div class="ad-barra" id="p-b2" aria-hidden="true"><span></span></div></div>
+            <div class="pagina__fila"><span>Contactos</span><div class="ad-barra" id="p-b3" aria-hidden="true"><span></span></div></div>
+            <p class="pagina__extra" id="p-extra"></p>
+            <span class="ad-tag ad-tag--line" id="p-version"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="git__acciones" role="group" aria-label="Acciones de ejemplo">
+      <button class="ad-btn ad-btn--accent" type="button" id="g-guardar">Guardar versión</button>
+      <button class="ad-btn ad-btn--outline" type="button" id="g-subir" disabled>Subir a GitHub</button>
+      <button class="ad-btn ad-btn--outline" type="button" id="g-publicar" disabled>Publicar</button>
+      <button class="btn-texto" type="button" id="g-reiniciar">Empezar de cero</button>
+    </div>
+    <div class="ad-lectura git__estado" aria-live="polite">
+      <span class="ad-lectura__k">Qué acaba de pasar</span>
+      <p id="g-estado">Empieza guardando una versión. Es como Guardar como, pero con una nota de qué cambió.</p>
+    </div>
+
+    <details class="ad-datos glosario">
+      <summary>Ver el glosario en una línea</summary>
+      <div class="ad-tabla">
+        <table>
+          <caption>Los términos, con su equivalente cotidiano</caption>
+          <thead><tr><th>Término</th><th>Qué es</th><th>Es como</th></tr></thead>
+          <tbody>
+            <tr><td>Repositorio</td><td>La carpeta del proyecto, con todo su historial.</td><td>Una carpeta compartida con memoria.</td></tr>
+            <tr><td>Commit</td><td>Guardar una versión con una nota de qué cambió.</td><td>Guardar como, con un comentario.</td></tr>
+            <tr><td>Push</td><td>Subir mis versiones a GitHub.</td><td>Sincronizar con la nube.</td></tr>
+            <tr><td>Pull y fetch</td><td>Traer lo último que subió el equipo.</td><td>Actualizar mi copia.</td></tr>
+            <tr><td>GitHub</td><td>El servidor donde vive la copia central.</td><td>El Drive del código.</td></tr>
+            <tr><td>GitHub Pages</td><td>Publica un archivo HTML como página web.</td><td>Un link para compartir un documento.</td></tr>
+            <tr><td>Público o privado</td><td>Define quién puede ver un repositorio.</td><td>Los permisos al compartir.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+    </div>
+  </section>
+
+  <!-- ============================ 5. RESULTADOS ============================ -->
+  <section class="ad-sec bloque ad-sec--papel" id="resultados" aria-labelledby="t-resultados">
+    <div class="ad-wrap">
+    <header class="ad-sec-cab ad-sec-cab--grande">
+      <p class="ad-eyebrow">Resultados</p>
+      <h2 id="t-resultados">Lo que sale de <span class="ad-hl">este flujo</span></h2>
+      <p class="ad-lead">Algunos productos ya funcionan y otros son ideas por priorizar con cada área.</p>
+    </header>
+
+    <h3 class="grupo-prod">Clientes y mercado</h3>
+    <ul class="lista-prod">
+      <li class="prod"><span class="prod__n">Informes digitales</span><span class="prod__d">Páginas web con los resultados de cada cliente, cada una con su propio link.</span><span class="ad-estado ad-estado--ok">Ya existe</span></li>
+      <li class="prod"><span class="prod__n">Página web de Adcom</span><span class="prod__d">La cara pública de la agencia: quiénes somos, qué hacemos y casos.</span><span class="ad-estado ad-estado--sin">Idea</span></li>
+    </ul>
+
+    <h3 class="grupo-prod">Todas las áreas</h3>
+    <ul class="lista-prod">
+      <li class="prod"><span class="prod__n">Biblioteca de documentos</span><span class="prod__d">Framework, banco de formatos, playbook creativo y tableros del área digital.</span><span class="ad-estado ad-estado--ok">Ya existe</span></li>
+      <li class="prod"><span class="prod__n">Gestor de tareas</span><span class="prod__d">Tareas, notas y recordatorios conectados a la bitácora de cada cliente.</span><span class="ad-estado ad-estado--ok">Ya existe</span></li>
+      <li class="prod"><span class="prod__n">Intranet</span><span class="prod__d">Un solo lugar para llegar a las herramientas de cada área.</span><span class="ad-estado ad-estado--sin">Idea</span></li>
+    </ul>
+
+    <h3 class="grupo-prod">Digital</h3>
+    <ul class="lista-prod">
+      <li class="prod"><span class="prod__n">Media Bridge</span><span class="prod__d">Consultar, simular y aplicar cambios de pauta en Meta, Google Ads, LinkedIn y TikTok.</span><span class="ad-estado ad-estado--ok">Ya existe</span></li>
+      <li class="prod"><span class="prod__n">Alertas de campañas</span><span class="prod__d">Avisos automáticos cuando una campaña cruza una regla definida, como el gasto o el costo.</span><span class="ad-estado ad-estado--ok">Ya existe</span></li>
+      <li class="prod"><span class="prod__n">Tableros de pauta</span><span class="prod__d">Inversión y resultados por cliente, para leer de un vistazo.</span><span class="ad-estado ad-estado--ok">Ya existe</span></li>
+      <li class="prod"><span class="prod__n">Métodos de trabajo</span><span class="prod__d">El framework documenta cómo se opera, qué se delega y quién aprueba.</span><span class="ad-estado ad-estado--ok">Ya existe</span></li>
+    </ul>
+
+    <h3 class="grupo-prod">Audiovisual</h3>
+    <ul class="lista-prod">
+      <li class="prod"><span class="prod__n">Generador de video</span><span class="prod__d">Piezas de video con IA a partir de un guion, con voz y estándares de marca.</span><span class="ad-estado ad-estado--parcial">En desarrollo</span></li>
+    </ul>
+
+    <h3 class="grupo-prod">Ventas</h3>
+    <ul class="lista-prod">
+      <li class="prod"><span class="prod__n">Propuestas comerciales</span><span class="prod__d">Presentaciones armadas con datos reales de la cuenta.</span><span class="ad-estado ad-estado--sin">Idea</span></li>
+      <li class="prod"><span class="prod__n">Casos de éxito</span><span class="prod__d">Resultados de campañas convertidos en material para nuevos clientes.</span><span class="ad-estado ad-estado--sin">Idea</span></li>
+    </ul>
+
+    <h3 class="grupo-prod">Discover</h3>
+    <ul class="lista-prod">
+      <li class="prod"><span class="prod__n">Por definir con el área</span><span class="prod__d">Espacio para las ideas de Discover.</span><span class="ad-estado ad-estado--na">Por definir</span></li>
+    </ul>
+
+    </div>
+  </section>
+
+  <section class="ad-sec ad-sec--oscuro ad-cierre" aria-labelledby="t-cierre">
+    <div class="ad-wrap ad-cierre__in">
+      <div>
+        <p class="ad-eyebrow ad-eyebrow--dark">En una frase</p>
+        <h2 id="t-cierre">La persona pide, la IA trabaja, la persona decide, y todo queda guardado para poder volver atrás.</h2>
+      </div>
+      <a class="ad-btn ad-btn--accent" href="../index.html">Volver a los documentos</a>
+    </div>
+  </section>
+</main>
+
+<footer class="ad-foot">
+  <div class="ad-foot__in">
+    <span>Adcom · Cómo trabajamos con IA</span>
+    <span>Documento interno · Los logos pertenecen a sus titulares y solo identifican las herramientas</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var ancho=window.matchMedia('(min-width:1200px)');
+var NS='http://www.w3.org/2000/svg';
+
+/* ------------------------------ 1. recorrido ------------------------------ */
+var tablero=$('#tablero'), svg=$('#hilos');
+var detK=$('#detalle-k'), detP=$('#detalle-p'), detN=$('#detalle-n'), detLogos=$('#detalle-logos'), detEj=$('#detalle-ej');
+var bAnt=$('#b-ant'), bSig=$('#b-sig'), bPlay=$('#b-play');
+var barra=$('#prog-barra'), progT=$('#prog-texto'), descSit=$('#situacion-desc');
+var chipsEsc=$$('[data-esc]'), escenarios=$$('.escenario',tablero);
+var esc=null, paso=0, timer=null, jugando=false, raf=0, finAnim=null;
+
+var LOGOS={persona:['persona'],gmail:['gmail'],claude:['claude'],plataformas:['meta','googleads','tiktok'],github:['github']};
+var NOTA_DECIDE='Aquí decide una persona. Sin su aprobación el recorrido no avanza.';
+var NOTA_IMPACTO='Este paso cambia algo real. Por eso llega siempre después de una aprobación.';
+
+function crear(n,a){var e=document.createElementNS(NS,n);for(var k in a){e.setAttribute(k,a[k])}return e}
+function celdas(){return $$('.ruta > li',esc)}
+function mostrarEl(el,ver){if(ver){el.removeAttribute('hidden')}else{el.setAttribute('hidden','')}}
+function logosHtml(actor){
+  return (LOGOS[actor]||[]).map(function(l){return '<svg class="logo" aria-hidden="true"><use href="#l-'+l+'"/></svg>'}).join('');
+}
+
+function marcador(id,clase){
+  var m=crear('marker',{id:id,'class':clase,viewBox:'0 0 10 10',refX:'9',refY:'5',markerWidth:'8',markerHeight:'8',orient:'auto'});
+  m.appendChild(crear('path',{d:'M0 1L9 5L0 9z'}));
+  return m;
+}
+
+function trazar(animar){
+  if(!ancho.matches){svg.replaceChildren();return}
+  var lis=celdas(), tb=tablero.getBoundingClientRect();
+  var R=lis.map(function(li){var r=$('.celda',li).getBoundingClientRect();return{l:r.left-tb.left,r:r.right-tb.left,t:r.top-tb.top,b:r.bottom-tb.top}});
+  svg.setAttribute('width',tb.width); svg.setAttribute('height',tb.height);
+  svg.replaceChildren();
+  var defs=crear('defs',{});
+  defs.appendChild(marcador('punta-hecha','punta-hecha'));
+  defs.appendChild(marcador('punta-falta','punta-falta'));
+  defs.appendChild(marcador('punta-vuelta','punta-vuelta'));
+  svg.appendChild(defs);
+
+  var tramo=null;
+  for(var i=0;i<R.length-1;i++){
+    var a=R[i], b=R[i+1], y1=(a.t+a.b)/2, y2=(b.t+b.b)/2, x1=a.r, x2=b.l, xm=(x1+x2)/2;
+    var d=Math.abs(y1-y2)<1?('M'+x1+' '+y1+'H'+x2):('M'+x1+' '+y1+'H'+xm+'V'+y2+'H'+x2);
+    var hecho=i<paso, esActual=(i===paso-1);
+    var p=crear('path',{d:d,'class':'hilo '+(hecho?'hilo--hecho':'hilo--falta')});
+    if(!(esActual&&animar)) p.setAttribute('marker-end','url(#'+(hecho?'punta-hecha':'punta-falta')+')');
+    svg.appendChild(p);
+    if(esActual) tramo=p;
+  }
+
+  /* el camino de vuelta aparece solo cuando la persona está decidiendo */
+  var ret=esc.getAttribute('data-retorno');
+  if(ret){
+    var par=ret.split('>'), f=+par[0]-1, t=+par[1]-1;
+    if(paso===f && R[f] && R[t]){
+      var A=R[f], B=R[t], xa=(A.l+A.r)/2, xb=(B.l+B.r)/2, yU=Math.min(A.t,B.t)-36;
+      svg.appendChild(crear('path',{d:'M'+xa+' '+A.t+'V'+yU+'H'+xb+'V'+(B.t-2),'class':'hilo hilo--vuelta','marker-end':'url(#punta-vuelta)'}));
+      var tx=crear('text',{x:(xa+xb)/2,y:yU-8,'class':'hilo__txt','text-anchor':'middle'});
+      tx.textContent=esc.getAttribute('data-retorno-texto')||'Si no: se ajusta';
+      svg.appendChild(tx);
+    }
+  }
+
+  var tk=crear('circle',{r:9,'class':'viajero'});
+  svg.appendChild(tk);
+  var destino={x:R[paso].l,y:(R[paso].t+R[paso].b)/2};
+  tk.setAttribute('cx',destino.x); tk.setAttribute('cy',destino.y);
+
+  cancelAnimationFrame(raf); clearTimeout(finAnim);
+  if(animar && tramo){
+    var len=tramo.getTotalLength(), t0=null, dur=700;
+    tramo.style.strokeDasharray=len; tramo.style.strokeDashoffset=len;
+    /* el cierre no depende de los cuadros de animación: si el navegador los pausa
+       (pestaña en segundo plano), la ficha igual termina donde debe */
+    var cerrar=function(){
+      cancelAnimationFrame(raf);
+      tramo.style.strokeDasharray=''; tramo.style.strokeDashoffset='';
+      tramo.setAttribute('marker-end','url(#punta-hecha)');
+      tk.setAttribute('cx',destino.x); tk.setAttribute('cy',destino.y);
+    };
+    var cuadro=function(ts){
+      if(t0===null) t0=ts;
+      var k=Math.min(1,(ts-t0)/dur), e=1-Math.pow(1-k,3);
+      var pt=tramo.getPointAtLength(len*e);
+      tramo.style.strokeDashoffset=len*(1-e);
+      tk.setAttribute('cx',pt.x); tk.setAttribute('cy',pt.y);
+      if(k<1){raf=requestAnimationFrame(cuadro)}else{cerrar()}
+    };
+    raf=requestAnimationFrame(cuadro);
+    finAnim=setTimeout(cerrar,dur+120);
+  }
+}
+
+function etiquetaPlay(){
+  var ult=paso===celdas().length-1;
+  var est=jugando?'pausa':(ult?'repetir':'play');
+  $$('[data-ico]',bPlay).forEach(function(i){mostrarEl(i,i.getAttribute('data-ico')===est)});
+  $('span',bPlay).textContent=jugando?'Pausar':(ult?'Repetir':'Reproducir');
+}
+
+function ir(n,animar){
+  var lis=celdas();
+  n=Math.max(0,Math.min(lis.length-1,n));
+  var avanzo=animar && n===paso+1;
+  paso=n;
+  lis.forEach(function(li,i){
+    var b=$('.celda',li);
+    if(i===paso) b.setAttribute('aria-current','step'); else b.removeAttribute('aria-current');
+  });
+  var li=lis[paso];
+  detLogos.innerHTML=logosHtml(li.getAttribute('data-actor'));
+  detK.textContent='Paso '+(paso+1)+' de '+lis.length+' · '+li.getAttribute('data-quien')+' · '+li.getAttribute('data-verbo');
+  detP.textContent=$('.desc',li).textContent;
+  detEj.innerHTML=$('.ejemplo',li).innerHTML;
+  var nota=li.hasAttribute('data-impacto')?NOTA_IMPACTO:(li.hasAttribute('data-decide')?NOTA_DECIDE:'');
+  detN.textContent=nota; detN.hidden=!nota;
+  barra.style.setProperty('--v',((paso+1)/lis.length*100)+'%');
+  progT.textContent='Paso '+(paso+1)+' de '+lis.length;
+  bAnt.disabled=paso===0; bSig.disabled=paso===lis.length-1;
+  etiquetaPlay();
+  trazar(avanzo && !reduce);
+  if(!ancho.matches && animar) $('.celda',li).scrollIntoView({block:'nearest',behavior:reduce?'auto':'smooth'});
+}
+
+function detener(){clearTimeout(timer);timer=null;jugando=false;etiquetaPlay()}
+function reproducir(){
+  if(paso===celdas().length-1) ir(0,false);
+  jugando=true; etiquetaPlay();
+  var tick=function(){
+    ir(paso+1,true);
+    if(paso<celdas().length-1){timer=setTimeout(tick,6500)}else{detener()}
+  };
+  timer=setTimeout(tick,1400);
+}
+
+function mostrar(id){
+  detener();
+  escenarios.forEach(function(e){e.hidden=e.getAttribute('data-id')!==id});
+  esc=escenarios.filter(function(e){return e.getAttribute('data-id')===id})[0];
+  tablero.style.setProperty('--cols',esc.getAttribute('data-cols'));
+  chipsEsc.forEach(function(c){c.setAttribute('aria-pressed',String(c.getAttribute('data-esc')===id))});
+  descSit.textContent=esc.getAttribute('data-desc');
+  paso=0; ir(0,false);
+}
+
+chipsEsc.forEach(function(c){c.addEventListener('click',function(){mostrar(c.getAttribute('data-esc'))})});
+bAnt.addEventListener('click',function(){detener();ir(paso-1,false)});
+bSig.addEventListener('click',function(){detener();ir(paso+1,true)});
+bPlay.addEventListener('click',function(){if(jugando){detener()}else{reproducir()}});
+escenarios.forEach(function(e){$$('.celda',e).forEach(function(b,i){b.addEventListener('click',function(){detener();ir(i,false)})})});
+
+if(window.ResizeObserver){new ResizeObserver(function(){if(esc) trazar(false)}).observe(tablero)}
+ancho.addEventListener('change',function(){if(esc) trazar(false)});
+if(document.fonts&&document.fonts.ready){document.fonts.ready.then(function(){if(esc) trazar(false)})}
+mostrar('informe');
+
+/* ----------------------------- 2. conexiones ----------------------------- */
+var cx=$('#conexion'), modoBtns=$$('[data-modo-btn]'), modoTxt=$$('[data-modo-txt]');
+function modo(m){
+  cx.setAttribute('data-modo',m);
+  modoBtns.forEach(function(b){b.setAttribute('aria-pressed',String(b.getAttribute('data-modo-btn')===m))});
+  modoTxt.forEach(function(t){t.hidden=t.getAttribute('data-modo-txt')!==m});
+  cx.classList.remove('anim'); void cx.offsetWidth; cx.classList.add('anim');
+}
+modoBtns.forEach(function(b){b.addEventListener('click',function(){modo(b.getAttribute('data-modo-btn'))})});
+modo('api');
+
+var herr=$$('[data-herr]');
+herr.forEach(function(b){b.addEventListener('click',function(){
+  herr.forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});
+  $('#herr-k').textContent=b.textContent+' · '+b.getAttribute('data-grupo');
+  $('#herr-t').textContent=b.getAttribute('data-texto');
+})});
+
+/* ------------------------------- 3. control ------------------------------- */
+var nivBtn=$$('[data-nivel-btn]'), nivPan=$$('[data-nivel-pan]'), seg=$$('#impacto li');
+function nivel(n){
+  nivBtn.forEach(function(b){b.setAttribute('aria-pressed',String(+b.getAttribute('data-nivel-btn')===n))});
+  nivPan.forEach(function(p){p.hidden=+p.getAttribute('data-nivel-pan')!==n});
+  seg.forEach(function(li,i){li.classList.toggle('is-on',i===n-1);li.classList.toggle('is-lleno',i<n-1)});
+}
+nivBtn.forEach(function(b){b.addEventListener('click',function(){nivel(+b.getAttribute('data-nivel-btn'))})});
+nivel(1);
+
+/* ------------------------------ 4. versiones ------------------------------ */
+var VERS=[
+  {nota:'Primer borrador',titulo:'Informe del mes (borrador)',barras:[35,50,25],extra:'Cifras preliminares.'},
+  {nota:'Ajusté las cifras',titulo:'Informe del mes (borrador)',barras:[52,64,38],extra:'Cifras actualizadas.'},
+  {nota:'Cambié el título',titulo:'Resultados del mes',barras:[52,64,38],extra:'Cifras actualizadas.'},
+  {nota:'Agregué la comparación',titulo:'Resultados del mes',barras:[58,70,44],extra:'Comparado con el mes anterior.'},
+  {nota:'Versión final',titulo:'Resultados del mes',barras:[58,70,44],extra:'Comparado con el mes anterior. Aprobado.'}
+];
+var local=[], publicada=null, nuevo=null;
+var vL=$('#v-local'), vR=$('#v-remoto'), gEst=$('#g-estado');
+var bG=$('#g-guardar'), bS=$('#g-subir'), bP=$('#g-publicar'), bR=$('#g-reiniciar');
+
+function ultimaSubida(){var s=local.filter(function(v){return v.subida});return s.length?s[s.length-1].n:null}
+function sinSubir(){return local.filter(function(v){return !v.subida}).length}
+function item(v,tipo){
+  var li=document.createElement('li'), inner;
+  if(tipo==='remoto'){
+    inner=document.createElement('button'); inner.type='button';
+    inner.className='version'+(publicada===v.n?' is-on':'');
+    inner.setAttribute('aria-label','Mostrar la versión '+v.n+' en la página: '+VERS[v.n-1].nota);
+    inner.addEventListener('click',function(){mostrarVersion(v.n)});
+  }else{
+    inner=document.createElement('div');
+    inner.className='version'+(v.subida?'':' is-sin-subir');
+  }
+  var n=document.createElement('span'); n.className='ad-n'; n.setAttribute('aria-hidden','true'); n.textContent=v.n;
+  var t=document.createElement('span'); t.textContent=VERS[v.n-1].nota;
+  inner.appendChild(n); inner.appendChild(t);
+  if(tipo==='local' && !v.subida){var g=document.createElement('span');g.className='ad-tag ad-tag--line';g.textContent='Sin subir';inner.appendChild(g)}
+  if(tipo==='remoto' && publicada===v.n){var g2=document.createElement('span');g2.className='ad-tag ad-tag--line';g2.textContent='Publicada';inner.appendChild(g2)}
+  if(nuevo===tipo+v.n && !reduce) li.className='ad-rise';
+  li.appendChild(inner);
+  return li;
+}
+function pintarPagina(){
+  var hay=publicada!==null;
+  $('#pagina-vacia').hidden=hay; $('#pagina-cuerpo').hidden=!hay;
+  $('#pagina-url').textContent=hay?'enlace-del-cliente/informe-del-mes':'Todavía no hay una página publicada';
+  if(!hay) return;
+  var d=VERS[publicada-1];
+  $('#p-titulo').textContent=d.titulo; $('#p-extra').textContent=d.extra; $('#p-version').textContent='Versión '+publicada;
+  ['#p-b1','#p-b2','#p-b3'].forEach(function(s,i){$(s+' > span').style.setProperty('--v',d.barras[i]+'%')});
+}
+function pintar(){
+  vL.replaceChildren(); vR.replaceChildren();
+  local.forEach(function(v){vL.appendChild(item(v,'local'))});
+  local.filter(function(v){return v.subida}).forEach(function(v){vR.appendChild(item(v,'remoto'))});
+  pintarPagina();
+  var ult=ultimaSubida();
+  bG.disabled=local.length>=VERS.length;
+  bS.disabled=sinSubir()===0;
+  bP.disabled=!(ult!==null && publicada!==ult);
+  /* la acción recomendada va en lima; solo una a la vez */
+  var rec=local.length===0?bG:(sinSubir()>0?bS:((ult!==null&&publicada!==ult)?bP:(local.length<VERS.length?bG:null)));
+  [bG,bS,bP].forEach(function(b){b.classList.toggle('ad-btn--accent',b===rec);b.classList.toggle('ad-btn--outline',b!==rec)});
+  nuevo=null;
+}
+function decir(t){gEst.textContent=t}
+function guardar(){
+  var n=local.length+1; local.push({n:n,subida:false}); nuevo='local'+n; pintar();
+  decir('Guardaste la versión '+n+': "'+VERS[n-1].nota+'". Por ahora solo está en tu computador y nadie más la ve.'+(n===VERS.length?' Con cinco versiones ya alcanza para el ejemplo.':''));
+}
+function subir(){
+  var k=sinSubir(); if(!k) return;
+  local.forEach(function(v){if(!v.subida){v.subida=true;nuevo='remoto'+v.n}});
+  pintar();
+  decir('Subiste '+k+(k===1?' versión':' versiones')+' a GitHub. El equipo ya puede verlas, pero la página del cliente '+(publicada===null?'todavía no existe.':'sigue mostrando la versión '+publicada+'.'));
+}
+function publicar(){
+  var ult=ultimaSubida(); if(ult===null) return;
+  publicada=ult; pintar();
+  decir('Publicado. Quien abra el link ve ahora la versión '+ult+': "'+VERS[ult-1].nota+'".');
+}
+function mostrarVersion(n){
+  if(publicada===null){decir('Primero publica una versión. Después podrás cambiar la que se muestra.');return}
+  publicada=n; pintar();
+  decir('Volviste a la versión '+n+': "'+VERS[n-1].nota+'". La página muestra de nuevo ese estado, y las versiones más nuevas siguen guardadas.');
+}
+function reiniciar(){
+  local=[]; publicada=null; pintar();
+  decir('Empieza guardando una versión. Es como Guardar como, pero con una nota de qué cambió.');
+}
+bG.addEventListener('click',guardar); bS.addEventListener('click',subir); bP.addEventListener('click',publicar); bR.addEventListener('click',reiniciar);
+pintar();
+
+/* --------------------- navegación: la sección que se está viendo --------------------- */
+if('IntersectionObserver' in window){
+  var enlaces=$$('#nav-secciones a');
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting) return;
+      enlaces.forEach(function(a){
+        if(a.getAttribute('href')==='#'+e.target.id) a.setAttribute('aria-current','true'); else a.removeAttribute('aria-current');
+      });
+    });
+  },{rootMargin:'-40% 0px -55% 0px'});
+  $$('.bloque').forEach(function(s){io.observe(s)});
+}
+})();
+</script>
+</body>
+</html>

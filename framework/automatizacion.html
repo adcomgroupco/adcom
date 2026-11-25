@@ -5,13 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Consulta, simulación, aprobación y auditoría de automatizaciones de pauta.">
 <title>Automatización e IA | Framework Digital de Adcom</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%230E0E0F'/%3E%3Ctext x='16' y='21' font-family='Inter Tight,Arial,sans-serif' font-size='13' font-weight='500' fill='%23F7F6F2' text-anchor='middle'%3EFD%3C/text%3E%3Ccircle cx='25' cy='8' r='3' fill='%23D8FF3D'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="../assets/favicon-adcom.png">
 <meta name="theme-color" content="#0E0E0F">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
 <!-- sistema v2: tokens y componentes ad-*; 01-tokens.css re-apunta los nombres del framework encima -->
-<link rel="stylesheet" href="../assets/css/adcom-v2.css">
+<link rel="stylesheet" href="../assets/ds/fonts.css">
+<link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261127">
 <link rel="stylesheet" href="assets/css/01-tokens.css">
 <link rel="stylesheet" href="assets/css/02-layout.css">
 <link rel="stylesheet" href="assets/css/03-componentes.css">
@@ -45,9 +43,7 @@
 </defs></svg>
 
 <header class="site-header page-header">
-  <a class="brand" href="index.html" aria-label="Inicio del Framework Digital">
-    <span class="brand-mark" aria-hidden="true">FD</span><span class="page-wordmark">Framework Digital<small>Adcom</small></span>
-  </a>
+  <a class="ad-marca ad-marca--claro" href="index.html" aria-label="Inicio del Framework Digital"><img src="../assets/ds/logos/adcom-mark.png" alt="Adcom" width="30" height="25"><i>Framework Digital</i></a>
   <button class="header-search" id="header-search" type="button" aria-label="Buscar en el framework">
     <svg class="ico" aria-hidden="true"><use href="#i-search"/></svg><span>Buscar</span>
   </button>
@@ -87,27 +83,29 @@
 
 <main id="inicio" tabindex="-1">
 <section class="framework-area" id="automatizacion" aria-labelledby="automatizacion-title">
-  <header class="area-intro page-intro section-dark">
+<header class="area-intro page-intro ad-sec ad-sec--oscuro ad-hero">
   <div class="wrap">
     <p class="page-kicker" id="automatizacion-title">Automatización e IA</p>
-    <h1 id="hero-title" tabindex="-1">Qué delegamos y <span class="ad-hl">quién aprueba</span></h1>
-    <p class="page-lead">Usa esta referencia para distinguir lo que puede consultar una herramienta, lo que puede proponer y lo que requiere aprobación antes de ejecutarse.</p>
-    <figure class="route-diagram route-sequence">
-      <figcaption>Control de un cambio propuesto</figcaption>
-      <ol role="list">
-        <li><a class="ad-card ad-card--dark" href="#mediabridge"><strong>Consulta</strong><span class="ad-card__d">Verifica fuente, alcance y periodo.</span></a></li>
-        <li><a class="ad-card ad-card--dark" href="#autonomia"><strong>Simula</strong><span class="ad-card__d">Revisa el efecto esperado antes de tocar la cuenta.</span></a></li>
-        <li><a class="ad-card ad-card--dark" href="#auditor"><strong>Aprueba o devuelve</strong><span class="ad-card__d">El auditor valida evidencia, riesgo y responsable.</span></a></li>
-        <li><a class="ad-card ad-card--dark" href="#riesgos-ia"><strong>Registra</strong><span class="ad-card__d">Deja decisión, motivo y seguimiento, incluso si se descarta.</span></a></li>
+    <h1 id="hero-title" tabindex="-1"><span class="ad-ln">Qué delegamos</span><span class="ad-ln">y <span class="ad-hl">quién aprueba</span>.</span></h1>
+    <p class="ad-lead">Usa esta referencia para distinguir lo que puede consultar una herramienta, lo que puede proponer y lo que requiere aprobación antes de ejecutarse.</p>
+    <figure class="fw-diagrama">
+      <figcaption class="fw-diagrama__t">Control de un cambio propuesto</figcaption>
+      <ol class="ad-pasos">
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">1</span><span class="fw-paso__k">Lo hace la herramienta</span><h3><a href="#mediabridge">Consulta</a></h3><p>Verifica fuente, alcance y periodo.</p></li>
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">2</span><span class="fw-paso__k">Lo hace la herramienta</span><h3><a href="#autonomia">Simula</a></h3><p>Revisa el efecto esperado antes de tocar la cuenta.</p></li>
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">3</span><span class="fw-paso__k">Lo decide una persona</span><h3><a href="#auditor">Aprueba o devuelve</a></h3><p>El auditor valida evidencia, riesgo y responsable.</p></li>
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">4</span><span class="fw-paso__k">Queda en la bitácora</span><h3><a href="#riesgos-ia">Registra</a></h3><p>Deja decisión, motivo y seguimiento, incluso si se descarta.</p></li>
       </ol>
     </figure>
-    <div class="page-search">
-    <form class="buscador" id="buscador" role="search">
-      <label class="sr-only" for="q">Buscar en el framework</label>
-      <input id="q" type="search" autocomplete="off" placeholder="Busca un tema o una regla…">
-    </form>
-    <div class="q-res" id="q-res" aria-live="polite" hidden></div>
-  </div>
+    <div class="fw-pie">
+      <div class="page-search">
+        <form class="buscador" id="buscador" role="search">
+          <label class="sr-only" for="q">Buscar en el framework</label>
+          <input id="q" type="search" autocomplete="off" placeholder="Busca un tema o una regla…">
+        </form>
+        <div class="q-res" id="q-res" aria-live="polite" hidden></div>
+      </div>
+    </div>
   </div>
 </header>
 <!-- Automatización e IA -->
@@ -116,7 +114,7 @@
     <div class="section-heading" data-reveal>
       <div>
         <p class="eyebrow"><span>95—99</span></p>
-        <h2 id="ia-title">Automatización e inteligencia artificial</h2>
+        <h2 id="ia-title">Automatización e <span class="ad-hl">inteligencia artificial</span></h2>
         <p class="claim">La herramienta propone. <em>La decisión sigue siendo nuestra.</em></p>
       </div>
       <p>Media Bridge conecta las plataformas de pauta con el trabajo del área: consulta, vigila, simula y —solo cuando alguien lo firma— ejecuta. Este capítulo define qué automatizamos, hasta dónde llega la herramienta y quién responde por lo que produce.</p>
@@ -250,24 +248,33 @@
       </div>
     </div>
 
-    <div class="divider" id="autonomia">
-      <h3 class="sub-heading" data-reveal><span class="num">97</span> Los tres niveles de autonomía</h3>
-      <p data-reveal style="margin-top:-6px;color:var(--fg-muted);max-width:70ch">Toda función de la herramienta cae en uno de tres niveles. El nivel define quién puede usarla y qué se necesita antes. Ninguna función sube de nivel sola.</p>
+    </div>
+</section>
+
+<section class="section-light" id="autonomia" data-framework-section tabindex="-1" aria-labelledby="autonomia-title">
+  <div class="wrap">
+    <div class="section-heading" data-reveal>
+      <div>
+        <p class="eyebrow eyebrow-dark"><span>97</span></p>
+        <h2 id="autonomia-title">Los tres niveles de <span class="ad-hl">autonomía</span></h2>
+      </div>
+      <p>Toda función de la herramienta cae en uno de tres niveles. El nivel define quién puede usarla y qué se necesita antes. Ninguna función sube de nivel sola.</p>
+    </div>
 
       <div class="columnas escala sep-lg" aria-label="Tres niveles de autonomía, de menor a mayor" data-reveal>
-        <div class="ad-card ad-card--dark" style="--nivel:1">
+        <div class="ad-card" style="--nivel:1">
           <span class="ad-card__n">97.1 · Nivel 1 · Consultar</span>
           <h4>Lee y reporta. No toca nada.</h4>
           <p>Consultas, insights, informes y análisis conversacional de solo lectura.</p>
           <p class="escala-nota">Cualquiera del equipo · sin aprobación</p>
         </div>
-        <div class="ad-card ad-card--dark" style="--nivel:2">
+        <div class="ad-card" style="--nivel:2">
           <span class="ad-card__n">97.2 · Nivel 2 · Proponer</span>
           <h4>Señala y simula. No aplica.</h4>
           <p>Alertas, diagnósticos y cambios en modo simulación. La herramienta muestra qué haría y qué efecto tendría.</p>
           <p class="escala-nota">Trafficker o planner · auditor asignado</p>
         </div>
-        <div class="ad-card ad-card--dark" style="--nivel:3">
+        <div class="ad-card" style="--nivel:3">
           <span class="ad-card__n">97.3 · Nivel 3 · Ejecutar</span>
           <h4>Aplica el cambio en la plataforma.</h4>
           <p>Pausar, cambiar estado o mover presupuesto exige confirmación explícita en el momento.</p>
@@ -276,24 +283,28 @@
       </div>
 
       <div class="notas sep-lg" data-reveal>
-        <div class="ad-card ad-card--dark">
+        <div class="ad-card">
           <span class="ad-card__n">97.4 · La regla del nivel 3</span>
           <h4>Una acción automatizada tiene el mismo responsable que una hecha a mano</h4>
           <p class="sep-xs">Quien confirma responde por el cambio. No existe la explicación “lo hizo la herramienta”: la herramienta propuso, una persona aprobó, y esa persona es la que sostiene la decisión frente al cliente y frente al equipo.</p>
         </div>
-        <div class="ad-card ad-card--dark">
+        <div class="ad-card">
           <span class="ad-card__n">97.5 · Lo que no se programa</span>
           <h4>Nada queda en ejecución automática permanente</h4>
           <p class="sep-xs">Lo único que corre solo es la vigilancia: consultar y avisar. Ninguna regla queda configurada para modificar la cuenta sin pasar por una persona, por conveniente que parezca. Una automatización que ejecuta sola deja de ser una herramienta y se vuelve un riesgo sin dueño.</p>
         </div>
       </div>
-    </div>
+    
 
-    <div class="divider" id="auditor">
+    </div>
+</section>
+
+<section class="section-dark" id="auditor" data-framework-section tabindex="-1" aria-labelledby="auditor-title">
+  <div class="wrap">
       <div class="section-heading" data-reveal>
         <div>
           <p class="eyebrow"><span>98</span></p>
-          <h3>El rol del auditor</h3>
+          <h2 id="auditor-title">El rol del <span class="ad-hl">auditor</span></h2>
           <p class="claim">No es quien usa la herramienta. <em>Es quien responde por lo que produce.</em></p>
         </div>
         <p>La automatización no elimina el trabajo de criterio: lo desplaza. Lo que antes era ejecutar ahora es verificar, y verificar mal es más grave que ejecutar mal, porque el error se multiplica por todas las cuentas donde corre la misma regla.</p>
@@ -333,11 +344,20 @@
           <blockquote class="ad-cita sep-md"><p>Toda acción automatizada tiene un auditor con nombre.</p><cite>Regla propuesta · 81 · 16</cite></blockquote>
         </div>
       </div>
-    </div>
+    
 
-    <div class="divider" id="riesgos-ia">
-      <h3 class="sub-heading" data-reveal><span class="num">99</span> Riesgos declarados de automatizar</h3>
-      <p data-reveal style="margin-top:-6px;color:var(--fg-muted);max-width:70ch">No son objeciones a la herramienta: son las seis formas conocidas en que una automatización de pauta falla. Están escritas para reconocerlas antes de que ocurran.</p>
+    </div>
+</section>
+
+<section class="section-light" id="riesgos-ia" data-framework-section tabindex="-1" aria-labelledby="riesgos-title">
+  <div class="wrap">
+    <div class="section-heading" data-reveal>
+      <div>
+        <p class="eyebrow eyebrow-dark"><span>99</span></p>
+        <h2 id="riesgos-title">Riesgos declarados de <span class="ad-hl">automatizar</span></h2>
+      </div>
+      <p>No son objeciones a la herramienta: son las seis formas conocidas en que una automatización de pauta falla. Están escritas para reconocerlas antes de que ocurran.</p>
+    </div>
       <details class="mas" data-reveal>
         <summary>Ver los seis riesgos y cómo se controlan</summary>
         <div class="mas-body"><div class="ad-tabla" tabindex="0">
@@ -355,7 +375,7 @@
       </div></div>
       </details>
 
-      <div class="ad-card ad-card--dark sep-lg" data-reveal>
+      <div class="ad-card sep-lg" data-reveal>
         <span class="ad-card__n">99.1 · Se conecta con</span>
         <h4>Este capítulo no reemplaza nada: le pone herramienta a lo que ya estaba escrito</h4>
         <ul class="list-check sep">
@@ -366,7 +386,17 @@
           <li><b>81 · Reglas del sistema documental</b> — se mantienen íntegras; la regla 16 propuesta las extiende a lo automatizado.</li>
         </ul>
       </div>
+    
+  </div>
+</section>
+
+<section class="section-dark ad-sec--oscuro ad-cierre" aria-labelledby="cierre-title">
+  <div class="wrap ad-cierre__in">
+    <div>
+      <h2 id="cierre-title">Ninguna acción se ejecuta sola.</h2>
+      <p>La herramienta propone, una persona con nombre aprueba y todo queda en la bitácora.</p>
     </div>
+    <a class="ad-btn ad-btn--accent" href="index.html#indice">Ir al índice del framework</a>
   </div>
 </section>
 

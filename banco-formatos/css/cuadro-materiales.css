@@ -3,20 +3,15 @@
 .cm-indice { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-6) 0 0; padding: 0; list-style: none; }
 .cm-indice a { display: inline-flex; align-items: center; min-height: var(--target-min); padding: 0 var(--space-4); border: 1px solid var(--piedra-borde); border-radius: var(--radius-pill); background: var(--papel); text-decoration: none; font-size: 15px; color: var(--sumi); }
 .cm-indice a:hover { background: var(--crema); }
-.cm-indice a:focus-visible, .cm-acciones button:focus-visible, .cm-revision textarea:focus-visible, .formato-filtros select:focus-visible { outline: 2px solid var(--sumi); outline-offset: 3px; }
+.cm-indice a:focus-visible, .cm-acciones button:focus-visible, .cm-revision textarea:focus-visible, .ad-filtros select:focus-visible { outline: 2px solid var(--sumi); outline-offset: 3px; }
 
-.formato-seccion .ad-sec-cab > * { margin: 0; }
 .cm-reglas { margin: 0; padding: 0; list-style: none; }
 .cm-reglas .ad-card__t, .cm-brief .ad-card__t { margin-block-start: 0; padding-block-start: 0; }
 
-.cm-resumen { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: var(--space-8); align-items: start; }
-.cm-resumen h3 { font: 500 20px/1.3 var(--font-display); margin: 0 0 var(--space-4); }
+.cm-resumen { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: var(--space-8); align-items: start; margin-block-start: var(--space-12); }
+.cm-resumen .ad-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .ad-kpi dd { margin: 0; }
-.cm-barras { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
-.cm-barras li { display: grid; grid-template-columns: minmax(8ch, 12ch) minmax(0, 1fr) 4ch; gap: var(--space-4); align-items: center; font-size: 15px; }
-.cm-barras strong { text-align: end; font-weight: 500; font-variant-numeric: tabular-nums; }
-.cm-resumen .ad-lectura { align-self: start; }
-
+.cm-resumen .ad-lectura { align-self: stretch; }
 .cm-brief { gap: var(--space-2); }
 .cm-brief dl { display: grid; gap: var(--space-2); margin: 0; }
 .cm-brief dl > div { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: var(--space-4); padding-block-start: var(--space-2); border-block-start: 1px solid var(--piedra); }
@@ -29,7 +24,7 @@
 .cm-vacio { padding: var(--space-6); color: var(--tinta-secundaria); text-align: center; }
 
 .cm-acciones { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--space-4); }
-.cm-acciones .formato-filtros { margin-block-end: var(--space-4); }
+.cm-acciones .ad-filtros { margin-block-end: var(--space-4); }
 .cm-acciones .ad-btn { margin-block-end: var(--space-4); }
 .cm-tabla-sep { margin-block-start: var(--space-6); }
 .cm-nota { margin: var(--space-4) 0 0; font-size: 14px; color: var(--tinta-secundaria); }
@@ -113,6 +108,7 @@
 @media (max-width: 900px) {
   .cm-resumen { grid-template-columns: minmax(0, 1fr); }
 }
+@media (max-width: 480px) { .cm-resumen .ad-kpis { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 640px) {
   .cm-copy-pieza { grid-template-columns: minmax(0, 1fr); }
   .cm-pz { max-width: 200px; }
@@ -126,3 +122,52 @@
   .cm-brief, .cm-bloque, .cm-pieza { break-inside: avoid; }
   .cm-programa { break-inside: auto; }
 }
+
+/* ============================ Composición de la página ============================
+   Los componentes vienen de adcom-v2.css; aquí solo lo que no tiene componente. */
+.ad-sec[aria-labelledby] { scroll-margin-block-start: var(--nav-height); }
+.ad-filtros[hidden] { display: none; }
+
+/* Portada: ficha en tres columnas y el índice de secciones como píldoras bajo ella */
+.cm-ficha { margin-block-start: var(--space-12); grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cm-indice { margin-block-start: var(--space-8); }
+@media (max-width: 760px) { .cm-ficha { grid-template-columns: minmax(0, 1fr); } }
+
+/* Cabeceras: titular grande, entradilla corta, aire hasta el contenido */
+.cm-cab { max-width: none; margin-block-end: var(--space-12); }
+.cm-cab h2 { max-width: 20ch; text-wrap: balance; }
+.ad-split > .cm-cab { margin-block-end: 0; }
+.cm-sub { margin: 0 0 var(--space-8); font: 500 22px/1.2 var(--font-display); letter-spacing: -.015em; }
+
+/* Reglas: las cuatro tarjetas a la derecha, a la misma altura */
+.cm-reglas { align-items: stretch; --gap: var(--space-4); }
+.cm-reglas .ad-card { justify-content: flex-start; }
+
+/* Ciclo de una pieza (diagrama protagonista): cinco estados con su cantidad al corte.
+   Variante sobre superficie oscura de .ad-pasos (propuesta para el sistema). */
+.cm-ciclo { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--space-8); }
+.cm-ciclo .ad-paso { border-color: var(--sobre-oscuro-200); gap: var(--space-2); padding-block-start: var(--space-6); }
+.cm-ciclo .ad-paso .ad-n { margin-block-start: calc(var(--space-6) * -1 - 24px); background: var(--negro-escena); border-color: var(--sobre-oscuro-200); color: var(--sobre-oscuro-100); }
+.cm-ciclo .ad-paso:last-child:not(.is-on) .ad-n { background: var(--negro-escena); border-color: var(--sobre-oscuro-200); }
+.cm-ciclo .ad-paso.is-on .ad-n { background: var(--lima); border-color: var(--lima); color: var(--sumi); }
+.cm-ciclo .ad-paso h3 { margin-block-start: var(--space-2); font-size: clamp(18px, 1.8vw, 22px); }
+.cm-ciclo__n { font: 300 clamp(44px, 5vw, 72px)/1 var(--font-display); letter-spacing: -.04em; font-variant-numeric: tabular-nums; color: var(--sobre-oscuro-100); }
+.cm-ciclo .ad-paso p { color: var(--sobre-oscuro-200); }
+.cm-oscuro .cm-nota { color: var(--sobre-oscuro-300); margin-block-start: var(--space-8); }
+@media (max-width: 1000px) { .cm-ciclo { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: var(--space-12); } }
+@media (max-width: 640px) { .cm-ciclo { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-8) var(--space-6); } }
+
+/* Briefs a la misma altura: cada tarjeta comparte las filas de la cuadrícula (subgrid), así el
+   mismo campo queda a la misma altura en todas. Sin subgrid, las tarjetas solo se estiran. */
+@supports (grid-template-rows: subgrid) {
+  #cm-brief { row-gap: 0; }
+  #cm-brief .cm-brief { grid-row: span 11; display: grid; grid-template-rows: subgrid; row-gap: 0; margin-block-end: var(--space-4); align-content: start; }
+  #cm-brief .cm-brief > .ad-card__n, #cm-brief .cm-brief > .ad-card__t { align-self: start; }
+  #cm-brief .cm-brief dl { display: contents; }
+  #cm-brief .cm-brief dl > div { align-content: start; }
+}
+#cm-brief .cm-brief .ad-card__n { margin: 0; }
+#cm-brief .cm-brief .ad-card__t { margin-block-end: var(--space-4); font-size: 22px; }
+
+/* Cierre */
+.cm-cierre h2 { max-width: 20ch; font-size: clamp(32px, 4.4vw, 56px); }

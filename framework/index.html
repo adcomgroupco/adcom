@@ -5,13 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Consulta las secciones y herramientas del área digital.">
 <title>Índice | Framework Digital de Adcom</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%230E0E0F'/%3E%3Ctext x='16' y='21' font-family='Inter Tight,Arial,sans-serif' font-size='13' font-weight='500' fill='%23F7F6F2' text-anchor='middle'%3EFD%3C/text%3E%3Ccircle cx='25' cy='8' r='3' fill='%23D8FF3D'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="../assets/favicon-adcom.png">
 <meta name="theme-color" content="#0E0E0F">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
 <!-- sistema v2: tokens y componentes ad-*; 01-tokens.css re-apunta los nombres del framework encima -->
-<link rel="stylesheet" href="../assets/css/adcom-v2.css">
+<link rel="stylesheet" href="../assets/ds/fonts.css">
+<link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261127">
 <link rel="stylesheet" href="assets/css/01-tokens.css">
 <link rel="stylesheet" href="assets/css/02-layout.css">
 <link rel="stylesheet" href="assets/css/03-componentes.css">
@@ -45,9 +43,7 @@
 </defs></svg>
 
 <header class="site-header page-header">
-  <a class="brand" href="index.html" aria-label="Inicio del Framework Digital">
-    <span class="brand-mark" aria-hidden="true">FD</span><span class="page-wordmark">Framework Digital<small>Adcom</small></span>
-  </a>
+  <a class="ad-marca ad-marca--claro" href="index.html" aria-label="Inicio del Framework Digital"><img src="../assets/ds/logos/adcom-mark.png" alt="Adcom" width="30" height="25"><i>Framework Digital</i></a>
   <button class="header-search" id="header-search" type="button" aria-label="Buscar en el framework">
     <svg class="ico" aria-hidden="true"><use href="#i-search"/></svg><span>Buscar</span>
   </button>
@@ -86,50 +82,79 @@
 </dialog>
 
 <main id="inicio" tabindex="-1">
-<header class="area-intro page-intro section-dark">
+<header class="area-intro page-intro ad-sec ad-sec--oscuro ad-hero">
   <div class="wrap">
-    <p class="page-kicker">Área Digital de Adcom</p>
-    <h1 id="hero-title" tabindex="-1">Framework <span class="ad-hl">Digital</span></h1>
-    <div class="entry-routes">
-      <a class="ad-card ad-card--dark" href="estrategia.html"><strong>Estrategia</strong><span class="ad-card__d">Define el problema, la dirección y cómo medir el éxito.</span></a>
-      <a class="ad-card ad-card--dark" href="operacion-tactica.html"><strong>Operación y táctica</strong><span class="ad-card__d">Organiza campañas, control, pruebas y aprendizaje.</span></a>
-      <a class="ad-card ad-card--dark" href="automatizacion.html"><strong>Automatización e IA</strong><span class="ad-card__d">Consulta qué puede hacer una herramienta y quién debe aprobar el cambio.</span></a>
+  <div class="fw-hero-split fw-hero-split--abajo">
+    <div>
+      <p class="page-kicker">Área Digital de Adcom</p>
+      <h1 id="hero-title" tabindex="-1"><span class="ad-ln">Framework</span><span class="ad-ln"><span class="ad-hl">Digital</span>.</span></h1>
+      <p class="ad-lead">Tres guías conectadas: lo que decidimos, cómo lo hacemos y qué delegamos a una herramienta.</p>
     </div>
-    <div class="page-search">
-    <form class="buscador" id="buscador" role="search">
-      <label class="sr-only" for="q">Buscar en el framework</label>
-      <input id="q" type="search" autocomplete="off" placeholder="Busca un tema o una regla…">
-    </form>
-    <div class="q-res" id="q-res" aria-live="polite" hidden></div>
+    <div class="fw-busca">
+      <div class="page-search">
+        <form class="buscador" id="buscador" role="search">
+          <label class="sr-only" for="q">Buscar en el framework</label>
+          <input id="q" type="search" autocomplete="off" placeholder="Busca un tema o una regla…">
+        </form>
+        <div class="q-res" id="q-res" aria-live="polite" hidden></div>
+      </div>
+      <details class="mas" id="herramientas">
+        <summary>Herramientas de pauta</summary>
+        <ul class="index-tools">
+          <li><a href="operacion-tactica.html#h-pacing">Simulador de pacing</a></li><li><a href="operacion-tactica.html#h-arbol">Árbol de diagnóstico</a></li>
+          <li><a href="operacion-tactica.html#h-nomenclatura">Constructor de nomenclatura</a></li><li><a href="operacion-tactica.html#h-utm">Constructor UTM</a></li>
+          <li><a href="operacion-tactica.html#h-combinador">Combinador de variables</a></li><li><a href="operacion-tactica.html#board">Tablero de cuentas</a></li>
+        </ul>
+      </details>
+    </div>
   </div>
-    <details class="mas" id="herramientas">
-      <summary>Herramientas de pauta</summary>
-      <ul class="index-tools">
-        <li><a href="operacion-tactica.html#h-pacing">Simulador de pacing</a></li><li><a href="operacion-tactica.html#h-arbol">Árbol de diagnóstico</a></li>
-        <li><a href="operacion-tactica.html#h-nomenclatura">Constructor de nomenclatura</a></li><li><a href="operacion-tactica.html#h-utm">Constructor UTM</a></li>
-        <li><a href="operacion-tactica.html#h-combinador">Combinador de variables</a></li><li><a href="operacion-tactica.html#board">Tablero de cuentas</a></li>
-      </ul>
-    </details>
   </div>
 </header>
-<section class="section-light framework-summary" id="resumen" aria-labelledby="resumen-title">
+
+<!-- ============ EJE: DE LO AMPLIO A LO ESPECÍFICO ============ -->
+<section class="section-light" id="resumen" aria-labelledby="resumen-title">
   <div class="wrap">
-    <h2 id="resumen-title">Cómo se conectan las guías</h2>
-    <p class="lead">La estrategia entrega una dirección y un criterio de éxito. El equipo los convierte en acciones y pruebas, y usa los resultados para decidir si mantiene el rumbo o lo ajusta. Automatización e IA reúne los controles para delegar tareas a herramientas.</p>
-    <a href="#indice">Consultar el índice por tema</a>
+    <div class="ad-split ad-split--arriba fw-cab">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">Cómo se conectan las guías</p>
+        <h2 id="resumen-title">De lo amplio a lo específico.</h2>
+      </div>
+      <div>
+        <p class="ad-lead">La estrategia entrega una dirección y un criterio de éxito. El equipo los convierte en acciones y pruebas, y usa los resultados para decidir si mantiene el rumbo o lo ajusta. Automatización e IA reúne los controles para delegar tareas a herramientas.</p>
+        <p class="fw-accion"><a class="ad-go" href="#indice">Consultar el índice por tema</a></p>
+      </div>
+    </div>
+    <figure class="fw-eje-fig">
+      <div class="fw-eje-ext" aria-hidden="true"><span>Lo amplio</span><span>Lo específico</span></div>
+      <ol class="ad-eje fw-eje" aria-label="De lo amplio a lo específico">
+        <li class="is-on"><a class="ad-eje__t" href="estrategia.html">Estrategia</a><span class="ad-eje__d">Qué decidimos</span></li>
+        <li><a class="ad-eje__t" href="operacion-tactica.html">Operación y táctica</a><span class="ad-eje__d">Cómo lo hacemos</span></li>
+        <li><a class="ad-eje__t" href="automatizacion.html">Automatización e IA</a><span class="ad-eje__d">Qué delegamos</span></li>
+      </ol>
+    </figure>
   </div>
 </section>
 
-<section class="section-light framework-summary" id="banco-formatos" aria-labelledby="banco-formatos-title">
+<!-- ============ LAS TRES GUÍAS ============ -->
+<section class="section-dark ad-sec--oscuro" id="guias" aria-labelledby="guias-title">
   <div class="wrap">
-    <h2 id="banco-formatos-title">Banco de formatos</h2>
-    <p class="lead">Plantillas para estrategia, implementación, resultados, inversión y materiales.</p>
-    <a href="../banco-formatos/index.html">Abrir el banco de formatos</a>
+    <div class="ad-split ad-split--arriba">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow ad-eyebrow--dark">Las guías</p>
+        <h2 id="guias-title">Entra por la pregunta que tienes hoy.</h2>
+        <p class="ad-lead">Cada guía responde una pregunta distinta y remite a las otras dos.</p>
+      </div>
+      <ol class="ad-filas">
+        <li><a class="ad-fila" href="estrategia.html"><span class="ad-n ad-n--md" aria-hidden="true">1</span><span><span class="ad-fila__k">Qué decidimos</span><span class="ad-fila__t">Estrategia</span><span class="ad-fila__d">Define el problema, la dirección y cómo medir el éxito.</span></span><span class="ad-go">Abrir</span></a></li>
+        <li><a class="ad-fila" href="operacion-tactica.html"><span class="ad-n ad-n--md" aria-hidden="true">2</span><span><span class="ad-fila__k">Cómo lo hacemos</span><span class="ad-fila__t">Operación y táctica</span><span class="ad-fila__d">Organiza campañas, control, pruebas y aprendizaje.</span></span><span class="ad-go">Abrir</span></a></li>
+        <li><a class="ad-fila" href="automatizacion.html"><span class="ad-n ad-n--md" aria-hidden="true">3</span><span><span class="ad-fila__k">Qué delegamos</span><span class="ad-fila__t">Automatización e IA</span><span class="ad-fila__d">Consulta qué puede hacer una herramienta y quién debe aprobar el cambio.</span></span><span class="ad-go">Abrir</span></a></li>
+      </ol>
+    </div>
   </div>
 </section>
 
 <!-- ============ ÍNDICE ============ -->
-<section class="section-dark" id="indice" tabindex="-1" aria-labelledby="indice-title">
+<section class="section-light" id="indice" tabindex="-1" aria-labelledby="indice-title">
   <div class="wrap">
     <div class="section-heading" data-reveal>
       <div>
@@ -155,6 +180,17 @@
         <p class="toc-vacio" id="toc-vacio" aria-live="polite" hidden>Sin resultados para esa palabra. Prueba con otra o quita el filtro de sección.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ============ CIERRE: BANCO DE FORMATOS ============ -->
+<section class="section-dark ad-sec--oscuro ad-cierre" id="banco-formatos" aria-labelledby="banco-formatos-title">
+  <div class="wrap ad-cierre__in">
+    <div>
+      <h2 id="banco-formatos-title">Una plantilla para cada entrega.</h2>
+      <p>Banco de formatos: plantillas para estrategia, implementación, resultados, inversión y materiales.</p>
+    </div>
+    <a class="ad-btn ad-btn--accent" href="../banco-formatos/index.html">Abrir el banco de formatos</a>
   </div>
 </section>
 
