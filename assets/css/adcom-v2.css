@@ -718,7 +718,7 @@ a.ad-fila:hover .ad-fila__t{text-decoration:underline;text-decoration-thickness:
 .ad-split--arriba{align-items:start}
 
 /* Enlace de acción en píldora lima: «Abrir ›» */
-.ad-go{display:inline-flex;align-items:center;gap:6px;min-height:var(--target-min);padding:0 20px;border-radius:var(--radius-pill);background:var(--lima);color:var(--sumi);font-size:14px;font-weight:500;line-height:1;text-decoration:none;white-space:nowrap}
+.ad-go{display:inline-flex;width:fit-content;align-items:center;gap:6px;min-height:var(--target-min);padding:0 20px;border-radius:var(--radius-pill);background:var(--lima);color:var(--sumi);font-size:14px;font-weight:500;line-height:1;text-decoration:none;white-space:nowrap}
 .ad-go::after{content:"›"}
 a:hover>.ad-go,.ad-go:hover{background:var(--sumi);color:var(--lima)}
 
@@ -780,6 +780,21 @@ a:hover>.ad-go,.ad-go:hover{background:var(--sumi);color:var(--lima)}
 .ad-sec--oscuro .ad-anillo .ad-dg-line{stroke:var(--sobre-oscuro-200)}
 .ad-sec--oscuro .ad-anillo .ad-n{background:var(--negro-escena);border-color:var(--sobre-oscuro-200);color:var(--sobre-oscuro-100)}
 .ad-sec--oscuro .ad-anillo .ad-n--on,.ad-sec--oscuro .ad-anillo__nodos li.is-on .ad-n{background:var(--lima);border-color:var(--lima);color:var(--sumi)}
+
+/* Recorridos, listas y cifras sobre fondo oscuro */
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-paso{border-top-color:rgba(247,246,242,.24)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-paso h3{color:var(--sobre-oscuro-100)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-paso p{color:var(--sobre-oscuro-200)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-paso .ad-n{background:var(--negro-escena);border-color:var(--sobre-oscuro-200);color:var(--sobre-oscuro-100)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-paso:last-child .ad-n,:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-paso.is-on .ad-n{background:var(--lima);border-color:var(--lima);color:var(--sumi)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-filas{border-top-color:rgba(247,246,242,.24)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-fila{color:var(--sobre-oscuro-100);border-bottom-color:rgba(247,246,242,.24)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-fila__k,:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-fila__go{color:var(--sobre-oscuro-300)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-fila .ad-n{background:var(--negro-escena);border-color:var(--sobre-oscuro-200);color:var(--sobre-oscuro-100)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-stat__n{color:var(--sobre-oscuro-100)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-stat__n .ad-fill{color:var(--sumi)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-stat__l{color:var(--sobre-oscuro-200)}
+:is(.ad-oscuro,.ad-sec--oscuro,.ad-sec--noche) .ad-stat__m{color:var(--sobre-oscuro-300)}
 
 /* Banda de cierre: una conversación, un botón */
 .ad-cierre__in{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--space-8)}

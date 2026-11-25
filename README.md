@@ -15,7 +15,8 @@ adcom/
 ├── acta-entrega-vacaciones.html  acta temporal de continuidad durante vacaciones
 ├── informes/                     diagnósticos de sector (educación superior)
 ├── tableros/                     tablero de educación (lee la hoja Consolidado Educación) e inversión de la agencia
-├── banco-formatos/               plantillas HTML, hojas de trabajo e instructivo de replicación
+├── banco-formatos/               plantillas HTML, hojas de trabajo, galería de componentes (componentes.html),
+│                                 página base (pagina-base.html) e instructivo de replicación
 ├── guias/                        guía interactiva de cómo trabajamos con IA
 ├── playbook-creativo/            biblioteca visual de formatos y posibilidades de pauta
 ├── framework/                    framework del área digital · v0.3
@@ -24,6 +25,9 @@ adcom/
 │   ├── _archivo/                 versiones sustituidas y el .md fuente original
 │   └── README.md                 cómo editarlo: dónde cambiar qué, utilidades, checklist
 ├── assets/css/adcom-v2.css       sistema de diseño v2 (fuente; ver abajo)
+├── ESTANDARES-DISENO.md          estándares de diseño v2: la regla, la verificación y cómo replicar
+├── AGENTS.md · CLAUDE.md         reglas para asistentes de IA que trabajen en el repo
+├── herramientas/auditar_v2.py    verificador de los estándares (python -I herramientas/auditar_v2.py)
 ├── sistema/                      sistema v1 de los repos de cliente y su sync.ps1
 └── README.md
 ```
@@ -32,6 +36,9 @@ Los `.html` de la raíz con nombre de informe o tablero (`tablero-educacion.html
 `diagnostico-educacion.html`) son redirecciones a su ruta nueva.
 
 ## Sistema de diseño
+
+**La regla completa está en [`ESTANDARES-DISENO.md`](ESTANDARES-DISENO.md)** (tokens, lima, tipografía, composición,
+componentes, diagramas, marca, verificación y cómo replicarlo en otro repo). Lo que sigue es el resumen.
 
 Este repo usa el **sistema v2**: washi, sumi y un solo acento lima; Inter Tight para titulares y
 cifras, Inter para el cuerpo. Sus valores vienen del artefacto «Adcom — Sistema de diseño» y viven

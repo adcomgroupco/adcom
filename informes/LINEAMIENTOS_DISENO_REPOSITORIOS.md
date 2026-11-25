@@ -1,5 +1,7 @@
 # Lineamientos de diseño consolidados de los repositorios
 
+> **Aviso:** en el repo `adcom` el estándar vigente es [`ESTANDARES-DISENO.md`](../ESTANDARES-DISENO.md) (sistema v2). Este documento describe el sistema anterior (amarillo y Poppins), que sigue vigente solo en los repos de cliente.
+
 > Auditoría local: 15 de septiembre de 2026  
 > Alcance: 17 repositorios locales vinculados a GitHub  
 > Estado: consolidación descriptiva y normativa; no modifica los repositorios fuente
