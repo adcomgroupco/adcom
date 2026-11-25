@@ -55,6 +55,14 @@ select{cursor:pointer;max-width:200px}
 #f-niv{max-width:170px}
 #f-cli{max-width:130px}
 select:focus-visible,input:focus-visible{border-color:var(--fg)}
+.ms{position:relative}
+.ms summary{list-style:none;cursor:pointer;min-height:var(--target-min);display:flex;align-items:center;gap:8px;padding:0 10px;border:1px solid var(--piedra-borde);border-radius:var(--radius-input);background:var(--papel);color:var(--fg);font-size:13px;white-space:nowrap;min-width:90px}
+.ms summary::-webkit-details-marker{display:none}
+.ms summary::after{content:'▾';margin-left:auto;color:var(--gray-600)}
+.ms summary:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+.ms-pop{position:absolute;top:calc(100% + 4px);left:0;z-index:60;min-width:230px;padding:6px;border:1px solid var(--sumi);border-radius:var(--radius-panel);background:var(--papel)}
+.ms-pop label{display:flex;align-items:center;gap:8px;min-height:var(--target-min);padding:0 8px;font-size:13px;border-radius:var(--radius-input);cursor:pointer}
+.ms-pop label:hover{background:var(--crema)}
 .topbar .ad-chip,.sec-tools .ad-chip{font-size:13px;padding:0 14px}
 .ad-chip:hover{border-color:var(--sumi)}
 /* lo activo va en sumi; la lima se reserva a una marca por bloque: rango rápido, métrica del gráfico y vista de nivel y medio */
@@ -246,7 +254,7 @@ select.sem-sel{max-width:160px}
     <div class="tb-row">
       <div class="fg"><span class="fl">Cliente</span><select id="f-cli" onchange="onSel()"><option value="">Todos</option></select></div>
       <div class="fg"><span class="fl">Nivel</span><select id="f-niv" onchange="onSel()"><option value="">Todos (sin B2B)</option></select></div>
-      <div class="fg"><span class="fl">Medio</span><select id="f-medio" onchange="onSel()"><option value="">Todos</option></select></div>
+      <div class="fg"><span class="fl">Medio</span><details class="ms" id="f-medio"><summary id="f-medio-lbl">Todos</summary><div class="ms-pop" id="f-medio-ops" role="group" aria-label="Medio"></div></details></div>
       <div class="f-sep"></div>
       <div class="fg"><span class="fl">Comparar con</span><div id="cmp-btns" class="fg"></div></div>
       <button class="btn-reset" onclick="resetFilters()">Limpiar filtros</button>
@@ -386,7 +394,7 @@ function build(e, fu, me, mm){
   const ord = (L) => (a, b) => (L.indexOf(a) + 1 || 99) - (L.indexOf(b) + 1 || 99) || a.localeCompare(b);
   fill('f-cli', [...new Set(RAW.map(r => r.cli))].sort(ord(CLIENTES)), document.getElementById('f-cli').value);
   fill('f-niv', [...new Set(RAW.map(r => r.niv))].sort(ord(NIVELES)), document.getElementById('f-niv').value);
-  fill('f-medio', [...new Set(RAW.map(r => r.medio))].sort(ord(MEDIOS)), document.getElementById('f-medio').value, m => MEDIO_LBL[m] || m);
+  MEDIO_OPS = [...new Set(RAW.map(r => r.medio))].sort(ord(MEDIOS)); MEDIO_SEL = MEDIO_SEL.filter(m => MEDIO_OPS.includes(m)); pintarMedio();
 }
 // última corrida de cada cliente según el LOG del Apps Script
 function renderLog(log){
@@ -395,6 +403,12 @@ function renderLog(log){
   document.getElementById('src-list').innerHTML = CLIENTES.map(c => { const x = ult[c];
     return `<div><span>${c}</span><span class="${x && x.estado !== 'OK' ? 'src-err' : ''}">${x ? esc(String(x.corrida).slice(0,16)) + (x.estado !== 'OK' ? ' · ' + esc(x.estado) : '') : 'sin datos'}</span></div>` }).join('');
 }
+
+// Leyenda de todas las gráficas: las líneas se ven como línea (con su color y trazo) y las barras como cuadro
+const LEYENDA = { usePointStyle: true, pointStyleWidth: 26, boxHeight: 8,
+  generateLabels: ch => Chart.defaults.plugins.legend.labels.generateLabels(ch).map(l => { const d = ch.data.datasets[l.datasetIndex];
+    return d.type === 'line' ? { ...l, pointStyle: 'line', strokeStyle: d.borderColor, lineWidth: 2.5, lineDash: d.borderDash || [] }
+      : { ...l, pointStyle: 'rectRounded', lineWidth: 0 } }) };
 
 // ── Filtros ──────────────────────────────────────────────────────────────────
 function fill(id, opts, sel, labelFn){ const el = document.getElementById(id), first = el.options[0].outerHTML;
@@ -417,11 +431,27 @@ function setQuick(k){
 function toggleMetaTotal(){ META_TOTAL = !META_TOTAL; render() }
 function onDate(){ QUICK = ''; render() }
 function onSel(){ render() }
-function resetFilters(){ ['f-cli','f-niv','f-medio'].forEach(id => document.getElementById(id).value = ''); META_TOTAL = false; setQuick('3m') }
+// Medio: selección múltiple (ninguno o todos marcados = sin filtro)
+let MEDIO_OPS = [], MEDIO_SEL = [];
+function pintarMedio(){
+  const lbl = m => MEDIO_LBL[m] || m, n = MEDIO_SEL.length;
+  document.getElementById('f-medio-lbl').textContent = !n ? 'Todos' : n <= 2 ? MEDIO_SEL.join(', ') : n + ' medios';
+  document.getElementById('f-medio-ops').innerHTML = `<label><input type="checkbox" value=""${n ? '' : ' checked'} onchange="onMedio(this)"> Todos</label>` +
+    MEDIO_OPS.map(m => `<label><input type="checkbox" value="${esc(m)}"${MEDIO_SEL.includes(m) ? ' checked' : ''} onchange="onMedio(this)"> ${esc(lbl(m))}</label>`).join('') }
+function onMedio(el){
+  const v = el.value;
+  MEDIO_SEL = !v ? [] : MEDIO_OPS.filter(m => m === v ? el.checked : MEDIO_SEL.includes(m));
+  if(MEDIO_SEL.length === MEDIO_OPS.length) MEDIO_SEL = [];
+  pintarMedio();
+  const x = [...document.querySelectorAll('#f-medio-ops input')].find(i => i.value === v); if(x) x.focus();
+  render() }
+document.addEventListener('click', e => { const d = document.getElementById('f-medio'); if(d.open && !e.composedPath().includes(d)) d.open = false });
+document.addEventListener('keydown', e => { const d = document.getElementById('f-medio'); if(e.key === 'Escape' && d.open){ d.open = false; document.getElementById('f-medio-lbl').focus() } });
+function resetFilters(){ ['f-cli','f-niv'].forEach(id => document.getElementById(id).value = ''); MEDIO_SEL = []; pintarMedio(); META_TOTAL = false; setQuick('3m') }
 function F(){ const g = id => document.getElementById(id).value;
-  return { desde: g('f-desde'), hasta: g('f-hasta'), cli: g('f-cli'), niv: g('f-niv'), medio: g('f-medio') } }
+  return { desde: g('f-desde'), hasta: g('f-hasta'), cli: g('f-cli'), niv: g('f-niv'), medio: MEDIO_SEL.length ? MEDIO_SEL : null } }
 const pasaNiv = (niv, f) => f.niv ? niv === f.niv : niv !== B2B;
-const pasa = (r, f) => r.d >= f.desde && r.d <= f.hasta && (!f.cli || r.cli === f.cli) && pasaNiv(r.niv, f) && (!f.medio || r.medio === f.medio);
+const pasa = (r, f) => r.d >= f.desde && r.d <= f.hasta && (!f.cli || r.cli === f.cli) && pasaNiv(r.niv, f) && (!f.medio || f.medio.includes(r.medio));
 // Parte de una meta que entra en el filtro: la meta completa del periodo con el botón encendido;
 // si no, proporcional a los días del rango que caen dentro de la meta.
 function share(m, f){
@@ -535,7 +565,7 @@ function filasComp(f){
     if(x && ult && ult < f.desde){ off[c] = { ...x, sinDatos: true }; return }
     const h = ult && ult < f.hasta ? ult : f.hasta;
     if(x) off[c] = { ...x, desde: addDays(f.desde, -x.dias), hasta: addDays(h, -x.dias) } });
-  RAW.forEach(r => { const o = off[r.cli]; if(!o || o.sinDatos || r.d < o.desde || r.d > o.hasta || !pasaNiv(r.niv, f) || (f.medio && r.medio !== f.medio)) return; rows.push(r) });
+  RAW.forEach(r => { const o = off[r.cli]; if(!o || o.sinDatos || r.d < o.desde || r.d > o.hasta || !pasaNiv(r.niv, f) || (f.medio && !f.medio.includes(r.medio))) return; rows.push(r) });
   return { rows, off };
 }
 
@@ -596,7 +626,7 @@ function calcSem(cli, f, perSel){
   const w0c = c ? lunes(c.ini) : null, nC = c ? Math.ceil((difDias(w0c, finExt(cli, c)) + 1) / 7) : 0;
   // sumas por semana del periodo y del comparado
   const act = Array.from({ length: nTot }, () => Z()), cmp = Array.from({ length: nC }, () => Z());
-  RAW.forEach(r => { if(r.cli !== cli || !pasaNiv(r.niv, f) || (f.medio && r.medio !== f.medio)) return;
+  RAW.forEach(r => { if(r.cli !== cli || !pasaNiv(r.niv, f) || (f.medio && !f.medio.includes(r.medio))) return;
     const i = Math.floor(difDias(w0, r.d) / 7); if(i >= 0 && i < nTot) add(act[i], r);
     if(c){ const j = Math.floor(difDias(w0c, r.d) / 7); if(j >= 0 && j < nC) add(cmp[j], r) } });
   const acum = (arr, k, n) => arr.slice(0, n).reduce((a, e) => a + e[k], 0);
@@ -713,7 +743,7 @@ function renderSemanas(f){
   const W = nTot, ini = i => addDays(w0, 7 * i), iniC = i => addDays(w0c, 7 * i);
   const lblX = (conC) => Array.from({ length: W }, (_, i) => conC ? ['S' + (i + 1), fDate(ini(i)), fDate(iniC(i))] : ['S' + (i + 1), fDate(ini(i))]);
   const baseOpts = (fmt, tit) => ({ responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
-    plugins: { legend: { labels: { boxWidth: 10, font: { family: 'Inter', size: 12 }, color: fg } }, tooltip: { callbacks: { title: tit, label: x => x.dataset.label + ': ' + (x.raw === null ? '—' : fmt(x.raw)) } } },
+    plugins: { legend: { labels: { ...LEYENDA, font: { family: 'Inter', size: 12 }, color: fg } }, tooltip: { callbacks: { title: tit, label: x => x.dataset.label + ': ' + (x.raw === null ? '—' : fmt(x.raw)) } } },
     scales: { x: { ticks: { color: fg, font: { size: 10 }, maxRotation: 0, autoSkip: true, autoSkipPadding: 4 }, grid: { display: false } },
       y: { beginAtZero: true, ticks: { color: fg, font: { size: 11 }, callback: v => fmt(v) } } } });
   const DL = window.ChartDataLabels ? [window.ChartDataLabels] : [];
@@ -946,7 +976,7 @@ function renderMes(f){
     { type:'line', label:'Leads CRM', data: ks.map(k => g[k].lc), borderColor: ink, backgroundColor: ink, borderWidth:2, tension:.25, yAxisID:'y', order:1 },
     { type:'line', label:'Matrículas', data: ks.map(k => g[k].mat), borderColor: sec, backgroundColor: sec, borderWidth:2, borderDash:[5,4], tension:.25, yAxisID:'y2', order:0 } ] };
   const opts = { responsive:true, maintainAspectRatio:false, interaction:{mode:'index', intersect:false},
-    plugins:{ legend:{labels:{boxWidth:10, font:{size:12}, color:fg}},
+    plugins:{ legend:{labels:{...LEYENDA, font:{size:12}, color:fg}},
       tooltip:{callbacks:{label: c => c.dataset.label + ': ' + (c.dataset.yAxisID === 'y1' ? fCOP(c.raw) : fN(c.raw))}} },
     scales:{ x:{ticks:{color:fg, font:{size:12}}, grid:{display:false}},
       y:{position:'left', beginAtZero:true, ticks:{color:fg, font:{size:12}, callback: v => NF0.format(v)}, title:{display:true, text:'Leads CRM', color:fg, font:{size:12}}},
@@ -1008,7 +1038,7 @@ function renderFuentes(f){
     ...FUENTES.map((k, i) => ({ type:'bar', label:'Leads ' + k.toLowerCase(), data: ks.map(m => MES[m][k].lc), backgroundColor: col[k], borderColor: css('--papel') || '#ffffff', borderWidth:{top:2}, maxBarThickness:64, stack:'leads', yAxisID:'y', order:5 + i })),
     ...FUENTES.map((k, i) => ({ type:'line', label:'Conversión ' + k.toLowerCase(), data: ks.map(m => MES[m][k].lc ? MES[m][k].mat / MES[m][k].lc * 100 : null), borderColor: line[k], backgroundColor: k === 'Pauta' ? lima : line[k], pointBorderColor: line[k], pointRadius: k === 'Pauta' ? 4 : 3, borderDash: dash[k], borderWidth:2, tension:.25, spanGaps:true, yAxisID:'y1', order:i })) ] };
   const opts = { responsive:true, maintainAspectRatio:false, interaction:{mode:'index', intersect:false},
-    plugins:{ legend:{labels:{boxWidth:10, font:{size:12}, color:fg}},
+    plugins:{ legend:{labels:{...LEYENDA, font:{size:12}, color:fg}},
       tooltip:{callbacks:{label: c => c.dataset.label + ': ' + (c.dataset.yAxisID === 'y1' ? (c.raw === null ? '—' : NF1.format(c.raw) + ' %') : fN(c.raw))}} },
     scales:{ x:{stacked:true, ticks:{color:fg, font:{size:12}}, grid:{display:false}},
       y:{stacked:true, position:'left', beginAtZero:true, ticks:{color:fg, font:{size:12}, callback: v => NF0.format(v)}, title:{display:true, text:'Leads CRM', color:fg, font:{size:12}}},
