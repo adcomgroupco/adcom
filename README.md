@@ -50,7 +50,7 @@ Lo mínimo que cumple toda página:
 
 - Carga las fuentes locales (`assets/ds/fonts.css`, sin Google Fonts) y enlaza `adcom-v2.css?v=AAAAMMDD`
   (después del CSS viejo, si todavía lo usa).
-- El encabezado lleva `.ad-marca`: el isotipo oficial (`assets/ds/logos/adcom-mark.png`) y el nombre del
+- El encabezado lleva `.ad-marca`: el wordmark oficial (`assets/logos/adcom-wordmark.png`) y el nombre del
   documento. Nunca «Adcom» escrito como si fuera el logotipo, ni logos de cliente.
 - Fondo `washi`, texto `sumi`, líneas de 1 px en `piedra`. Nada de sombras ni degradados.
 - La lima marca lo que se pulsa (`.ad-go`, `.ad-btn--accent`) y lo primero que hay que ver en cada bloque:

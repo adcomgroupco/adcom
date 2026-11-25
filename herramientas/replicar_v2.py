@@ -1,6 +1,6 @@
 """Replica el kit de diseño v2 de adcom en otro repo (ver ESTANDARES-DISENO.md, sección 15).
 
-Copia: las fuentes y el isotipo (assets/ds/), la hoja del sistema (assets/css/adcom-v2.css), el favicon, el
+Copia: las fuentes y el isotipo (assets/ds/), el wordmark (assets/logos/), la hoja del sistema (assets/css/adcom-v2.css), el favicon, el
 estándar, el verificador, la galería de componentes y la página base. Y deja una nota en AGENTS.md del repo
 destino para que un asistente de IA siga el estándar.
 
@@ -39,6 +39,7 @@ FUERA_DE_AMBITO = {
 KIT = [
     "assets/css/adcom-v2.css",
     "assets/ds",
+    "assets/logos/adcom-wordmark.png",
     "assets/favicon-adcom.png",
     "ESTANDARES-DISENO.md",
     "herramientas/auditar_v2.py",
@@ -54,7 +55,7 @@ BLOQUE = f"""{MARCA_I}
 Este repo incluye el kit de diseño v2 de `adcom`. El estándar es **`ESTANDARES-DISENO.md`**: léelo antes de
 crear o cambiar una página. Lo esencial: componentes `ad-*` de `assets/css/adcom-v2.css` (galería en
 `banco-formatos/componentes.html`), página nueva a partir de `banco-formatos/pagina-base.html`, lima solo como
-relleno con texto sumi, fuentes locales (`assets/ds/fonts.css`) e isotipo oficial. Para migrar una página
+relleno con texto sumi, fuentes locales (`assets/ds/fonts.css`) y wordmark oficial. Para migrar una página
 existente sigue `assets/ds/MIGRACION.md`. Verifica con `python -I herramientas/auditar_v2.py`.
 Los archivos del kit se regeneran con `herramientas/replicar_v2.py` desde `adcom`: no se editan aquí.
 {MARCA_F}

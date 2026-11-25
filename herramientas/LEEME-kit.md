@@ -9,7 +9,8 @@ nueva con él. Este archivo es lo primero que hay que leer.
 |---|---|
 | `ESTANDARES-DISENO.md` | **La regla.** Colores, lima, tipografía, composición, componentes, diagramas, marca, verificación |
 | `assets/css/adcom-v2.css` | La hoja del sistema: tokens y todos los componentes `ad-*` |
-| `assets/ds/` | Fuentes locales (Inter Tight e Inter), isotipo oficial, tokens y la guía de migración `MIGRACION.md` |
+| `assets/ds/` | Fuentes locales (Inter Tight e Inter), isotipo, tokens y la guía de migración `MIGRACION.md` |
+| `assets/logos/adcom-wordmark.png` | Wordmark oficial: el logo de los encabezados |
 | `assets/favicon-adcom.png` | Favicon |
 | `banco-formatos/componentes.html` | Galería viva de cada componente: ábrela con doble clic |
 | `banco-formatos/pagina-base.html` | Página de arranque lista para copiar |
@@ -35,7 +36,7 @@ python -I herramientas/replicar_v2.py --repos "C:\ruta\al\repo"            # sim
 python -I herramientas/replicar_v2.py --repos "C:\ruta\al\repo" --ejecutar # copia de verdad
 ```
 
-Qué hace: agrega al repo destino las fuentes, el isotipo, la hoja, el estándar, el verificador, la galería y la
+Qué hace: agrega al repo destino las fuentes, el wordmark y el isotipo, la hoja, el estándar, el verificador, la galería y la
 página base, con las mismas rutas; deja un bloque en su `AGENTS.md` para asistentes de IA y un `.adcom-v2.json`
 con la versión de origen. **Solo agrega archivos**: no toca las páginas existentes ni hace commit. Revisa con
 `git status` y haz el commit tú.
@@ -82,5 +83,5 @@ instrucción en el `AGENTS.md` del repo. Un buen encargo:
   compartir.
 - Los enlaces «Banco de formatos» y «Adcom» de la galería apuntan a páginas que no vienen en este kit; es
   normal.
-- Hay decisiones aún abiertas (logo definitivo, colores de estado, resaltador frente a línea): están en la
-  sección 16 del estándar.
+- Los colores de estado (verde, rojo, ámbar) son provisionales. Las decisiones tomadas y las que siguen
+  abiertas están en la sección 16 del estándar.
