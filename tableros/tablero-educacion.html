@@ -381,6 +381,12 @@ function renderLog(log){
     return `<div><span>${c}</span><span class="${x && x.estado !== 'OK' ? 'src-err' : ''}">${x ? esc(String(x.corrida).slice(0,16)) + (x.estado !== 'OK' ? ' · ' + esc(x.estado) : '') : 'sin datos'}</span></div>` }).join('');
 }
 
+// Leyenda de todas las gráficas: las líneas se ven como línea (con su color y trazo) y las barras como cuadro
+const LEYENDA = { usePointStyle: true, pointStyleWidth: 26, boxHeight: 8,
+  generateLabels: ch => Chart.defaults.plugins.legend.labels.generateLabels(ch).map(l => { const d = ch.data.datasets[l.datasetIndex];
+    return d.type === 'line' ? { ...l, pointStyle: 'line', strokeStyle: d.borderColor, lineWidth: 2.5, lineDash: d.borderDash || [] }
+      : { ...l, pointStyle: 'rectRounded', lineWidth: 0 } }) };
+
 // ── Filtros ──────────────────────────────────────────────────────────────────
 function fill(id, opts, sel, labelFn){ const el = document.getElementById(id), first = el.options[0].outerHTML;
   el.innerHTML = first + opts.map(o => `<option value="${esc(o)}"${o===sel?' selected':''}>${esc(labelFn ? labelFn(o) : o)}</option>`).join('');
@@ -714,7 +720,7 @@ function renderSemanas(f){
   const W = nTot, ini = i => addDays(w0, 7 * i), iniC = i => addDays(w0c, 7 * i);
   const lblX = (conC) => Array.from({ length: W }, (_, i) => conC ? ['S' + (i + 1), fDate(ini(i)), fDate(iniC(i))] : ['S' + (i + 1), fDate(ini(i))]);
   const baseOpts = (fmt, tit) => ({ responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
-    plugins: { legend: { labels: { boxWidth: 10, font: { family: 'Inter', size: 12 }, color: fg } }, tooltip: { callbacks: { title: tit, label: x => x.dataset.label + ': ' + (x.raw === null ? '—' : fmt(x.raw)) } } },
+    plugins: { legend: { labels: { ...LEYENDA, font: { family: 'Inter', size: 12 }, color: fg } }, tooltip: { callbacks: { title: tit, label: x => x.dataset.label + ': ' + (x.raw === null ? '—' : fmt(x.raw)) } } },
     scales: { x: { ticks: { color: fg, font: { size: 10 }, maxRotation: 0, autoSkip: true, autoSkipPadding: 4 }, grid: { display: false } },
       y: { beginAtZero: true, ticks: { color: fg, font: { size: 11 }, callback: v => fmt(v) } } } });
   const DL = window.ChartDataLabels ? [window.ChartDataLabels] : [];
@@ -947,7 +953,7 @@ function renderMes(f){
     { type:'line', label:'Leads CRM', data: ks.map(k => g[k].lc), borderColor: ink, backgroundColor: ink, borderWidth:2, tension:.25, yAxisID:'y', order:1 },
     { type:'line', label:'Matrículas', data: ks.map(k => g[k].mat), borderColor: sec, backgroundColor: sec, borderWidth:2, borderDash:[5,4], tension:.25, yAxisID:'y2', order:0 } ] };
   const opts = { responsive:true, maintainAspectRatio:false, interaction:{mode:'index', intersect:false},
-    plugins:{ legend:{labels:{boxWidth:10, font:{size:12}, color:fg}},
+    plugins:{ legend:{labels:{...LEYENDA, font:{size:12}, color:fg}},
       tooltip:{callbacks:{label: c => c.dataset.label + ': ' + (c.dataset.yAxisID === 'y1' ? fCOP(c.raw) : fN(c.raw))}} },
     scales:{ x:{ticks:{color:fg, font:{size:12}}, grid:{display:false}},
       y:{position:'left', beginAtZero:true, ticks:{color:fg, font:{size:12}, callback: v => NF0.format(v)}, title:{display:true, text:'Leads CRM', color:fg, font:{size:12}}},
@@ -1009,7 +1015,7 @@ function renderFuentes(f){
     ...FUENTES.map((k, i) => ({ type:'bar', label:'Leads ' + k.toLowerCase(), data: ks.map(m => MES[m][k].lc), backgroundColor: col[k], borderColor: css('--papel') || '#ffffff', borderWidth:{top:2}, maxBarThickness:64, stack:'leads', yAxisID:'y', order:5 + i })),
     ...FUENTES.map((k, i) => ({ type:'line', label:'Conversión ' + k.toLowerCase(), data: ks.map(m => MES[m][k].lc ? MES[m][k].mat / MES[m][k].lc * 100 : null), borderColor: line[k], backgroundColor: k === 'Pauta' ? lima : line[k], pointBorderColor: line[k], pointRadius: k === 'Pauta' ? 4 : 3, borderDash: dash[k], borderWidth:2, tension:.25, spanGaps:true, yAxisID:'y1', order:i })) ] };
   const opts = { responsive:true, maintainAspectRatio:false, interaction:{mode:'index', intersect:false},
-    plugins:{ legend:{labels:{boxWidth:10, font:{size:12}, color:fg}},
+    plugins:{ legend:{labels:{...LEYENDA, font:{size:12}, color:fg}},
       tooltip:{callbacks:{label: c => c.dataset.label + ': ' + (c.dataset.yAxisID === 'y1' ? (c.raw === null ? '—' : NF1.format(c.raw) + ' %') : fN(c.raw))}} },
     scales:{ x:{stacked:true, ticks:{color:fg, font:{size:12}}, grid:{display:false}},
       y:{stacked:true, position:'left', beginAtZero:true, ticks:{color:fg, font:{size:12}, callback: v => NF0.format(v)}, title:{display:true, text:'Leads CRM', color:fg, font:{size:12}}},
