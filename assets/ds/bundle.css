@@ -1,0 +1,110 @@
+/* Adcom — clases de componentes. Se cargan después de tokens.css y solo usan sus variables. */
+.ad-root { background: var(--washi); color: var(--sumi); font-family: var(--font-body); font-size: 17px; line-height: 1.6; }
+.ad-root * { box-sizing: border-box; }
+.ad-root h1, .ad-root h2, .ad-root h3 { margin: 0; text-wrap: balance; font-family: var(--font-display); font-weight: 500; }
+.ad-root p { margin: 0; text-wrap: pretty; }
+.ad-root a { color: var(--sumi); }
+.ad-root a:hover { color: var(--tinta-secundaria); }
+.ad-ln { display: block; text-wrap: balance; }
+
+/* Eyebrow */
+.ad-eyebrow { font-family: var(--font-display); font-size: 17px; font-weight: 500; letter-spacing: -0.005em; color: var(--tinta-suave); }
+.ad-eyebrow--dark { color: var(--sobre-oscuro-300); }
+
+/* Botones */
+.ad-btn { display: inline-flex; align-items: center; justify-content: center; min-height: var(--target-cta); padding: 14px 28px; border: 0; border-radius: var(--radius-pill); font: inherit; font-size: 16px; font-weight: 500; line-height: 1.2; text-decoration: none; cursor: pointer; }
+.ad-btn--accent { background: var(--lima); color: var(--sumi); }
+.ad-btn--accent:hover { color: var(--sumi); }
+.ad-btn--dark { min-height: var(--target-min); padding: 10px 20px; background: var(--sumi); color: #fff; font-size: 14px; }
+.ad-btn--dark:hover { color: #fff; }
+.ad-btn--outline { padding: 13px 28px; border: 1px solid var(--sumi); background: transparent; color: var(--sumi); }
+.ad-link { font-size: 16px; text-decoration: none; }
+.ad-link--dark { color: var(--washi); font-size: 15px; border-bottom: 1px solid var(--lima); padding-bottom: 2px; }
+.ad-btn:focus-visible, .ad-chip:focus-visible, .ad-link:focus-visible, .ad-input:focus-visible { outline: 2px solid var(--sumi); outline-offset: 3px; }
+
+/* Chip de filtro */
+.ad-chip { font: inherit; font-size: 14px; min-height: var(--target-min); padding: 10px 20px; border-radius: var(--radius-pill); border: 1px solid var(--piedra-borde); background: transparent; color: var(--sumi); cursor: pointer; }
+.ad-chip[aria-pressed="true"] { background: var(--sumi); border-color: var(--sumi); color: #fff; }
+
+/* Etiqueta en píldora */
+.ad-tag { display: inline-block; font-size: 17px; font-weight: 500; padding: 1px 10px; border-radius: var(--radius-pill); background: var(--lima); color: var(--sumi); }
+.ad-tag--line { font-size: 13px; padding: 0 8px; background: transparent; border: 1px solid var(--sumi); }
+.ad-pill { display: inline-block; border: 1px solid var(--piedra-borde); border-radius: var(--radius-pill); padding: 10px 22px; font-size: 15px; background: var(--papel); }
+
+/* Resaltador lima */
+.ad-hl { background: linear-gradient(transparent 10%, var(--lima) 10%, var(--lima) 90%, transparent 90%); padding: 0 6px; margin: 0 -2px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+
+/* Insignia numerada */
+.ad-n { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: 1px solid var(--sumi); border-radius: var(--radius-circle); font-family: var(--font-display); font-size: 13px; font-weight: 500; line-height: 1; flex: none; background: var(--papel); color: var(--sumi); }
+.ad-n--md { width: 30px; height: 30px; font-size: 14px; }
+.ad-n--lg { width: 48px; height: 48px; font-size: 17px; background: var(--washi); }
+.ad-n--on { background: var(--lima); border-color: var(--lima); color: var(--sumi); }
+
+/* Cifra */
+.ad-stat { display: flex; flex-direction: column; gap: 8px; }
+.ad-stat__n { font-family: var(--font-display); font-size: 64px; font-weight: 300; letter-spacing: -0.04em; line-height: 1; }
+.ad-stat--lg .ad-stat__n { font-size: 44px; }
+.ad-stat__n .ad-fill { background: var(--lima); padding: 0 8px; }
+.ad-stat__l { font-size: 15px; color: var(--tinta-secundaria); }
+.ad-stat__m { font-size: 13px; color: var(--tinta-suave); }
+
+/* Columna de capacidad */
+.ad-cap { display: flex; flex-direction: column; gap: 12px; padding: 32px 0; }
+.ad-cap__n { font-family: var(--font-display); font-size: 15px; color: var(--tinta-suave); }
+.ad-cap h3 { font-size: 26px; }
+.ad-cap__r { font-size: 14px; font-weight: 500; }
+.ad-cap__d { font-size: 15px; color: var(--tinta-secundaria); }
+.ad-cap__m { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--piedra); font-size: 13px; color: var(--tinta-suave); }
+.ad-op { font-family: var(--font-display); font-weight: 300; font-size: 44px; line-height: 1; color: var(--tinta-tenue); text-align: center; }
+.ad-op--x { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: var(--radius-circle); background: var(--lima); font-weight: 400; font-size: 28px; color: var(--sumi); }
+
+/* Tarjeta de categoría */
+.ad-cat { position: relative; display: block; height: 520px; border-radius: var(--radius-panel); overflow: hidden; background: var(--papel); border: 1px solid var(--piedra); color: var(--sumi); text-decoration: none; }
+.ad-cat--dark { background: var(--sumi); border-color: var(--sumi); color: #fff; }
+.ad-cat__body { position: absolute; left: 40px; right: 40px; bottom: 40px; display: flex; flex-direction: column; gap: 12px; }
+.ad-cat__k { font-size: 14px; color: var(--tinta-secundaria); }
+.ad-cat--dark .ad-cat__k { color: var(--piedra); }
+.ad-cat__t { font-family: var(--font-display); font-size: 44px; font-weight: 500; line-height: 1; letter-spacing: -0.03em; }
+.ad-cat__d { font-size: 16px; color: var(--tinta-secundaria); }
+.ad-cat--dark .ad-cat__d { color: var(--piedra); }
+
+/* Tarjeta de producto sobre Noche */
+.ad-prod { border: 1px solid var(--noche-borde-tarjeta); border-radius: var(--radius-card); padding: 40px; display: flex; flex-direction: column; gap: 16px; background: var(--noche); color: var(--washi); }
+.ad-prod p { color: var(--noche-texto); }
+.ad-prod__ui { height: 240px; border: 1px solid var(--noche-borde); border-radius: var(--radius-panel); background: var(--noche-panel); padding: 18px; display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 16px; font-size: 12px; color: var(--noche-texto); overflow: hidden; }
+.ad-prod__note { font-size: 11px; color: var(--noche-nota); }
+
+/* Rejilla de logos */
+.ad-logos { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); border-top: 1px solid var(--piedra); border-left: 1px solid var(--piedra); }
+.ad-logos__c { height: 104px; display: flex; align-items: center; justify-content: center; border-right: 1px solid var(--piedra); border-bottom: 1px solid var(--piedra); padding: 0 20px; font-family: var(--font-display); font-size: 18px; color: var(--sumi); filter: grayscale(1); opacity: var(--opacity-logo); mix-blend-mode: multiply; transition: opacity var(--duration-hover), filter var(--duration-hover); }
+.ad-logos__c:hover { filter: none; opacity: 1; }
+
+/* Campo de formulario */
+.ad-field { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--tinta-secundaria); }
+.ad-input { font: inherit; font-size: 16px; padding: 14px 16px; border: 1px solid var(--piedra-borde); border-radius: var(--radius-input); background: var(--papel); color: var(--sumi); }
+
+/* Header */
+.ad-nav { position: sticky; top: 0; z-index: 10; background: var(--washi-vidrio); backdrop-filter: blur(var(--blur-header)); border-bottom: 1px solid var(--piedra); }
+.ad-nav__in { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--space-6); min-height: var(--nav-height); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4); }
+.ad-nav__links { display: flex; flex-wrap: wrap; gap: 28px; font-size: 14px; }
+.ad-nav__links a { text-decoration: none; color: var(--tinta-secundaria); min-height: var(--target-min); display: inline-flex; align-items: center; }
+.ad-logo-slot { display: inline-flex; align-items: center; justify-content: center; min-height: var(--target-min); padding: 0 12px; border: 1px dashed var(--piedra-borde); border-radius: var(--radius-input); font-size: 12px; color: var(--tinta-suave); }
+
+/* Pie */
+.ad-foot { border-top: 1px solid var(--piedra); }
+.ad-foot__in { max-width: var(--container-max); margin: 0 auto; padding: 48px var(--space-6); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-6); font-size: 13px; color: var(--tinta-suave); }
+
+/* Diagramas */
+.ad-dg-line { stroke: var(--sumi); stroke-width: 1; fill: none; }
+.ad-dg-soft { stroke: var(--piedra); stroke-width: 1; fill: none; }
+.ad-dg-dot { fill: var(--sumi); }
+.ad-dg-lima { fill: var(--lima); }
+.ad-dg-paper { fill: var(--papel); stroke: var(--sumi); stroke-width: 1; }
+.ad-dg-text { font-family: var(--font-display); font-size: 12px; fill: var(--sumi); }
+@keyframes adOrbit { to { transform: rotate(360deg); } }
+@keyframes adRise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes adDraw { from { stroke-dashoffset: 680; } to { stroke-dashoffset: 0; } }
+.ad-orbit { transform-origin: 200px 200px; animation: adOrbit 16s var(--easing-linear) infinite; }
+.ad-rise { animation: adRise var(--duration-rise) var(--easing-rise) both; }
+.ad-draw { stroke-dasharray: 680; animation: adDraw var(--duration-draw) var(--easing-draw) .4s both; }
+@media (prefers-reduced-motion: reduce) { .ad-orbit, .ad-rise, .ad-draw { animation: none; } }

@@ -1,0 +1,202 @@
+/* Adcom — Sistema de diseño — generated from tokens.json */
+:root, [data-theme="claro"] {
+  --washi: #f7f6f2; /* Fondo base de toda página y de los artboards. Texto: `sumi` (17:1), `tinta-secundaria` (8,2:1) y `tinta-suave` (4,9:1) sobre este fondo. */
+  --papel: #ffffff; /* Fondo alterno: secciones 'La solución' y 'Resultados', tarjetas de diagrama, campos de formulario y pastillas de Problema. Mismo texto que sobre `washi`. */
+  --crema: #efede7; /* Fondo de la sección de contacto y de las cajas de nota (prompts de video). Texto: `sumi`, `tinta-secundaria` (7,6:1) y `tinta-suave` (4,6:1). */
+  --piedra: #e4e2dc; /* Línea fina de 1 px entre secciones, filas y tarjetas; también relleno de 'silencio' en la partitura. Decorativa: no lleva texto ni es el único indicador de un control. */
+  --piedra-borde: #d6d3cb; /* Borde de pastillas, chips inactivos y campos de formulario. Contraste 1,4:1 sobre `washi`: queda por debajo de 3:1 para bordes de control (ver aviso en README). */
+  --sumi: #141414; /* Texto principal, logotipo, líneas de diagrama, botón primario y superficie oscura de 'Growth System' y cápsulas de categoría. Sobre `lima` 16:1. */
+  --tinta-secundaria: #4a4a46; /* Texto de párrafo y descripciones sobre `washi`, `papel` y `crema`. */
+  --tinta-suave: #6b6b66; /* Etiquetas, eyebrows, pies de cifra y metadatos sobre `washi`, `papel` y `crema` (4,6–5,4:1). */
+  --tinta-tenue: #8a8a84; /* Solo texto grande (24 px o más) como énfasis atenuado ('AI las multiplica', 'por dentro'): 3,2:1. Nunca en cuerpo ni etiquetas. */
+  --lima: #d8ff3d; /* Acento único, 10 % del carácter. Solo como relleno (botón, resaltador, punto, paso final, círculo ×) con texto `sumi`; nunca como color de texto. Una vez por pantalla. */
+  --indigo: #16233a; /* Compañero de `lima` definido en la lámina 'Opciones de acento'. No aparece todavía en ninguna página del canvas; reservado. */
+  --noche: #0e0e27; /* Superficie de productos propios (LumnIA, Vincero) y de la tarjeta AI. Texto: `washi` (17,5:1), `noche-eyebrow` (8,9:1), `noche-texto` (12,2:1). */
+  --negro-escena: #0e0e0f; /* Fondo de la sección 'Personas + IA' y de los marcos de video. Texto: `washi` (17,8:1), `sobre-oscuro-200` (11,6:1), `sobre-oscuro-300` (8,1:1). */
+  --sobre-oscuro-100: var(--washi); /* Texto principal sobre `sumi`, `noche` y `negro-escena`. */
+  --sobre-oscuro-200: #c9c9c4; /* Texto de párrafo sobre `negro-escena`. */
+  --sobre-oscuro-300: #a8a8a2; /* Eyebrows y metadatos sobre `negro-escena` y `noche` (7,9–8,1:1). */
+  --noche-eyebrow: #a9b3c4; /* Eyebrow de la sección de productos sobre `noche`. */
+  --noche-texto: #c9d0db; /* Párrafos de las tarjetas de producto sobre `noche` y `noche-panel` (11–12:1). */
+  --noche-panel: #14153a; /* Fondo de las interfaces ilustrativas dentro de las tarjetas de producto. */
+  --noche-borde-tarjeta: #2e3d57; /* Borde de 1 px de la tarjeta de producto sobre `noche`. */
+  --noche-borde: #2e3057; /* Borde y divisores internos del panel ilustrativo. */
+  --noche-linea: #3b3d66; /* Barras de gráfico y línea base dentro del panel ilustrativo (la última barra va en `lima`). */
+  --noche-burbuja: #1e2050; /* Burbuja de mensaje entrante (agente) en LumnIA. */
+  --noche-burbuja-2: #2a2d63; /* Burbuja de mensaje saliente (persona) en LumnIA. */
+  --noche-muted: #8e96b8; /* Etiquetas secundarias dentro del panel ilustrativo sobre `noche-panel` (6:1). */
+  --noche-nota: #6f77a0; /* Nota 'Interfaz ilustrativa' bajo el panel. Contraste 4,3:1 sobre `noche`: queda por debajo de 4,5:1 a 11 px (ver aviso en README). */
+  --washi-vidrio: rgba(247,246,242,0.86); /* Fondo translúcido del header fijo, con desenfoque (`blur-header`). */
+}
+:root {
+  --space-2: 8px; /* Huecos mínimos: etiqueta–título dentro de un bloque, gap de píldoras. */
+  --space-4: 16px; /* Gap estándar entre elementos de un grupo; padding de panel pequeño. */
+  --space-6: 24px; /* Gutter lateral del contenedor; gap entre tarjetas; padding de píldora grande. */
+  --space-8: 32px; /* Padding de fila de capacidad; gap entre columnas de pasos. */
+  --space-10: 40px; /* Padding de tarjeta de producto y de categoría; gap de bloques de texto. */
+  --space-12: 48px; /* Gap entre bloques de una sección compacta. */
+  --space-16: 64px; /* Gap entre encabezado y contenido de una sección; separación del diagrama del hero. */
+  --space-24: 96px; /* Padding inferior del hero y separación vertical compacta. */
+  --space-32: 128px; /* Padding superior del hero y de secciones secundarias (Brand Group). */
+  --space-40: 160px; /* Separación vertical estándar entre secciones ('160 px entre secciones'). */
+  --container-max: 1200px; /* Ancho máximo del contenido de página; se centra con `space-6` de gutter. */
+  --nav-height: 64px; /* Altura mínima del header fijo. */
+  --target-min: 44px; /* Alto mínimo de cualquier elemento tocable (enlaces de nav, chips, píldoras). */
+  --target-cta: 48px; /* Alto mínimo de un botón de acción principal. */
+  --radius-input: 2px; /* Campos de formulario. */
+  --radius-card: 4px; /* Tarjetas, imágenes, cajas de nota y marcos de video. 'Lo que se lee es recto'. */
+  --radius-panel: 6px; /* Tarjetas grandes de categoría, tarjetas de diagrama y paneles ilustrativos. */
+  --radius-pill: 999px; /* Todo lo que se toca: botones, chips, etiquetas de capacidad. */
+  --radius-circle: 50%; /* Insignias numeradas, círculo ×, puntos y anillos. */
+  --duration-hover: 400ms; /* Transición de opacidad y filtro de los logos de cliente al pasar el cursor. */
+  --duration-rise: 700ms; /* Entrada de nodos y notas (`adRise`: sube 8 px y aparece). Escalonada cada 500 ms en el hero. */
+  --duration-draw: 2200ms; /* Dibujo de la línea del hero (`adDraw`), con 400 ms de retardo. */
+  --duration-runner: 6500ms; /* Recorrido del punto que salta obstáculos en el hero; arranca a 2600 ms y repite. */
+  --duration-loop-short: 4000ms; /* Pulso de nodos de red (`lpPulse`); límite inferior de 'ciclos de 4 a 14 s'. */
+  --duration-loop-mid: 9000ms; /* Dibujo de líneas de red (`lpDraw`) y flotación de piezas (6 a 9 s). */
+  --duration-orbit: 14000ms; /* Órbita del diagrama (`dgspin` 14 s; el anillo del Growth System gira a 16 s; la tarjeta Gambling a 10 s). */
+  --easing-draw: cubic-bezier(.2,.7,.2,1); /* Línea que se dibuja al entrar (`adDraw`). */
+  --easing-rise: ease-out; /* Aparición de nodos y notas (`adRise`). */
+  --easing-loop: ease-in-out; /* Loops de pulso, flotación, onda y red. */
+  --easing-linear: linear; /* Órbitas, subida de tarjetas y marquesina: velocidad constante. */
+  --opacity-logo: 0.62; /* Logos de cliente en reposo (con `grayscale(1)` y `mix-blend-mode: multiply`); 1 al pasar el cursor. */
+  --blur-header: 16px; /* Desenfoque de fondo del header fijo (`backdrop-filter`). */
+  --font-display: "Inter Tight", system-ui, sans-serif;
+  --font-body: Inter, system-ui, sans-serif;
+  --text-display-hero: 500 104px/1.02 var(--font-display); /* H1 del Home. Fluido: clamp(48px, 8vw, 104px). */
+  --text-statement: 500 72px/1.04 var(--font-display); /* Frase de sección sobre fondo oscuro. Fluido: clamp(36px, 5.5vw, 72px). */
+  --text-h2: 500 60px/1.05 var(--font-display); /* H2 de sección. Fluido: clamp(36px, 5vw, 60px). */
+  --text-h2-compact: 500 44px/1.1 var(--font-display); /* H2 de bloque corporativo (Brand Group). Fluido: clamp(30px, 4vw, 44px). */
+  --text-titulo-categoria: 500 44px/1 var(--font-display); /* Título de tarjeta de categoría. */
+  --text-h3-diagrama: 500 32px/1.15 var(--font-display); /* Título de columna en diagramas. */
+  --text-h3-capacidad: 500 26px/1.2 var(--font-display); /* Título de capacidad y de fila oscura. */
+  --text-eyebrow: 500 17px/1.6 var(--font-display); /* Etiqueta de sección sobre el titular, en `tinta-suave`; sin mayúsculas. */
+  --text-lead: 400 21px/1.5 var(--font-body); /* Subtítulo bajo el H1. */
+  --text-body: 400 17px/1.6 var(--font-body); /* Párrafo base de página. */
+  --text-body-sm: 400 15px/1.5 var(--font-body); /* Descripciones en columnas y tarjetas. */
+  --text-caption: 400 14px/1.5 var(--font-body); /* Navegación, metadatos y notas. */
+  --text-label: 400 13px/1.5 var(--font-body); /* Rótulos de campo y pies de cifra. */
+  --text-button: 500 16px/1.2 var(--font-body); /* Botón de acción principal. */
+  --text-button-sm: 500 14px/1.2 var(--font-body); /* Botón de header y chips. */
+  --text-cifra-xl: 300 64px/1 var(--font-display); /* Dato destacado en 'Resultados'. Peso 300: finas y grandes. */
+  --text-cifra-lg: 300 44px/1 var(--font-display); /* Franja de cifras del Home. */
+}
+.display-hero {
+  font-family: var(--font-display);
+  font-size: 104px;
+  line-height: 1.02;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+.statement {
+  font-family: var(--font-display);
+  font-size: 72px;
+  line-height: 1.04;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+.h2 {
+  font-family: var(--font-display);
+  font-size: 60px;
+  line-height: 1.05;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+.h2-compact {
+  font-family: var(--font-display);
+  font-size: 44px;
+  line-height: 1.1;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+.titulo-categoria {
+  font-family: var(--font-display);
+  font-size: 44px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+.h3-diagrama {
+  font-family: var(--font-display);
+  font-size: 32px;
+  line-height: 1.15;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.h3-capacidad {
+  font-family: var(--font-display);
+  font-size: 26px;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.eyebrow {
+  font-family: var(--font-display);
+  font-size: 17px;
+  line-height: 1.6;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+.lead {
+  font-family: var(--font-body);
+  font-size: 21px;
+  line-height: 1.5;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.body {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.body-sm {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.caption {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.label {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.button {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.button-sm {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.cifra-xl {
+  font-family: var(--font-display);
+  font-size: 64px;
+  line-height: 1;
+  font-weight: 300;
+  letter-spacing: -0.04em;
+}
+.cifra-lg {
+  font-family: var(--font-display);
+  font-size: 44px;
+  line-height: 1;
+  font-weight: 300;
+  letter-spacing: -0.04em;
+}
