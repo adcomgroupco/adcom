@@ -82,6 +82,12 @@ def archivos_del_kit():
 
 
 def commit_origen() -> str:
+    # Dentro del kit empaquetado no hay git: la versión viene en el archivo VERSION (empaquetar_kit.py).
+    version = RAIZ / "VERSION"
+    if version.exists():
+        for linea in version.read_text(encoding="utf-8").splitlines():
+            if linea.startswith("commit="):
+                return linea.split("=", 1)[1].strip()
     try:
         r = subprocess.run(["git", "-C", str(RAIZ), "rev-parse", "--short", "HEAD"], capture_output=True,
                            text=True, check=True)

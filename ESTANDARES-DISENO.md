@@ -326,6 +326,16 @@ cliente. **v2** (este documento) está en `adcom`. Para llevar v2 a otro repo:
 5. Cuando v2 se apruebe para los clientes, `adcom-v2.css` se mueve a `sistema/` y `sync.ps1` lo copia a cada repo
    en lugar de copiarlo a mano. **Hasta entonces `sync.ps1` no se toca**: sigue regenerando v1.
 
+**Para compartir el kit con alguien que no tiene este repo**, se empaqueta en un `.zip` autosuficiente:
+
+```text
+python -I herramientas/empaquetar_kit.py        # deja Adcom-kit-diseno-v2-AAAA-MM-DD.zip en Descargas
+```
+
+Trae el kit, el estándar, el verificador, el instalador y un `LEEME.md` con los pasos (instalación automática,
+manual y cómo encargárselo a una IA). Se regenera cada vez que cambia el sistema y se comparte por correo o
+Drive: el zip es un entregable y no se guarda dentro del repo.
+
 El sitio web (`sitio-adcom`) usa estilos en línea exportados del canvas: es la referencia **visual**, no la
 técnica. No se copia su código; se reconstruye su composición con los componentes de aquí.
 
