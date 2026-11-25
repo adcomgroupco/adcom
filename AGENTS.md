@@ -21,7 +21,7 @@ Lo esencial, para no olvidarlo:
    `.ad-cierre`. Tableros e informes de datos mantienen fondo claro.
 3. **Lima:** siempre relleno con texto `sumi`; nunca texto ni línea. Marca lo que se pulsa y una cosa por
    bloque, entre 4 y 10 rellenos por página. `.ad-estado--ok` no se rellena.
-4. **Encabezado:** `.ad-marca` con el isotipo oficial. Nunca «Adcom» escrito como logotipo ni logos de cliente.
+4. **Encabezado:** `.ad-marca` con el wordmark oficial (`assets/logos/adcom-wordmark.png`). Nunca «Adcom» escrito como logotipo ni logos de cliente.
 5. **Fuentes locales** (`assets/ds/fonts.css`): nada de Google Fonts. Hojas con `?v=AAAAMMDD`: al editar una,
    sube el número en las páginas que la enlazan.
 6. **Sin sombras ni degradados decorativos, sin mayúsculas forzadas, sin emoji ni exclamaciones.** Titulares

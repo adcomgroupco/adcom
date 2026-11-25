@@ -15,7 +15,7 @@ Contenido: [1 Principios](#1-principios) · [2 Archivos](#2-archivos-y-cómo-enl
 [9 Marca](#9-marca) · [10 Voz](#10-contenido-y-voz) · [11 Accesibilidad](#11-accesibilidad-y-responsive) ·
 [12 Privacidad](#12-privacidad-en-plantillas) · [13 Verificación](#13-verificación) ·
 [14 Páginas nuevas](#14-crear-una-página-o-un-componente-nuevo) · [15 Replicar](#15-replicar-en-otro-repo) ·
-[16 Pendientes](#16-decisiones-abiertas)
+[16 Decisiones](#16-decisiones)
 
 ## 1. Principios
 
@@ -35,7 +35,8 @@ un diagrama que explica y una marca de lima que dice dónde mirar.
 |---|---|---|
 | `assets/css/adcom-v2.css` | Tokens, puente de nombres del sistema anterior, componentes `ad-*` (secciones 5b y 5c) | Sí, es la fuente |
 | `assets/ds/fonts.css` y `fonts/` | Inter Tight e Inter, locales | No |
-| `assets/ds/logos/adcom-mark.png` | Isotipo oficial (negro, 256×213) | No |
+| `assets/logos/adcom-wordmark.png` | **Wordmark oficial** «adcom» (negro, 800×183): el logo de los encabezados | No |
+| `assets/ds/logos/adcom-mark.png` | Isotipo (negro, 256×213): solo favicon y apple-touch | No |
 | `assets/favicon-adcom.png` | Favicon | No |
 | `banco-formatos/formatos.css` | Estilo compartido de las plantillas del banco | Sí |
 | `banco-formatos/componentes.html` | Galería viva de cada componente | Sí, al crear uno |
@@ -210,9 +211,13 @@ un párrafo largo para entenderse, está mal planteado. Si una lista basta, se u
 
 ## 9. Marca
 
-- El encabezado lleva `.ad-marca`: el **isotipo oficial** (`assets/ds/logos/adcom-mark.png`) más un separador y
-  el nombre del documento en texto. Sobre fondo oscuro, `.ad-marca--claro` (isotipo en blanco).
-- **Nunca** escribir «Adcom» en texto como si fuera el logotipo ni redibujar la marca.
+- El encabezado lleva `.ad-marca`: el **wordmark oficial** (`assets/logos/adcom-wordmark.png`, 22 px de alto)
+  más un separador y el nombre del documento en texto. Sobre fondo oscuro, `.ad-marca--claro` (wordmark en
+  blanco).
+- **Nunca** escribir «Adcom» en texto como si fuera el logotipo ni redibujar la marca. El isotipo
+  (`assets/ds/logos/adcom-mark.png`) queda para el favicon.
+- `assets/ds/MIGRACION.md` (exportación del equipo) dice «el logo es solo el isotipo». Se decidió usar el
+  wordmark oficial en los encabezados; ese documento no se edita y en este repo manda este estándar.
 - **Sin logos de cliente** en portadas ni encabezados: el nombre del cliente va en texto. Las imágenes que son
   contenido (previews de anuncios, capturas, piezas) se conservan.
 - Los logos de clientes pueden mostrarse en gris (`opacity-logo`, `grayscale(1)`, `multiply`) y recuperar su
@@ -264,7 +269,7 @@ El auditor cuenta, por archivo: amarillo del sistema anterior, Poppins, sombras,
 fuera de norma, colores fuera de paleta, emoji, exclamaciones, `lang`. Objetivo: **0** en todo salvo los
 colores de estado provisionales.
 
-- [ ] Encabezado con `.ad-marca`; sin wordmark escrito ni logos de cliente.
+- [ ] Encabezado con `.ad-marca` (wordmark oficial); sin «Adcom» escrito como logo ni logos de cliente.
 - [ ] `fonts.css` y `adcom-v2.css?v=` enlazados; sin Google Fonts.
 - [ ] Cada bloque grande en `.ad-sec`; fondos que alternan en páginas no densas.
 - [ ] Un diagrama protagonista con la lógica de la página (no densas) y un cierre `.ad-cierre`.
@@ -304,7 +309,20 @@ solo con tokens; demo en `componentes.html`; sube `?v=`; verifica contraste, foc
 Hoy conviven dos sistemas. **v1** (amarillo `#ffd400`, Poppins; `sistema/` con `sync.ps1`) está en los repos de
 cliente. **v2** (este documento) está en `adcom`. Para llevar v2 a otro repo:
 
-1. Copia `assets/ds/` (fuentes, logos, favicon) y `assets/css/adcom-v2.css` al repo, en las mismas rutas.
+1. **Copia el kit con la herramienta**, no a mano. Desde la raíz de `adcom`:
+
+   ```text
+   python -I herramientas/replicar_v2.py --repos cesde            # simula: no escribe nada
+   python -I herramientas/replicar_v2.py --repos cesde --ejecutar # copia
+   python -I herramientas/replicar_v2.py --todos                  # simula en todo el ámbito
+   ```
+
+   Agrega `assets/ds/` (fuentes, isotipo, favicon), `assets/logos/` (wordmark), `assets/css/adcom-v2.css`, este estándar, el verificador,
+   la galería de componentes, la página base y un bloque en `AGENTS.md` para asistentes de IA, y deja
+   `.adcom-v2.json` con el commit y la fecha de origen. Solo **agrega**: no toca las páginas del repo ni el
+   sistema anterior, respeta el ámbito de `sync.ps1` (Westfield, Loyevo y `otros` quedan fuera) y no hace
+   commit. Para actualizar un repo más adelante, se vuelve a correr: las copias se regeneran y lo propio no se
+   toca. Los archivos del kit no se editan en el destino.
 2. Enlaza las hojas como en la sección 2 y carga la fuente local; quita Google Fonts.
 3. Para cada página, sigue `assets/ds/MIGRACION.md` (qué cambia y qué no: la capa visual cambia; contenido, datos
    y JS no) y la lista de la sección 13. Conserva los ids y clases que usa el JS.
@@ -313,17 +331,31 @@ cliente. **v2** (este documento) está en `adcom`. Para llevar v2 a otro repo:
 5. Cuando v2 se apruebe para los clientes, `adcom-v2.css` se mueve a `sistema/` y `sync.ps1` lo copia a cada repo
    en lugar de copiarlo a mano. **Hasta entonces `sync.ps1` no se toca**: sigue regenerando v1.
 
+**Para compartir el kit con alguien que no tiene este repo**, se empaqueta en un `.zip` autosuficiente:
+
+```text
+python -I herramientas/empaquetar_kit.py        # deja Adcom-kit-diseno-v2-AAAA-MM-DD.zip en Descargas
+```
+
+Trae el kit, el estándar, el verificador, el instalador y un `LEEME.md` con los pasos (instalación automática,
+manual y cómo encargárselo a una IA). Se regenera cada vez que cambia el sistema y se comparte por correo o
+Drive: el zip es un entregable y no se guarda dentro del repo.
+
 El sitio web (`sitio-adcom`) usa estilos en línea exportados del canvas: es la referencia **visual**, no la
 técnica. No se copia su código; se reconstruye su composición con los componentes de aquí.
 
-## 16. Decisiones abiertas
+## 16. Decisiones
 
-- **Resaltador o línea.** El sitio resalta la palabra clave con un fondo lima detrás del texto (`.ad-hl`, lo que
-  usa este repo). El feedback del equipo en `assets/ds/MIGRACION.md` pide en cambio una línea gruesa bajo la
-  palabra. Pendiente de unificar; cambiarlo es una sola clase.
-- **Logo definitivo.** El estándar fija el isotipo como provisional. El sitio trae un wordmark «adcom» en PNG que
-  podría ser el definitivo.
-- **Colores de estado** (verde, rojo, ámbar): provisionales hasta que el sistema los defina.
+**Cerradas (2026-11-25):**
+
+- **Resaltador.** La palabra clave del titular se resalta con fondo lima detrás del texto (`.ad-hl`), como en el sitio
+  web. El feedback del equipo en `assets/ds/MIGRACION.md` pedía una línea gruesa debajo; se decidió mantener el resaltador.
+- **Logo.** Los encabezados usan el wordmark oficial (`assets/logos/adcom-wordmark.png`), no el isotipo.
+- **Colores de estado** (verde, rojo, ámbar): siguen **provisionales** hasta que el sistema los defina. Se usan solo con
+  texto y forma.
+
+**Abiertas:**
+
 - **`adcom-v2.css` en `sistema/`** y su sincronización a los repos de cliente (sección 15).
 - **Lima en el artefacto original.** El sistema de Claude Chat dice «una por pantalla»; este repo usa «una por
   bloque». Conviene actualizar el artefacto para que coincida.
@@ -333,3 +365,4 @@ técnica. No se copia su código; se reconstruye su composición con los compone
 | Fecha | Cambio |
 |---|---|
 | 2026-11 | v2: capa `adcom-v2.css`, componentes `ad-*`, composición con ritmo y diagramas, isotipo y fuentes locales, banco de formatos |
+| 2026-11 | Wordmark oficial en los encabezados; cierre de decisiones sobre resaltador y estados |

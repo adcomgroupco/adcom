@@ -676,9 +676,9 @@ a.ad-fila:hover .ad-fila__t{text-decoration:underline;text-decoration-thickness:
 
 .ad-wrap{max-width:var(--container-max);margin-inline:auto;padding-inline:var(--space-6)}
 
-/* Marca: isotipo oficial + nombre del documento. Nunca un wordmark escrito a mano. */
+/* Marca: wordmark oficial (assets/logos/adcom-wordmark.png) + nombre del documento. Nunca «Adcom» escrito como texto. */
 .ad-marca{display:inline-flex;align-items:center;gap:12px;min-height:var(--target-min);color:var(--sumi);text-decoration:none}
-.ad-marca img{display:block;width:30px;height:auto}
+.ad-marca img{display:block;height:22px;width:auto}
 .ad-marca i{font-style:normal;font-size:14px;line-height:1.2;color:var(--tinta-secundaria);padding-left:12px;border-left:1px solid var(--piedra-borde)}
 .ad-marca--claro{color:var(--sobre-oscuro-100)}
 .ad-marca--claro img{filter:invert(1)}
