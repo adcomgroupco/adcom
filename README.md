@@ -28,6 +28,7 @@ adcom/
 ├── ESTANDARES-DISENO.md          estándares de diseño v2: la regla, la verificación y cómo replicar
 ├── AGENTS.md · CLAUDE.md         reglas para asistentes de IA que trabajen en el repo
 ├── herramientas/auditar_v2.py    verificador de los estándares (python -I herramientas/auditar_v2.py)
+├── herramientas/replicar_v2.py   copia el kit de diseño v2 a otro repo (simula por defecto; --ejecutar copia)
 ├── sistema/                      sistema v1 de los repos de cliente y su sync.ps1
 └── README.md
 ```

@@ -304,7 +304,20 @@ solo con tokens; demo en `componentes.html`; sube `?v=`; verifica contraste, foc
 Hoy conviven dos sistemas. **v1** (amarillo `#ffd400`, Poppins; `sistema/` con `sync.ps1`) está en los repos de
 cliente. **v2** (este documento) está en `adcom`. Para llevar v2 a otro repo:
 
-1. Copia `assets/ds/` (fuentes, logos, favicon) y `assets/css/adcom-v2.css` al repo, en las mismas rutas.
+1. **Copia el kit con la herramienta**, no a mano. Desde la raíz de `adcom`:
+
+   ```text
+   python -I herramientas/replicar_v2.py --repos cesde            # simula: no escribe nada
+   python -I herramientas/replicar_v2.py --repos cesde --ejecutar # copia
+   python -I herramientas/replicar_v2.py --todos                  # simula en todo el ámbito
+   ```
+
+   Agrega `assets/ds/` (fuentes, isotipo, favicon), `assets/css/adcom-v2.css`, este estándar, el verificador,
+   la galería de componentes, la página base y un bloque en `AGENTS.md` para asistentes de IA, y deja
+   `.adcom-v2.json` con el commit y la fecha de origen. Solo **agrega**: no toca las páginas del repo ni el
+   sistema anterior, respeta el ámbito de `sync.ps1` (Westfield, Loyevo y `otros` quedan fuera) y no hace
+   commit. Para actualizar un repo más adelante, se vuelve a correr: las copias se regeneran y lo propio no se
+   toca. Los archivos del kit no se editan en el destino.
 2. Enlaza las hojas como en la sección 2 y carga la fuente local; quita Google Fonts.
 3. Para cada página, sigue `assets/ds/MIGRACION.md` (qué cambia y qué no: la capa visual cambia; contenido, datos
    y JS no) y la lista de la sección 13. Conserva los ids y clases que usa el JS.
