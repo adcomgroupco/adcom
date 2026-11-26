@@ -1,7 +1,7 @@
 # Adcom
 
 Material interno del área digital de Adcom: el framework de operación, los tableros por cliente y
-los diagnósticos de sector.
+los diagnósticos de sector y los talleres de pauta.
 
 Todo es HTML estático. No hay build, ni dependencias, ni servidor: se abre haciendo doble clic en
 `index.html`.
@@ -18,6 +18,7 @@ adcom/
 ├── banco-formatos/               plantillas HTML, hojas de trabajo, galería de componentes (componentes.html),
 │                                 página base (pagina-base.html) e instructivo de replicación
 ├── guias/                        guía interactiva de cómo trabajamos con IA
+├── talleres/                     presentaciones de talleres en HTML y sus recursos
 ├── playbook-creativo/            biblioteca visual de formatos y posibilidades de pauta
 ├── framework/                    framework del área digital · v0.3
 │   ├── index.html                el documento completo, con herramientas interactivas
@@ -84,6 +85,19 @@ llevan su CSS embebido. Mover una carpeta no rompe a las demás.
 
 El playbook creativo abre desde `playbook-creativo/index.html` y funciona con doble clic, sin servidor.
 Sus fichas editoriales viven en `assets/data.js`; las referencias, en `assets/references.js`.
+
+## Talleres
+
+Los cuatro [talleres](talleres/index.html) montan las guías de formación de 2025 (PowerPoint) como páginas
+con el sistema v2. Son la base: se complementan con secciones nuevas siguiendo
+[`talleres/README.md`](talleres/README.md) (fuentes, reglas de cifras y privacidad, cómo agregar un taller).
+
+| Taller | Qué se puede hacer |
+| --- | --- |
+| [Entorno digital](talleres/entorno-digital.html) | Ver el rol de cada red y repartir el crédito de una compra con cuatro modelos de atribución. |
+| [Segmentación](talleres/segmentacion.html) | Ver quién cabe dentro de un interés y cómo decide Meta, Google y TikTok. |
+| [Comunicación](talleres/comunicacion.html) | Recorrer el método ABCD y comparar seis estructuras de anuncio. |
+| [Contenido para anuncios](talleres/contenido-anuncios.html) | Armar un mensaje con la matriz de ingeniería creativa y probar el área segura en Reels y Stories. |
 
 ## Cómo agregar un destino al portal
 

@@ -1,0 +1,124 @@
+/* Talleres · solo lo particular de estas páginas (prefijo ta-). Todo lo demás sale de adcom-v2.css.
+   Piezas: selector de paneles, simulador de área segura, matriz de mensajes y crédito de atribución. */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:var(--nav-height)}
+body{margin:0;background:var(--washi);color:var(--sumi)}
+.ad-nav__links a:hover{color:var(--sumi)}
+/* Móvil: el sistema no trae menú compacto. Enlaces en una fila desplazable y encabezado no fijo,
+   para que no ocupe media pantalla. Candidato a subir a adcom-v2.css. */
+@media (max-width:640px){
+  .ad-nav{position:static}
+  html{scroll-padding-top:0}
+  .ad-nav__links{flex-wrap:nowrap;overflow-x:auto;width:100%;gap:var(--space-6);scrollbar-width:none}
+  .ad-nav__links a{flex:none}
+}
+
+/* Texto de lectura dentro de las secciones */
+.ta-lista{margin:0;padding:0;list-style:none;border-top:1px solid var(--piedra)}
+.ta-lista>li{padding:var(--space-4) 0;border-bottom:1px solid var(--piedra);color:var(--tinta-secundaria)}
+.ta-lista>li b{display:block;color:var(--sumi);font-weight:500}
+:is(.ad-sec--oscuro,.ad-oscuro) .ta-lista,:is(.ad-sec--oscuro,.ad-oscuro) .ta-lista>li{border-color:rgba(247,246,242,.16);color:var(--sobre-oscuro-200)}
+:is(.ad-sec--oscuro,.ad-oscuro) .ta-lista>li b{color:var(--sobre-oscuro-100)}
+.ta-fuente{margin-block-start:var(--space-4);font-size:13px;color:var(--tinta-suave)}
+:is(.ad-sec--oscuro,.ad-oscuro) .ta-fuente{color:var(--sobre-oscuro-300)}
+.ta-mt{margin-block-start:var(--space-12)}
+.ta-centro{text-align:center;margin-inline:auto}
+
+/* Frase protagonista: una idea por pantalla, como una diapositiva de la guía.
+   Tercera línea opcional en tono tenue (.ta-tenue), como el sitio. */
+.ta-frase .ad-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;gap:var(--space-6)}
+.ta-frase .ad-t-statement{margin:0;max-width:20ch}
+.ta-frase .ad-lead{max-width:52ch;margin:0}
+.ta-tenue{color:var(--tinta-tenue)}
+:is(.ad-sec--oscuro,.ad-oscuro) .ta-tenue{color:var(--sobre-oscuro-300)}
+:is(.ad-sec--oscuro,.ad-oscuro) .ta-frase .ad-lead{color:var(--sobre-oscuro-200)}
+
+/* Columnas con regla superior: la grilla de ideas paralelas del sitio, en lugar de listas. */
+.ta-caps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(var(--col,240px),100%),1fr));gap:0 var(--space-8);margin:0;padding:0;list-style:none;border-top:1px solid var(--sumi)}
+.ta-caps>*{display:flex;flex-direction:column;gap:var(--space-2);padding-block:var(--space-6)}
+.ta-caps h3{margin:0;font-family:var(--font-display);font-weight:500;font-size:clamp(19px,1.8vw,22px);line-height:1.2;letter-spacing:-.01em}
+.ta-caps p{margin:0;font-size:15px;line-height:1.55;color:var(--tinta-secundaria)}
+.ta-caps .ta-k{font-size:13px;color:var(--tinta-suave)}
+.ta-caps .ad-stat__n{font-size:clamp(32px,3.4vw,44px)}
+:is(.ad-sec--oscuro,.ad-oscuro) .ta-caps{border-top-color:rgba(247,246,242,.32)}
+:is(.ad-sec--oscuro,.ad-oscuro) .ta-caps p{color:var(--sobre-oscuro-200)}
+:is(.ad-sec--oscuro,.ad-oscuro) .ta-caps .ta-k{color:var(--sobre-oscuro-300)}
+:is(.ad-sec--oscuro,.ad-oscuro) .ta-caps .ad-stat__n{color:var(--sobre-oscuro-100)}
+
+/* Diagramas en SVG (cruce y red): usan las clases ad-dg-* del sistema. */
+.ta-svg{display:block;width:100%;max-width:var(--max,640px);margin-inline:auto;height:auto;overflow:visible}
+.ta-svg .ad-dg-text{font-size:13px}
+.ta-svg .ta-dg-titulo{font-family:var(--font-display);font-size:16px;font-weight:500;fill:var(--sumi)}
+.ta-svg .ta-dg-suave{font-family:var(--font-body);font-size:12px;fill:var(--tinta-suave)}
+/* Tonos de anuncio en los esquemas: se distinguen por luminosidad, sin colores fuera de paleta. */
+.ta-dg-c1{fill:var(--sumi)}
+.ta-dg-c2{fill:var(--tinta-secundaria)}
+.ta-dg-c3{fill:var(--tinta-tenue)}
+/* Tabla de modelos de IA con logos monocromos (sprite <symbol> en la página, como la guía de IA). */
+.ta-sprite{position:absolute;width:0;height:0;overflow:hidden}
+.ta-logo{width:24px;height:24px;flex:none;fill:currentColor}
+.ta-modelos th[scope=row] small,.ta-modelo small{display:block;font-size:13px;font-weight:400;color:var(--tinta-suave)}
+.ta-modelos td,.ta-modelos th{vertical-align:top;padding-block:var(--space-4)}
+.ta-modelos td.valor{font-family:var(--font-display);font-size:22px;font-weight:300}
+.ta-modelo{display:flex;align-items:flex-start;gap:10px;line-height:1.3}
+.ta-modelo+.ta-modelo{margin-block-start:var(--space-4)}
+.ta-modelo--texto{padding-inline-start:34px}
+/* Esquemas anchos: en móvil se desplazan dentro de su caja en lugar de encogerse hasta no leerse. */
+.ta-svg-scroll{overflow-x:auto}
+@media (max-width:760px){.ta-svg-scroll .ta-svg{min-width:720px}}
+
+/* Selector: chips que muestran un panel. Sin JS, todos los paneles quedan visibles. */
+.ta-chips{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:0 0 var(--space-8)}
+.ta-panel>h3{margin:0 0 var(--space-4);font-family:var(--font-display);font-weight:500;font-size:clamp(22px,2.6vw,26px);letter-spacing:-.02em}
+.ta-panel+.ta-panel{margin-block-start:var(--space-12)}
+.js .ta-panel+.ta-panel{margin-block-start:0}
+
+/* Ficha de pares etiqueta / valor dentro de un panel */
+.ta-pares{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:var(--space-6);margin:0}
+.ta-pares>div{border-top:1px solid var(--sumi);padding-block-start:var(--space-4)}
+.ta-pares dt{font-size:13px;color:var(--tinta-suave)}
+.ta-pares dd{margin:var(--space-2) 0 0;font-size:17px;line-height:1.5}
+
+/* Puntos de contacto por etapa */
+.ta-etapas{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:var(--space-6)}
+.ta-etapas h3{margin:0 0 var(--space-4);font-family:var(--font-display);font-weight:500;font-size:22px}
+.ta-etapas ul{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:0;padding:0;list-style:none}
+.ta-etapas li{padding:6px 14px;border:1px solid var(--piedra-borde);border-radius:var(--radius-pill);font-size:14px;background:var(--papel)}
+.ta-etapas li.ta-off{border-style:dashed;background:transparent}
+
+/* Atribución: un recorrido y el crédito que le da cada modelo */
+.ta-credito{margin:0;padding:0;list-style:none;display:grid;gap:var(--space-4)}
+.ta-credito li{display:grid;grid-template-columns:minmax(120px,1fr) 3fr 64px;gap:var(--space-4);align-items:center}
+.ta-credito b{font-weight:500}
+.ta-credito output{font-family:var(--font-display);font-size:22px;font-weight:300;text-align:right}
+@media (max-width:640px){.ta-credito li{grid-template-columns:1fr 64px}.ta-credito .ad-barra{grid-column:1/-1;grid-row:2}}
+
+/* Simulador de área segura (9:16) */
+.ta-sim{display:grid;grid-template-columns:minmax(0,280px) minmax(0,1fr);gap:var(--space-12);align-items:start}
+@media (max-width:760px){.ta-sim{grid-template-columns:minmax(0,1fr)}}
+.ta-tel{position:relative;width:100%;max-width:280px;aspect-ratio:9/16;background:var(--papel);border:2px solid var(--sumi);border-radius:var(--radius-panel);overflow:hidden}
+.ta-tel__pieza{position:absolute;inset:0;display:grid;place-items:center;color:var(--tinta-suave);font-size:13px}
+.ta-zona{position:absolute;background:var(--piedra);border:0 dashed var(--tinta-tenue)}
+.ta-zona--arriba{left:0;right:0;top:0;height:var(--t);border-bottom-width:1px}
+.ta-zona--abajo{left:0;right:0;bottom:0;height:var(--b);border-top-width:1px}
+.ta-zona--izq{left:0;top:var(--t);bottom:var(--b);width:var(--l);border-right-width:1px}
+.ta-zona--der{right:0;top:var(--t);bottom:var(--b);width:var(--l);border-left-width:1px}
+.ta-zona--iconos{right:0;bottom:var(--b);height:var(--ih);width:var(--iw);border-left-width:1px;border-top-width:1px}
+.ta-cta{position:absolute;left:50%;transform:translateX(-50%);max-width:80%;padding:6px 14px;background:var(--sumi);color:var(--washi);border-radius:var(--radius-pill);font-size:14px;font-weight:500;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ta-controles{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-6);min-width:0}
+.ta-controles .ad-estado{white-space:normal;height:auto}
+.ta-controles input{width:100%;min-width:0}
+.ta-controles label{display:grid;gap:var(--space-2);font-size:14px;color:var(--tinta-suave)}
+.ta-controles input[type=range]{width:100%;min-height:var(--target-min);accent-color:var(--sumi)}
+.ta-controles input[type=text]{font:inherit;font-size:16px;min-height:var(--target-min);padding:0 var(--space-4);border:1px solid var(--piedra-borde);border-radius:var(--radius-input);background:var(--papel);color:var(--sumi)}
+
+/* Matriz de mensajes: una opción por columna */
+.ta-matriz{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(140px,100%),1fr));gap:var(--space-4)}
+.ta-matriz fieldset{margin:0;padding:var(--space-4) 0 0;border:0;border-top:1px solid var(--sumi);min-width:0}
+.ta-matriz legend{float:left;width:100%;margin-block-end:var(--space-4);font-family:var(--font-display);font-weight:500;font-size:17px}
+.ta-matriz legend small{display:block;font-family:var(--font-body);font-weight:400;font-size:13px;color:var(--tinta-suave)}
+.ta-matriz .ad-chip{display:block;width:100%;margin-block-end:var(--space-2);text-align:left;font-size:14px;line-height:1.35;padding:10px 16px}
+/* Elegir en la matriz no gasta lima: la marca del bloque es la receta resultante (.ad-hl). */
+.ta-matriz .ad-chip[aria-pressed="true"]{background:var(--sumi);border-color:var(--sumi);color:var(--washi)}
+.ta-receta{margin-block-start:var(--space-8)}
+.ta-receta code{font-family:var(--font-display);font-size:clamp(22px,3vw,30px);font-weight:500;letter-spacing:-.01em}

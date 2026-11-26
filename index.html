@@ -13,6 +13,7 @@
     /* El portal es nativo de v2: solo tokens del sistema, ningún valor suelto.
        Lo propio de esta página es el diagrama del ciclo (prefijo .pt-). */
     *,*::before,*::after{box-sizing:border-box}
+    html{scroll-padding-top:var(--nav-height)}
     body{margin:0;background:var(--washi);color:var(--sumi)}
     .ad-nav__links a:hover{color:var(--sumi)}
     code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;background:var(--papel);padding:1px 6px;border-radius:var(--radius-input)}
@@ -73,6 +74,7 @@
       <a href="guias/como-trabajamos-con-ia.html">IA</a>
       <a href="banco-formatos/index.html">Banco de formatos</a>
       <a href="playbook-creativo/index.html">Playbook</a>
+      <a href="#talleres">Talleres</a>
       <a href="clientes.html">Clientes</a>
       <a href="tableros/tablero-educacion.html">Tableros</a>
     </div>
@@ -87,9 +89,10 @@
         <span class="ad-ln">Cómo operamos.</span>
         <span class="ad-ln">Cómo lo <span class="ad-hl">medimos</span>.</span>
       </h1>
-      <p class="ad-lead">El framework de operación, la guía de cómo trabajamos con IA, las plantillas de trabajo, el playbook creativo y los tableros del área digital.</p>
+      <p class="ad-lead">El framework de operación, la guía de cómo trabajamos con IA, las plantillas, el playbook creativo, los talleres y los tableros del área digital.</p>
       <div class="ad-hero__acciones">
         <a class="ad-btn ad-btn--accent" href="#documentos">Ver los documentos</a>
+        <a class="ad-link" href="#talleres">Ver los talleres ›</a>
         <a class="ad-link" href="#ciclo">Cómo se conectan ›</a>
       </div>
     </div>
@@ -147,6 +150,38 @@
           <span class="ad-n ad-n--md" aria-hidden="true">9</span>
           <span><span class="ad-fila__k">Documento temporal</span><span class="ad-fila__t">Acta de entrega de vacaciones</span></span>
           <span class="ad-go">Abrir</span>
+        </a></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="ad-sec pt-docs" id="talleres" aria-labelledby="t-talleres">
+    <div class="ad-wrap ad-split ad-split--arriba">
+      <header class="ad-sec-cab ad-sec-cab--grande pt-cab">
+        <h2 id="t-talleres">Talleres</h2>
+        <p class="ad-lead">Elige el taller según la pregunta que quieres resolver.</p>
+        <a class="ad-link" href="talleres/index.html">Ver el recorrido completo ›</a>
+      </header>
+      <ol class="ad-filas" aria-label="Guías y talleres de Adcom">
+        <li><a class="ad-fila" href="talleres/entorno-digital.html">
+          <span class="ad-n ad-n--md" aria-hidden="true">1</span>
+          <span><span class="ad-fila__t">Entorno digital</span><span class="ad-fila__k">¿Dónde está el usuario, qué rol cumple cada red y quién se lleva el crédito de una venta?</span></span>
+          <span class="ad-go" aria-hidden="true">Abrir</span>
+        </a></li>
+        <li><a class="ad-fila" href="talleres/segmentacion.html">
+          <span class="ad-n ad-n--md" aria-hidden="true">2</span>
+          <span><span class="ad-fila__t">Segmentación</span><span class="ad-fila__k">¿A quién buscar, cómo probarlo y qué cambia Meta Andromeda?</span></span>
+          <span class="ad-go" aria-hidden="true">Abrir</span>
+        </a></li>
+        <li><a class="ad-fila" href="talleres/comunicacion.html">
+          <span class="ad-n ad-n--md" aria-hidden="true">3</span>
+          <span><span class="ad-fila__t">Comunicación</span><span class="ad-fila__k">¿Qué decirle y con qué estructura construir el anuncio?</span></span>
+          <span class="ad-go" aria-hidden="true">Abrir</span>
+        </a></li>
+        <li><a class="ad-fila" href="talleres/contenido-anuncios.html">
+          <span class="ad-n ad-n--md" aria-hidden="true">4</span>
+          <span><span class="ad-fila__t">Contenido para anuncios</span><span class="ad-fila__k">¿Cómo producir piezas combinables que se vean y se entiendan en el teléfono?</span></span>
+          <span class="ad-go" aria-hidden="true">Abrir</span>
         </a></li>
       </ol>
     </div>
