@@ -10,3 +10,7 @@
 Thumbs.db
 .vscode/
 tableros/inversion-agencia-datos.json
+
+# Python
+__pycache__/
+*.pyc

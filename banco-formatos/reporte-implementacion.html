@@ -18,20 +18,22 @@
     Cómo se llena: los datos viven en js/reporte-implementacion.js (bloque
     «Reemplazar con los datos del cliente»). En este HTML solo se reescriben la
     portada y los textos de lectura.
+    Ritmo: portada y secciones claras alternan con crema; la sección de
+    tracking (el diagrama de compuertas) y el cierre van sobre fondo oscuro.
   -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
-  <link rel="stylesheet" href="../assets/css/adcom-v2.css">
-  <link rel="stylesheet" href="formatos.css">
-  <link rel="stylesheet" href="css/reporte-implementacion.css">
+  <link rel="stylesheet" href="../assets/ds/fonts.css">
+  <link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261128">
+  <link rel="stylesheet" href="formatos.css?v=20261123">
+  <link rel="stylesheet" href="css/reporte-implementacion.css?v=20261127">
   <script src="js/reporte-implementacion.js" defer></script>
+  <link rel="icon" type="image/png" href="../assets/favicon-adcom.png">
+  <link rel="apple-touch-icon" href="../assets/ds/logos/apple-touch-icon.png">
 </head>
 <body>
 <a class="skip-link" href="#contenido">Ir al contenido</a>
 <header class="ad-nav formato-nav">
   <nav class="ad-nav__in" aria-label="Principal">
-    <a class="formato-nav__marca" href="../index.html">Adcom</a>
+    <a class="ad-marca" href="../index.html"><img src="../assets/logos/adcom-wordmark.png" alt="Adcom" width="96" height="22"><i>Reporte de implementación</i></a>
     <div class="ad-nav__links">
       <a href="#destinos">Destinos</a>
       <a href="#piezas">Piezas</a>
@@ -41,50 +43,60 @@
   </nav>
 </header>
 
-<main class="formato-shell formato-contenido" id="contenido" tabindex="-1">
+<main id="contenido" tabindex="-1">
 
   <!-- 1. PORTADA
        Fecha, alcance, estado REAL al corte y resumen de lo hecho, en lenguaje
        del cliente (programas y sedes, no IDs). Si hay actualización posterior,
        se dice en la meta («actualizado el …») y en el lead.
        Las cifras del lead deben coincidir con la franja de abajo, que se
-       calcula sola desde los datos. -->
-  <header class="formato-portada">
-    <p class="formato-meta">Universidad Andina · Posgrados · Meta Ads · 12 de abril de 2027 · plantilla con datos ficticios</p>
-    <h1 class="ad-t-statement"><span class="ad-ln">Anuncios de Posgrados.</span><span class="ad-ln"><span class="ad-hl">Tanda del 12 de abril</span>.</span></h1>
-    <p class="ad-t-lead">Publicamos seis piezas nuevas para tres programas en Bogotá, Medellín y la modalidad virtual. Al corte, cinco de los nueve anuncios ya tienen entrega, uno está activo sin impresiones, dos siguen en revisión y uno fue rechazado y se está corrigiendo.</p>
-    <dl class="formato-ficha">
-      <div><dt>Cliente</dt><dd>Universidad Andina</dd></div>
-      <div><dt>Línea</dt><dd>Posgrados 2027-1</dd></div>
-      <div><dt>Plataforma</dt><dd>Meta Ads</dd></div>
-      <div><dt>Resultado que cuenta</dt><dd>Formulario enviado; en virtual, evento Lead del píxel</dd></div>
-      <div><dt>Corte</dt><dd id="ri-corte">Sin dato</dd></div>
-      <div><dt>Documento</dt><dd>ANDINA_IMPLEMENTACIÓN_Posgrados abril 2027_2027-04-12_v1</dd></div>
-    </dl>
+       calcula sola desde los datos (#ri-kpi): programas, piezas únicas,
+       anuncios configurados (pieza × conjunto), con entrega y presupuesto
+       CONFIGURADO. Nunca mezclar aquí inversión observada.
+       La lima de la franja marca la cifra clave: «Con entrega al corte». -->
+  <header class="ad-hero ri-hero">
+    <div class="ad-wrap">
+      <p class="formato-meta">Universidad Andina · Posgrados · Meta Ads · 12 de abril de 2027 · plantilla con datos ficticios</p>
+      <h1><span class="ad-ln">Anuncios de Posgrados.</span><span class="ad-ln">Tanda del 12 de abril.</span></h1>
+      <p class="ad-lead ri-lead">Publicamos seis piezas nuevas para tres programas en Bogotá, Medellín y la modalidad virtual. Al corte, cinco de los nueve anuncios ya tienen entrega, uno está activo sin impresiones, dos siguen en revisión y uno fue rechazado y se está corrigiendo.</p>
+      <div class="ad-kpis ri-franja" id="ri-kpi"></div>
+      <dl class="ad-ficha ri-ficha">
+        <div><dt>Cliente</dt><dd>Universidad Andina</dd></div>
+        <div><dt>Línea</dt><dd>Posgrados 2027-1</dd></div>
+        <div><dt>Plataforma</dt><dd>Meta Ads</dd></div>
+        <div><dt>Resultado que cuenta</dt><dd>Formulario enviado; en virtual, evento Lead del píxel</dd></div>
+        <div><dt>Corte</dt><dd id="ri-corte">Sin dato</dd></div>
+        <div><dt>Documento</dt><dd>ANDINA_IMPLEMENTACIÓN_Posgrados abril 2027_2027-04-12_v1</dd></div>
+      </dl>
+    </div>
   </header>
 
   <!-- 2. RESUMEN DE LA TANDA
-       Franja calculada desde los datos: programas, piezas únicas, anuncios
-       configurados (pieza × conjunto), conjuntos y presupuesto CONFIGURADO.
-       Nunca mezclar aquí inversión observada. -->
-  <section class="formato-seccion" aria-labelledby="resumen">
-    <div class="ad-sec-cab">
-      <p class="ad-eyebrow">1 · Resumen</p>
-      <h2 id="resumen">Resumen de la tanda</h2>
-    </div>
-    <div class="ad-kpis" id="ri-kpi"></div>
-    <div class="ad-lectura ri-regla">
-      <span class="ad-lectura__k">Cómo se cuenta</span>
-      <p>Un anuncio es una pieza en un conjunto: la misma pieza en tres conjuntos son tres anuncios, pero se muestra una sola vez en la galería.</p>
-    </div>
-
-    <!-- Estado al corte: distinguir configurado, en revisión, con entrega y
-         rechazado. Activo no es lo mismo que con entrega. -->
-    <h3 class="ri-subtitulo">¿En qué estado están los anuncios al corte?</h3>
-    <div id="ri-estado" class="ri-estado"></div>
-    <div class="ad-lectura ri-regla">
-      <span class="ad-lectura__k">Qué quiere decir</span>
-      <p id="ri-estado-lectura"></p>
+       A la izquierda, cómo se cuenta; a la derecha, el estado al corte.
+       Distinguir configurado, en revisión, con entrega y rechazado: activo no
+       es lo mismo que con entrega. La barra marca en lima el tramo «con
+       entrega» (borde sumi). -->
+  <section class="ad-sec" aria-labelledby="resumen">
+    <div class="ad-wrap ad-split ad-split--arriba">
+      <div>
+        <div class="ad-sec-cab ad-sec-cab--grande">
+          <p class="ad-eyebrow">1 · Resumen</p>
+          <h2 id="resumen">Lo configurado y cómo va al corte</h2>
+          <p class="ad-lead">Qué quedó publicado, cuántos anuncios ya entregan y cuáles esperan a la plataforma.</p>
+        </div>
+        <div class="ad-lectura ri-regla">
+          <span class="ad-lectura__k">Cómo se cuenta</span>
+          <p>Un anuncio es una pieza en un conjunto: la misma pieza en tres conjuntos son tres anuncios, pero se muestra una sola vez en la galería.</p>
+        </div>
+      </div>
+      <div class="ri-bloque">
+        <h3 class="ri-subtitulo">¿En qué estado están los anuncios al corte?</h3>
+        <div id="ri-estado" class="ri-estado"></div>
+        <div class="ad-lectura ri-regla">
+          <span class="ad-lectura__k">Qué quiere decir</span>
+          <p id="ri-estado-lectura"></p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -93,29 +105,31 @@
        conjunto, formulario o evento EXACTO, presupuesto configurado, fechas y
        estado de los anuncios nuevos. Verificar cada destino por ID y contenido;
        los IDs van al anexo, no aquí. -->
-  <section class="formato-seccion" aria-labelledby="destinos">
-    <div class="ad-sec-cab">
-      <p class="ad-eyebrow">2 · Destinos</p>
-      <h2 id="destinos">Destinos por programa</h2>
-      <p>Dónde quedó cada pieza, con qué formulario o evento capta y cuánto presupuesto tiene configurado el conjunto para el periodo.</p>
-    </div>
-    <div class="ad-tabla" role="region" aria-labelledby="destinos-caption" tabindex="0">
-      <table>
-        <caption id="destinos-caption">Conjuntos que reciben anuncios nuevos · presupuesto configurado en COP, no inversión observada</caption>
-        <thead>
-          <tr>
-            <th scope="col">Programa y sede</th>
-            <th scope="col">Campaña y conjunto</th>
-            <th scope="col">Formulario o evento</th>
-            <th scope="col">Piezas nuevas</th>
-            <th scope="col" class="valor">Presupuesto</th>
-            <th scope="col">Fechas</th>
-            <th scope="col">Estado al corte</th>
-          </tr>
-        </thead>
-        <tbody id="ri-destinos"></tbody>
-        <tfoot id="ri-destinos-total"></tfoot>
-      </table>
+  <section class="ad-sec ad-sec--crema" aria-labelledby="destinos">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">2 · Destinos</p>
+        <h2 id="destinos">Cada pieza llega a su formulario</h2>
+        <p class="ad-lead">Dónde quedó cada pieza, con qué formulario o evento capta y cuánto presupuesto tiene el conjunto para el periodo.</p>
+      </div>
+      <div class="ad-tabla" role="region" aria-labelledby="destinos-caption" tabindex="0">
+        <table>
+          <caption id="destinos-caption">Conjuntos que reciben anuncios nuevos · presupuesto configurado en COP, no inversión observada</caption>
+          <thead>
+            <tr>
+              <th scope="col">Programa y sede</th>
+              <th scope="col">Campaña y conjunto</th>
+              <th scope="col">Formulario o evento</th>
+              <th scope="col">Piezas nuevas</th>
+              <th scope="col" class="valor">Presupuesto</th>
+              <th scope="col">Fechas</th>
+              <th scope="col">Estado al corte</th>
+            </tr>
+          </thead>
+          <tbody id="ri-destinos"></tbody>
+          <tfoot id="ri-destinos-total"></tfoot>
+        </table>
+      </div>
     </div>
   </section>
 
@@ -125,109 +139,134 @@
        programa, formato, título, texto principal, CTA, URL con UTM, destinos y
        estado. En la plantilla los recuadros son marcadores: al usarla se
        reemplazan por la imagen publicada (comprobar que corresponde). -->
-  <section class="formato-seccion" aria-labelledby="piezas">
-    <div class="ad-sec-cab">
-      <p class="ad-eyebrow">3 · Piezas</p>
-      <h2 id="piezas">Piezas publicadas</h2>
-      <p>Una vista por pieza. Si una pieza se publicó en varios conjuntos, se indica en «Destinos» y no se repite.</p>
-    </div>
-    <div class="ri-filtros" id="ri-filtros" hidden>
-      <div class="ri-filtros__grupo" role="group" aria-labelledby="ri-f-programa">
-        <span class="ri-filtros__titulo" id="ri-f-programa">Programa</span>
-        <div class="ri-chips" id="ri-chips-programa"></div>
+  <section class="ad-sec" aria-labelledby="piezas">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">3 · Piezas</p>
+        <h2 id="piezas">Una vista por cada pieza publicada</h2>
+        <p class="ad-lead">Si una pieza salió en varios conjuntos, se indica en «Destinos» y no se repite.</p>
       </div>
-      <div class="ri-filtros__grupo" role="group" aria-labelledby="ri-f-estado">
-        <span class="ri-filtros__titulo" id="ri-f-estado">Estado</span>
-        <div class="ri-chips" id="ri-chips-estado"></div>
+      <div class="ri-filtros" id="ri-filtros" hidden>
+        <div class="ri-filtros__grupo" role="group" aria-labelledby="ri-f-programa">
+          <span class="ri-filtros__titulo" id="ri-f-programa">Programa</span>
+          <div class="ri-chips" id="ri-chips-programa"></div>
+        </div>
+        <div class="ri-filtros__grupo" role="group" aria-labelledby="ri-f-estado">
+          <span class="ri-filtros__titulo" id="ri-f-estado">Estado</span>
+          <div class="ri-chips" id="ri-chips-estado"></div>
+        </div>
       </div>
+      <p class="formato-nota" id="ri-piezas-resumen" role="status"></p>
+      <div id="ri-galeria"></div>
+      <noscript><p class="formato-nota">La galería se arma con los datos de js/reporte-implementacion.js; abre la página con JavaScript activo.</p></noscript>
     </div>
-    <p class="formato-nota" id="ri-piezas-resumen" role="status"></p>
-    <div id="ri-galeria"></div>
-    <noscript><p class="formato-nota">La galería se arma con los datos de js/reporte-implementacion.js; abre la página con JavaScript activo.</p></noscript>
   </section>
 
   <!-- 5. VARIANTE OPCIONAL: PRUEBA A/B
        Solo si la tanda es una prueba. Si no lo es, dejar `prueba: null` en los
        datos y la sección se oculta sola. Debe decir qué se compara, qué se
        mantiene igual, cómo se reparte el gasto y cuándo se lee. -->
-  <section class="formato-seccion" aria-labelledby="prueba" id="ri-prueba-seccion" hidden>
-    <div class="ad-sec-cab">
-      <p class="ad-eyebrow">4 · Prueba A/B</p>
-      <h2 id="prueba">Cómo se hace la comparación</h2>
-      <p class="ri-opcional"><span class="ad-tag ad-tag--line">Opcional</span> Solo cuando la tanda incluye una prueba.</p>
-    </div>
-    <ul class="ri-lista" id="ri-prueba-reglas"></ul>
-    <div class="ad-tabla" role="region" aria-labelledby="prueba-caption" tabindex="0">
-      <table>
-        <caption id="prueba-caption">Grupos de la prueba</caption>
-        <thead><tr><th scope="col">Programa</th><th scope="col">Grupo de control (vigente)</th><th scope="col">Grupo de prueba</th><th scope="col">Reparto del gasto</th><th scope="col">Se lee</th></tr></thead>
-        <tbody id="ri-prueba"></tbody>
-      </table>
+  <section class="ad-sec ad-sec--linea" aria-labelledby="prueba" id="ri-prueba-seccion" hidden>
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">4 · Prueba A/B</p>
+        <h2 id="prueba">Cómo se hace la comparación</h2>
+        <p class="ri-opcional"><span class="ad-tag ad-tag--line">Opcional</span> Solo cuando la tanda incluye una prueba.</p>
+      </div>
+      <ul class="ri-lista" id="ri-prueba-reglas"></ul>
+      <div class="ad-tabla" role="region" aria-labelledby="prueba-caption" tabindex="0">
+        <table>
+          <caption id="prueba-caption">Grupos de la prueba</caption>
+          <thead><tr><th scope="col">Programa</th><th scope="col">Grupo de control (vigente)</th><th scope="col">Grupo de prueba</th><th scope="col">Reparto del gasto</th><th scope="col">Se lee</th></tr></thead>
+          <tbody id="ri-prueba"></tbody>
+        </table>
+      </div>
     </div>
   </section>
 
   <!-- 6. ANUNCIOS ANTERIORES
        Qué pasó con lo que ya estaba: pausado, rotado o se mantiene, y por qué.
        Leer de vuelta en la plataforma que solo cambió lo previsto. -->
-  <section class="formato-seccion" aria-labelledby="anteriores">
-    <div class="ad-sec-cab">
-      <p class="ad-eyebrow">5 · Anteriores</p>
-      <h2 id="anteriores">Anuncios anteriores</h2>
-      <p>Lo que estaba publicado en esos conjuntos y qué hicimos con cada anuncio.</p>
-    </div>
-    <div class="ad-tabla" role="region" aria-labelledby="anteriores-caption" tabindex="0">
-      <table>
-        <caption id="anteriores-caption">Tratamiento de los anuncios vigentes antes de la tanda</caption>
-        <thead><tr><th scope="col">Anuncio anterior</th><th scope="col">Programa y sede</th><th scope="col">Tratamiento</th><th scope="col">Motivo</th><th scope="col">Fecha</th></tr></thead>
-        <tbody id="ri-anteriores"></tbody>
-      </table>
+  <section class="ad-sec ad-sec--crema" aria-labelledby="anteriores">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">5 · Anteriores</p>
+        <h2 id="anteriores">Lo que ya estaba, con su motivo</h2>
+        <p class="ad-lead">Lo que estaba publicado en esos conjuntos y qué hicimos con cada anuncio.</p>
+      </div>
+      <div class="ad-tabla" role="region" aria-labelledby="anteriores-caption" tabindex="0">
+        <table>
+          <caption id="anteriores-caption">Tratamiento de los anuncios vigentes antes de la tanda</caption>
+          <thead><tr><th scope="col">Anuncio anterior</th><th scope="col">Programa y sede</th><th scope="col">Tratamiento</th><th scope="col">Motivo</th><th scope="col">Fecha</th></tr></thead>
+          <tbody id="ri-anteriores"></tbody>
+        </table>
+      </div>
     </div>
   </section>
 
   <!-- 7. VALIDACIONES DE TRACKING (framework 25, compuertas 3 y 4)
-       Prueba real, no revisión de pantalla. Cada fila: qué se revisó, estado
-       (Verificado, Parcial, Pendiente, No aplica, Sin dato), evidencia,
+       DIAGRAMA PROTAGONISTA: las seis compuertas del punto 25 como eje.
+       Cada compuerta se dibuja desde DATOS.compuertas (cerrada = punto lleno,
+       parcial = medio lleno, abierta = vacío) y la lima marca la ACTUAL: la
+       primera que aún no está cerrada. Nunca solo color: cada nodo dice su
+       estado con texto.
+       Debajo, prueba real, no revisión de pantalla. Cada fila: qué se revisó,
+       estado (Verificado, Parcial, Pendiente, No aplica, Sin dato), evidencia,
        responsable (rol, no nombre) y fecha. La auditoría de configuración no
        prueba entrega ni el recorrido del lead hasta el CRM. -->
-  <section class="formato-seccion" aria-labelledby="tracking">
-    <div class="ad-sec-cab">
-      <p class="ad-eyebrow">6 · Tracking</p>
-      <h2 id="tracking">Validaciones de tracking</h2>
-      <p>Cada compuerta se cierra antes de pasar a la siguiente; la activación solo abre con la medición validada.</p>
-    </div>
-    <ol class="ad-pasos ri-pasos" id="ri-compuertas" aria-label="Compuertas de implementación y tracking"></ol>
-    <div class="ad-tabla" role="region" aria-labelledby="tracking-caption" tabindex="0">
-      <table>
-        <caption id="tracking-caption">Validaciones mínimas de las compuertas 3 y 4</caption>
-        <thead><tr><th scope="col">Validación</th><th scope="col">Estado</th><th scope="col">Evidencia</th><th scope="col">Responsable</th><th scope="col">Fecha</th></tr></thead>
-        <tbody id="ri-validaciones"></tbody>
-      </table>
-    </div>
-    <div class="ad-lectura ri-regla">
-      <span class="ad-lectura__k">Qué no prueba la revisión</span>
-      <p>La revisión de configuración confirma nombre, formato, destino y formulario. No demuestra que el anuncio entregue ni que el lead llegue al CRM: eso se comprueba con un envío real.</p>
+  <section class="ad-sec ad-sec--oscuro" aria-labelledby="tracking">
+    <div class="ad-wrap">
+      <div class="ad-split ad-split--arriba ri-tracking-cab">
+        <div class="ad-sec-cab ad-sec-cab--grande">
+          <p class="ad-eyebrow ad-eyebrow--dark">6 · Tracking</p>
+          <h2 id="tracking">La activación abre con la medición validada.</h2>
+          <p class="ad-lead">Cada compuerta se cierra antes de pasar a la siguiente.</p>
+        </div>
+        <div class="ri-tracking-lado">
+          <ul class="ri-clave" aria-label="Cómo leer las compuertas">
+            <li><i class="ri-clave__p ri-clave__p--cerrada" aria-hidden="true"></i>Cerrada</li>
+            <li><i class="ri-clave__p ri-clave__p--parcial" aria-hidden="true"></i>Parcial</li>
+            <li><i class="ri-clave__p" aria-hidden="true"></i>Abierta</li>
+            <li><i class="ri-clave__p ri-clave__p--actual" aria-hidden="true"></i>Compuerta actual</li>
+          </ul>
+          <div class="ad-lectura ri-regla">
+            <span class="ad-lectura__k">Qué no prueba la revisión</span>
+            <p>La revisión de configuración confirma nombre, formato, destino y formulario. No demuestra que el anuncio entregue ni que el lead llegue al CRM: eso se comprueba con un envío real.</p>
+          </div>
+        </div>
+      </div>
+      <ol class="ad-eje ri-eje" id="ri-compuertas" aria-label="Compuertas de implementación y tracking"></ol>
+      <div class="ad-tabla ri-tabla-oscura" role="region" aria-labelledby="tracking-caption" tabindex="0">
+        <table>
+          <caption id="tracking-caption">Validaciones mínimas de las compuertas 3 y 4</caption>
+          <thead><tr><th scope="col">Validación</th><th scope="col">Estado</th><th scope="col">Evidencia</th><th scope="col">Responsable</th><th scope="col">Fecha</th></tr></thead>
+          <tbody id="ri-validaciones"></tbody>
+        </table>
+      </div>
     </div>
   </section>
 
   <!-- 8. PENDIENTES
        Cada pendiente lleva fecha y criterio de éxito (igual que «Por
        verificar» en la bitácora). Cuando se cumple, sale de aquí y se dice en
-       la actualización del reporte. -->
-  <section class="formato-seccion" aria-labelledby="pendientes">
-    <div class="ad-sec-cab">
-      <p class="ad-eyebrow">7 · Pendientes</p>
-      <h2 id="pendientes">Pendientes</h2>
-    </div>
-    <div class="ad-tabla" role="region" aria-labelledby="pendientes-caption" tabindex="0">
-      <table>
-        <caption id="pendientes-caption">Por verificar, con fecha y criterio de éxito</caption>
-        <thead><tr><th scope="col">Fecha</th><th scope="col">Qué se verifica</th><th scope="col">Criterio de éxito</th><th scope="col">Responsable</th></tr></thead>
-        <tbody id="ri-pendientes"></tbody>
-      </table>
-    </div>
-    <div class="ad-lectura ri-regla">
-      <span class="ad-lectura__k">Cuándo hay resultados</span>
-      <p>Los primeros resultados de las piezas nuevas van en el informe de resultados, cuando cada conjunto tenga al menos siete días de entrega.</p>
+       la actualización del reporte. La lima marca la fecha del primero. -->
+  <section class="ad-sec" aria-labelledby="pendientes">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">7 · Pendientes</p>
+        <h2 id="pendientes">Lo que falta, con fecha y criterio</h2>
+      </div>
+      <div class="ad-tabla" role="region" aria-labelledby="pendientes-caption" tabindex="0">
+        <table>
+          <caption id="pendientes-caption">Por verificar, con fecha y criterio de éxito</caption>
+          <thead><tr><th scope="col">Fecha</th><th scope="col">Qué se verifica</th><th scope="col">Criterio de éxito</th><th scope="col">Responsable</th></tr></thead>
+          <tbody id="ri-pendientes"></tbody>
+        </table>
+      </div>
+      <div class="ad-lectura ri-regla">
+        <span class="ad-lectura__k">Cuándo hay resultados</span>
+        <p>Los primeros resultados de las piezas nuevas van en el informe de resultados, cuando cada conjunto tenga al menos siete días de entrega.</p>
+      </div>
     </div>
   </section>
 
@@ -235,24 +274,38 @@
        Para el equipo, no para el cliente: nombres internos de anuncio y
        conjunto. Los IDs se verifican en plataforma y NO se publican si el
        repositorio del cliente es público. -->
-  <section class="formato-seccion" aria-labelledby="anexo">
-    <div class="ad-sec-cab">
-      <p class="ad-eyebrow">8 · Anexo</p>
-      <h2 id="anexo">Anexo técnico</h2>
-    </div>
-    <details class="ad-datos ri-anexo">
-      <summary>Ver la nomenclatura interna de los anuncios</summary>
-      <div class="ad-tabla" role="region" aria-labelledby="anexo-caption" tabindex="0">
-        <table>
-          <caption id="anexo-caption">Un renglón por anuncio configurado (pieza × conjunto)</caption>
-          <thead><tr><th scope="col">Nombre del anuncio</th><th scope="col">Conjunto</th><th scope="col">Pieza</th><th scope="col">Identificador</th></tr></thead>
-          <tbody id="ri-anexo"></tbody>
-        </table>
+  <section class="ad-sec ad-sec--crema" aria-labelledby="anexo">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">8 · Anexo</p>
+        <h2 id="anexo">Anexo técnico</h2>
+        <p class="ad-lead">Nomenclatura interna, para el equipo.</p>
       </div>
-    </details>
+      <details class="ad-datos ri-anexo">
+        <summary>Ver la nomenclatura interna de los anuncios</summary>
+        <div class="ad-tabla" role="region" aria-labelledby="anexo-caption" tabindex="0">
+          <table>
+            <caption id="anexo-caption">Un renglón por anuncio configurado (pieza × conjunto)</caption>
+            <thead><tr><th scope="col">Nombre del anuncio</th><th scope="col">Conjunto</th><th scope="col">Pieza</th><th scope="col">Identificador</th></tr></thead>
+            <tbody id="ri-anexo"></tbody>
+          </table>
+        </div>
+      </details>
+      <p class="formato-nota ri-fuente" id="ri-fuente"></p>
+    </div>
   </section>
 
-  <p class="formato-nota ri-fuente" id="ri-fuente"></p>
+  <!-- CIERRE: una frase y una acción. Los resultados van en otro informe, con
+       otra fuente y otra ventana; el botón lleva a la plantilla de informe particular. -->
+  <section class="ad-sec ad-sec--oscuro ad-cierre" aria-labelledby="cierre">
+    <div class="ad-wrap ad-cierre__in">
+      <div>
+        <h2 id="cierre">Con la medición validada, la tanda se lee.</h2>
+        <p>Esta constancia no lleva gasto ni leads. Cuando haya siete días de entrega, los resultados van en su propio informe.</p>
+      </div>
+      <a class="ad-btn ad-btn--accent" href="informe-particular.html">Ver el informe particular</a>
+    </div>
+  </section>
 </main>
 
 <footer class="ad-foot">

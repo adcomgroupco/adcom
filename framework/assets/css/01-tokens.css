@@ -124,7 +124,7 @@ td,.board-head span,.ficha b,.meter-scale{font-variant-numeric:tabular-nums}
 section[id],[id].divider,h3[id],h2[id],h4[id],h5[id]{scroll-margin-top:104px}
 .section-dark,.section-light{padding:clamp(68px,8vw,112px) clamp(20px,5vw,72px)}
 /* tokens de superficie oscura: secciones oscuras e islas oscuras */
-.section-dark,.iface,.avoid,.split>div:nth-child(2){
+.section-dark,.page-intro,.iface,.avoid,.split>div:nth-child(2){
   --fg:var(--sobre-oscuro-100);--fg-muted:var(--sobre-oscuro-200);
   --chip-bg:rgba(247,246,242,.08);--chip-bd:transparent;--chip-fg:var(--sobre-oscuro-200);
   --line:var(--line-dark);--surface:var(--sumi);--surface-2:rgba(247,246,242,.06);
@@ -153,7 +153,7 @@ section[id],[id].divider,h3[id],h2[id],h4[id],h5[id]{scroll-margin-top:104px}
    plano: sin esto un titular o un párrafo suyo toma la tinta de la sección. */
 .ad-card--dark,.panel:not(.panel-light),.calc-inputs,.calc-out,.builder-form,.builder-out,
 .tree,.roadmap-card{--fg:var(--sobre-oscuro-100);--fg-muted:var(--sobre-oscuro-200);--si:var(--green);--no:var(--red)}
-.section-dark{background:var(--ink);color:var(--fg-muted)}
+.section-dark,.page-intro{background:var(--ink);color:var(--fg-muted)}
 .section-light{background:var(--paper);color:var(--fg-muted)}
 .iface,.avoid,.split>div:nth-child(2){color:var(--sobre-oscuro-100)}
 /* Mismo principio para el resto de islas oscuras.

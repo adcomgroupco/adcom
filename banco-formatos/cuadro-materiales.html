@@ -6,13 +6,13 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#F7F6F2">
   <title>Cuadro de materiales | Adcom</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
-  <link rel="stylesheet" href="../assets/css/adcom-v2.css">
-  <link rel="stylesheet" href="formatos.css">
-  <link rel="stylesheet" href="css/cuadro-materiales.css">
-  <script src="js/cuadro-materiales.js" defer></script>
+  <link rel="stylesheet" href="../assets/ds/fonts.css">
+  <link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261128">
+  <link rel="stylesheet" href="formatos.css?v=20261123">
+  <link rel="stylesheet" href="css/cuadro-materiales.css?v=20261126c">
+  <script src="js/cuadro-materiales.js?v=20261126" defer></script>
+  <link rel="icon" type="image/png" href="../assets/favicon-adcom.png">
+  <link rel="apple-touch-icon" href="../assets/ds/logos/apple-touch-icon.png">
 </head>
 <body>
 <!--
@@ -27,18 +27,19 @@
 <a class="skip-link" href="#contenido">Ir al contenido</a>
 <header class="ad-nav formato-nav">
   <nav class="ad-nav__in" aria-label="Principal">
-    <a class="formato-nav__marca" href="../index.html">Adcom</a>
+    <a class="ad-marca" href="../index.html"><img src="../assets/logos/adcom-wordmark.png" alt="Adcom" width="96" height="22"><i>Cuadro de materiales</i></a>
     <div class="ad-nav__links"><a href="index.html">Banco de formatos</a></div>
   </nav>
 </header>
-<main class="formato-shell formato-contenido" id="contenido" tabindex="-1">
+<main id="contenido" tabindex="-1">
 
   <!-- Portada: campaña, corte y quién aprueba. Sin nombres de personas: roles. -->
-  <header class="formato-portada">
-    <p class="formato-meta">Plantilla con datos ficticios · cuadro de materiales</p>
-    <h1 class="ad-t-statement"><span class="ad-ln">Qué comunicamos.</span><span class="ad-ln">Y con qué <span class="ad-hl">piezas</span>.</span></h1>
-    <p class="ad-t-lead">Cada fila parte de un mensaje y una hipótesis, no de un número de piezas. De ahí salen los formatos, los copys y la aprobación.</p>
-    <dl class="formato-ficha">
+  <section class="ad-hero" aria-labelledby="titulo-cuadro">
+  <div class="ad-wrap">
+    <p class="ad-eyebrow">Plantilla con datos ficticios · cuadro de materiales</p>
+    <h1 id="titulo-cuadro"><span class="ad-ln">Qué comunicamos.</span><span class="ad-ln">Y con qué <span class="ad-hl">piezas</span>.</span></h1>
+    <p class="ad-lead">Cada fila parte de un mensaje y una hipótesis, no de un número de piezas. De ahí salen los formatos, los copys y la aprobación.</p>
+    <dl class="ad-ficha cm-ficha">
       <div><dt>Cliente</dt><dd id="cm-cliente">Sin dato</dd></div>
       <div><dt>Campaña</dt><dd id="cm-campana">Sin dato</dd></div>
       <div><dt>Periodo</dt><dd id="cm-periodo">Sin dato</dd></div>
@@ -54,54 +55,65 @@
       <li><a href="#especificaciones">Especificaciones</a></li>
     </ul>
     <noscript><p class="formato-nota">Esta plantilla arma las tablas con JavaScript. Ábrela en un navegador con JavaScript activo o usa cuadro-materiales.xlsx.</p></noscript>
-  </header>
+  </div>
+  </section>
 
   <!-- Reglas de diligenciamiento. Se mantienen en todas las campañas; se ajustan solo si cambia el proceso. -->
-  <section class="formato-seccion" aria-labelledby="reglas">
-    <div class="ad-sec-cab">
-      <h2 id="reglas">Cuatro reglas para pedir <span class="ad-hl">piezas</span> sin reprocesos</h2>
-      <p>Se mantienen en todas las campañas; se ajustan solo si cambia el proceso.</p>
+  <section class="ad-sec ad-sec--papel" aria-labelledby="reglas">
+  <div class="ad-wrap">
+    <div class="ad-split ad-split--arriba">
+    <div class="ad-sec-cab ad-sec-cab--grande cm-cab">
+      <h2 id="reglas">Cuatro reglas para pedir piezas sin reprocesos</h2>
+      <p class="ad-lead">Se mantienen en todas las campañas; se ajustan solo si cambia el proceso.</p>
     </div>
-    <ul class="ad-grid cm-reglas" style="--col:240px">
+    <ul class="ad-grid cm-reglas" style="--col:220px">
       <li class="ad-card"><h3 class="ad-card__t">Un mensaje por fila</h3><p class="ad-card__d">Las adaptaciones por formato van dentro de la misma fila. No se duplica el mensaje como si fuera otra campaña.</p></li>
       <li class="ad-card"><h3 class="ad-card__t">Del brief a la pieza</h3><p class="ad-card__d">Cada pieza lleva el código del brief que responde. Una pieza sin código no entra a producción.</p></li>
       <li class="ad-card"><h3 class="ad-card__t">Lo mínimo para pedir</h3><p class="ad-card__d">Mensaje, cantidad por formato y plataforma, fecha de entrega y de aprobación, nueva o adaptación, textos legales y quién aprueba (94.3).</p></li>
       <li class="ad-card"><h3 class="ad-card__t">Aprobación con nombre</h3><p class="ad-card__d">Por muestra (una pieza modelo) o pieza por pieza. El enlace final se agrega solo cuando la pieza está aprobada.</p></li>
     </ul>
+    </div>
+  </div>
   </section>
 
   <!-- Resumen: unidades por estado al corte. Se calcula desde PRODUCCION; no se escribe a mano. -->
-  <section class="formato-seccion" id="resumen" aria-labelledby="titulo-resumen">
-    <div class="ad-sec-cab">
+  <section class="ad-sec ad-sec--oscuro cm-oscuro" id="resumen" aria-labelledby="titulo-resumen">
+  <div class="ad-wrap">
+    <div class="ad-sec-cab ad-sec-cab--grande cm-cab">
       <h2 id="titulo-resumen">Estado de la producción al corte</h2>
-      <p>Las unidades se cuentan por estado desde el cuadro de producción; nada se escribe a mano.</p>
+      <p class="ad-lead">Las unidades se cuentan por estado desde el cuadro de producción; nada se escribe a mano.</p>
     </div>
-    <dl class="ad-kpis" id="cm-kpi"></dl>
+    <!-- Diagrama del ciclo de una pieza: pedido, producción, aprobación y entrega. Cada paso trae su
+         cantidad al corte (se calcula desde PRODUCCION); el paso donde hoy hay más piezas va en lima. -->
+    <h3 class="cm-sub">¿Dónde están las piezas hoy?</h3>
+    <ol class="ad-pasos cm-ciclo" id="cm-barras" aria-label="Unidades por estado, del pedido a la entrega"></ol>
+    <p class="cm-nota" id="cm-canceladas"></p>
     <div class="cm-resumen">
-      <div>
-        <h3>¿Dónde están las piezas hoy?</h3>
-        <ul class="cm-barras" id="cm-barras" aria-label="Unidades por estado"></ul>
-      </div>
+      <dl class="ad-kpis" id="cm-kpi"></dl>
       <div class="ad-lectura" id="cm-lectura"></div>
     </div>
+  </div>
   </section>
 
   <!-- Nivel estratégico (24): una tarjeta por necesidad de comunicación. -->
-  <section class="formato-seccion" id="brief" aria-labelledby="titulo-brief">
-    <div class="ad-sec-cab">
+  <section class="ad-sec ad-sec--papel" id="brief" aria-labelledby="titulo-brief">
+  <div class="ad-wrap">
+    <div class="ad-sec-cab ad-sec-cab--grande cm-cab">
       <h2 id="titulo-brief">Brief por mensaje</h2>
-      <p>No pedimos «cinco piezas para Meta»: pedimos validar una hipótesis de comunicación en una audiencia.</p>
+      <p class="ad-lead">No pedimos «cinco piezas para Meta»: pedimos validar una hipótesis de comunicación en una audiencia.</p>
     </div>
     <div class="ad-grid" id="cm-brief" style="--col:340px;--gap:var(--space-4)"></div>
+  </div>
   </section>
 
   <!-- Nivel productivo (24): piezas por mensaje y plataforma. Filtros y CSV con las columnas de la hoja Producción. -->
-  <section class="formato-seccion" id="produccion" aria-labelledby="titulo-produccion">
-    <div class="ad-sec-cab">
+  <section class="ad-sec" id="produccion" aria-labelledby="titulo-produccion">
+  <div class="ad-wrap">
+    <div class="ad-sec-cab ad-sec-cab--grande cm-cab">
       <h2 id="titulo-produccion">Cuadro de producción por mensaje y plataforma</h2>
     </div>
     <div class="cm-acciones">
-      <div class="formato-filtros" hidden>
+      <div class="ad-filtros cm-filtros" hidden>
         <label>Plataforma<select id="cm-f-plataforma"><option value="all">Todas</option></select></label>
         <label>Mensaje<select id="cm-f-brief"><option value="all">Todos</option></select></label>
         <label>Estado<select id="cm-f-estado"><option value="all">Todos</option></select></label>
@@ -120,16 +132,18 @@
       </table>
     </div>
     <p class="cm-nota">Nomenclatura de anuncio (75.1): [NN]_[FORMATO]_[Ángulo]_[CTA]_[Versión].</p>
+  </div>
   </section>
 
   <!-- Copys: una tarjeta por programa con sus bloques por medio, conteo de caracteres y revisión.
        La revisión vive en memoria; en el repo del cliente se conecta a la hoja Copys o se exporta. -->
-  <section class="formato-seccion" id="copys" aria-labelledby="titulo-copys">
-    <div class="ad-sec-cab">
+  <section class="ad-sec ad-sec--papel" id="copys" aria-labelledby="titulo-copys">
+  <div class="ad-wrap">
+    <div class="ad-sec-cab ad-sec-cab--grande cm-cab">
       <h2 id="titulo-copys">Copys por programa, revisados bloque a bloque</h2>
     </div>
     <div class="cm-acciones">
-      <div class="formato-filtros" hidden>
+      <div class="ad-filtros cm-filtros" hidden>
         <label>Nivel<select id="cm-c-nivel"><option value="all">Todos</option></select></label>
         <label>Medio<select id="cm-c-medio"><option value="all">Todos</option></select></label>
         <label>Revisión<select id="cm-c-estado"><option value="all">Todas</option></select></label>
@@ -138,11 +152,13 @@
     </div>
     <p class="cm-progreso" id="cm-progreso" aria-live="polite"></p>
     <div class="cm-copys" id="cm-copys"></div>
+  </div>
   </section>
 
   <!-- Referencia: catálogo de formatos (hoja Formatos) y límites de caracteres. -->
-  <section class="formato-seccion" id="especificaciones" aria-labelledby="titulo-specs">
-    <div class="ad-sec-cab">
+  <section class="ad-sec" id="especificaciones" aria-labelledby="titulo-specs">
+  <div class="ad-wrap">
+    <div class="ad-sec-cab ad-sec-cab--grande cm-cab">
       <h2 id="titulo-specs">Especificaciones de formato y de texto</h2>
     </div>
     <div class="ad-tabla" role="region" aria-labelledby="specs-caption" tabindex="0">
@@ -160,10 +176,22 @@
       </table>
     </div>
     <p class="cm-nota" id="cm-fuente"></p>
+  </div>
+  </section>
+
+  <!-- CIERRE: la regla que ordena todo el cuadro y la siguiente plantilla del ciclo. -->
+  <section class="ad-sec ad-sec--noche ad-cierre cm-cierre" aria-labelledby="cierre-t">
+    <div class="ad-wrap ad-cierre__in">
+      <div>
+        <h2 id="cierre-t">Una pieza sin código de brief no entra a producción.</h2>
+        <p>Cuando las piezas están aprobadas, se montan y se documentan en el reporte de implementación.</p>
+      </div>
+      <a class="ad-btn ad-btn--accent" href="reporte-implementacion.html">Ver el reporte de implementación</a>
+    </div>
   </section>
 </main>
 <footer class="ad-foot">
-  <div class="ad-foot__in"><span>Adcom · Área digital</span></div>
+  <div class="ad-foot__in"><span>Área digital · Banco de formatos</span></div>
 </footer>
 </body>
 </html>

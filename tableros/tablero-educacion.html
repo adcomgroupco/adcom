@@ -5,11 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Tablero Educación</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
 <link rel="stylesheet" href="../assets/css/adcom.css">
-<link rel="stylesheet" href="../assets/css/adcom-v2.css">
+<link rel="stylesheet" href="../assets/ds/fonts.css">
+<link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261128">
 <script defer src="../assets/js/adcom.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
@@ -29,7 +27,15 @@ body{font-family:var(--font-body);font-size:15px;line-height:1.6;background:var(
 .main{flex:1;display:flex;flex-direction:column;min-width:0}
 
 /* RIEL (adcom.css) ajustado a v2 */
-.app-sidebar-nav a{min-height:var(--target-min);font-size:.875rem}
+.app-sidebar-top{padding:24px 20px 22px}
+.app-sidebar .ad-marca{margin-bottom:24px}
+.app-sidebar-client-name{font-size:1rem;font-weight:500;line-height:1.25;margin-top:6px}
+.app-sidebar-client-label,.app-sidebar-client-period{font-size:13px}
+.app-sidebar-client-period{margin-top:6px;line-height:1.4}
+.app-sidebar-nav{padding:20px 12px}
+.app-sidebar-nav-title{padding:6px 12px 10px;font-size:13px;font-weight:400}
+.app-sidebar-nav a{min-height:var(--target-min);font-size:.9375rem;font-weight:400;padding-inline:12px}
+.app-sidebar-nav a.active{font-weight:500}
 .app-sidebar-nav a:focus-visible{outline:2px solid var(--shell-fg);outline-offset:-3px}
 .app-sidebar-client{border-radius:var(--radius-card);background:rgba(247,246,242,.04)}
 .app-sidebar-nav a:hover{background:var(--shell-active)}
@@ -37,32 +43,51 @@ body{font-family:var(--font-body);font-size:15px;line-height:1.6;background:var(
 .app-sidebar .btn-reset:hover{background:var(--shell-active)}
 
 /* TOPBAR */
-.topbar{background:var(--papel);border-bottom:1px solid var(--gray-200);padding:10px 20px;position:sticky;top:0;z-index:50;display:flex;flex-direction:column;gap:8px}
-.tb-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.topbar-title{font-family:var(--font-display);font-size:15px;font-weight:500;margin-right:4px;white-space:nowrap}
-.f-sep{width:1px;height:18px;background:var(--gray-200)}
+.topbar{background:var(--papel);border-bottom:1px solid var(--gray-200);padding:10px clamp(20px,1.8vw,28px);position:sticky;top:0;z-index:50;display:flex;flex-direction:column;gap:8px}
+.tb-row{display:flex;align-items:center;gap:8px 10px;flex-wrap:wrap}
+.topbar-title{font-family:var(--font-display);font-size:16px;font-weight:500;letter-spacing:-.015em;margin-right:4px;white-space:nowrap}
+.f-sep{display:none}
 .fg{display:flex;align-items:center;gap:6px}
 .fl{font-size:13px;color:var(--gray-600);font-weight:400;white-space:nowrap}
 select,input[type=date]{font:inherit;font-size:13px;min-height:var(--target-min);padding:0 10px;border:1px solid var(--piedra-borde);border-radius:var(--radius-input);background:var(--papel);color:var(--fg)}
-select{cursor:pointer;max-width:220px}
+select{cursor:pointer;max-width:200px}
+#f-medio{max-width:150px}
+#f-niv{max-width:170px}
+#f-cli{max-width:130px}
 select:focus-visible,input:focus-visible{border-color:var(--fg)}
-.topbar .ad-chip,.sec-tools .ad-chip{font-size:13px;padding:0 16px}
+.ms{position:relative}
+.ms summary{list-style:none;cursor:pointer;min-height:var(--target-min);display:flex;align-items:center;gap:8px;padding:0 10px;border:1px solid var(--piedra-borde);border-radius:var(--radius-input);background:var(--papel);color:var(--fg);font-size:13px;white-space:nowrap;min-width:90px}
+.ms summary::-webkit-details-marker{display:none}
+.ms summary::after{content:'▾';margin-left:auto;color:var(--gray-600)}
+.ms summary:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+.ms-pop{position:absolute;top:calc(100% + 4px);left:0;z-index:60;min-width:230px;padding:6px;border:1px solid var(--sumi);border-radius:var(--radius-panel);background:var(--papel)}
+.ms-pop label{display:flex;align-items:center;gap:8px;min-height:var(--target-min);padding:0 8px;font-size:13px;border-radius:var(--radius-input);cursor:pointer}
+.ms-pop label:hover{background:var(--crema)}
+.topbar .ad-chip,.sec-tools .ad-chip{font-size:13px;padding:0 14px}
 .ad-chip:hover{border-color:var(--sumi)}
-/* lo seleccionado va en lima (relleno con texto sumi) */
-.ad-chip[aria-pressed="true"]{background:var(--lima);border-color:var(--lima);color:var(--sumi)}
-.btn-reset{font:inherit;font-size:13px;font-weight:500;min-height:var(--target-min);padding:0 18px;background:var(--sumi);color:var(--papel);border:1px solid var(--sumi);border-radius:var(--radius-pill);cursor:pointer}
-.last-upd{margin-left:auto;font-size:13px;color:var(--gray-400)}
+/* lo activo va en sumi; la lima se reserva a una marca por bloque: rango rápido, métrica del gráfico y vista de nivel y medio */
+.ad-chip[aria-pressed="true"]{background:var(--sumi);border-color:var(--sumi);color:var(--papel)}
+#quick .ad-chip[data-q][aria-pressed="true"],.g-btns .ad-chip[aria-pressed="true"],.sec-tools .ad-chip[aria-pressed="true"]{background:var(--lima);border-color:var(--sumi);color:var(--sumi)}
+.g-btns .g-sep~.ad-chip[aria-pressed="true"],#g1-tbtn[aria-pressed="true"],#g2-tbtn[aria-pressed="true"]{background:var(--sumi);border-color:var(--sumi);color:var(--papel)}
+.btn-reset{font:inherit;font-size:13px;font-weight:500;min-height:var(--target-min);padding:0 14px;background:transparent;color:var(--sumi);border:1px solid var(--sumi);border-radius:var(--radius-pill);cursor:pointer}
+.last-upd{margin-top:10px;font-size:13px;line-height:1.4;color:var(--shell-fg-muted)}
 
 /* CONTENT */
-.content{padding:24px 24px;min-width:0}
-.sec-title{font-family:var(--font-display);font-size:19px;line-height:1.3;font-weight:500;letter-spacing:-.01em;margin:8px 0 12px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;scroll-margin-top:170px}
-.sec-note{font-family:var(--font-body);font-size:13px;letter-spacing:0;color:var(--gray-400);font-weight:400;margin-left:4px}
-.sec-tools{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.content{padding:48px clamp(24px,3vw,48px) 96px;min-width:0}
+/* título de sección: titular grande con su nota debajo; las herramientas, a la derecha */
+.sec-title{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:8px 24px;font-family:var(--font-display);font-size:clamp(28px,2.6vw,38px);line-height:1.1;font-weight:500;letter-spacing:-.03em;margin:clamp(72px,7vw,104px) 0 28px;padding-top:clamp(32px,3vw,48px);border-top:1px solid var(--piedra);text-wrap:balance;scroll-margin-top:150px}
+.content>.sec-title:first-child{margin-top:0;padding-top:0;border-top:0}
+.sec-note{grid-column:1;font-family:var(--font-body);font-size:15px;line-height:1.5;letter-spacing:0;color:var(--tinta-secundaria);font-weight:400;max-width:78ch}
+.sec-note:empty{display:none}
+.sec-tools{grid-column:2;grid-row:1 / span 2;align-self:end;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 .box{background:var(--papel);border-radius:var(--radius-card);border:1px solid var(--gray-200)}
 
 /* KPIs: .ad-kpis; la barra de avance es .ad-barra */
-.ad-kpis{margin-bottom:28px;grid-template-columns:repeat(4,minmax(0,1fr))}
-.ad-kpi__n{font-size:clamp(24px,2.2vw,32px)}
+.ad-kpis{margin-bottom:32px;grid-template-columns:repeat(4,minmax(0,1fr))}
+.ad-kpi{padding:28px 24px 24px;gap:6px}
+.ad-kpi__l{font-size:15px}
+.ad-kpi__n{font-size:clamp(26px,2.1vw,34px);margin-block:2px 4px;overflow-wrap:normal;white-space:nowrap}
+.ad-kpi__m{font-size:14px;color:var(--tinta-secundaria)}
 @media(max-width:1300px){.ad-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.ad-kpis{grid-template-columns:1fr}}
 .kpi-bwrap{margin-top:10px}
@@ -71,21 +96,23 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
 .t-pos{color:var(--c-pos);font-weight:500} .t-mid{color:var(--c-mid);font-weight:500} .t-neg{color:var(--c-neg);font-weight:500} .t-mute{color:var(--gray-400)}
 
 /* COMPARATIVO */
-.cmp{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-bottom:28px}
-.bars-card{max-width:760px}
+.cmp{display:grid;grid-template-columns:minmax(0,1fr);gap:56px;margin-bottom:28px}
 .cmp .tcard{margin-bottom:0}
-.bars-card{padding:20px}
-.bars-card h3{font-size:17px;font-weight:500;margin-bottom:4px}
-.bars-card .bars-note{font-size:13px;color:var(--gray-400);margin-bottom:16px}
+.bars-card{padding:0}
+.bars-card h3{font-size:clamp(22px,2vw,28px);line-height:1.15;letter-spacing:-.02em;font-weight:500;margin-bottom:8px}
+.bars-card .bars-note{font-size:15px;color:var(--tinta-secundaria);max-width:78ch;margin-bottom:28px}
+/* un cliente por columna: tres barras cada uno */
+#cli-bars{grid-template-columns:repeat(auto-fit,minmax(min(360px,100%),1fr));gap:12px 56px}
 .bars-card .bar-head .val{font-size:1.05rem}
 /* cumplimiento por cliente: tres barras por cliente; la raya marca el 100 % (la barra llega hasta 150 %) */
-.cum-cli{display:grid;gap:6px;padding:12px 0;border-top:1px solid var(--gray-200)}
-.cum-cli:first-child{border-top:0;padding-top:0}
-.cum-cli .name{font-family:var(--font-display);font-weight:500;font-size:15px}
+.cum-cli{display:grid;gap:10px;align-content:start;padding:20px 0 28px;border-top:1px solid var(--sumi)}
+.cum-cli .name{font-family:var(--font-display);font-weight:500;font-size:20px;letter-spacing:-.015em;margin-bottom:4px}
 .cum-line{display:grid;grid-template-columns:118px minmax(0,1fr) 64px;gap:10px;align-items:center;font-size:13px;color:var(--gray-600)}
 .cum-line .val{text-align:right;font-variant-numeric:tabular-nums}
 .cum-line .ad-barra{height:10px}
-.cum-line .det{grid-column:2 / 4;font-size:12px;color:var(--gray-400);margin-top:-4px}
+.cum-line .det{grid-column:2 / 4;font-size:13px;color:var(--tinta-suave);margin-top:-4px}
+/* la meta cumplida no se rellena de lima: la raya del 100 % ya la marca */
+.cum-line .ad-barra--on>span{background:var(--sumi);outline:0}
 /* mes a mes: mes → cliente → nivel */
 .mm-chip{cursor:pointer;user-select:none;white-space:nowrap}
 .mm-chip .car{display:inline-block;font-size:9px;color:var(--gray-400);margin-right:6px;transition:transform .15s}
@@ -94,34 +121,37 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
 .mm-l3 td:first-child{padding-left:40px;color:var(--gray-600)}
 
 /* GRÁFICOS Y FUENTES */
-.chart-card{padding:16px;margin-bottom:20px}
-.chart-wrap{height:280px;position:relative}
-.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
-.nivel-card{padding:16px;gap:0}
+.chart-card{padding:28px 28px 24px;margin-bottom:32px}
+.chart-wrap{height:340px;position:relative}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:32px}
+.nivel-card{padding:28px;gap:0}
 /* la etiqueta repite el color de la serie en los gráficos: pauta sumi, orgánico tinta-secundaria, otras tinta-tenue */
 .nivel-tag{display:inline-block;justify-self:start;font-size:13px;font-weight:500;padding:2px 12px;border-radius:var(--radius-pill);margin-bottom:12px}
 .tag-pau{background:var(--sumi);color:var(--papel)} .tag-org{background:var(--tinta-secundaria);color:var(--papel)} .tag-otr{background:var(--tinta-tenue);color:var(--sumi)}
-.nm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 10px}
-.nm-label{font-size:13px;color:var(--gray-400);font-weight:400}
-.nm-value{font-family:var(--font-display);font-size:20px;font-weight:400;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.nm-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 12px}
+.nm-label{font-size:14px;color:var(--tinta-secundaria);font-weight:400}
+.nm-value{font-family:var(--font-display);font-size:clamp(20px,1.7vw,26px);font-weight:300;letter-spacing:-.03em;font-variant-numeric:tabular-nums;white-space:nowrap}
+/* la fuente actual (pauta) marca con lima su etiqueta, no toda la tarjeta */
+.nivel-card.is-on{background:var(--papel);border-color:var(--sumi);color:var(--sumi)}
+.nivel-card.is-on .tag-pau{background:var(--lima);color:var(--sumi);border:1px solid var(--sumi)}
 
 /* TABLAS: .ad-tabla; aquí solo la densidad, las columnas de cifras y los niveles */
-.tcard{margin-bottom:28px}
+.tcard{margin-bottom:32px}
 .ad-tabla table{min-width:0;font-size:13px;line-height:1.4}
-.ad-tabla thead th{padding:10px;position:sticky;top:0;background:var(--papel)}
+.ad-tabla thead th{padding:14px 12px;position:sticky;top:0;background:var(--papel)}
 .ad-tabla th,.ad-tabla td{text-align:left}
 .ad-tabla th.r,.ad-tabla td.r{text-align:right}
 .ad-tabla td.r{font-variant-numeric:tabular-nums}
 .ad-tabla th.grp,.ad-tabla td.grp{border-left:1px solid var(--gray-200)}
-.ad-tabla tbody td{padding:8px 10px;color:var(--gray-600);white-space:nowrap;vertical-align:middle}
+.ad-tabla tbody td{padding:11px 12px;color:var(--gray-600);white-space:nowrap;vertical-align:middle}
 .ad-tabla tbody tr:hover td{background:var(--gray-50)}
 .ad-tabla .tr-total td{font-weight:500;color:var(--fg);background:var(--gray-50) !important;border-top:1px solid var(--fg) !important}
 .lv1 td{font-weight:500;color:var(--fg)}
 .lv3 td:first-child{padding-left:30px;color:var(--gray-600)}
-.foot-note{font-size:13px;color:var(--gray-400);padding:10px 0 0;line-height:1.6}
+.foot-note{font-size:14px;color:var(--tinta-secundaria);padding:16px 0 0;line-height:1.65;max-width:120ch}
 .foot-note b{color:var(--gray-600)}
 .empty{padding:18px;text-align:center;color:var(--gray-400);font-size:13px}
-@media(max-width:1700px){.ad-tabla thead th,.ad-tabla tbody td{font-size:12px;padding:7px 8px}}
+@media(max-width:1700px){.ad-tabla thead th,.ad-tabla tbody td{font-size:13px;padding:10px 10px}}
 @media(pointer:coarse){.ad-tabla tbody td{padding-block:12px}}
 
 /* FUENTE (pie del riel) */
@@ -131,17 +161,48 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
 
 /* LOADING */
 #loading{position:fixed;inset:0;background:rgba(14,14,15,.96);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:12px}
-.ld-logo img{height:36px}
+.ld-marca{margin-bottom:8px}
 .spinner{width:28px;height:28px;border:3px solid rgba(247,246,242,.18);border-top-color:var(--sobre-oscuro-100);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 #ld-msg{color:var(--sobre-oscuro-300);font-size:13px}
 @media(prefers-reduced-motion:reduce){.spinner{animation:none}}
 
 @media(max-width:1300px){.three-col{grid-template-columns:1fr}}
-@media(max-width:900px){.content{padding:16px}.topbar{position:static}}
+@media(max-width:900px){.content{padding:32px 16px 64px}.topbar{position:static;padding-inline:16px}.app-sidebar .ad-marca{margin:0}.app-sidebar-top{padding:10px 14px}.sec-title{grid-template-columns:minmax(0,1fr)}.sec-tools{grid-column:1;grid-row:auto;justify-content:flex-start}}
 @media(max-width:560px){.nm-grid{grid-template-columns:repeat(2,1fr)}
   .fg,#quick{flex-wrap:wrap}.f-sep{display:none}.last-upd{margin-left:0}select{max-width:100%}.topbar,.content{padding-inline:16px}
-  .bar-head{flex-wrap:wrap}.sec-tools{margin-left:0}.cum-line{grid-template-columns:96px minmax(0,1fr) 56px}}
+  .bar-head{flex-wrap:wrap}.ad-kpi{padding:20px}.chart-card,.nivel-card{padding:18px}.cum-line{grid-template-columns:96px minmax(0,1fr) 56px}}
+/* COMPARATIVOS Y SEMANA A SEMANA */
+#cmp-btns,.g-btns{flex-wrap:wrap}
+.g-btns .ad-chip,.g-top .ad-chip{font-size:13px;padding:0 16px}
+.kpi-cmp{font-size:13px;line-height:1.45;margin-top:2px;color:var(--gray-400)}
+.kpi-cmp b{font-weight:500}
+.cmp-note{font-size:14px;color:var(--tinta-secundaria);margin:-8px 0 0;line-height:1.65;max-width:120ch}
+.cmp-note b{color:var(--gray-600);font-weight:500}
+.sem-cards{grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:16px}
+.sem-cards:empty{display:none}
+.alerta{display:inline-block;font-size:12px;font-weight:500;padding:1px 8px;border-radius:var(--radius-pill);margin-right:4px;white-space:nowrap;border:1px solid currentColor}
+.al-neg{color:var(--c-neg)} .al-mid{color:var(--c-mid)} .al-pos{color:var(--c-pos)} .al-cur{color:var(--gray-600)}
+.ad-tabla th.gcab{text-align:center;border-left:1px solid var(--gray-200);border-bottom:1px solid var(--gray-200)}
+.pb{--pbc:rgba(34,160,90,.16);background:linear-gradient(270deg,transparent calc(100% - var(--w)),var(--pbc) calc(100% - var(--w)))}
+.pb.t-neg{--pbc:rgba(194,38,28,.13)} .pb.t-mid{--pbc:rgba(235,104,52,.15)}
+.g-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.g-top .sem-sub{margin:0;flex:1}
+#g1-det,#g2-det{margin-top:12px}
+.g-btns{display:flex;gap:6px;align-items:center}
+.g-btns .g-sep{width:1px;height:20px;background:var(--gray-200);margin:0 4px}
+.g-bar{margin:0 0 12px}
+.sem-sub{font-family:var(--font-display);font-size:16px;font-weight:500;color:var(--fg);margin:14px 0 8px}
+.sem-fila{cursor:pointer}
+.sem-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:-2px 0 12px}
+.ad-tabla .sem-actual td{background-color:var(--gray-100)}
+.sem-c b{display:block;font-weight:500;color:var(--fg)} .sem-c span{display:block;font-size:12px;color:var(--gray-400);white-space:nowrap}
+#sem-body td:first-child,#sem-head th:first-child,#sem-body2 td:first-child,#sem-head2 th:first-child{position:sticky;left:0;z-index:1;background-color:var(--papel);background-image:linear-gradient(90deg,transparent calc(100% - 1px),var(--piedra) calc(100% - 1px))}
+#sem-head th:first-child,#sem-head2 th:first-child{z-index:2}
+#sem-body tr.sem-actual td:first-child,#sem-body2 tr.sem-actual td:first-child{background-color:var(--gray-100)}
+select.sem-sel{max-width:160px}
+@media(max-width:1300px){.sem-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.sem-cards{grid-template-columns:1fr}}
 .main,.content,.tb-row{min-width:0}
 </style>
 <link rel="icon" type="image/png" href="data:image/png;base64,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">
@@ -149,14 +210,14 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
 <body class="con-shell">
 <a class="skip-link" href="#sec-kpi">Ir al resumen</a>
 <div id="loading">
-  <div class="ld-logo"><img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/wAARCABkAGQDASIAAhEBAxEB/8QAHAAAAgMBAQEBAAAAAAAAAAAAAAUEBgcDAgH/xAA4EAACAQMDAgQEBAUEAwAAAAABAgMABBEFEiExBhNBUWEicYGRBxQjMqEVQlKxwdHwJGJy4fH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A2miiigCiiigCiiigCiiigCiiigCiiigCiiigCiiigCiiigCiiigCiio+oahb6Xp8t7dOUhiALEKWPJAHABJ5IoJFFeW41O3t7KO7kEgjkxsATLMT0AA5JrMT/aBpKXnkLFeNG0bOt0Ihs4zgMCeQRgjt3oA9FY5vjlpYlnBtLwQQP5T3JiHlhsZXBBOQfXFaltcRXdrFcQNuilQSIcEZBGR19KAqiiqnxBqsuj2SXEdub2SR9gt4s5c8kkdOMc0Au8TeLNK8Krbf2k8im4LiIRxlySBk9B24815n/bHRlRXa3u0VwSpaIYY4OAw7E4OP3r578e/Etl4u1K31OGzmtLi3DxOjuHVlO04IwMHJPbpXkmtanHJp9rbWNq1rbRbnz57SSSSWZieSSSf3oA9P1j9pOl2Msq2tvPdmN2Utj92xHr15r0v4b8U6T4s092029WQKQJIY2VpIs/3AAkA+xr5Lk0u9e1nuBZzNDA5SSQRna3bAPr1FX3wftY7bVJNSmvmskFuwjxGSJJpMBFXBHopz6mgD7bRRRQBRRRQBRRRQBXif4oQadqmqadb67ZXGs6Tpk6SX9lYSokpJBKHk+jDjGPWvbVSdU0m01izNneozwllfaDg5U5U/mBQB868OeIfDP8A9Rfw4fDkNzqyT/ZLq/nj3K6uSMyE/MQCoyvPFeoeDfjJpOptZaIkV1LqxXyo1mTapZfmHJbKgDn6V48fhX4aMt/HFG6G0meFGKgFlUnv0PFQPC1xNoXxT0y7s5pFjg1KJFDkHZl9pGR1HNAHutFFFAFcOorXriigCiiigCiiigCiiigP/9k=" alt="Universidad Católica"></div>
+  <span class="ad-marca ad-marca--claro ld-marca"><img src="../assets/logos/adcom-wordmark.png" alt="Adcom" width="96" height="22"><i>Tablero Educación</i></span>
   <div class="spinner"></div>
   <div id="ld-msg">Cargando datos...</div>
 </div>
 
 <nav class="app-sidebar" data-roles="tinta" aria-label="Secciones">
   <div class="app-sidebar-top">
-    <a class="app-sidebar-brand" href="../index.html"><i></i>Adcom</a>
+    <a class="ad-marca ad-marca--claro" href="../index.html"><img src="../assets/logos/adcom-wordmark.png" alt="Adcom" width="96" height="22"><i>Tablero Educación</i></a>
     <div class="app-sidebar-client">
       <span class="app-sidebar-client-label">Cuenta</span>
       <strong class="app-sidebar-client-name">Educación, pauta digital</strong>
@@ -175,6 +236,7 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
   <div class="app-sidebar-foot">
     Fuente actualizada
     <div class="src-list" id="src-list">—</div>
+    <div class="last-upd" id="last-upd"></div>
     <button class="tbtn btn-reset" style="margin-top:8px" onclick="load()">Volver a cargar</button>
   </div>
 </nav>
@@ -188,12 +250,11 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
       <div class="fg"><span class="fl">Hasta</span><input type="date" id="f-hasta" onchange="onDate()"></div>
       <div class="f-sep"></div>
       <div id="quick" class="fg"></div>
-      <span class="last-upd" id="last-upd"></span>
     </div>
     <div class="tb-row">
       <div class="fg"><span class="fl">Cliente</span><select id="f-cli" onchange="onSel()"><option value="">Todos</option></select></div>
       <div class="fg"><span class="fl">Nivel</span><select id="f-niv" onchange="onSel()"><option value="">Todos (sin B2B)</option></select></div>
-      <div class="fg"><span class="fl">Medio</span><select id="f-medio" onchange="onSel()"><option value="">Todos</option></select></div>
+      <div class="fg"><span class="fl">Medio</span><details class="ms" id="f-medio"><summary id="f-medio-lbl">Todos</summary><div class="ms-pop" id="f-medio-ops" role="group" aria-label="Medio"></div></details></div>
       <div class="f-sep"></div>
       <div class="fg"><span class="fl">Comparar con</span><div id="cmp-btns" class="fg"></div></div>
       <button class="btn-reset" onclick="resetFilters()">Limpiar filtros</button>
@@ -201,12 +262,12 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
   </div>
 
   <div class="content">
-    <div class="sec-title" id="sec-kpi">Resumen del rango<span class="sec-note" id="rango-note"></span></div>
+    <h2 class="sec-title" id="sec-kpi">Resumen del rango<span class="sec-note" id="rango-note"></span></h2>
     <div class="ad-kpis" id="kpi-grid"></div>
     <div class="cmp-note" id="cmp-note"></div>
 
     <div id="blk-cliente">
-      <div class="sec-title" id="sec-cliente">Por cliente<span class="sec-note">metas de pauta del periodo 2027-1, proporcionales al rango</span></div>
+      <h2 class="sec-title" id="sec-cliente">Por cliente<span class="sec-note">metas de pauta del periodo 2027-1, proporcionales al rango</span></h2>
       <div class="cmp">
         <div class="tcard"><div class="ad-tabla"><table><thead id="cli-head"></thead><tbody id="cli-body"></tbody></table></div></div>
         <div class="bars-card">
@@ -217,15 +278,32 @@ select:focus-visible,input:focus-visible{border-color:var(--fg)}
       </div>
     </div>
 
-    <div class="sec-title" id="sec-mes">Mes a mes<span class="sec-note" id="mes-note">cada etapa del CRM cuenta en su propia fecha</span></div>
+    <h2 class="sec-title" id="sec-sem">Semana a semana<span class="sec-note" id="sem-note"></span></h2>
+    <div class="sem-bar" id="sem-bar"><span class="fl">Periodo</span><div class="fg" id="sem-tools"></div></div>
+    <div class="ad-kpis sem-cards" id="sem-cards"></div>
+    <div id="sem-graf">
+      <div class="g-btns g-bar" id="sem-btns"></div>
+      <div class="box chart-card"><div class="g-top"><div class="sem-sub" id="g1-tit">Ejecución de metas</div><button class="ad-chip" aria-pressed="false" id="g1-tbtn" onclick="toggleTabla(1)">Ver tabla</button></div>
+        <div class="chart-wrap"><canvas id="chart-g1"></canvas></div><div class="foot-note" id="g1-foot"></div><div id="g1-det"></div></div>
+      <div class="box chart-card" id="g2-box"><div class="g-top"><div class="sem-sub" id="g2-tit">Comparación de periodos</div><button class="ad-chip" aria-pressed="false" id="g2-tbtn" onclick="toggleTabla(2)">Ver tabla</button></div>
+        <div class="chart-wrap"><canvas id="chart-g2"></canvas></div><div class="foot-note" id="g2-foot"></div><div id="g2-det"></div></div>
+    </div>
+    <div id="sem-det">
+    <div id="sem-t1"><div class="sem-sub" id="sem-tit1">Ejecución de metas</div>
+    <div class="tcard"><div class="ad-tabla"><table><thead id="sem-head"></thead><tbody id="sem-body"></tbody></table></div><div class="foot-note" id="sem-foot"></div></div></div>
+    <div id="sem-cmp-box"><div class="sem-sub" id="sem-cmp-tit">Comparativo</div>
+    <div class="tcard"><div class="ad-tabla"><table><thead id="sem-head2"></thead><tbody id="sem-body2"></tbody></table></div><div class="foot-note" id="sem-foot2"></div></div></div>
+    </div>
+
+    <h2 class="sec-title" id="sec-mes">Mes a mes<span class="sec-note" id="mes-note">cada etapa del CRM cuenta en su propia fecha</span></h2>
     <div class="box chart-card"><div class="chart-wrap"><canvas id="chart-mes"></canvas></div></div>
     <div class="tcard"><div class="ad-tabla"><table><thead id="mes-head"></thead><tbody id="mes-body"></tbody></table></div><div class="foot-note" id="mes-foot"></div></div>
 
-    <div class="sec-title" id="sec-medio">Por nivel y medio<span class="sec-note">el medio del CRM sale de cada cliente; EIA no lo trae</span>
-      <span class="sec-tools"><button class="ad-chip" aria-pressed="true" data-mv="niv" onclick="setMedioVista('niv')">Nivel · medio</button><button class="ad-chip" aria-pressed="false" data-mv="medio" onclick="setMedioVista('medio')">Solo medio</button><button class="ad-chip" aria-pressed="false" data-mv="cli" onclick="setMedioVista('cli')">Cliente · nivel</button></span></div>
+    <h2 class="sec-title" id="sec-medio">Por nivel y medio<span class="sec-note">el medio del CRM sale de cada cliente; EIA no lo trae</span>
+      <span class="sec-tools"><button class="ad-chip" aria-pressed="true" data-mv="niv" onclick="setMedioVista('niv')">Nivel · medio</button><button class="ad-chip" aria-pressed="false" data-mv="medio" onclick="setMedioVista('medio')">Solo medio</button><button class="ad-chip" aria-pressed="false" data-mv="cli" onclick="setMedioVista('cli')">Cliente · nivel</button></span></h2>
     <div class="tcard"><div class="ad-tabla"><table><thead id="medio-head"></thead><tbody id="medio-body"></tbody></table></div></div>
 
-    <div class="sec-title" id="sec-fuentes">Pauta vs orgánico y otras fuentes<span class="sec-note">leads y matrículas del CRM de todas las fuentes · conversión = matrículas / leads del rango · aplican fechas, cliente y nivel</span></div>
+    <h2 class="sec-title" id="sec-fuentes">Pauta vs orgánico y otras fuentes<span class="sec-note">leads y matrículas del CRM de todas las fuentes · conversión = matrículas / leads del rango · aplican fechas, cliente y nivel</span></h2>
     <div class="three-col" id="fuente-cards"></div>
     <div class="box chart-card"><div class="chart-wrap"><canvas id="chart-fu"></canvas></div></div>
     <div class="tcard"><div class="ad-tabla"><table><thead id="fu-head"></thead><tbody id="fu-body"></tbody></table></div>
@@ -316,7 +394,7 @@ function build(e, fu, me, mm){
   const ord = (L) => (a, b) => (L.indexOf(a) + 1 || 99) - (L.indexOf(b) + 1 || 99) || a.localeCompare(b);
   fill('f-cli', [...new Set(RAW.map(r => r.cli))].sort(ord(CLIENTES)), document.getElementById('f-cli').value);
   fill('f-niv', [...new Set(RAW.map(r => r.niv))].sort(ord(NIVELES)), document.getElementById('f-niv').value);
-  fill('f-medio', [...new Set(RAW.map(r => r.medio))].sort(ord(MEDIOS)), document.getElementById('f-medio').value, m => MEDIO_LBL[m] || m);
+  MEDIO_OPS = [...new Set(RAW.map(r => r.medio))].sort(ord(MEDIOS)); MEDIO_SEL = MEDIO_SEL.filter(m => MEDIO_OPS.includes(m)); pintarMedio();
 }
 // última corrida de cada cliente según el LOG del Apps Script
 function renderLog(log){
@@ -325,6 +403,12 @@ function renderLog(log){
   document.getElementById('src-list').innerHTML = CLIENTES.map(c => { const x = ult[c];
     return `<div><span>${c}</span><span class="${x && x.estado !== 'OK' ? 'src-err' : ''}">${x ? esc(String(x.corrida).slice(0,16)) + (x.estado !== 'OK' ? ' · ' + esc(x.estado) : '') : 'sin datos'}</span></div>` }).join('');
 }
+
+// Leyenda de todas las gráficas: las líneas se ven como línea (con su color y trazo) y las barras como cuadro
+const LEYENDA = { usePointStyle: true, pointStyleWidth: 26, boxHeight: 8,
+  generateLabels: ch => Chart.defaults.plugins.legend.labels.generateLabels(ch).map(l => { const d = ch.data.datasets[l.datasetIndex];
+    return d.type === 'line' ? { ...l, pointStyle: 'line', strokeStyle: d.borderColor, lineWidth: 2.5, lineDash: d.borderDash || [] }
+      : { ...l, pointStyle: 'rectRounded', lineWidth: 0 } }) };
 
 // ── Filtros ──────────────────────────────────────────────────────────────────
 function fill(id, opts, sel, labelFn){ const el = document.getElementById(id), first = el.options[0].outerHTML;
@@ -347,11 +431,27 @@ function setQuick(k){
 function toggleMetaTotal(){ META_TOTAL = !META_TOTAL; render() }
 function onDate(){ QUICK = ''; render() }
 function onSel(){ render() }
-function resetFilters(){ ['f-cli','f-niv','f-medio'].forEach(id => document.getElementById(id).value = ''); META_TOTAL = false; setQuick('3m') }
+// Medio: selección múltiple (ninguno o todos marcados = sin filtro)
+let MEDIO_OPS = [], MEDIO_SEL = [];
+function pintarMedio(){
+  const lbl = m => MEDIO_LBL[m] || m, n = MEDIO_SEL.length;
+  document.getElementById('f-medio-lbl').textContent = !n ? 'Todos' : n <= 2 ? MEDIO_SEL.join(', ') : n + ' medios';
+  document.getElementById('f-medio-ops').innerHTML = `<label><input type="checkbox" value=""${n ? '' : ' checked'} onchange="onMedio(this)"> Todos</label>` +
+    MEDIO_OPS.map(m => `<label><input type="checkbox" value="${esc(m)}"${MEDIO_SEL.includes(m) ? ' checked' : ''} onchange="onMedio(this)"> ${esc(lbl(m))}</label>`).join('') }
+function onMedio(el){
+  const v = el.value;
+  MEDIO_SEL = !v ? [] : MEDIO_OPS.filter(m => m === v ? el.checked : MEDIO_SEL.includes(m));
+  if(MEDIO_SEL.length === MEDIO_OPS.length) MEDIO_SEL = [];
+  pintarMedio();
+  const x = [...document.querySelectorAll('#f-medio-ops input')].find(i => i.value === v); if(x) x.focus();
+  render() }
+document.addEventListener('click', e => { const d = document.getElementById('f-medio'); if(d.open && !e.composedPath().includes(d)) d.open = false });
+document.addEventListener('keydown', e => { const d = document.getElementById('f-medio'); if(e.key === 'Escape' && d.open){ d.open = false; document.getElementById('f-medio-lbl').focus() } });
+function resetFilters(){ ['f-cli','f-niv'].forEach(id => document.getElementById(id).value = ''); MEDIO_SEL = []; pintarMedio(); META_TOTAL = false; setQuick('3m') }
 function F(){ const g = id => document.getElementById(id).value;
-  return { desde: g('f-desde'), hasta: g('f-hasta'), cli: g('f-cli'), niv: g('f-niv'), medio: g('f-medio') } }
+  return { desde: g('f-desde'), hasta: g('f-hasta'), cli: g('f-cli'), niv: g('f-niv'), medio: MEDIO_SEL.length ? MEDIO_SEL : null } }
 const pasaNiv = (niv, f) => f.niv ? niv === f.niv : niv !== B2B;
-const pasa = (r, f) => r.d >= f.desde && r.d <= f.hasta && (!f.cli || r.cli === f.cli) && pasaNiv(r.niv, f) && (!f.medio || r.medio === f.medio);
+const pasa = (r, f) => r.d >= f.desde && r.d <= f.hasta && (!f.cli || r.cli === f.cli) && pasaNiv(r.niv, f) && (!f.medio || f.medio.includes(r.medio));
 // Parte de una meta que entra en el filtro: la meta completa del periodo con el botón encendido;
 // si no, proporcional a los días del rango que caen dentro de la meta.
 function share(m, f){
@@ -465,7 +565,7 @@ function filasComp(f){
     if(x && ult && ult < f.desde){ off[c] = { ...x, sinDatos: true }; return }
     const h = ult && ult < f.hasta ? ult : f.hasta;
     if(x) off[c] = { ...x, desde: addDays(f.desde, -x.dias), hasta: addDays(h, -x.dias) } });
-  RAW.forEach(r => { const o = off[r.cli]; if(!o || o.sinDatos || r.d < o.desde || r.d > o.hasta || !pasaNiv(r.niv, f) || (f.medio && r.medio !== f.medio)) return; rows.push(r) });
+  RAW.forEach(r => { const o = off[r.cli]; if(!o || o.sinDatos || r.d < o.desde || r.d > o.hasta || !pasaNiv(r.niv, f) || (f.medio && !f.medio.includes(r.medio))) return; rows.push(r) });
   return { rows, off };
 }
 
@@ -481,7 +581,7 @@ function varHTML(v, vc, tipo, key){
 function setCmp(k){ CMP = k; render() }
 function renderCmpNote(f){
   document.getElementById('cmp-btns').innerHTML = [['anio', CMP_LBL.anio.boton], ['', 'Sin comparar']]
-    .map(([k, l]) => `<button class="qbtn${CMP === k ? ' on' : ''}" onclick="setCmp('${k}')">${l}</button>`).join('');
+    .map(([k, l]) => `<button class="ad-chip" aria-pressed="${CMP === k}" onclick="setCmp('${k}')">${l}</button>`).join('');
   const el = document.getElementById('cmp-note');
   if(!CMPD){ el.innerHTML = ''; return }
   const partes = CLIENTES.filter(c => !f.cli || c === f.cli).map(c => {
@@ -526,7 +626,7 @@ function calcSem(cli, f, perSel){
   const w0c = c ? lunes(c.ini) : null, nC = c ? Math.ceil((difDias(w0c, finExt(cli, c)) + 1) / 7) : 0;
   // sumas por semana del periodo y del comparado
   const act = Array.from({ length: nTot }, () => Z()), cmp = Array.from({ length: nC }, () => Z());
-  RAW.forEach(r => { if(r.cli !== cli || !pasaNiv(r.niv, f) || (f.medio && r.medio !== f.medio)) return;
+  RAW.forEach(r => { if(r.cli !== cli || !pasaNiv(r.niv, f) || (f.medio && !f.medio.includes(r.medio))) return;
     const i = Math.floor(difDias(w0, r.d) / 7); if(i >= 0 && i < nTot) add(act[i], r);
     if(c){ const j = Math.floor(difDias(w0c, r.d) / 7); if(j >= 0 && j < nC) add(cmp[j], r) } });
   const acum = (arr, k, n) => arr.slice(0, n).reduce((a, e) => a + e[k], 0);
@@ -611,8 +711,8 @@ function renderSemanas(f){
   const { hoy, p, c, w0, nTot, w0c, nC, act, cmp, acum, dd, parL, parM, metas, mp, n, aI, pmAc, st, emb, ETK, totC, mTot, sinInvSem, metaSem, metaTotK, proyK } = s0;
   document.getElementById('sem-graf').style.display = '';
   ubicarTablas(true);
-  document.getElementById('g1-tbtn').textContent = SEM_T1 ? 'Ocultar tabla' : 'Ver tabla'; document.getElementById('g1-tbtn').classList.toggle('on', SEM_T1);
-  document.getElementById('g2-tbtn').textContent = SEM_T2 ? 'Ocultar tabla' : 'Ver tabla'; document.getElementById('g2-tbtn').classList.toggle('on', SEM_T2);
+  document.getElementById('g1-tbtn').textContent = SEM_T1 ? 'Ocultar tabla' : 'Ver tabla'; document.getElementById('g1-tbtn').setAttribute('aria-pressed', SEM_T1);
+  document.getElementById('g2-tbtn').textContent = SEM_T2 ? 'Ocultar tabla' : 'Ver tabla'; document.getElementById('g2-tbtn').setAttribute('aria-pressed', SEM_T2);
   if(!ETK.includes(SEM_E) && SEM_E !== 'inv') SEM_E = 'lc';
   document.getElementById('sem-note').textContent = `${cli} · periodo ${p.per} (${fDate(p.ini)} ${p.ini.slice(0, 4)} – ${fDate(p.fin)} ${p.fin.slice(0, 4)}${p.nota ? ', ' + p.nota : ''}) · semana 1 desde el lunes ${fDate(w0)}` +
     (c ? ` · comparado con ${c.per}` : '') + ' · aplican cliente, nivel y medio; no las fechas';
@@ -638,12 +738,12 @@ function renderSemanas(f){
 
   // ── gráficas
   const fg = css('--fg-muted') || '#888', gris = 'rgba(140,140,140,.35)', s1 = css('--serie-1') || '#2a78d6';
-  document.getElementById('sem-btns').innerHTML = ['inv', ...ETK].map(k => `<button class="qbtn${k === SEM_E ? ' on' : ''}" onclick="setG('e','${k}')">${ETQ[k]}</button>`).join('') +
-    '<span class="g-sep"></span>' + [['sem', 'Semanal'], ['acum', 'Acumulado']].map(([k, l]) => `<button class="qbtn${k === SEM_V ? ' on' : ''}" onclick="setG('v','${k}')">${l}</button>`).join('');
+  document.getElementById('sem-btns').innerHTML = ['inv', ...ETK].map(k => `<button class="ad-chip" aria-pressed="${k === SEM_E}" onclick="setG('e','${k}')">${ETQ[k]}</button>`).join('') +
+    '<span class="g-sep"></span>' + [['sem', 'Semanal'], ['acum', 'Acumulado']].map(([k, l]) => `<button class="ad-chip" aria-pressed="${k === SEM_V}" onclick="setG('v','${k}')">${l}</button>`).join('');
   const W = nTot, ini = i => addDays(w0, 7 * i), iniC = i => addDays(w0c, 7 * i);
   const lblX = (conC) => Array.from({ length: W }, (_, i) => conC ? ['S' + (i + 1), fDate(ini(i)), fDate(iniC(i))] : ['S' + (i + 1), fDate(ini(i))]);
   const baseOpts = (fmt, tit) => ({ responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
-    plugins: { legend: { labels: { boxWidth: 10, font: { family: 'Poppins', size: 12 }, color: fg } }, tooltip: { callbacks: { title: tit, label: x => x.dataset.label + ': ' + (x.raw === null ? '—' : fmt(x.raw)) } } },
+    plugins: { legend: { labels: { ...LEYENDA, font: { family: 'Inter', size: 12 }, color: fg } }, tooltip: { callbacks: { title: tit, label: x => x.dataset.label + ': ' + (x.raw === null ? '—' : fmt(x.raw)) } } },
     scales: { x: { ticks: { color: fg, font: { size: 10 }, maxRotation: 0, autoSkip: true, autoSkipPadding: 4 }, grid: { display: false } },
       y: { beginAtZero: true, ticks: { color: fg, font: { size: 11 }, callback: v => fmt(v) } } } });
   const DL = window.ChartDataLabels ? [window.ChartDataLabels] : [];
@@ -658,13 +758,13 @@ function renderSemanas(f){
   // barras: meta y ejecución (con su valor); línea en el eje derecho: % de cumplimiento (puntos y etiqueta en color de semáforo)
   const ink = css('--fg') || '#111';
   const fCorto = k => v => k === 'inv' ? '$' + fN(Math.round(v / 1e6)) + ' M' : fN(v);
-  const lblBar = (fmt) => ({ display: x => x.dataset.data[x.dataIndex] !== null && x.dataset.data[x.dataIndex] > 0, anchor: 'end', align: 'end', offset: 1, color: fg, font: { family: 'Poppins', size: 9 }, formatter: v => fmt(v) });
+  const lblBar = (fmt) => ({ display: x => x.dataset.data[x.dataIndex] !== null && x.dataset.data[x.dataIndex] > 0, anchor: 'end', align: 'end', offset: 1, color: fg, font: { family: 'Inter', size: 9 }, formatter: v => fmt(v) });
   const ejesDobles = (o, fmtY, tituloY2, cero) => { o.scales.y.title = { display: false }; o.scales.y2 = { position: 'right', beginAtZero: cero, grid: { display: false },
     ticks: { color: fg, font: { size: 11 }, callback: v => fP(v) }, title: { display: true, text: tituloY2, color: fg, font: { size: 11 } }, grace: '15%' }; o.scales.y.grace = '10%'; o.layout = { padding: { top: 22 } }; return o };
   CH_G1 = new Chart(document.getElementById('chart-g1'), { data: { labels: lblX(false), datasets: [
       { type: 'line', label: 'Cumplimiento', data: p1, yAxisID: 'y2', borderColor: ink, borderWidth: 1.5, tension: .25, spanGaps: false, order: 0,
         pointRadius: 3.5, pointBackgroundColor: p1.map(x => semColor(x, c1)), pointBorderColor: p1.map(x => semColor(x, c1)), backgroundColor: ink,
-        datalabels: { display: x => p1[x.dataIndex] !== null, align: 'top', offset: 4, color: x => semColor(p1[x.dataIndex], c1), font: { family: 'Poppins', size: 10, weight: '700' }, formatter: v => fP(v) } },
+        datalabels: { display: x => p1[x.dataIndex] !== null, align: 'top', offset: 4, color: x => semColor(p1[x.dataIndex], c1), font: { family: 'Inter', size: 10, weight: '700' }, formatter: v => fP(v) } },
       { type: 'bar', label: `Meta ${ETQ[k1].toLowerCase()}${ac1 ? ' acumulada' : ''}`, data: m1, backgroundColor: gris, order: 1, datalabels: lblBar(fCorto(k1)) },
       { type: 'bar', label: `${ETQ[k1]}${ac1 ? ' acumulado' : ''} ${p.per}`, data: e1, backgroundColor: s1, order: 1, datalabels: lblBar(fCorto(k1)) } ] },
     options: (o => { o.plugins.tooltip.callbacks.label = x => x.dataset.label + ': ' + (x.raw === null ? '—' : x.dataset.yAxisID === 'y2' ? fP(x.raw) : f1(x.raw)); return ejesDobles(o, f1, 'Cumplimiento', true) })(
@@ -688,7 +788,7 @@ function renderSemanas(f){
     CH_G2 = new Chart(document.getElementById('chart-g2'), { data: { labels: lblX(true), datasets: [
         { type: 'line', label: 'Variación acumulada', data: vr, yAxisID: 'y2', borderColor: ink, borderWidth: 1.5, tension: .25, spanGaps: false, order: 0,
           pointRadius: 3.5, pointBackgroundColor: vr.map((_, i) => cv(i)), pointBorderColor: vr.map((_, i) => cv(i)), backgroundColor: ink,
-          datalabels: { display: x => vr[x.dataIndex] !== null, align: 'top', offset: 4, color: x => cv(x.dataIndex), font: { family: 'Poppins', size: 10, weight: '700' }, formatter: v => (v >= 0 ? '+' : '') + fP(v) } },
+          datalabels: { display: x => vr[x.dataIndex] !== null, align: 'top', offset: 4, color: x => cv(x.dataIndex), font: { family: 'Inter', size: 10, weight: '700' }, formatter: v => (v >= 0 ? '+' : '') + fP(v) } },
         { type: 'bar', label: `${ETQ[k2]}${ac2 ? ' acumulado' : ''} ${c.per}`, data: vc, backgroundColor: gris, order: 1, datalabels: lblBar(fCorto(k2)) },
         { type: 'bar', label: `${ETQ[k2]}${ac2 ? ' acumulado' : ''} ${p.per}`, data: va, backgroundColor: s1, order: 1, datalabels: lblBar(fCorto(k2)) } ] },
       options: (o => { o.plugins.tooltip.callbacks.label = x => x.dataset.label + ': ' + (x.raw === null ? '—' : x.dataset.yAxisID === 'y2' ? (x.raw >= 0 ? '+' : '') + fP(x.raw) : f2(x.raw)); return ejesDobles(o, f2, 'Variación', false) })(
@@ -876,7 +976,7 @@ function renderMes(f){
     { type:'line', label:'Leads CRM', data: ks.map(k => g[k].lc), borderColor: ink, backgroundColor: ink, borderWidth:2, tension:.25, yAxisID:'y', order:1 },
     { type:'line', label:'Matrículas', data: ks.map(k => g[k].mat), borderColor: sec, backgroundColor: sec, borderWidth:2, borderDash:[5,4], tension:.25, yAxisID:'y2', order:0 } ] };
   const opts = { responsive:true, maintainAspectRatio:false, interaction:{mode:'index', intersect:false},
-    plugins:{ legend:{labels:{boxWidth:10, font:{size:12}, color:fg}},
+    plugins:{ legend:{labels:{...LEYENDA, font:{size:12}, color:fg}},
       tooltip:{callbacks:{label: c => c.dataset.label + ': ' + (c.dataset.yAxisID === 'y1' ? fCOP(c.raw) : fN(c.raw))}} },
     scales:{ x:{ticks:{color:fg, font:{size:12}}, grid:{display:false}},
       y:{position:'left', beginAtZero:true, ticks:{color:fg, font:{size:12}, callback: v => NF0.format(v)}, title:{display:true, text:'Leads CRM', color:fg, font:{size:12}}},
@@ -938,7 +1038,7 @@ function renderFuentes(f){
     ...FUENTES.map((k, i) => ({ type:'bar', label:'Leads ' + k.toLowerCase(), data: ks.map(m => MES[m][k].lc), backgroundColor: col[k], borderColor: css('--papel') || '#ffffff', borderWidth:{top:2}, maxBarThickness:64, stack:'leads', yAxisID:'y', order:5 + i })),
     ...FUENTES.map((k, i) => ({ type:'line', label:'Conversión ' + k.toLowerCase(), data: ks.map(m => MES[m][k].lc ? MES[m][k].mat / MES[m][k].lc * 100 : null), borderColor: line[k], backgroundColor: k === 'Pauta' ? lima : line[k], pointBorderColor: line[k], pointRadius: k === 'Pauta' ? 4 : 3, borderDash: dash[k], borderWidth:2, tension:.25, spanGaps:true, yAxisID:'y1', order:i })) ] };
   const opts = { responsive:true, maintainAspectRatio:false, interaction:{mode:'index', intersect:false},
-    plugins:{ legend:{labels:{boxWidth:10, font:{size:12}, color:fg}},
+    plugins:{ legend:{labels:{...LEYENDA, font:{size:12}, color:fg}},
       tooltip:{callbacks:{label: c => c.dataset.label + ': ' + (c.dataset.yAxisID === 'y1' ? (c.raw === null ? '—' : NF1.format(c.raw) + ' %') : fN(c.raw))}} },
     scales:{ x:{stacked:true, ticks:{color:fg, font:{size:12}}, grid:{display:false}},
       y:{stacked:true, position:'left', beginAtZero:true, ticks:{color:fg, font:{size:12}, callback: v => NF0.format(v)}, title:{display:true, text:'Leads CRM', color:fg, font:{size:12}}},

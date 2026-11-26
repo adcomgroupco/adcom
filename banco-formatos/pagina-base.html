@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#F7F6F2">
+  <title>Título de la página | Adcom</title>
+  <!--
+    PÁGINA BASE · copia este archivo y reemplaza el contenido.
+    1. Ajusta las rutas ../assets/… según la profundidad de tu página (en la raíz: assets/…).
+    2. Sube ?v=AAAAMMDD en adcom-v2.css si editas la hoja.
+    3. Borra las secciones que no uses; deja el orden claro → oscuro → claro → cierre.
+    4. Pasa la lista de ESTANDARES-DISENO.md, sección 13: python -I herramientas/auditar_v2.py
+    Todo sale de componentes ad-*; no escribas CSS suelto. Galería: banco-formatos/componentes.html
+  -->
+  <link rel="stylesheet" href="../assets/ds/fonts.css">
+  <link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261128">
+  <link rel="icon" type="image/png" href="../assets/favicon-adcom.png">
+  <link rel="apple-touch-icon" href="../assets/ds/logos/apple-touch-icon.png">
+  <style>
+    /* Solo el cuerpo de la página. Nada de colores ni tamaños sueltos: tokens. */
+    body{margin:0;background:var(--washi);color:var(--sumi)}
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Ir al contenido</a>
+
+<!-- ENCABEZADO · wordmark oficial + nombre del documento. Nunca «Adcom» escrito como logotipo. -->
+<header class="ad-nav">
+  <nav class="ad-nav__in" aria-label="Principal">
+    <a class="ad-marca" href="../index.html"><img src="../assets/logos/adcom-wordmark.png" alt="Adcom" width="96" height="22"><i>Nombre del documento</i></a>
+    <div class="ad-nav__links"><a href="#sistema">Sistema</a><a href="#cifras">Cifras</a></div>
+  </nav>
+</header>
+
+<main id="contenido" tabindex="-1">
+
+  <!-- PORTADA · titular que afirma, en dos líneas cortas, con la palabra clave resaltada. -->
+  <section class="ad-sec ad-hero ad-hero--centro">
+    <div class="ad-wrap">
+      <p class="ad-eyebrow">Categoría o contexto del documento</p>
+      <h1 class="ad-t-display-hero">
+        <span class="ad-ln">Una idea clara.</span>
+        <span class="ad-ln">Un <span class="ad-hl">resultado</span> medible.</span>
+      </h1>
+      <p class="ad-lead">Una entradilla de dos o tres líneas que dice qué encuentra quien lee este documento.</p>
+      <div class="ad-hero__acciones">
+        <a class="ad-btn ad-btn--accent" href="#sistema">Acción principal</a>
+        <a class="ad-link" href="#cifras">Acción secundaria ›</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN EN DOS COLUMNAS · la idea a la izquierda y el diagrama protagonista a la derecha.
+       Elige la figura por la lógica de la página: ad-eje (de lo amplio a lo específico), ad-anillo (ciclo),
+       ad-suma (capacidades que se suman), ad-pasos (recorrido). -->
+  <section class="ad-sec ad-sec--papel" id="sistema">
+    <div class="ad-wrap ad-split">
+      <div class="ad-sec-cab ad-sec-cab--grande" style="margin:0">
+        <p class="ad-eyebrow">Cómo funciona</p>
+        <h2>De lo amplio a lo específico.</h2>
+        <p class="ad-lead">Explica en una frase la relación que muestra la figura.</p>
+        <a class="ad-go" href="#cifras">Ver resultados</a>
+      </div>
+      <ol class="ad-eje" aria-label="De lo amplio a lo específico">
+        <li><span class="ad-eje__t">Primero</span><span class="ad-eje__d">Qué decidimos</span></li>
+        <li class="is-on"><span class="ad-eje__t">Después</span><span class="ad-eje__d">Cómo lo hacemos</span></li>
+        <li><span class="ad-eje__t">Al final</span><span class="ad-eje__d">Qué medimos</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- CIFRAS · números grandes y finos con contexto y fuente; una sola con ad-fill (la clave). -->
+  <section class="ad-sec" id="cifras">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">Resultados</p>
+        <h2>Resultados, no promesas.</h2>
+      </div>
+      <div class="ad-cifras">
+        <div class="ad-stat"><span class="ad-stat__n">70.000</span><span class="ad-stat__l">Matriculados, récord institucional</span><span class="ad-stat__m">Educación · 2023</span></div>
+        <div class="ad-stat"><span class="ad-stat__n">6 → 12&nbsp;%</span><span class="ad-stat__l">Conversión en formación técnica</span><span class="ad-stat__m">Educación · 2017–2024</span></div>
+        <div class="ad-stat"><span class="ad-stat__n"><span class="ad-fill">+20&nbsp;%</span></span><span class="ad-stat__l">Matrículas de posgrado</span><span class="ad-stat__m">CRM + pauta · 2022–2026</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN OSCURA · una idea fuerte; el recorrido va como pasos numerados (el último, en lima). -->
+  <section class="ad-sec ad-sec--oscuro">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow ad-eyebrow--dark">Método</p>
+        <h2>Del entendimiento a la <span class="ad-hl">optimización</span>.</h2>
+      </div>
+      <ol class="ad-pasos">
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">1</span><h3>Entender</h3><p>El negocio, el embudo y los datos.</p></li>
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">2</span><h3>Definir</h3><p>La meta, el resultado y la fuente.</p></li>
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">3</span><h3>Activar</h3><p>Pauta, contenido y tecnología.</p></li>
+        <li class="ad-paso"><span class="ad-n ad-n--lg" aria-hidden="true">4</span><h3>Optimizar</h3><p>Medir y volver a empezar.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- TABLA · el detalle. Con caption (periodo, unidad, moneda), cifras a la derecha y total al pie. -->
+  <section class="ad-sec">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab">
+        <p class="ad-eyebrow">Detalle</p>
+        <h2>La cifra que explica el resto.</h2>
+      </div>
+      <div class="ad-tabla">
+        <table>
+          <caption>Resultados por medio · periodo · pesos colombianos · fuente CRM</caption>
+          <thead><tr><th scope="col">Medio</th><th scope="col" class="valor">Inversión</th><th scope="col" class="valor">Leads</th><th scope="col">Estado</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Meta Ads</th><td class="valor">$41.200.000</td><td class="valor">1.640</td><td><span class="ad-estado ad-estado--ok">En meta</span></td></tr>
+            <tr><th scope="row">Google Ads</th><td class="valor">$30.100.000</td><td class="valor">1.420</td><td><span class="ad-estado ad-estado--parcial">Parcial</span></td></tr>
+          </tbody>
+          <tfoot><tr><th scope="row">Total</th><td class="valor">$71.300.000</td><td class="valor">3.060</td><td></td></tr></tfoot>
+        </table>
+      </div>
+      <div class="ad-lectura" style="margin-block-start:var(--space-6)"><span class="ad-lectura__k">Qué quiere decir</span><p>Una frase que traduce la tabla: qué pasó y qué decidimos.</p></div>
+    </div>
+  </section>
+
+  <!-- CIERRE · una frase y una sola acción. -->
+  <section class="ad-sec ad-sec--oscuro ad-cierre">
+    <div class="ad-wrap ad-cierre__in">
+      <div>
+        <h2>El próximo paso empieza con una conversación.</h2>
+        <p>Revisamos la fuente, definimos el resultado y proponemos el primer paso.</p>
+      </div>
+      <a class="ad-btn ad-btn--accent" href="#contenido">Hablemos</a>
+    </div>
+  </section>
+</main>
+
+<footer class="ad-foot">
+  <div class="ad-foot__in"><span>Adcom · Área digital</span></div>
+</footer>
+</body>
+</html>

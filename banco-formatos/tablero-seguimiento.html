@@ -21,12 +21,10 @@
   -->
   <title>Tablero de pauta · Universidad Andina</title>
   <link rel="icon" href="data:,">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
-  <link rel="stylesheet" href="../assets/css/adcom-v2.css">
-  <link rel="stylesheet" href="formatos.css">
-  <link rel="stylesheet" href="css/tablero-seguimiento.css">
+  <link rel="stylesheet" href="../assets/ds/fonts.css">
+  <link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261128">
+  <link rel="stylesheet" href="formatos.css?v=20261123">
+  <link rel="stylesheet" href="css/tablero-seguimiento.css?v=20261129">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
   <script src="js/tablero-seguimiento.js" defer></script>
 </head>
@@ -36,7 +34,7 @@
 <!-- RIEL: marca, cuenta y periodo, secciones y estado de las fuentes. Es mueble: va oscuro. -->
 <aside class="ts-riel" data-roles="tinta" aria-label="Navegación del tablero">
   <div class="ts-riel__top">
-    <a class="ts-marca" href="../index.html"><i aria-hidden="true"></i>Adcom</a>
+    <a class="ad-marca ad-marca--claro ts-marca" href="../index.html"><img src="../assets/logos/adcom-wordmark.png" alt="Adcom" width="96" height="22"><i>Tablero de pauta</i></a>
     <div class="ts-cuenta">
       <span>Cliente</span>
       <strong data-cliente>Universidad Andina</strong>
@@ -66,28 +64,42 @@
 </aside>
 
 <div class="ts-main">
-  <!-- FILTROS: fila 1 fechas y rangos rápidos (relativos a la fecha de corte); fila 2 dimensiones.
-       La opción activa del rango rápido va en lima (relleno con texto sumi), igual que la sección activa del riel. -->
-  <header class="ts-barra">
-    <div class="ts-barra__fila">
-      <h1 class="ts-titulo">Tablero de <span class="ad-hl">pauta</span> · <span data-cliente>Universidad Andina</span></h1>
-      <label class="ts-campo">Desde <input type="date" id="f-desde"></label>
-      <label class="ts-campo">Hasta <input type="date" id="f-hasta"></label>
-      <div class="ts-rapidos" id="rapidos" role="group" aria-label="Rangos rápidos"></div>
-      <button type="button" class="ad-chip" id="b-meta" aria-pressed="false" title="Toma la meta completa del periodo; las fechas no cambian">Meta del periodo</button>
-      <span class="ts-actualizado" id="actualizado"></span>
+  <!-- CABECERA: título del tablero y corte de los datos. No es fija: solo los filtros acompañan al scroll. -->
+  <header class="ts-cab">
+    <div>
+      <p class="ts-cab__k">Tablero de seguimiento de pauta</p>
+      <h1 class="ts-titulo">Tablero de pauta · <span data-cliente>Universidad Andina</span></h1>
     </div>
-    <div class="ts-barra__fila">
-      <label class="ts-campo">Nivel <select id="f-nivel"><option value="">Todos</option></select></label>
-      <label class="ts-campo">Facultad <select id="f-facultad"><option value="">Todas</option></select></label>
-      <label class="ts-campo">Programa <select id="f-programa"><option value="">Todos</option></select></label>
-      <label class="ts-campo">Medio <select id="f-medio"><option value="">Todos</option></select></label>
-      <button type="button" class="ad-btn ad-btn--dark ts-limpiar" id="b-limpiar">Limpiar filtros</button>
-    </div>
+    <span class="ts-actualizado" id="actualizado"></span>
   </header>
 
+  <!-- FILTROS (panel de dos filas rotuladas): fila 1 periodo (fechas y rangos rápidos, relativos a la fecha de
+       corte); fila 2 segmento (dimensiones). Cada fila lleva su rótulo. La opción activa del rango rápido
+       va en lima (relleno con texto sumi), igual que la sección activa del riel. -->
+  <div class="ts-barra" role="group" aria-label="Filtros del tablero">
+    <div class="ts-barra__fila">
+      <span class="ts-barra__k">Periodo</span>
+      <div class="ts-barra__ctl">
+        <label class="ts-campo">Desde <input type="date" id="f-desde"></label>
+        <label class="ts-campo">Hasta <input type="date" id="f-hasta"></label>
+        <div class="ts-rapidos" id="rapidos" role="group" aria-label="Rangos rápidos"></div>
+        <button type="button" class="ad-chip" id="b-meta" aria-pressed="false" title="Toma la meta completa del periodo; las fechas no cambian">Meta del periodo</button>
+      </div>
+    </div>
+    <div class="ts-barra__fila">
+      <span class="ts-barra__k">Segmento</span>
+      <div class="ts-barra__ctl">
+        <label class="ts-campo">Nivel <select id="f-nivel"><option value="">Todos</option></select></label>
+        <label class="ts-campo">Facultad <select id="f-facultad"><option value="">Todas</option></select></label>
+        <label class="ts-campo">Programa <select id="f-programa"><option value="">Todos</option></select></label>
+        <label class="ts-campo">Medio <select id="f-medio"><option value="">Todos</option></select></label>
+        <button type="button" class="ad-btn ad-btn--dark ts-limpiar" id="b-limpiar">Limpiar filtros</button>
+      </div>
+    </div>
+  </div>
+
   <main class="ts-contenido" id="contenido">
-    <div class="ad-lectura ts-plantilla"><span class="ad-lectura__k">Plantilla</span><p>Plantilla del banco de formatos con datos ficticios. Los datos se reemplazan en <code>js/tablero-seguimiento.js</code>, parte 1.</p></div>
+    <div class="ad-aviso ts-plantilla"><span class="ad-aviso__k">Plantilla</span>Plantilla del banco de formatos con datos ficticios. Los datos se reemplazan en <code>js/tablero-seguimiento.js</code>, parte 1.</div>
     <p class="ts-carga" id="carga" role="status">Cargando datos…</p>
     <p class="ts-aviso" id="aviso-datos" role="alert" hidden></p>
     <noscript><p class="ts-aviso">El tablero necesita JavaScript para calcular las cifras.</p></noscript>

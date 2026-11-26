@@ -5,13 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="La táctica define qué lanzar o ajustar. La operación pone responsable, plazo, control de calidad y registro.">
 <title>Operación y táctica | Framework Digital de Adcom</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%230E0E0F'/%3E%3Ctext x='16' y='21' font-family='Inter Tight,Arial,sans-serif' font-size='13' font-weight='500' fill='%23F7F6F2' text-anchor='middle'%3EFD%3C/text%3E%3Ccircle cx='25' cy='8' r='3' fill='%23D8FF3D'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="../assets/favicon-adcom.png">
 <meta name="theme-color" content="#0E0E0F">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
 <!-- sistema v2: tokens y componentes ad-*; 01-tokens.css re-apunta los nombres del framework encima -->
-<link rel="stylesheet" href="../assets/css/adcom-v2.css">
+<link rel="stylesheet" href="../assets/ds/fonts.css">
+<link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261128">
 <link rel="stylesheet" href="assets/css/01-tokens.css">
 <link rel="stylesheet" href="assets/css/02-layout.css">
 <link rel="stylesheet" href="assets/css/03-componentes.css">
@@ -45,9 +43,7 @@
 </defs></svg>
 
 <header class="site-header page-header">
-  <a class="brand" href="index.html" aria-label="Inicio del Framework Digital">
-    <span class="brand-mark" aria-hidden="true">FD</span><span class="page-wordmark">Framework Digital<small>Adcom</small></span>
-  </a>
+  <a class="ad-marca ad-marca--claro" href="index.html" aria-label="Inicio del Framework Digital"><img src="../assets/logos/adcom-wordmark.png" alt="Adcom" width="96" height="22"><i>Framework Digital</i></a>
   <button class="header-search" id="header-search" type="button" aria-label="Buscar en el framework">
     <svg class="ico" aria-hidden="true"><use href="#i-search"/></svg><span>Buscar</span>
   </button>
@@ -87,42 +83,55 @@
 
 <main id="inicio" tabindex="-1">
 <section class="framework-area" id="operacion-tactica" aria-labelledby="operacion-tactica-title" tabindex="-1">
-  <header class="area-intro page-intro section-dark">
+<header class="area-intro page-intro ad-sec ad-sec--oscuro ad-hero">
   <div class="wrap">
-    <p class="page-kicker" id="operacion-tactica-title">Operación y táctica</p>
-    <h1 id="hero-title" tabindex="-1">Activación y <span class="ad-hl">control</span> de campañas</h1>
-    <p class="page-lead">Usa esta página para elegir qué hacer hoy. Ubica el trabajo por estado y abre el procedimiento que necesitas.</p>
-    <figure class="route-diagram work-map">
-      <figcaption>Ruta según el estado del trabajo</figcaption>
-      <ul role="list">
-        <li><a class="ad-card ad-card--dark" href="#solicitudes"><strong>Tengo un pedido nuevo</strong><span class="ad-card__d">Confirma alcance, responsable y fecha.</span></a></li>
-        <li><a class="ad-card ad-card--dark" href="#implementacion"><strong>Voy a activar</strong><span class="ad-card__d">Verifica presupuesto, piezas, destino y medición.</span></a></li>
-        <li><a class="ad-card ad-card--dark" href="#control"><strong>La campaña está activa</strong><span class="ad-card__d">Contrasta consumo real y esperado. Si hay una anomalía, valida la señal.</span></a></li>
-        <li><a class="ad-card ad-card--dark" href="#cierres"><strong>Terminó el periodo</strong><span class="ad-card__d">Conciliación, resultado y pendiente para el siguiente ciclo.</span></a></li>
-      </ul>
-    </figure>
-    <p class="page-example"><strong>Ejemplo</strong> Si el gasto va por delante, verifica periodo, moneda y ritmo esperado. Si la desviación persiste, documenta el ajuste y la próxima revisión en el <a href="#seguimiento">seguimiento operativo</a>.</p>
-    <nav class="chapter-nav" aria-label="Capítulos de operación y táctica">
-      <ul class="area-topics" aria-label="Capítulos de operación y táctica">
-        <li><a href="#solicitudes">Solicitudes</a></li>
-        <li><a href="#flujo">Flujo de trabajo</a></li>
-        <li><a href="#equipo">Responsables y traspasos</a></li>
-        <li><a href="#cuentas">Distribución de cuentas</a></li>
-        <li><a href="#procesos">Campañas y QA</a></li>
-        <li><a href="#control">Presupuesto y alertas</a></li>
-        <li><a href="#reaccion">Diagnóstico y decisiones</a></li>
-        <li><a href="#optimizacion">Optimización y pruebas</a></li>
-        <li><a href="#playbooks">Playbooks</a></li>
-        <li><a href="#sistema">Repositorio, nombres y UTM</a></li>
-      </ul>
-    </nav>
-    <div class="page-search">
-    <form class="buscador" id="buscador" role="search">
-      <label class="sr-only" for="q">Buscar en el framework</label>
-      <input id="q" type="search" autocomplete="off" placeholder="Busca un tema o una regla…">
-    </form>
-    <div class="q-res" id="q-res" aria-live="polite" hidden></div>
-  </div>
+    <div class="fw-hero-split">
+      <div>
+        <p class="page-kicker" id="operacion-tactica-title">Operación y táctica</p>
+        <h1 id="hero-title" tabindex="-1"><span class="ad-ln">Activar,</span><span class="ad-ln">controlar,</span><span class="ad-ln">aprender.</span></h1>
+        <p class="ad-lead">Usa esta página para elegir qué hacer hoy. Ubica el trabajo por estado y abre el procedimiento que necesitas.</p>
+      </div>
+      <figure class="ad-anillo fw-anillo" aria-labelledby="ruta-estado">
+        <figcaption class="sr-only" id="ruta-estado">Ruta según el estado del trabajo</figcaption>
+        <svg viewBox="0 0 400 400" aria-hidden="true">
+          <circle class="ad-dg-line" cx="200" cy="200" r="104"/>
+          <g class="ad-orbit"><circle class="ad-dg-lima" cx="200" cy="96" r="7"/></g>
+        </svg>
+        <span class="ad-anillo__c">Cada campaña</span>
+        <ol class="ad-anillo__nodos">
+          <li><a href="#solicitudes"><b><span class="ad-n ad-n--md">1</span>Tengo un pedido nuevo</b><small>Confirma alcance, responsable y fecha.</small></a></li>
+          <li><a href="#implementacion"><b><span class="ad-n ad-n--md">2</span>Voy a activar</b><small>Verifica presupuesto, piezas, destino y medición.</small></a></li>
+          <li><a href="#control"><b><span class="ad-n ad-n--md">3</span>La campaña está activa</b><small>Contrasta consumo real y esperado. Si hay una anomalía, valida la señal.</small></a></li>
+          <li><a href="#cierres"><b><span class="ad-n ad-n--md">4</span>Terminó el periodo</b><small>Conciliación, resultado y pendiente para el siguiente ciclo.</small></a></li>
+        </ol>
+      </figure>
+    </div>
+    <div class="fw-pie">
+      <p class="page-example"><strong>Ejemplo</strong> Si el gasto va por delante, verifica periodo, moneda y ritmo esperado. Si la desviación persiste, documenta el ajuste y la próxima revisión en el <a href="#seguimiento">seguimiento operativo</a>.</p>
+      <div>
+        <nav class="chapter-nav" aria-label="Capítulos de operación y táctica">
+          <ul class="area-topics" aria-label="Capítulos de operación y táctica">
+            <li><a href="#solicitudes">Solicitudes</a></li>
+            <li><a href="#flujo">Flujo de trabajo</a></li>
+            <li><a href="#equipo">Responsables y traspasos</a></li>
+            <li><a href="#cuentas">Distribución de cuentas</a></li>
+            <li><a href="#procesos">Campañas y QA</a></li>
+            <li><a href="#control">Presupuesto y alertas</a></li>
+            <li><a href="#reaccion">Diagnóstico y decisiones</a></li>
+            <li><a href="#optimizacion">Optimización y pruebas</a></li>
+            <li><a href="#playbooks">Playbooks</a></li>
+            <li><a href="#sistema">Repositorio, nombres y UTM</a></li>
+          </ul>
+        </nav>
+        <div class="page-search">
+          <form class="buscador" id="buscador" role="search">
+            <label class="sr-only" for="q">Buscar en el framework</label>
+            <input id="q" type="search" autocomplete="off" placeholder="Busca un tema o una regla…">
+          </form>
+          <div class="q-res" id="q-res" aria-live="polite" hidden></div>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -2566,9 +2575,15 @@
   </div>
 </section>
 
-  <div class="area-handoff section-light">
-    <div class="wrap"><p>Los resultados, los experimentos y los cierres alimentan la siguiente decisión estratégica.</p><a href="estrategia.html#estrategia">Volver a estrategia</a></div>
-  </div>
+  <section class="section-dark ad-sec--oscuro ad-cierre" aria-labelledby="cierre-title">
+    <div class="wrap ad-cierre__in">
+      <div>
+        <h2 id="cierre-title">La siguiente decisión empieza con lo que aprendimos.</h2>
+        <p>Los resultados, los experimentos y los cierres alimentan la siguiente decisión estratégica.</p>
+      </div>
+      <a class="ad-btn ad-btn--accent" href="estrategia.html#estrategia">Volver a estrategia</a>
+    </div>
+  </section>
 </section>
 
 </main>

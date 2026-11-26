@@ -14,9 +14,8 @@ body.ts{display:flex;align-items:stretch;min-height:100vh;margin:0;font-size:15p
 /* riel: mueble oscuro, negro-escena con texto sobre-oscuro */
 .ts-riel{width:248px;flex:0 0 auto;position:sticky;top:0;align-self:flex-start;height:100vh;overflow-y:auto;scrollbar-width:thin;display:flex;flex-direction:column;background:var(--shell-bg);color:var(--shell-fg)}
 .ts-riel__top{padding:20px 16px 16px;border-bottom:1px solid var(--shell-rule)}
-.ts-marca{display:inline-flex;align-items:center;gap:8px;min-height:var(--target-min);color:var(--shell-fg);text-decoration:none;font:500 18px var(--font-display);letter-spacing:-.01em}
+/* marca: .ad-marca--claro del sistema (isotipo en blanco + nombre del documento) */
 .ts-marca:hover{color:var(--shell-fg)}
-.ts-marca i{width:8px;height:8px;border-radius:50%;background:var(--lima)}
 .ts-cuenta{margin-top:8px;padding:10px 12px;border:1px solid var(--shell-rule);border-radius:var(--radius-card)}
 .ts-cuenta span{display:block;font-size:13px;color:var(--shell-fg-muted)}
 .ts-cuenta strong{display:block;margin:2px 0;font:500 16px/1.3 var(--font-display)}
@@ -37,15 +36,20 @@ body.ts{display:flex;align-items:stretch;min-height:100vh;margin:0;font-size:15p
 .ts-riel__fuentes li span:last-child{color:var(--shell-fg)}
 
 /* ---------- barra de filtros ---------- */
-.ts-barra{position:sticky;top:0;z-index:20;display:grid;gap:8px;padding:10px 24px;background:var(--papel);border-bottom:1px solid var(--piedra)}
-.ts-barra__fila{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
-.ts-titulo{margin:0 8px 0 0;font:500 17px/1.2 var(--font-display);letter-spacing:-.01em}
+/* cabecera y filtros: dos filas rotuladas (periodo y segmento) en un panel; con dos filas de 44 px no caben fijos al scroll sin comerse la pantalla */
+.ts-cab{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 24px;padding:48px 32px 28px}
+.ts-cab__k{margin:0 0 6px;font-size:14px;color:var(--tinta-secundaria)}
+.ts-titulo{margin:0;font:500 clamp(30px,3.2vw,44px)/1.08 var(--font-display);letter-spacing:-.03em;text-wrap:balance}
+.ts-barra{display:grid;gap:12px;margin-inline:32px;padding:16px 20px;background:var(--papel);border:1px solid var(--piedra);border-radius:var(--radius-panel)}
+.ts-barra__fila{display:grid;grid-template-columns:72px minmax(0,1fr);align-items:start;gap:6px 16px}
+.ts-barra__k{padding-block-start:14px;font-size:13px;color:var(--tinta-secundaria)}
+.ts-barra__ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
 .ts-campo{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--tinta-suave)}
-.ts-campo input,.ts-campo select{font:inherit;font-size:14px;min-height:var(--target-min);padding:0 10px;max-width:170px;border:1px solid var(--piedra-borde);border-radius:var(--radius-input);background:var(--papel);color:var(--sumi)}
+.ts-campo input,.ts-campo select{font:inherit;font-size:14px;min-height:var(--target-min);padding:0 10px;max-width:140px;border:1px solid var(--piedra-borde);border-radius:var(--radius-input);background:var(--papel);color:var(--sumi)}
 .ts-campo select{cursor:pointer}
 .ts-campo input:focus-visible,.ts-campo select:focus-visible{border-color:var(--sumi)}
 .ts-rapidos,.ts-vistas,.ts-herramientas{display:flex;flex-wrap:wrap;gap:6px}
-.ts-actualizado{margin-left:auto;font-size:13px;color:var(--tinta-suave)}
+.ts-actualizado{font-size:13px;color:var(--tinta-suave)}
 
 /* lo que se toca es redondo */
 /* chips y botones: .ad-chip y .ad-btn del sistema; aquí solo el tamaño compacto de la barra y el riel */
@@ -59,18 +63,21 @@ body.ts{display:flex;align-items:stretch;min-height:100vh;margin:0;font-size:15p
 /* el rango rápido es el filtro principal: su opción activa es la lima de la pantalla */
 
 /* ---------- contenido ---------- */
-.ts-contenido{padding:24px;min-width:0}
-.ts-plantilla{margin:0 0 16px}
+.ts-contenido{padding:32px 32px 80px;min-width:0}
+.ts-plantilla{margin:0 0 24px}
 .ts-plantilla code{font-size:13px}
 .ts-carga,.ts-aviso{margin:0 0 16px;font-size:14px;color:var(--tinta-secundaria)}
 .ts-carga[hidden],.ts-aviso[hidden]{display:none}
 .ts-aviso{padding:10px 14px;border:1px solid var(--neg);border-radius:var(--radius-card);background:var(--papel);color:var(--neg)}
 .ts-oculto{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.ts-sec{padding-block:8px 32px;scroll-margin-top:180px}
-.ts-h2{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin:8px 0 14px;font:500 22px/1.25 var(--font-display);letter-spacing:-.015em}
-.ts-h2-fila{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px}
-.ts-h2-fila .ts-h2{margin-bottom:8px}
-.ts-h3{margin:20px 0 10px;font:500 16px/1.3 var(--font-display)}
+/* secciones: una línea de separación y aire arriba; el h2 manda, su nota va al lado */
+.ts-sec{padding-block:56px 8px;border-top:1px solid var(--piedra);scroll-margin-top:24px}
+.ts-sec:first-of-type{padding-top:8px;border-top:0}
+.ts-h2{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin:0 0 24px;font:500 clamp(26px,2.4vw,32px)/1.15 var(--font-display);letter-spacing:-.025em}
+.ts-h2 .ts-nota{font-size:14px;color:var(--tinta-secundaria)}
+.ts-h2-fila{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;margin-bottom:24px}
+.ts-h2-fila .ts-h2{margin-bottom:0}
+.ts-h3{margin:32px 0 12px;font:500 18px/1.3 var(--font-display);letter-spacing:-.01em}
 .ts-nota{font:400 13px/1.5 var(--font-body);letter-spacing:0;color:var(--tinta-suave)}
 .ts-caja{background:var(--papel);border:1px solid var(--piedra);border-radius:var(--radius-card)}
 .ts-lectura{max-width:80ch;margin:10px 0 16px}
@@ -185,13 +192,15 @@ body.ts{display:flex;align-items:stretch;min-height:100vh;margin:0;font-size:15p
 /* bajo 900 px el riel se acuesta arriba como franja de navegación con scroll propio */
 @media (max-width:900px){
   body.ts{flex-direction:column;min-height:0}
+  .ts-cab{padding:28px 16px 20px}
+  .ts-barra__fila{grid-template-columns:minmax(0,1fr)}
   .ts-riel{position:sticky;top:0;z-index:30;width:100%;height:auto;flex-direction:row;align-items:center;overflow-x:auto;overflow-y:hidden}
   .ts-riel__top{display:flex;align-items:center;padding:4px 12px;border-bottom:0;border-right:1px solid var(--shell-rule);flex:none}
   .ts-cuenta,.ts-riel__titulo,.ts-riel__pie{display:none}
   .ts-riel nav{display:flex;gap:2px;padding:4px 8px;flex:none}
   .ts-riel nav a{white-space:nowrap}
-  .ts-barra{position:static;padding:10px 16px}
-  .ts-contenido{padding:16px}
+  .ts-barra{margin-inline:16px;padding:12px 16px}
+  .ts-contenido{padding:16px 16px 48px}
   .ts-sec{scroll-margin-top:64px}
 }
 @media (max-width:640px){
@@ -215,7 +224,8 @@ body.ts{display:flex;align-items:stretch;min-height:100vh;margin:0;font-size:15p
 @media print{
   body.ts{display:block;background:#fff}
   .ts-riel,.ts-rapidos,.ts-vistas,.ts-herramientas,#b-meta,#b-limpiar,.ts-plantilla,.skip-link{display:none!important}
-  .ts-barra{position:static;border:0;padding:0 0 8px}
+  .ts-barra{margin:0;border:0;padding:0 0 8px}
+  .ts-cab{padding:0 0 8px}
   .ts-campo input,.ts-campo select{border:0;padding:0;min-height:0;appearance:none}
   .ts-contenido{padding:0}
   .ts-tabla{overflow:visible}

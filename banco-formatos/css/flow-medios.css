@@ -3,11 +3,11 @@
 .flow-cabecera {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
-  gap: var(--space-4);
+  gap: var(--space-6);
 }
-.flow-cabecera + * { margin-block-start: var(--space-6); }
+.flow-cabecera + * { margin-block-start: var(--space-4); }
 .flow-escenarios-control { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .flow-nota { margin-block-start: var(--space-4); }
 .flow-aviso {
@@ -72,7 +72,6 @@
 .ad-kpi dd { margin: 0; }
 .flow-escenarios-control .ad-chip[aria-pressed="true"] { background: var(--lima); border-color: var(--sumi); color: var(--sumi); }
 .flow-nota { max-width: 78ch; }
-.formato-seccion .ad-sec-cab > * { margin: 0; }
 .flow-escenarios { margin: 0 0 var(--space-6); padding: 0; list-style: none; }
 .flow-escenario__n { margin: 0; font: 500 20px/1.2 var(--font-display); }
 .flow-escenario dl { margin: 0; display: grid; gap: var(--space-2); }
@@ -87,4 +86,42 @@
   .flow-detalle { display: block; }
   .flow-gantt .gantt-medio, .gantt-hitos th, .flow-gantt tfoot th { position: static; }
   .flow-escenario { break-inside: avoid; }
+}
+
+/* ============================ Composición de la página ============================
+   Los componentes vienen de adcom-v2.css; aquí solo lo que no tiene componente. */
+.ad-sec[aria-labelledby] { scroll-margin-block-start: var(--nav-height); }
+
+/* Portada: la ficha en tres columnas y la lectura con ancho de entradilla */
+.flow-ficha { margin-block-start: var(--space-12); grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.flow-lectura { max-width: 52ch; }
+@media (max-width: 760px) { .flow-ficha { grid-template-columns: minmax(0, 1fr); } }
+
+/* Cabeceras de sección: titular grande, entradilla corta y aire hasta el contenido */
+.flow-cab { max-width: none; margin-block-end: var(--space-12); }
+.flow-cab h2 { max-width: 20ch; text-wrap: balance; }
+.flow-cabecera > .flow-cab { margin-block-end: 0; }
+.flow-cabecera + * { margin-block-start: var(--space-12); }
+.ad-split > div > .flow-cab { margin-block-end: var(--space-8); }
+.ad-sec .formato-filtros, .ad-sec .flow-filtros { margin-block: 0 var(--space-4); }
+.ad-sec .ad-tabla + .ad-lectura, .ad-sec .flow-escenarios + .ad-tabla { margin-block-start: var(--space-6); }
+.flow-escenarios + .ad-tabla + .ad-lectura { margin-block-start: var(--space-6); }
+.flow-reglas { margin-block-end: var(--space-12); }
+.flow-reglas .ad-paso { padding-block-start: var(--space-4); }
+.flow-figura { margin-block-start: 0; }
+.flow-figura svg { max-width: none; }
+
+/* Calendario sobre superficie oscura: la tabla es un panel claro dentro de la banda, con su texto en sumi */
+.flow-oscuro .ad-tabla { color: var(--sumi); }
+.flow-oscuro .ad-tabla :focus-visible { outline-color: var(--sumi); }
+.flow-oscuro a:focus-visible, .flow-oscuro .ad-tabla:focus-visible { outline-color: var(--sobre-oscuro-100); }
+
+/* Cierre con frase de dos líneas: más bajo que el estándar para que no ocupe tres */
+.flow-cierre h2 { max-width: 24ch; font-size: clamp(32px, 4.4vw, 56px); }
+
+/* Móvil: los cuatro enlaces del encabezado van en una sola fila desplazable, no en tres */
+@media (max-width: 640px) {
+  .formato-nav .ad-nav__links { flex-wrap: nowrap; gap: var(--space-4); width: 100%; overflow-x: auto; scrollbar-width: none; }
+  .formato-nav .ad-nav__links a { flex: none; }
+  .formato-nav .ad-nav__in { gap: 0 var(--space-4); }
 }

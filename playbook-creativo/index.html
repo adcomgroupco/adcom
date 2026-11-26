@@ -8,10 +8,8 @@
   <meta name="theme-color" content="#F7F6F2">
   <title>Playbook creativo de medios digitales</title>
   <link rel="icon" type="image/png" sizes="64x64" href="assets/branding/adcom-favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Inter:wght@400;500&display=swap">
-  <link rel="stylesheet" href="../assets/css/adcom-v2.css">
+  <link rel="stylesheet" href="../assets/ds/fonts.css">
+  <link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261128">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="redesign.css">
   <script defer src="assets/references.js"></script>
@@ -23,50 +21,98 @@
   <a class="skip-link" href="#explorar">Saltar a la exploración</a>
   <header class="site-header ad-nav">
     <div class="ad-nav__in">
-      <a class="marca" href="../index.html" aria-label="Adcom, volver al portal">Adcom<span>Playbook creativo</span></a>
-      <nav class="ad-nav__links" aria-label="Navegación principal"><a href="#medios">Medios</a><a href="#explorar">Explorar formatos</a><a href="#metodo">Cómo usarlo</a></nav>
+      <a class="ad-marca" href="../index.html" aria-label="Adcom, Playbook creativo: volver al portal"><img src="../assets/logos/adcom-wordmark.png" alt="Adcom" width="96" height="22"><i>Playbook creativo</i></a>
+      <nav class="ad-nav__links" aria-label="Navegación principal"><a href="#metodo">Cómo usarlo</a><a href="#medios">Medios</a><a href="#explorar">Explorar formatos</a></nav>
     </div>
   </header>
   <main>
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="wrap hero-inner">
-      <div class="hero-copy">
+    <section class="ad-sec ad-hero ad-hero--centro pb-hero" aria-labelledby="hero-title">
+      <div class="ad-wrap">
         <p class="ad-eyebrow">Biblioteca creativa de medios digitales</p>
-        <h1 id="hero-title">Playbook creativo de <span class="ad-hl">medios digitales</span></h1>
-        <p class="hero-sub">Una idea puede vivir en una búsqueda, una canción, un directo o una pantalla en la ciudad.</p>
-        <p class="hero-purpose">Conoce qué permite cada formato, míralo en contexto y decide qué producir. Digital va más allá de las redes sociales.</p>
-        <a class="ad-btn ad-btn--accent" href="#medios">Explorar medios <span aria-hidden="true">↓</span></a>
-      </div>
+        <h1 id="hero-title"><span>Playbook creativo</span> <span>de medios digitales.</span></h1>
+        <p class="ad-lead">Una idea puede vivir en una búsqueda, una canción, un directo o una pantalla en la ciudad.</p>
+        <p class="ad-lead pb-hero__proposito">Conoce qué permite cada formato, míralo en contexto y decide qué producir. Digital va más allá de las redes sociales.</p>
+        <div class="ad-hero__acciones"><a class="ad-btn ad-btn--accent pb-cta" href="#medios">Explorar medios <span aria-hidden="true">↓</span></a></div>
+
+        <figure class="ad-figura pb-ruta">
+          <figcaption class="ad-eyebrow">De lo amplio a lo específico</figcaption>
+          <ol class="ad-eje pb-eje">
+            <li>
+              <span class="pb-eje__n" data-count="medios">8</span>
+              <span class="ad-eje__t">Medio</span>
+              <span class="ad-eje__d">Eliges dónde vivirá la idea.</span>
+              <span class="pb-eje__ej pb-logos" aria-hidden="true">
+                <img src="assets/logos/meta.svg" alt="" width="24" height="24">
+                <img class="pb-logo--tiktok" src="assets/logos/tiktok.svg" alt="" width="24" height="24">
+                <img src="assets/logos/google.svg" alt="" width="24" height="24">
+                <img src="assets/logos/youtube.svg" alt="" width="24" height="24">
+                <img src="assets/logos/spotify.svg" alt="" width="24" height="24">
+                <img src="assets/logos/twitch.svg" alt="" width="24" height="24">
+                <img src="assets/logos/kick.svg" alt="" width="24" height="24">
+                <span class="media-logo-type">DSP</span><span class="media-logo-type">TV</span><span class="media-logo-type">OOH</span>
+              </span>
+            </li>
+            <li>
+              <span class="pb-eje__n" data-count="formatos">43</span>
+              <span class="ad-eje__t">Formato</span>
+              <span class="ad-eje__d">Ves cómo se ve cada uno en contexto.</span>
+              <span class="pb-eje__ej"><span class="ad-tag ad-tag--line">Reels</span><span class="ad-tag ad-tag--line">Anuncio en búsquedas</span><span class="ad-tag ad-tag--line">Anuncio al pausar</span><span class="ad-tag ad-tag--line">Pantalla digital</span></span>
+            </li>
+            <li class="is-on">
+              <span class="pb-eje__n">1</span>
+              <span class="ad-eje__t">Ficha</span>
+              <span class="ad-eje__d">Abres sus medidas, zonas seguras y lo que debes validar.</span>
+              <span class="pb-eje__ej"><span class="ad-tag ad-tag--line">1080 × 1920 px</span><span class="ad-tag ad-tag--line">9:16</span><span class="ad-tag ad-tag--line">Zonas seguras</span></span>
+            </li>
+          </ol>
+        </figure>
       </div>
     </section>
 
-    <section class="wrap media-section" id="medios" aria-labelledby="medios-title">
-      <div class="section-intro ad-sec-cab"><p class="ad-eyebrow">Explorar por medio</p><h2 id="medios-title">¿Dónde vivirá la idea?</h2><p>Elige un medio o busca un formato. Puedes cambiar de ruta en cualquier momento.</p></div>
-      <nav class="media-index" id="media-grid" aria-label="Medios disponibles"></nav>
-    </section>
-
-    <section class="explore-section" data-suelo="papel" id="explorar" aria-labelledby="explorar-title">
-      <div class="wrap">
-        <h2 id="explorar-title" class="visually-hidden">Explorar formatos</h2>
-        <div class="filters">
-          <label class="search-wrap"><span class="visually-hidden">Buscar formatos</span><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Buscar formato, objetivo o idea…" autocomplete="off"></label>
-          <button id="clear-filters" class="ad-chip" type="button" hidden>Limpiar búsqueda</button>
+    <section class="ad-sec ad-sec--oscuro pb-metodo" id="metodo" aria-labelledby="metodo-title">
+      <div class="ad-wrap">
+        <div class="ad-split ad-split--arriba">
+          <div class="ad-sec-cab ad-sec-cab--grande">
+            <p class="ad-eyebrow ad-eyebrow--dark">De inspiración a producción</p>
+            <h2 id="metodo-title">Una ficha, <span class="ad-hl">tres preguntas</span>.</h2>
+          </div>
+          <p class="ad-lead method-note">Los ejemplos recrean interfaces y contextos para explicar cada mecánica. Las marcas y campañas son ficticias; cada ficha enlaza referencias y señala qué debe validarse.</p>
         </div>
-        <p id="result-count" class="visually-hidden" role="status" aria-live="polite"></p>
-        <div class="format-sections" id="format-grid"></div>
-        <nav class="format-pager" id="format-pager" aria-label="Páginas de formatos" hidden></nav>
-        <p class="empty-state ad-lectura" id="empty-state" hidden>No hay formatos para esta búsqueda. Prueba otro término o quita un filtro.</p>
+        <ol class="ad-pasos pb-pasos">
+          <li class="ad-paso"><span class="ad-n" aria-hidden="true">1</span><h3>¿Qué permite?</h3><p>Entiende la mecánica y abre rutas que van más allá de adaptar un tamaño.</p><small class="pb-en-ficha">En la ficha: Qué mirar y Cómo aprovecharlo</small></li>
+          <li class="ad-paso"><span class="ad-n" aria-hidden="true">2</span><h3>¿Qué hará la persona?</h3><p>Diseña la respuesta buscada y reconoce los controles nativos del medio.</p><small class="pb-en-ficha">En la ficha: ¿Qué hace la persona?</small></li>
+          <li class="ad-paso"><span class="ad-n" aria-hidden="true">3</span><h3>¿Qué hay que validar?</h3><p>Comprueba inventario, proveedor, datos, zonas visibles y especificaciones actuales.</p><small class="pb-en-ficha">En la ficha: Dimensiones y Antes de producir</small></li>
+        </ol>
       </div>
     </section>
 
-    <section class="wrap method-section" id="metodo" aria-labelledby="metodo-title">
-      <div class="method-title ad-sec-cab"><p class="ad-eyebrow">De inspiración a producción</p><h2 id="metodo-title">Una ficha, tres preguntas.</h2></div>
-      <ol class="ad-pasos">
-        <li class="ad-paso"><span class="ad-n" aria-hidden="true">1</span><h3>¿Qué permite?</h3><p>Entiende la mecánica y abre rutas que van más allá de adaptar un tamaño.</p></li>
-        <li class="ad-paso"><span class="ad-n" aria-hidden="true">2</span><h3>¿Qué hará la persona?</h3><p>Diseña la respuesta buscada y reconoce los controles nativos del medio.</p></li>
-        <li class="ad-paso"><span class="ad-n" aria-hidden="true">3</span><h3>¿Qué hay que validar?</h3><p>Comprueba inventario, proveedor, datos, zonas visibles y especificaciones actuales.</p></li>
-      </ol>
-      <p class="method-note ad-lectura">Los ejemplos recrean interfaces y contextos para explicar cada mecánica. Las marcas y campañas son ficticias; cada ficha enlaza referencias y señala qué debe validarse.</p>
+    <section class="ad-sec pb-catalogo" id="medios" aria-labelledby="medios-title">
+      <div class="ad-wrap">
+        <div class="section-intro ad-sec-cab ad-sec-cab--grande">
+          <p class="ad-eyebrow">Explorar por medio</p>
+          <h2 id="medios-title">¿Dónde vivirá la idea?</h2>
+          <p class="ad-lead">Elige un medio o busca un formato. Puedes cambiar de ruta en cualquier momento.</p>
+        </div>
+        <nav class="media-index" id="media-grid" aria-label="Medios disponibles"></nav>
+        <div id="explorar" class="pb-explorar" aria-labelledby="explorar-title" role="region">
+          <h2 id="explorar-title" class="visually-hidden">Explorar formatos</h2>
+          <div class="filters">
+            <label class="search-wrap"><span class="visually-hidden">Buscar formatos</span><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Buscar formato, objetivo o idea…" autocomplete="off"></label>
+            <button id="clear-filters" class="ad-chip" type="button" hidden>Limpiar búsqueda</button>
+          </div>
+          <p id="result-count" class="visually-hidden" role="status" aria-live="polite"></p>
+          <div class="format-sections" id="format-grid"></div>
+          <nav class="format-pager" id="format-pager" aria-label="Páginas de formatos" hidden></nav>
+          <p class="empty-state ad-lectura" id="empty-state" hidden>No hay formatos para esta búsqueda. Prueba otro término o quita un filtro.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="ad-sec ad-sec--oscuro ad-cierre" aria-labelledby="cierre-title">
+      <div class="ad-wrap ad-cierre__in">
+        <div><h2 id="cierre-title">La próxima pieza empieza en una ficha.</h2><p>Elige el medio, abre el formato y lleva medidas y zonas seguras al brief.</p></div>
+        <a class="ad-btn ad-btn--accent" href="#medios">Explorar medios <span aria-hidden="true">↑</span></a>
+      </div>
     </section>
   </main>
 
