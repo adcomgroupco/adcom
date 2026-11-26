@@ -199,9 +199,9 @@ function cargar() {
   }).then(function (t) {
     if (/^\s*<(!doctype|html)/i.test(t)) throw new Error('La hoja no es pública: compártela por enlace o publica la pestaña TABLERO_DATOS en la web.');
     var f = csv2filas(t), meta = {}, filas = [];
-    f.slice(1).forEach(function (r) {
-      if (r[5]) meta[r[5]] = r[6];
-      if (r[0] && r[1] && r[3] !== '' && !isNaN(+r[3])) filas.push([r[0], r[1], r[2], +r[3]]);
+    f.forEach(function (r, i) {
+      if (r[5]) meta[r[5]] = r[6];                       // los metadatos van desde la fila 1 (encabezado)
+      if (i && r[0] && r[1] && r[3] !== '' && !isNaN(+r[3])) filas.push([r[0], r[1], r[2], +r[3]]);
     });
     if (!filas.length) throw new Error('TABLERO_DATOS está vacía.');
     if (filas[0][1].length < 10) throw new Error('TABLERO_DATOS aún está en formato mensual; se actualiza sola cada hora.');
