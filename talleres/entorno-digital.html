@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#F7F6F2">
+  <meta name="description" content="Taller de entorno digital: qué pasa hoy en redes, el rol de cada plataforma, atribución, omnicanalidad, creatividad y cómo trabajamos con IA.">
+  <title>Entorno digital · Talleres | Adcom</title>
+  <!-- Fuente: «GUIA DIGITAL 2025.pptx» (CLIENTES / GUIAS y TALLERES). Las cifras son las que cita la guía.
+       El capítulo de IA se actualizó en 2026 con la metodología de guias/como-trabajamos-con-ia.html. -->
+  <link rel="stylesheet" href="../assets/ds/fonts.css">
+  <link rel="stylesheet" href="../assets/css/adcom-v2.css?v=20261128">
+  <link rel="icon" type="image/png" href="../assets/favicon-adcom.png">
+  <link rel="apple-touch-icon" href="../assets/ds/logos/apple-touch-icon.png">
+  <link rel="stylesheet" href="talleres.css?v=20261132">
+</head>
+<body>
+<a class="skip-link" href="#contenido">Ir al contenido</a>
+<svg class="ta-sprite" aria-hidden="true" focusable="false">
+  <!-- Logos monocromos de las empresas de IA: Simple Icons (CC0) y LobeHub Icons (MIT). -->
+  <symbol id="lg-claude" viewBox="0 0 24 24"><path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></symbol>
+  <symbol id="lg-openai" viewBox="0 0 24 24"><path d="M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z"></path></symbol>
+  <symbol id="lg-gemini" viewBox="0 0 24 24"><path d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/></symbol>
+  <symbol id="lg-microsoft" viewBox="0 0 24 24"><path d="M11.49 2H2v9.492h9.492V2h-.002z"></path><path d="M22 2h-9.492v9.492H22V2z"></path><path d="M11.49 12.508H2V22h9.492v-9.492h-.002z"></path><path d="M22 12.508h-9.492V22H22v-9.492z"></path></symbol>
+  <symbol id="lg-alibaba" viewBox="0 0 24 24"><path d="M24 14.014c-2.8 1.512-5.62 2.896-8.759 3.524-.7.139-1.476.139-2.187.043-.678-.085-1.017-.682-.776-1.31.23-.585.536-1.181.93-1.671.852-1.065 1.814-2.034 2.678-3.088a15.75 15.75 0 001.422-2.054c.306-.511.164-1.129-.372-1.384-.897-.437-1.859-.745-2.81-1.075-.11-.043-.274.074-.492.149.273.244.47.425.743.67-2.821.48-5.49 1.16-8.08 2.098-.012.053-.033.095-.023.117.383.585.208 1.032-.35 1.394a2.365 2.365 0 00-.568.522c1.706.5 3.226.213 4.68-.735-.087-.127-.175-.244-.262-.372.546.096.874.394.918.862.011.107-.054.213-.087.32-.077-.086-.175-.17-.24-.267-.045-.064-.056-.138-.088-.245-1.728 1.15-3.587 1.438-5.632.842 0 .404-.022.745.011 1.075.022.287-.098.415-.36.564-.591.362-1.204.735-1.696 1.214-.59.585-.371 1.299.427 1.597.907.34 1.859.35 2.81.234 1.126-.139 2.23-.32 3.456-.49-1.433.67-2.844 1.14-4.33 1.33-1.04.14-2.078.214-3.106-.084-1.476-.415-2.133-1.501-1.75-2.96.361-1.363 1.236-2.449 2.176-3.45 3.139-3.332 7.108-5.024 11.7-5.365 1.072-.074 2.155.064 3.16.511 1.411.639 2.002 1.99 1.313 3.354-.448.905-1.072 1.735-1.695 2.555-.612.809-1.301 1.554-1.946 2.331-.186.234-.361.48-.503.745-.274.5-.088.83.492.778 1.213-.118 2.45-.213 3.62-.511 1.716-.437 3.389-1.054 5.084-1.597.175-.043.339-.107.492-.17z"></path></symbol>
+  <symbol id="lg-bytedance" viewBox="0 0 24 24"><path d="M19.8772 1.4685L24 2.5326v18.9426l-4.1228 1.0563V1.4685zm-13.3481 9.428l4.115 1.0641v8.9786l-4.115 1.0642v-11.107zM0 2.572l4.115 1.0642v16.7354L0 21.428V2.572zm17.4553 5.6205v11.107l-4.1228-1.0642V9.2568l4.1228-1.0642z"/></symbol>
+  <symbol id="lg-minimax" viewBox="0 0 24 24"><path d="M11.43 3.92a.86.86 0 1 0-1.718 0v14.236a1.999 1.999 0 0 1-3.997 0V9.022a.86.86 0 1 0-1.718 0v3.87a1.999 1.999 0 0 1-3.997 0V11.49a.57.57 0 0 1 1.139 0v1.404a.86.86 0 0 0 1.719 0V9.022a1.999 1.999 0 0 1 3.997 0v9.134a.86.86 0 0 0 1.719 0V3.92a1.998 1.998 0 1 1 3.996 0v11.788a.57.57 0 1 1-1.139 0zm10.572 3.105a2 2 0 0 0-1.999 1.997v7.63a.86.86 0 0 1-1.718 0V3.923a1.999 1.999 0 0 0-3.997 0v16.16a.86.86 0 0 1-1.719 0V18.08a.57.57 0 1 0-1.138 0v2a1.998 1.998 0 0 0 3.996 0V3.92a.86.86 0 0 1 1.719 0v12.73a1.999 1.999 0 0 0 3.996 0V9.023a.86.86 0 1 1 1.72 0v6.686a.57.57 0 0 0 1.138 0V9.022a2 2 0 0 0-1.998-1.997"/></symbol>
+  <symbol id="lg-elevenlabs" viewBox="0 0 24 24"><path d="M4.6035 0v24h4.9317V0zm9.8613 0v24h4.9317V0z"/></symbol>
+  <symbol id="lg-stepfun" viewBox="0 0 24 24"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM8.762 19.614H4.376v-4.386h4.386v4.386zm5.423 0H9.798v-4.386h4.387v4.386zm0-5.42H9.798V9.81h4.387v4.386zm0-5.418H9.798V4.39h4.387v4.386zm5.422-.004h-4.386V4.386h4.386v4.386z"></path></symbol>
+</svg>
+
+<header class="ad-nav">
+  <nav class="ad-nav__in" aria-label="Principal">
+    <a class="ad-marca" href="index.html"><img src="../assets/logos/adcom-wordmark.png" alt="Adcom" width="96" height="22"><i>Talleres · Entorno digital</i></a>
+    <div class="ad-nav__links"><a href="#hoy">Hoy</a><a href="#redes">Redes</a><a href="#atribucion">Atribución</a><a href="#creatividad">Creatividad</a><a href="#ia">IA</a></div>
+  </nav>
+</header>
+
+<main id="contenido" tabindex="-1">
+
+  <!-- PORTADA -->
+  <section class="ad-sec ad-hero ad-hero--centro">
+    <div class="ad-wrap">
+      <p class="ad-eyebrow">Taller 1 · Entorno digital</p>
+      <h1 class="ad-t-display-hero">
+        <span class="ad-ln">El usuario no sigue</span>
+        <span class="ad-ln">un camino <span class="ad-hl">lineal</span>.</span>
+      </h1>
+      <p class="ad-lead">Qué está pasando en redes, qué rol cumple cada plataforma, quién se lleva el crédito de una venta y cómo trabajamos con IA.</p>
+      <div class="ad-hero__acciones">
+        <a class="ad-btn ad-btn--accent" href="#hoy">Empezar el taller</a>
+        <a class="ad-link" href="#ia">Ir a la metodología de IA ›</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1. QUÉ PASA HOY -->
+  <section class="ad-sec ad-sec--papel" id="hoy" aria-labelledby="t-hoy">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande ad-sec-cab--centro">
+        <p class="ad-eyebrow">¿Qué pasa hoy?</p>
+        <h2 id="t-hoy">La compra empieza en una red social.</h2>
+      </div>
+      <div class="ad-cifras">
+        <div class="ad-stat"><span class="ad-stat__n"><span class="ad-fill">72&nbsp;%</span></span><span class="ad-stat__l">de las compras se inicia con un clic en redes sociales</span><span class="ad-stat__m">Sin fuente en la guía</span></div>
+        <div class="ad-stat"><span class="ad-stat__n">40&nbsp;%</span><span class="ad-stat__l">de los jóvenes de 18 a 24 años prefiere buscar productos en TikTok antes que en Google</span><span class="ad-stat__m">Sin fuente en la guía</span></div>
+        <div class="ad-stat"><span class="ad-stat__n">17 h</span><span class="ad-stat__l">de video corto por semana, en promedio, por usuario</span><span class="ad-stat__m">HubSpot · 2024</span></div>
+        <div class="ad-stat"><span class="ad-stat__n">55&nbsp;%</span><span class="ad-stat__l">compró algo por miedo a quedarse sin existencias tras verlo en redes</span><span class="ad-stat__m">Shopify · 2023</span></div>
+      </div>
+      <p class="ta-fuente ta-centro">Y 130 millones de usuarios tocan un enlace de compra en Instagram cada mes (sin fuente en la guía). Cifras de la guía de 2025: verifícalas antes de usarlas con un cliente.</p>
+    </div>
+  </section>
+
+  <!-- FRASE + REALIDAD -->
+  <section class="ad-sec ad-sec--oscuro ta-frase" aria-label="Realidad del marketing digital">
+    <div class="ad-wrap">
+      <p class="ad-eyebrow ad-eyebrow--dark">Realidad del marketing digital</p>
+      <p class="ad-t-statement">
+        <span class="ad-ln">Meta reporta 7 conversiones.</span>
+        <span class="ad-ln">Google reporta 20.</span>
+        <span class="ad-ln ta-tenue">El CMS reporta 1.</span>
+      </p>
+      <p class="ad-lead">La operación diaria no es tan limpia como el plan. Conviene nombrarlo antes de hablar de buenas prácticas.</p>
+    </div>
+  </section>
+
+  <section class="ad-sec" id="realidad" aria-labelledby="t-realidad">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab">
+        <p class="ad-eyebrow">Lo que vivimos cada semana</p>
+        <h2 id="t-realidad" class="ad-t-h2-compact">Plataformas, clientes y medición.</h2>
+      </div>
+      <div class="ta-caps" style="--col:300px">
+        <div><span class="ta-k">Plataformas</span><p>Cuentas desactivadas sin razón. Métodos de pago rechazados sin explicación. Anuncios rechazados por «violar políticas». Interfaces que cambian dos veces en el mismo mes. Mejoras creativas automáticas encendidas por defecto.</p></div>
+        <div><span class="ta-k">Clientes</span><p>«¿Por qué me salen mis anuncios?» y «¿por qué no me salen?». Estrategias «virales». Más leads, de mejor calidad, con menos presupuesto. Apagar el branding por bajo rendimiento.</p></div>
+        <div><span class="ta-k">Medición</span><p>Analytics atribuyéndole cero ventas a Facebook Ads. Tableros caídos por problemas de conexión. Apple restringiendo el rastreo. Identidad verificada para subir un presupuesto mínimo.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. REDES -->
+  <section class="ad-sec ad-sec--crema" id="redes" aria-labelledby="t-redes">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">Plataformas</p>
+        <h2 id="t-redes">Cada red tiene una personalidad.</h2>
+        <p class="ad-lead">Elige una red: su tamaño, su papel y con qué métrica se juzga.</p>
+      </div>
+      <div data-picker>
+        <div class="ta-chips" role="group" aria-label="Elige una red" hidden>
+          <button class="ad-chip" type="button" data-show="facebook">Facebook</button>
+          <button class="ad-chip" type="button" data-show="instagram">Instagram</button>
+          <button class="ad-chip" type="button" data-show="tiktok">TikTok</button>
+          <button class="ad-chip" type="button" data-show="google">Google</button>
+          <button class="ad-chip" type="button" data-show="youtube">YouTube</button>
+          <button class="ad-chip" type="button" data-show="linkedin">LinkedIn</button>
+          <button class="ad-chip" type="button" data-show="whatsapp">WhatsApp</button>
+        </div>
+        <div class="ta-panel" data-panel="facebook"><h3>La plaza del pueblo</h3><div class="ta-caps" style="--col:200px">
+          <div><span class="ta-k">Usuarios al mes</span><span class="ad-stat__n">3.070 M</span><p>Domina en mayores de 35 años.</p></div>
+          <div><span class="ta-k">Rol</span><h3>Conectar y alcanzar</h3><p>Construir comunidades locales.</p></div>
+          <div><span class="ta-k">Ejemplo</span><h3>Grupo de clientes</h3><p>Un grupo para clientes leales, con descuentos.</p></div>
+          <div><span class="ta-k">Se mide con</span><h3>Comunidad</h3><p>Seguidores, interacciones y comentarios.</p></div>
+        </div></div>
+        <div class="ta-panel" data-panel="instagram"><h3>La influenciadora de moda</h3><div class="ta-caps" style="--col:200px">
+          <div><span class="ta-k">Usuarios al mes</span><span class="ad-stat__n">2.000 M</span><p>El 70&nbsp;% del tiempo se va en Reels.</p></div>
+          <div><span class="ta-k">Rol</span><h3>Atraer y vender</h3><p>Generar deseo, interacción y compra.</p></div>
+          <div><span class="ta-k">Ejemplo</span><h3>Reel con enlace</h3><p>El producto en uso, con enlace de compra.</p></div>
+          <div><span class="ta-k">Se mide con</span><h3>Clics y ventas</h3><p>Clics en enlaces, conversiones, interacción.</p></div>
+        </div></div>
+        <div class="ta-panel" data-panel="tiktok"><h3>El estudiante fiestero</h3><div class="ta-caps" style="--col:200px">
+          <div><span class="ta-k">Usuarios al mes</span><span class="ad-stat__n">1.800 M</span><p>Crece 15&nbsp;% al año.</p></div>
+          <div><span class="ta-k">Rol</span><h3>Reconocimiento</h3><p>Viralidad y creatividad.</p></div>
+          <div><span class="ta-k">Ejemplo</span><h3>Desafío de tendencia</h3><p>Un reto relacionado con el producto.</p></div>
+          <div><span class="ta-k">Se mide con</span><h3>Alcance</h3><p>Vistas, veces compartido, interacción.</p></div>
+        </div></div>
+        <div class="ta-panel" data-panel="google"><h3>El bibliotecario sabio</h3><div class="ta-caps" style="--col:200px">
+          <div><span class="ta-k">Usuarios al mes</span><span class="ad-stat__n">Sin dato</span><p>La guía no trae la cifra.</p></div>
+          <div><span class="ta-k">Rol</span><h3>Captar intención</h3><p>Generar demanda y captarla.</p></div>
+          <div><span class="ta-k">Ejemplo</span><h3>Búsqueda</h3><p>Anuncio en «mejor [producto] 2024».</p></div>
+          <div><span class="ta-k">Se mide con</span><h3>Leads</h3><p>CTR de los anuncios y leads generados.</p></div>
+        </div></div>
+        <div class="ta-panel" data-panel="youtube"><h3>El profesor universitario</h3><div class="ta-caps" style="--col:200px">
+          <div><span class="ta-k">Usuarios al mes</span><span class="ad-stat__n">2.700 M</span><p>1.500 M en Shorts (Google, 2024).</p></div>
+          <div><span class="ta-k">Rol</span><h3>Educar y posicionar</h3><p>Dar visibilidad con profundidad.</p></div>
+          <div><span class="ta-k">Ejemplo</span><h3>Tutorial</h3><p>«Cómo usar [producto]».</p></div>
+          <div><span class="ta-k">Se mide con</span><h3>Atención</h3><p>Minutos vistos y suscriptores nuevos.</p></div>
+        </div></div>
+        <div class="ta-panel" data-panel="linkedin"><h3>El ejecutivo serio</h3><div class="ta-caps" style="--col:200px">
+          <div><span class="ta-k">Usuarios al mes</span><span class="ad-stat__n">1.000 M</span><p>Crece 8&nbsp;% al año (Microsoft, 2024).</p></div>
+          <div><span class="ta-k">Rol</span><h3>Generar demanda B2B</h3><p>Profesionalizar y segmentar.</p></div>
+          <div><span class="ta-k">Ejemplo</span><h3>Artículo y pauta</h3><p>Tendencias del sector con LinkedIn Ads.</p></div>
+          <div><span class="ta-k">Se mide con</span><h3>Conversaciones</h3><p>Conexiones y mensajes directos.</p></div>
+        </div></div>
+        <div class="ta-panel" data-panel="whatsapp"><h3>El amigo cercano</h3><div class="ta-caps" style="--col:200px">
+          <div><span class="ta-k">Usuarios al mes</span><span class="ad-stat__n">2.400 M</span><p>Chat empresarial y ventas conversacionales (Meta, 2024).</p></div>
+          <div><span class="ta-k">Rol</span><h3>Personalizar</h3><p>Conexión persona a persona.</p></div>
+          <div><span class="ta-k">Ejemplo</span><h3>Cupones</h3><p>Ofertas exclusivas por lista de difusión.</p></div>
+          <div><span class="ta-k">Se mide con</span><h3>Respuesta</h3><p>Tasa de apertura y respuestas.</p></div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. OMNICANALIDAD · red -->
+  <section class="ad-sec" id="omnicanal" aria-labelledby="t-omnicanal">
+    <div class="ad-wrap ad-split">
+      <div class="ad-sec-cab ad-sec-cab--grande" style="margin:0">
+        <p class="ad-eyebrow">Omnicanalidad</p>
+        <h2 id="t-omnicanal">Ve en Instagram, busca en Google, compra después de un correo.</h2>
+        <p class="ad-lead">La omnicanalidad busca una experiencia fluida en todos esos puntos, en lugar de canales que no se hablan.</p>
+      </div>
+      <figure style="margin:0">
+        <svg class="ta-svg" style="--max:560px" viewBox="0 0 560 340" role="img" aria-labelledby="red-t">
+          <title id="red-t">Recorrido no lineal: Instagram, búsqueda en Google, tienda en línea, correo y compra, con idas y vueltas entre ellos.</title>
+          <g class="ad-dg-soft" stroke-dasharray="4 6"><line x1="90" y1="90" x2="190" y2="270"/><line x1="290" y1="60" x2="420" y2="260"/><line x1="470" y1="120" x2="190" y2="270"/></g>
+          <path class="ad-dg-line ad-draw" d="M90 90 L290 60 L470 120 L420 260 L190 270"/>
+          <circle cx="90" cy="90" r="10" class="ad-dg-paper"/><circle cx="290" cy="60" r="10" class="ad-dg-paper"/>
+          <circle cx="470" cy="120" r="10" class="ad-dg-paper"/><circle cx="420" cy="260" r="10" class="ad-dg-paper"/>
+          <circle cx="190" cy="270" r="16" class="ad-dg-lima"/>
+          <g class="ad-dg-text" text-anchor="middle">
+            <text x="90" y="124">Instagram</text><text x="290" y="36">Búsqueda en Google</text>
+            <text x="470" y="154">Tienda en línea</text><text x="420" y="294">Correo</text>
+          </g>
+          <text x="190" y="310" text-anchor="middle" class="ta-dg-titulo">Compra</text>
+        </svg>
+      </figure>
+    </div>
+    <div class="ad-wrap ta-mt">
+      <div class="ad-cifras">
+        <div class="ad-stat"><span class="ad-stat__n">72&nbsp;%</span><span class="ad-stat__l">de los consumidores espera que la marca lo reconozca en todos los canales</span><span class="ad-stat__m">Salesforce · 2024</span></div>
+        <div class="ad-stat"><span class="ad-stat__n">+90&nbsp;%</span><span class="ad-stat__l">de retención con una estrategia omnicanal bien ejecutada</span><span class="ad-stat__m">Harvard Business Review · 2024</span></div>
+        <div class="ad-stat"><span class="ad-stat__n">+250&nbsp;%</span><span class="ad-stat__l">de conversión frente a estrategias aisladas</span><span class="ad-stat__m">Harvard Business Review · 2024</span></div>
+      </div>
+      <h3 class="ad-t-h3-capacidad ta-mt">Puntos de contacto en cada etapa</h3>
+      <div class="ta-etapas">
+        <div><h3>Reconocimiento</h3><ul><li>Social orgánico y pago</li><li>Pre-roll</li><li>Apps</li><li>Tendencias</li><li>Podcasts</li><li class="ta-off">Televisión</li><li class="ta-off">Radio</li><li class="ta-off">Cine</li><li class="ta-off">OOH y DOOH</li></ul></div>
+        <div><h3>Interés</h3><ul><li>Búsqueda</li><li>Display web</li><li>Redes sociales</li><li>Blogs</li><li>Vlogs</li><li class="ta-off">Respaldo de celebridades</li></ul></div>
+        <div><h3>Recomendación</h3><ul><li>Reseñas de consumidores</li><li>UGC</li><li>Reseñas de influenciadores</li><li>Bloggers</li><li class="ta-off">Testimonios</li></ul></div>
+        <div><h3>Compra</h3><ul><li>Tiendas en línea</li><li>Sitio de la marca</li><li>SEO y velocidad web</li><li>Búsqueda</li><li>Cupones</li><li>Comparadores de precio</li></ul></div>
+      </div>
+      <p class="ta-fuente">Borde continuo: en línea. Borde punteado: fuera de línea. Digital no es la única forma de llegar: cada punto tiene un rol, unos para marca, otros para interés y otros para la compra.</p>
+    </div>
+  </section>
+
+  <!-- 4. ATRIBUCIÓN -->
+  <section class="ad-sec ad-sec--papel" id="atribucion" aria-labelledby="t-atribucion">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">Modelo de atribución</p>
+        <h2 id="t-atribucion">Mide lo que realmente impacta.</h2>
+        <p class="ad-lead">El mismo recorrido, cuatro maneras de repartir el crédito de la venta. Cambia el modelo y mira quién gana.</p>
+      </div>
+      <div class="ad-split ad-split--arriba">
+        <div class="ta-caps" style="--col:100%">
+          <div><span class="ta-k">El problema</span><p>Las marcas confían en modelos simples como el último clic, cuando el recorrido real es mucho más complejo.</p></div>
+          <div><span class="ad-stat__n">67&nbsp;%</span><p>de los directores de marketing redefine su modelo de atribución en 2025.</p><span class="ta-k">Forrester · 2024</span></div>
+          <div><span class="ad-stat__n">+35&nbsp;%</span><p>de ROAS al redistribuir la inversión con modelos avanzados.</p><span class="ta-k">Google · 2024</span></div>
+        </div>
+        <div data-atribucion>
+          <div class="ta-chips" role="group" aria-label="Modelo de atribución" hidden>
+            <button class="ad-chip" type="button" data-modelo="ultimo">Último clic</button>
+            <button class="ad-chip" type="button" data-modelo="primero">Primer clic</button>
+            <button class="ad-chip" type="button" data-modelo="lineal">Lineal</button>
+            <button class="ad-chip" type="button" data-modelo="posicion">Según posición</button>
+          </div>
+          <ol class="ta-credito" aria-label="Crédito de la compra por contacto">
+            <li data-contacto><b>1 · Instagram</b><div class="ad-barra" style="--v:0%" role="img" aria-label="0 % del crédito"><span></span></div><output>0&nbsp;%</output></li>
+            <li data-contacto><b>2 · Búsqueda en Google</b><div class="ad-barra" style="--v:0%" role="img" aria-label="0 % del crédito"><span></span></div><output>0&nbsp;%</output></li>
+            <li data-contacto><b>3 · Tienda en línea</b><div class="ad-barra" style="--v:0%" role="img" aria-label="0 % del crédito"><span></span></div><output>0&nbsp;%</output></li>
+            <li data-contacto><b>4 · Correo y compra</b><div class="ad-barra" style="--v:100%" role="img" aria-label="100 % del crédito"><span></span></div><output>100&nbsp;%</output></li>
+          </ol>
+          <div class="ad-lectura ta-mt" aria-live="polite"><span class="ad-lectura__k">Qué quiere decir</span><p data-lectura>Todo el crédito va al último contacto. Los canales que abrieron la conversación parecen no servir.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FRASE + TRES FUERZAS -->
+  <section class="ad-sec ad-sec--oscuro" id="fuerzas" aria-labelledby="t-fuerzas">
+    <div class="ad-wrap">
+      <div class="ta-frase" style="padding:0">
+        <div class="ad-wrap" style="padding:0">
+          <p class="ad-eyebrow ad-eyebrow--dark">2025 en adelante</p>
+          <h2 id="t-fuerzas" class="ad-t-statement">
+            <span class="ad-ln">Las marcas no ganarán por gastar más,</span>
+            <span class="ad-ln ta-tenue">sino por saber conectar mejor.</span>
+          </h2>
+        </div>
+      </div>
+      <div class="ta-caps ta-mt">
+        <div><span class="ta-k">01</span><h3>Automatizar</h3><p>Optimizar las tareas repetitivas para liberar tiempo.</p></div>
+        <div><span class="ta-k">02</span><h3>Creatividad auténtica</h3><p>Contenido que se siente real, humano y honesto.</p></div>
+        <div><span class="ta-k">03</span><h3>Datos propios</h3><p>Dominar la información de primera mano.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. CREATIVIDAD -->
+  <section class="ad-sec" id="creatividad" aria-labelledby="t-creatividad">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande ad-sec-cab--centro">
+        <p class="ad-eyebrow">El rol de la creatividad</p>
+        <h2 id="t-creatividad">Repetir el mismo anuncio cuesta más.</h2>
+      </div>
+      <div class="ad-cifras">
+        <div class="ad-stat"><span class="ad-stat__n">6 a 8</span><span class="ad-stat__l">impactos necesita en promedio una marca para lograr una conversión</span><span class="ad-stat__m">Sin fuente en la guía</span></div>
+        <div class="ad-stat"><span class="ad-stat__n">61&nbsp;%</span><span class="ad-stat__l">de los consumidores se irrita al ver el mismo anuncio varias veces</span><span class="ad-stat__m">Sin fuente en la guía</span></div>
+        <div class="ad-stat"><span class="ad-stat__n">4 veces</span><span class="ad-stat__l">más CTR en anuncios con contenido generado por usuarios</span><span class="ad-stat__m">Sin fuente en la guía</span></div>
+        <div class="ad-stat"><span class="ad-stat__n">92&nbsp;%</span><span class="ad-stat__l">confía más en otros usuarios que en la publicidad tradicional</span><span class="ad-stat__m">Nielsen</span></div>
+      </div>
+      <div class="ad-lectura ta-mt"><span class="ad-lectura__k">Qué quiere decir</span><p>Con frecuencia alta, las plataformas cobran más por impresión porque el anuncio pierde relevancia. Variar la creatividad baja el costo y protege la marca. Cómo: <a class="ad-link" href="comunicacion.html#estructuras">estructuras de mensaje ›</a> y <a class="ad-link" href="contenido-anuncios.html#matriz">matriz de mensajes ›</a></p></div>
+    </div>
+  </section>
+
+  <section class="ad-sec ad-sec--crema ta-frase" aria-label="Mi público">
+    <div class="ad-wrap">
+      <p class="ad-eyebrow">Mi público</p>
+      <p class="ad-t-statement">
+        <span class="ad-ln">El que le habla a todos</span>
+        <span class="ad-ln ta-tenue">no le habla a nadie.</span>
+      </p>
+      <p class="ad-lead">¿Qué busco al hacer publicidad? ¿Qué quiero para mi marca? ¿Qué ofrece mi marca frente a la competencia? <a class="ad-link" href="segmentacion.html">Taller de segmentación ›</a></p>
+    </div>
+  </section>
+
+  <section class="ad-sec" id="tendencias" aria-labelledby="t-tendencias">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab">
+        <p class="ad-eyebrow">Tendencias</p>
+        <h2 id="t-tendencias" class="ad-t-h2-compact">Conectar, entretener y no soltar el mensaje de marca.</h2>
+      </div>
+      <div class="ta-caps" style="--col:220px">
+        <div><span class="ta-k">01</span><h3>Economía de la atención</h3><p>Tiempo limitado, consumo rápido: formatos cortos y directos.</p></div>
+        <div><span class="ta-k">02</span><h3>Contenido de usuarios</h3><p>Autenticidad y confianza. Referentes: Share a Coke, #RedCupsAreBack.</p></div>
+        <div><span class="ta-k">03</span><h3>Marcas humanas</h3><p>Tono empático y honesto. ¿Estás escuchando a tu comunidad?</p></div>
+        <div><span class="ta-k">04</span><h3>Voz e IA</h3><p>Crece la búsqueda con asistentes: todo empieza con una pregunta.</p></div>
+      </div>
+      <div class="ta-caps ta-mt" style="--col:320px">
+        <div><span class="ad-stat__n">74&nbsp;%</span><p>de los marketers dice que la automatización le ahorra más de 4 horas semanales de trabajo manual (sin fuente en la guía).</p></div>
+        <div><span class="ta-k">Facilitemos nuestros procesos</span><h3>Menos operatividad. Más creatividad, estrategia y soluciones.</h3><p>No es solo ahorrar tiempo: es convertir minutos en oportunidades.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. IA -->
+  <section class="ad-sec ad-sec--oscuro" id="ia" aria-labelledby="t-ia">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande ad-sec-cab--centro">
+        <p class="ad-eyebrow ad-eyebrow--dark">Inteligencia artificial</p>
+        <h2 id="t-ia">Lo que a la televisión le tomó cincuenta años, a la IA le tomó meses.</h2>
+      </div>
+      <ol class="ad-eje" aria-label="Tiempo que tardó cada medio en masificarse">
+        <li><span class="ad-eje__t">Televisión</span><span class="ad-eje__d">50 años</span></li>
+        <li><span class="ad-eje__t">Internet</span><span class="ad-eje__d">30 años</span></li>
+        <li><span class="ad-eje__t">Redes sociales</span><span class="ad-eje__d">5 años</span></li>
+        <li><span class="ad-eje__t">Programática</span><span class="ad-eje__d">2 años</span></li>
+        <li><span class="ad-eje__t">IA generativa</span><span class="ad-eje__d">6 meses</span></li>
+      </ol>
+      <p class="ta-fuente ta-centro">Tiempo que tardó cada medio en masificarse, según la guía de 2025.</p>
+    </div>
+  </section>
+
+  <section class="ad-sec ta-frase" aria-label="Principio de trabajo con IA">
+    <div class="ad-wrap">
+      <p class="ad-eyebrow">Cómo trabajamos con IA</p>
+      <p class="ad-t-statement">
+        <span class="ad-ln">La IA trabaja.</span>
+        <span class="ad-ln ta-tenue">La persona decide.</span>
+      </p>
+      <p class="ad-lead">La IA lee, analiza y propone. Lo que cambia una cuenta o sale hacia un cliente lo aprueba una persona, y todo queda guardado.</p>
+    </div>
+  </section>
+
+  <section class="ad-sec ad-sec--papel" id="ia-evolucion" aria-labelledby="t-ia-evolucion">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">Del prompt al agente</p>
+        <h2 id="t-ia-evolucion">Ya no se trata de pedir bien, sino de darle contexto y reglas.</h2>
+        <p class="ad-lead">La guía de 2025 enseñaba tipos de prompt. Hoy el resultado depende más de lo que la IA sabe del caso y de los límites con los que actúa.</p>
+      </div>
+      <ol class="ad-eje" aria-label="Cómo evolucionó el trabajo con IA">
+        <li><span class="ad-eje__t">Prompt</span><span class="ad-eje__d">Pedir bien: instrucción, ejemplos, paso a paso</span></li>
+        <li><span class="ad-eje__t">Contexto</span><span class="ad-eje__d">Darle lo que necesita: perfil del cliente, historial, datos propios</span></li>
+        <li class="is-on"><span class="ad-eje__t">Agentes</span><span class="ad-eje__d">Actúa con herramientas: lee plataformas, propone y ejecuta con aprobación</span></li>
+      </ol>
+      <h3 class="ad-t-h3-capacidad ta-mt">Qué se le da hoy a la IA</h3>
+      <ol class="ad-suma">
+        <li class="ad-suma__i"><span class="ad-suma__n">01</span><h3>Tarea</h3><p>Qué hay que lograr, para quién y para cuándo.</p></li>
+        <li class="ad-op" aria-hidden="true">+</li>
+        <li class="ad-suma__i"><span class="ad-suma__n">02</span><h3>Contexto</h3><p>El perfil del cliente, la bitácora y los datos del periodo.</p></li>
+        <li class="ad-op" aria-hidden="true">+</li>
+        <li class="ad-suma__i"><span class="ad-suma__n">03</span><h3>Reglas</h3><p>Qué puede hacer solo y qué necesita aprobación.</p></li>
+        <li class="ad-op" aria-hidden="true">+</li>
+        <li class="ad-suma__i"><span class="ad-suma__n">04</span><h3>Criterio de éxito</h3><p>Cómo sabremos que el resultado está bien.</p></li>
+      </ol>
+      <details class="ad-datos ta-mt"><summary>Tipos de prompt de la guía de 2025</summary>
+        <div class="ta-caps ta-mt" style="--col:200px">
+          <div><h3>Zero-shot</h3><p>Solo la instrucción, sin ejemplos.</p></div>
+          <div><h3>One-shot</h3><p>Un único ejemplo que guía la respuesta.</p></div>
+          <div><h3>Few-shot</h3><p>Varios ejemplos que refuerzan el patrón.</p></div>
+          <div><h3>Cadena de razonamiento</h3><p>El modelo explica su razonamiento paso a paso.</p></div>
+        </div>
+        <p class="ta-fuente">Siguen siendo útiles dentro de la tarea. La fórmula de la guía era instrucción + contexto + detalle.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="ad-sec" id="ia-ciclo" aria-labelledby="t-ia-ciclo">
+    <div class="ad-wrap ad-split">
+      <div class="ad-sec-cab ad-sec-cab--grande" style="margin:0">
+        <p class="ad-eyebrow">Metodología</p>
+        <h2 id="t-ia-ciclo">Un ciclo que aprende de cada decisión.</h2>
+        <p class="ad-lead">La IA parte del contexto y propone; la persona decide; lo decidido se registra y vuelve como contexto la próxima vez.</p>
+        <a class="ad-link" href="../guias/como-trabajamos-con-ia.html">Ver el recorrido completo en la guía de IA ›</a>
+      </div>
+      <figure class="ad-anillo" role="img" aria-label="Ciclo de trabajo con IA: contexto, propuesta, decisión de la persona y registro que vuelve como contexto">
+        <svg viewBox="0 0 400 400" aria-hidden="true">
+          <circle class="ad-dg-line" cx="200" cy="200" r="120"/>
+          <g class="ad-orbit"><circle class="ad-dg-lima" cx="200" cy="80" r="7"/></g>
+        </svg>
+        <span class="ad-anillo__c">Persona + IA</span>
+        <ol class="ad-anillo__nodos">
+          <li><b><span class="ad-n ad-n--md">1</span>Contexto</b><small>Perfil, bitácora, datos</small></li>
+          <li><b><span class="ad-n ad-n--md">2</span>Propone</b><small>Lee, analiza, redacta</small></li>
+          <li class="is-on"><b><span class="ad-n ad-n--md">3</span>Decide</b><small>Una persona aprueba</small></li>
+          <li><b><span class="ad-n ad-n--md">4</span>Registra</b><small>Versiones y bitácora</small></li>
+        </ol>
+      </figure>
+    </div>
+  </section>
+
+  <section class="ad-sec ad-sec--crema" id="ia-control" aria-labelledby="t-ia-control">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">Quién decide qué</p>
+        <h2 id="t-ia-control">El control depende del riesgo, no de la herramienta.</h2>
+      </div>
+      <div class="ta-caps">
+        <div><span class="ta-k">Riesgo alto</span><h3>La persona aprueba</h3><p>Cambios en cuentas, presupuesto o anuncios, y todo lo que sale hacia un cliente. La IA simula y espera la aprobación.</p></div>
+        <div><span class="ta-k">Riesgo medio</span><h3>La persona supervisa</h3><p>Lecturas de resultados, borradores de informes, alertas. La IA trabaja sola y la persona revisa antes de usarlo.</p></div>
+        <div><span class="ta-k">Riesgo bajo</span><h3>Automático</h3><p>Tareas repetibles y verificables: descargar datos, cruzar fuentes, dar formato. Se revisa por muestreo.</p></div>
+      </div>
+      <div class="ta-caps ta-mt">
+        <div><span class="ta-k">Cómo se mide</span><h3>Con casos reales</h3><p>Se prueba con trabajos ya resueltos y se compara contra lo que hizo el equipo.</p></div>
+        <div><span class="ta-k">Cómo se audita</span><h3>Todo queda guardado</h3><p>Cada versión y cada cambio tienen registro, y se puede volver atrás.</p></div>
+        <div><span class="ta-k">Cómo se cuida</span><h3>Sin datos sensibles</h3><p>Nada de credenciales ni datos personales de clientes o leads en lo que se comparte.</p></div>
+      </div>
+      <details class="ad-datos ta-mt"><summary>Cómo se evalúan los modelos de lenguaje</summary>
+        <div class="ta-caps ta-mt" style="--col:220px">
+          <div><h3>HumanEval</h3><p>Código funcional a partir de una descripción.</p></div>
+          <div><h3>MBPP+</h3><p>Problemas de programación en Python.</p></div>
+          <div><h3>MATH</h3><p>Álgebra, cálculo y geometría.</p></div>
+          <div><h3>GSM8K</h3><p>Problemas matemáticos de varios pasos.</p></div>
+          <div><h3>Aider</h3><p>Asistencia de programación en tiempo real.</p></div>
+          <div><h3>LiveCodeBench</h3><p>Código en entornos interactivos.</p></div>
+          <div><h3>SWE-Bench</h3><p>Ingeniería de software real: repositorios e incidencias.</p></div>
+        </div>
+        <p class="ta-fuente">Los modelos de lenguaje son modelos estadísticos de texto: asignan una probabilidad a cada fragmento posible y eligen el siguiente.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="ad-sec ad-sec--papel" id="ia-herramientas" aria-labelledby="t-ia-herramientas">
+    <div class="ad-wrap">
+      <div class="ad-sec-cab ad-sec-cab--grande">
+        <p class="ad-eyebrow">Qué herramienta para qué trabajo</p>
+        <h2 id="t-ia-herramientas">El mejor modelo cambia cada mes. El criterio no.</h2>
+        <p class="ad-lead">No nos casamos con un modelo: elegimos por tipo de trabajo y probamos con casos reales. Estos son los que encabezan los tableros públicos y los que usa hoy el equipo.</p>
+      </div>
+      <div class="ad-tabla">
+        <table class="ta-modelos">
+          <caption>Modelos que encabezan los tableros de Artificial Analysis · 26 nov 2026 · índice de inteligencia para texto; puntaje Elo de votación a ciegas para imagen, video y voz</caption>
+          <thead><tr><th scope="col">Trabajo</th><th scope="col">Lidera</th><th scope="col" class="valor">Puntaje</th><th scope="col">También arriba</th><th scope="col">Usa el equipo</th></tr></thead>
+          <tbody>
+            <tr>
+              <th scope="row">Texto y análisis<small>Redactar, resumir, analizar</small></th>
+              <td><span class="ta-modelo"><svg class="ta-logo" aria-hidden="true"><use href="#lg-claude"/></svg><span>Claude Fable 5.2<small>Anthropic</small></span></span></td>
+              <td class="valor">65</td>
+              <td><span class="ta-modelo"><svg class="ta-logo" aria-hidden="true"><use href="#lg-openai"/></svg><span>GPT-6.2 Astra<small>OpenAI</small></span></span><span class="ta-modelo"><svg class="ta-logo" aria-hidden="true"><use href="#lg-gemini"/></svg><span>Gemini 4<small>Google</small></span></span></td>
+              <td><span class="ta-modelo"><svg class="ta-logo" aria-hidden="true"><use href="#lg-claude"/></svg><span>Claude</span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Código y automatización<small>Scripts, flujos, páginas</small></th>
+              <td>Los mismos modelos de texto, como agentes sobre los repositorios</td>
+              <td class="valor">Sin dato</td>
+              <td>El tablero no tiene índice de código propio</td>
+              <td><span class="ta-modelo"><svg class="ta-logo" aria-hidden="true"><use href="#lg-claude"/></svg><span>Claude Code</span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Imagen<small>Piezas y variaciones</small></th>
+              <td><span class="ta-modelo"><svg class="ta-logo" aria-hidden="true"><use href="#lg-openai"/></svg><span>GPT Image 2.6<small>OpenAI</small></span></span></td>
+              <td class="valor">1.264</td>
+              <td><span class="ta-modelo"><svg class="ta-logo" aria-hidden="true"><use href="#lg-microsoft"/></svg><span>MAI-Image 2.7<small>Microsoft AI</small></span></span></td>
+              <td><span class="ta-modelo ta-modelo--texto"><span>Higgsfield<small>Agrupa varios modelos</small></span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Video desde texto<small>UGC y piezas en movimiento</small></th>
+              <td><span class="ta-modelo"><svg class="ta-logo" aria-hidden="true"><use href="#lg-alibaba"/></svg><span>Wan 3.0<small>Alibaba</small></span></span></td>
+              <td class="valor">1.175</td>
+              <td><span class="ta-modelo ta-modelo--texto"><span>Utopai X<small>Utopai Studios</small></span></span><span class="ta-modelo"><svg class="ta-logo" aria-hidden="true"><use href="#lg-minimax"/></svg><span>MiniMax H3<small>MiniMax</small></span></span></td>
+              <td rowspan="2"><span class="ta-modelo ta-modelo--texto"><span>Higgsfield<small>Elegimos el modelo por caso</small></span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Video desde imagen<small>Animar una pieza</small></th>
+              <td><span class="ta-modelo ta-modelo--texto"><span>MAGI-2<small>Sand.ai</small></span></span></td>
+              <td class="valor">1.163</td>
+              <td><span class="ta-modelo"><svg class="ta-logo" aria-hidden="true"><use href="#lg-bytedance"/></svg><span>Seedance 2.5<small>ByteDance</small></span></span></td>
+            </tr>
+            <tr>
+              <th scope="row">Voz<small>Locución y voces de creador</small></th>
+              <td><span class="ta-modelo"><svg class="ta-logo" aria-hidden="true"><use href="#lg-elevenlabs"/></svg><span>Eleven v4<small>ElevenLabs</small></span></span></td>
+              <td class="valor">1.342</td>
+              <td><span class="ta-modelo"><svg class="ta-logo" aria-hidden="true"><use href="#lg-stepfun"/></svg><span>StepAudio 3<small>StepFun</small></span></span><span class="ta-modelo"><svg class="ta-logo" aria-hidden="true"><use href="#lg-alibaba"/></svg><span>Qwen-Audio 3.1<small>Alibaba</small></span></span></td>
+              <td><span class="ta-modelo"><svg class="ta-logo" aria-hidden="true"><use href="#lg-elevenlabs"/></svg><span>ElevenLabs<small>Voz primero, después el video</small></span></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="ta-fuente">Referencia: <a class="ad-link" href="https://artificialanalysis.ai/leaderboards/models" rel="noopener">tableros de Artificial Analysis ›</a>, consultados el 26 nov 2026 (índice de inteligencia para texto; votación a ciegas para imagen, video y voz). Cambian seguido: revísalos antes de recomendar un modelo.</p>
+    </div>
+  </section>
+
+  <section class="ad-sec ta-frase" aria-label="Del creador al curador">
+    <div class="ad-wrap">
+      <p class="ad-eyebrow">Oportunidades y retos</p>
+      <p class="ad-t-statement">
+        <span class="ad-ln">Dejamos de ser creadores.</span>
+        <span class="ad-ln ta-tenue">Ahora somos curadores.</span>
+      </p>
+      <p class="ad-lead">Alba, una creadora de contenido generada por IA, tiene personalidad, voz y gustos propios, está en varias ciudades a la vez y no envejece. El valor ya no está en producir, sino en elegir bien qué sale.</p>
+    </div>
+  </section>
+
+  <section class="ad-sec ad-sec--oscuro ad-cierre">
+    <div class="ad-wrap ad-cierre__in">
+      <div>
+        <h2>Ya sabemos dónde está el usuario. Ahora, a quién buscar.</h2>
+        <p>El siguiente taller baja de las plataformas a la audiencia, y explica cómo decide Meta con Andromeda.</p>
+      </div>
+      <a class="ad-btn ad-btn--accent" href="segmentacion.html">Ir a Segmentación</a>
+    </div>
+  </section>
+</main>
+
+<footer class="ad-foot">
+  <div class="ad-foot__in"><span>Adcom · Área digital · Guía de entorno digital 2025, actualizada 2026</span><a class="ad-link" href="index.html">Todos los talleres ›</a></div>
+</footer>
+<script src="talleres.js?v=20261125" defer></script>
+</body>
+</html>
